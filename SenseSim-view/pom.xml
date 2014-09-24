@@ -18,7 +18,7 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>groupId</groupId>
+            <groupId>org.mdyk</groupId>
             <artifactId>SenseSim-mathModel</artifactId>
             <version>${project.version}</version>
         </dependency>
