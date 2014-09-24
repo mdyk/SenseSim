@@ -45,11 +45,19 @@
     </build>
     <!--http://repository.jboss.org/-->
     <repositories>
+
         <repository>
             <id>SenseSim</id>
             <name>SenseSim</name>
-            <url>http://10.1.189.26:8180/nexus/content/groups/SenseSim/</url>
+            <!--<url>http://ci.ms4ds.wat.edu.pl:8081/nexus/content/groups/SenseSim/</url>-->
+            <url>http://10.1.103.21:8081/nexus/content/groups/SenseSim/</url>
         </repository>
+
+        <!--<repository>-->
+            <!--<id>SenseSim</id>-->
+            <!--<name>SenseSim</name>-->
+            <!--<url>http://10.1.189.26:8180/nexus/content/groups/SenseSim/</url>-->
+        <!--</repository>-->
         <repository>
             <id>central</id>
             <name>Maven Central</name>
