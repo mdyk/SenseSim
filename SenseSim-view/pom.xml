@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>SenseSim</artifactId>
+        <groupId>org.mdyk</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>SenseSim-view</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mdyk</groupId>
+            <artifactId>SenseSim-logic</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>groupId</groupId>
+            <artifactId>SenseSim-mathModel</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!--<dependency>-->
+            <!--<groupId>com.oracle</groupId>-->
+            <!--<artifactId>javafx</artifactId>-->
+            <!--<version>2.2</version>-->
+            <!--<systemPath>${java.home}/lib/jfxrt.jar</systemPath>-->
+            <!--<scope>system</scope>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jgoodies</groupId>
+            <artifactId>looks</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jgoodies</groupId>
+            <artifactId>forms</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.openstreetmap</groupId>
+            <artifactId>jmapviewer</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.0.5</version>
+        </dependency>
+    </dependencies>
+</project>

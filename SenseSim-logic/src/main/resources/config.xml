@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<scenario id="1" >
+    <nodes>
+        <node id="1">
+            <speed>1</speed>
+            <radioRange>10</radioRange>
+            <sesnorImplType>GeoSensorNodeThread</sesnorImplType>
+            <startPosition>
+                <latitude>43.60411</latitude>
+                <longitude>1.44411</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>43.60411</latitude>
+                    <longitude>1.44411</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>43.60458583589277</latitude>
+                    <longitude>1.4438488331430568</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>43.604511</latitude>
+                    <longitude>1.443669</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="2">
+            <speed>1</speed>
+            <radioRange>10</radioRange>
+            <sesnorImplType>GeoSensorNodeThread</sesnorImplType>
+            <startPosition>
+                <latitude>43.60458583589277</latitude>
+                <longitude>1.4438488331430568</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>43.60458583589277</latitude>
+                    <longitude>1.4438488331430568</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>43.60411</latitude>
+                    <longitude>1.44411</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>43.604511</latitude>
+                    <longitude>1.443669</longitude>
+                </checkpoint>
+            </route>
+        </node>
+    </nodes>
+</scenario>

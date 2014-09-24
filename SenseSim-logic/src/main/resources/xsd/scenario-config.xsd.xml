@@ -1,0 +1,47 @@
+<scenario id="string">
+  <nodes>
+    <!--Zero or more repetitions:-->
+    <node id="string">
+      <speed>string</speed>
+      <radioRange>string</radioRange>
+      <sesnorImplType>GeoSensorNode</sesnorImplType>
+      <sensorAbilities>
+        <!--1 or more repetitions:-->
+        <ability>string</ability>
+      </sensorAbilities>
+      <startPosition>
+        <latitude>string</latitude>
+        <longitude>string</longitude>
+      </startPosition>
+      <route>
+        <!--Zero or more repetitions:-->
+        <checkpoint>
+          <latitude>string</latitude>
+          <longitude>string</longitude>
+        </checkpoint>
+      </route>
+    </node>
+  </nodes>
+  <phenomena>
+    <!--Zero or more repetitions:-->
+    <phenomenon startTime="string" endTime="string" abilityName="string">
+      <phenomenonArea>
+        <!--Zero or more repetitions:-->
+        <checkpoint>
+          <latitude>string</latitude>
+          <longitude>string</longitude>
+        </checkpoint>
+      </phenomenonArea>
+      <!--Optional:-->
+      <phenomenonValue>
+        <discreteValue fromTime="string" toTime="string">
+          <value>string</value>
+        </discreteValue>
+      </phenomenonValue>
+      <!--Optional:-->
+      <csvFile>
+        <csvFile>string</csvFile>
+      </csvFile>
+    </phenomenon>
+  </phenomena>
+</scenario>

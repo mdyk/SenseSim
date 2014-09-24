@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:complexType name="routeType">
+        <xs:sequence>
+            <xs:element type="checkpointType" name="checkpoint" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="nodesType">
+        <xs:sequence>
+            <xs:element type="nodeType" name="node" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="checkpointType">
+        <xs:sequence>
+            <xs:element name="latitude">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="longitude">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string"/>
+                </xs:simpleType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="abilitiesType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="ability" maxOccurs="unbounded" minOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!--<xs:complexType name="abilityType">-->
+        <!--<xs:sequence>-->
+            <!--<xs:element name="ability">-->
+                <!--<xs:simpleType>-->
+                    <!--<xs:restriction base="xs:string"/>-->
+                <!--</xs:simpleType>-->
+            <!--</xs:element>-->
+        <!--</xs:sequence>-->
+    <!--</xs:complexType>-->
+
+    <xs:complexType name="startPositionType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="latitude"/>
+            <xs:element type="xs:string" name="longitude"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="nodeType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="speed"/>
+            <xs:element type="xs:string" name="radioRange"/>
+            <xs:element name="sesnorImplType">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="GeoSensorNode"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element type="abilitiesType" name="sensorAbilities" />
+            <xs:element type="startPositionType" name="startPosition"/>
+            <xs:element type="routeType" name="route"/>
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="id"/>
+    </xs:complexType>
+
+    <xs:complexType name="phenomenonDiscreteValueType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="value" />
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="fromTime"/>
+        <xs:attribute type="xs:string" name="toTime"/>
+    </xs:complexType>
+    
+    <xs:complexType name="phenomenonValueType">
+        <xs:sequence>
+            <xs:element type="phenomenonDiscreteValueType" name="discreteValue" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="phenomenonCSVValueType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="csvFile" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="phenomenonType">
+        <xs:sequence>
+            <xs:element type="routeType" name="phenomenonArea" />
+            <xs:element type="phenomenonValueType" name="phenomenonValue" minOccurs="0" />
+            <xs:element type="phenomenonCSVValueType" name="csvFile" minOccurs="0" />
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="startTime"/>
+        <xs:attribute type="xs:string" name="endTime"/>
+        <xs:attribute type="xs:string" name="abilityName"/>
+    </xs:complexType>
+
+    <xs:complexType name="phenomenaType">
+        <xs:sequence>
+            <xs:element type="phenomenonType" name="phenomenon" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:element name="scenario">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element type="nodesType" name="nodes"/>
+                <xs:element type="phenomenaType" name="phenomena"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="id"/>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
