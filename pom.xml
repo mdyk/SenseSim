@@ -49,8 +49,7 @@
         <repository>
             <id>SenseSim</id>
             <name>SenseSim</name>
-            <!--<url>http://ci.ms4ds.wat.edu.pl:8081/nexus/content/groups/SenseSim/</url>-->
-            <url>http://10.1.103.21:8081/nexus/content/groups/SenseSim/</url>
+            <url>http://ci.ms4ds.wat.edu.pl:8081/nexus/content/groups/SenseSim/</url>
         </repository>
 
         <!--<repository>-->
