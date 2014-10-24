@@ -30,6 +30,7 @@ public class SimplePhenomenon implements IPhenomenonModel<GeoPosition> {
 
     @Override
     public List<GeoPosition> getPhenomenonRegionPoints() {
+
         return region;
     }
 
