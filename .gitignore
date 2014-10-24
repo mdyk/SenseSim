@@ -16,5 +16,4 @@ hs_err_pid*
 
 # Idea specific #
 .idea/
-**.iml
-SenseSim*/*.iml
+*/**.iml
