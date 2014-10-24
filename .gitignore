@@ -1,5 +1,5 @@
-*.class
-*.log
+**.class
+**.log
 
 # maven specifics #
 */target/**
@@ -16,5 +16,5 @@ hs_err_pid*
 
 # Idea specific #
 .idea/
-*.iml
+**.iml
 SenseSim*/*.iml
