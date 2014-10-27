@@ -120,4 +120,7 @@ public class DisSimRoutedSensorNode extends DefaultSensorModel<GeoPosition> impl
     public CommunicationStatus getCommunicationStatus() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+
+
 }

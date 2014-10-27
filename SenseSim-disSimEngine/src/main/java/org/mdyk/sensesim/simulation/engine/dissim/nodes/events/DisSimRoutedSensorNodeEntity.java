@@ -11,14 +11,14 @@ public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
 
     private static final Logger logger = Logger.getLogger(DisSimRoutedSensorNodeEntity.class);
 
-    protected EventsRoutedSensorNodeWrapper wrapper;
+    protected DisSimRoutedSensorNode wrapper;
 
     protected StartMoveActivity startMoveActivity;
     protected EndMoveActivity endMoveActivity;
     protected StartSenseActivity startSenseActivity;
     protected EndSenseActivity endSenseActivity;
 
-    public DisSimRoutedSensorNodeEntity(BasicSimContext context, EventsRoutedSensorNodeWrapper wrapper) {
+    public DisSimRoutedSensorNodeEntity(BasicSimContext context, DisSimRoutedSensorNode wrapper) {
         super(context);
         this.wrapper = wrapper;
         try {
@@ -32,5 +32,9 @@ public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
     @Override
     public void reflect(BasicSimStateChange<?, ?> event) {
         /* EMPTY */
+    }
+
+    public DisSimRoutedSensorNode getWrapper() {
+        return wrapper;
     }
 }

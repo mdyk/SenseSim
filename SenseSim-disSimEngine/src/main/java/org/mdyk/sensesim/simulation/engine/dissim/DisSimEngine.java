@@ -13,7 +13,7 @@ import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.EventsRoutedSensorNodeWrapper;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimRoutedSensorNode;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,9 +26,8 @@ import java.util.List;
 /**
  * Simulation engine based on DisSim framework
  */
-//@PluginImplementation
 @Singleton
-public class DisSimEngine /*extends BasicSimContext*/ implements /*SimContextInterface,*/ SimEngine<EventsRoutedSensorNodeWrapper>, Runnable {
+public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable {
 
     private Logger logger = Logger.getLogger(DisSimEngine.class);
 
@@ -43,11 +42,9 @@ public class DisSimEngine /*extends BasicSimContext*/ implements /*SimContextInt
 
     private File scenarioXML;
 
-    private List<EventsRoutedSensorNodeWrapper> sensorsList = new LinkedList<>();
+    private List<DisSimRoutedSensorNode> sensorsList = new LinkedList<>();
 
     public DisSimEngine() {
-//        super();
-//        super("SenseSimContext", SimModel.getInstance());
         EventBusHolder.getEventBus().register(this);
     }
 
@@ -62,18 +59,7 @@ public class DisSimEngine /*extends BasicSimContext*/ implements /*SimContextInt
 
     @Override
     public void runScenario() {
-//        networkManager.runNodes();
-
         new Thread(this).start();
-
-//        for(EventsRoutedSensorNodeWrapper wrapper : sensorsList) {
-//            wrapper.startNode();
-//        }
-//        try {
-//            SimModel.getInstance().startSimulation();
-//        } catch (SimControlException e) {
-//            logger.error(e.getMessage() ,e);
-//        }
     }
 
     @Override
@@ -92,14 +78,14 @@ public class DisSimEngine /*extends BasicSimContext*/ implements /*SimContextInt
     }
 
     @Override
-    public void addNode(EventsRoutedSensorNodeWrapper sensorNode) {
+    public void addNode(DisSimRoutedSensorNode sensorNode) {
         networkManager.addNode(sensorNode);
     }
 
     private void addNodes(List<ISensorModel> nodesList) {
         for (ISensorModel sensorModel : nodesList) {
-            addNode((EventsRoutedSensorNodeWrapper) sensorModel);
-            sensorsList.add((EventsRoutedSensorNodeWrapper) sensorModel);
+            addNode((DisSimRoutedSensorNode) sensorModel);
+            sensorsList.add((DisSimRoutedSensorNode) sensorModel);
         }
     }
 
@@ -164,7 +150,7 @@ public class DisSimEngine /*extends BasicSimContext*/ implements /*SimContextInt
 
     @Override
     public void run() {
-        for(EventsRoutedSensorNodeWrapper wrapper : sensorsList) {
+        for(DisSimRoutedSensorNode wrapper : sensorsList) {
             wrapper.startNode();
         }
         try {
