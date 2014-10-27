@@ -19,24 +19,24 @@ import java.util.List;
 
 
 // TODO zmiana nazwy albo całkowite usunięcie tej klasy
-public class EventsRoutedSensorNodeWrapper extends DefaultSensorModel<GeoPosition> implements RoutedGeoSensorNode {
+public class DisSimRoutedSensorNode extends DefaultSensorModel<GeoPosition> implements RoutedGeoSensorNode {
 
 
-    private static final Logger logger = Logger.getLogger(EventsRoutedSensorNodeWrapper.class);
+    private static final Logger logger = Logger.getLogger(DisSimRoutedSensorNode.class);
 
     protected List<GeoPosition> route;
     protected GeoMovementAlgorithm currentMovementAlg;
     protected Environment environment;
     protected WirelessChannel wirelessChannel;
-    protected EventsRoutedSensorNode eventsRoutedSensorNode;
+    protected DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity;
 
 
 
     @Inject
-    public EventsRoutedSensorNodeWrapper(@Assisted("id") int id, @Assisted GeoPosition position,
-                                            @Assisted("radioRange") int radioRange,
-                                            @Assisted double velocity, @Assisted List<AbilityType> abilities,
-                                            Environment environment, WirelessChannel wirelessChannel) {
+    public DisSimRoutedSensorNode(@Assisted("id") int id, @Assisted GeoPosition position,
+                                  @Assisted("radioRange") int radioRange,
+                                  @Assisted double velocity, @Assisted List<AbilityType> abilities,
+                                  Environment environment, WirelessChannel wirelessChannel) {
         super(id, position, radioRange, velocity, abilities);
 
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
@@ -83,7 +83,7 @@ public class EventsRoutedSensorNodeWrapper extends DefaultSensorModel<GeoPositio
 
     @Override
     public void startNode() {
-        eventsRoutedSensorNode = new EventsRoutedSensorNode(SimModel.getInstance().getCommonSimContext() , this);
+        disSimRoutedSensorNodeEntity = new DisSimRoutedSensorNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
     }
 
     @Override

@@ -7,9 +7,9 @@ import dissim.simspace.SimControlException;
 import org.apache.log4j.Logger;
 
 
-public class EventsRoutedSensorNode extends BasicSimEntity {
+public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
 
-    private static final Logger logger = Logger.getLogger(EventsRoutedSensorNode.class);
+    private static final Logger logger = Logger.getLogger(DisSimRoutedSensorNodeEntity.class);
 
     protected EventsRoutedSensorNodeWrapper wrapper;
 
@@ -18,7 +18,7 @@ public class EventsRoutedSensorNode extends BasicSimEntity {
     protected StartSenseActivity startSenseActivity;
     protected EndSenseActivity endSenseActivity;
 
-    public EventsRoutedSensorNode(BasicSimContext context , EventsRoutedSensorNodeWrapper wrapper) {
+    public DisSimRoutedSensorNodeEntity(BasicSimContext context, EventsRoutedSensorNodeWrapper wrapper) {
         super(context);
         this.wrapper = wrapper;
         try {

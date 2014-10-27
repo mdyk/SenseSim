@@ -4,20 +4,20 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimControlException;
 
-public class StartSenseActivity extends BasicSimStateChange<EventsRoutedSensorNode, Object> {
+public class StartSenseActivity extends BasicSimStateChange<DisSimRoutedSensorNodeEntity, Object> {
 
-    private EventsRoutedSensorNode eventsRoutedSensorNode;
+    private DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity;
 
-    public StartSenseActivity(EventsRoutedSensorNode eventsRoutedSensorNode, double delay) throws SimControlException {
-        super(eventsRoutedSensorNode, delay);
-        this.eventsRoutedSensorNode = eventsRoutedSensorNode;
+    public StartSenseActivity(DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity, double delay) throws SimControlException {
+        super(disSimRoutedSensorNodeEntity, delay);
+        this.disSimRoutedSensorNodeEntity = disSimRoutedSensorNodeEntity;
     }
 
     @Override
     protected void transition() throws SimControlException {
         System.out.println("Starting to sense " + simTime());
 
-        eventsRoutedSensorNode.endSenseActivity = new EndSenseActivity(0.5 , eventsRoutedSensorNode);
+        disSimRoutedSensorNodeEntity.endSenseActivity = new EndSenseActivity(0.5 , disSimRoutedSensorNodeEntity);
 
         System.out.println("------- sense -------");
 

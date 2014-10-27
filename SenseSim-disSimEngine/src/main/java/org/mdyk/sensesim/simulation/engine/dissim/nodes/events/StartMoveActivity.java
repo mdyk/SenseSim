@@ -5,14 +5,14 @@ import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimControlException;
 
 
-public class StartMoveActivity extends BasicSimStateChange<EventsRoutedSensorNode, Object> {
+public class StartMoveActivity extends BasicSimStateChange<DisSimRoutedSensorNodeEntity, Object> {
 
-    private EventsRoutedSensorNode eventsRoutedSensorNode;
+    private DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity;
     private SimGenerator generator;
 
-    public StartMoveActivity(EventsRoutedSensorNode eventsRoutedSensorNode, double delay) throws SimControlException {
-        super(eventsRoutedSensorNode);
-        this.eventsRoutedSensorNode = eventsRoutedSensorNode;
+    public StartMoveActivity(DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity, double delay) throws SimControlException {
+        super(disSimRoutedSensorNodeEntity);
+        this.disSimRoutedSensorNodeEntity = disSimRoutedSensorNodeEntity;
         generator = new SimGenerator();
     }
 
@@ -24,7 +24,7 @@ public class StartMoveActivity extends BasicSimStateChange<EventsRoutedSensorNod
         double ruch = generator.normal(9.0, 1.0);
         System.out.println("-------- Początek ruchu [" + simTime() + "] -------");
 
-        eventsRoutedSensorNode.endMoveActivity = new EndMoveActivity(1, eventsRoutedSensorNode, this);
+        disSimRoutedSensorNodeEntity.endMoveActivity = new EndMoveActivity(1, disSimRoutedSensorNodeEntity, this);
 
         System.out.println("<<<< StartMoveActivity.transition");
     }

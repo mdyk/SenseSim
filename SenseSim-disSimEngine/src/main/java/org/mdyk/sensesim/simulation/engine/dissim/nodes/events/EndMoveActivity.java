@@ -8,15 +8,15 @@ import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
 
 
-public class EndMoveActivity extends BasicSimStateChange<EventsRoutedSensorNode, StartMoveActivity> {
+public class EndMoveActivity extends BasicSimStateChange<DisSimRoutedSensorNodeEntity, StartMoveActivity> {
 
     private static final Logger logger = Logger.getLogger(EndMoveActivity.class);
 
-    private EventsRoutedSensorNode eventsRoutedSensorNode;
+    private DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity;
 
-    public EndMoveActivity(double delay, EventsRoutedSensorNode eventsRoutedSensorNode, StartMoveActivity startMoveActivity) throws SimControlException {
-        super(eventsRoutedSensorNode, delay);
-        this.eventsRoutedSensorNode = eventsRoutedSensorNode;
+    public EndMoveActivity(double delay, DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity, StartMoveActivity startMoveActivity) throws SimControlException {
+        super(disSimRoutedSensorNodeEntity, delay);
+        this.disSimRoutedSensorNodeEntity = disSimRoutedSensorNodeEntity;
     }
 
     @Override
@@ -25,14 +25,14 @@ public class EndMoveActivity extends BasicSimStateChange<EventsRoutedSensorNode,
 
         System.out.println("-------- Koniec ruchu [" + simTime() + "] -------");
 
-        logger.debug(">> move node: "+ eventsRoutedSensorNode.wrapper.getID());
-        GeoPosition newPosition = eventsRoutedSensorNode.wrapper.currentMovementAlg.nextPositionToCheckpoint(eventsRoutedSensorNode.wrapper.getPosition(), eventsRoutedSensorNode.wrapper.getVelocity());
-        logger.debug(String.format("moveing from position %s to %s ",eventsRoutedSensorNode.wrapper.getPosition().toString(),newPosition.toString()));
-        eventsRoutedSensorNode.wrapper.setPosition(newPosition);
-        EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(eventsRoutedSensorNode.wrapper));
-        logger.debug("<< move node: "+ eventsRoutedSensorNode.wrapper.getID());
+        logger.debug(">> move node: "+ disSimRoutedSensorNodeEntity.getWrapper().getID());
+        GeoPosition newPosition = disSimRoutedSensorNodeEntity.getWrapper().currentMovementAlg.nextPositionToCheckpoint(disSimRoutedSensorNodeEntity.getWrapper().getPosition(), disSimRoutedSensorNodeEntity.getWrapper().getVelocity());
+        logger.debug(String.format("moveing from position %s to %s ", disSimRoutedSensorNodeEntity.getWrapper().getPosition().toString(),newPosition.toString()));
+        disSimRoutedSensorNodeEntity.getWrapper().setPosition(newPosition);
+        EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(disSimRoutedSensorNodeEntity.getWrapper()));
+        logger.debug("<< move node: "+ disSimRoutedSensorNodeEntity.getWrapper().getID());
 
-        eventsRoutedSensorNode.startMoveActivity = new StartMoveActivity(eventsRoutedSensorNode, 1.0);
+        disSimRoutedSensorNodeEntity.startMoveActivity = new StartMoveActivity(disSimRoutedSensorNodeEntity, 1.0);
 
         System.out.println("<<<< EndMoveActivity.transition");
     }
