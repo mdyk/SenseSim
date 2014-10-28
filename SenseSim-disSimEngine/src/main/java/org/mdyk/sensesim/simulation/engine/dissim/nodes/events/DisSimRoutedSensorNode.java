@@ -22,7 +22,7 @@ import java.util.List;
 public class DisSimRoutedSensorNode extends DefaultSensorModel<GeoPosition> implements RoutedGeoSensorNode {
 
 
-    private static final Logger logger = Logger.getLogger(DisSimRoutedSensorNode.class);
+    private static final Logger LOG = Logger.getLogger(DisSimRoutedSensorNode.class);
 
     protected List<GeoPosition> route;
     protected GeoMovementAlgorithm currentMovementAlg;

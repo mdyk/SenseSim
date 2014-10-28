@@ -18,7 +18,7 @@ public abstract class  SensorNodeThread<P extends Position, M extends MovementAl
 
     public enum State{ACTIVE, PAUSED}
 
-    private static final Logger logger = Logger.getLogger(SensorNodeThread.class);
+    private static final Logger LOG = Logger.getLogger(SensorNodeThread.class);
     List<M>             movementAlgs;
     protected M         currentMovementAlg;
     private State       nodeState;
@@ -70,7 +70,7 @@ public abstract class  SensorNodeThread<P extends Position, M extends MovementAl
 
     @Override
     public void startNode() {
-        logger.debug("Węzeł wystartował");
+        LOG.debug("Węzeł wystartował");
         new Thread(this).start();
     }
 

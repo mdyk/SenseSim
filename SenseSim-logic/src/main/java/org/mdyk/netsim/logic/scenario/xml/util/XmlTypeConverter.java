@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class XmlTypeConverter {
 
-    private static final Logger logger = Logger.getLogger(XmlTypeConverter.class);
+    private static final Logger LOG = Logger.getLogger(XmlTypeConverter.class);
 
     public static List<GeoPosition> convertRoute(RouteType routeType) {
         List<GeoPosition> route = new LinkedList<>();
@@ -44,7 +44,7 @@ public class XmlTypeConverter {
     }
 
     public static Map<IPhenomenonTime , Object> readPhenomenonValuesFromFile(String filePath) {
-        logger.debug(">>> readPhenomenonValuesFromFile [filePath = "+filePath+"]");
+        LOG.debug(">>> readPhenomenonValuesFromFile [filePath = " + filePath + "]");
 
         Map<IPhenomenonTime, Object> phenomenonValue = new HashMap<>();
 
@@ -78,7 +78,7 @@ public class XmlTypeConverter {
             }
         }
         catch (Exception e) {
-            logger.error(e.getMessage() , e);
+            LOG.error(e.getMessage(), e);
         }
         finally {
             try {
@@ -86,11 +86,11 @@ public class XmlTypeConverter {
                     reader.close();
                 }
             } catch (IOException e) {
-                logger.error(e.getMessage() , e);
+                LOG.error(e.getMessage(), e);
             }
         }
 
-        logger.debug("<<<t readPhenomenonValuesFromFile");
+        LOG.debug("<<<t readPhenomenonValuesFromFile");
         return phenomenonValue;
     }
 

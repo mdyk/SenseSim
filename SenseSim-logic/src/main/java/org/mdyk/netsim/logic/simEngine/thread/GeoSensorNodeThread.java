@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMovementAlgorithm> implements RoutedGeoSensorNode {
 
-    private static final Logger logger = Logger.getLogger(GeoSensorNodeThread.class);
+    private static final Logger LOG = Logger.getLogger(GeoSensorNodeThread.class);
     protected List<GeoPosition> route;
     protected Environment environment;
     protected WirelessChannel wirelessChannel;
@@ -46,7 +46,7 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
     public void sense() {
 
         if(environment.isNodeInEventRegion(getPosition())){
-            logger.debug("NODE_START_SENSE");
+            LOG.debug("NODE_START_SENSE");
             EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_START_SENSE,this));
 
             for(AbilityType ability : getAbilities()) {
@@ -55,7 +55,7 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
 
         }
         else {
-            logger.debug("NODE_END_SENSE");
+            LOG.debug("NODE_END_SENSE");
             EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_END_SENSE,this));
         }
 
@@ -100,18 +100,18 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
             // TODO konfigurowanie prędkości węzłów
             Thread.sleep(100);
         } catch (InterruptedException e) {
-            logger.error(e);
+            LOG.error(e);
         }
     }
 
     @Override
     public void move() {
-        logger.debug(">> move node: "+ getID());
+        LOG.debug(">> move node: " + getID());
         GeoPosition newPosition = currentMovementAlg.nextPositionToCheckpoint(this.position, this.velocity);
-        logger.debug(String.format("moveing from position %s to %s ",this.getPosition().toString(),newPosition.toString()));
+        LOG.debug(String.format("moveing from position %s to %s ", this.getPosition().toString(), newPosition.toString()));
         this.setPosition(newPosition);
         EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(this));
-        logger.debug("<< move node: "+ getID());
+        LOG.debug("<< move node: " + getID());
     }
 
     @Override

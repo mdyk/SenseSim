@@ -20,7 +20,7 @@ import java.util.*;
 @Singleton
 public class NetworkManager {
 
-    private static final Logger logger = Logger.getLogger(NetworkManager.class);
+    private static final Logger LOG = Logger.getLogger(NetworkManager.class);
     private List<SensorNode> sensorNodeList;
 
     // Map is actualized only when neighborhood changes
@@ -44,60 +44,60 @@ public class NetworkManager {
     }
 
     public void runNodes() {
-        logger.debug(">> runScenario");
+        LOG.debug(">> runScenario");
         for (SensorNode sensorNode : sensorNodeList) {
-            logger.info("Starting node: "+ sensorNode.getID());
+            LOG.info("Starting node: " + sensorNode.getID());
             sensorNode.startNode();
         }
-        logger.debug("<< runScenario");
+        LOG.debug("<< runScenario");
     }
 
     public void pauseNodes() {
-        logger.debug(">> pauseScenario");
+        LOG.debug(">> pauseScenario");
         for (SensorNode sensorNode : sensorNodeList) {
-            logger.info("Pausing node: "+ sensorNode.getID());
+            LOG.info("Pausing node: " + sensorNode.getID());
             sensorNode.pauseNode();
         }
-        logger.debug("<< pauseScenario");
+        LOG.debug("<< pauseScenario");
     }
 
     public void resumeNodes() {
-        logger.debug(">> resumeScenario");
+        LOG.debug(">> resumeScenario");
         for (SensorNode sensorNode : sensorNodeList) {
-            logger.info("Resume node: "+ sensorNode.getID());
+            LOG.info("Resume node: " + sensorNode.getID());
             sensorNode.resumeNode();
         }
-        logger.debug("<< resumeScenario");
+        LOG.debug("<< resumeScenario");
     }
 
     public void stopNodes() {
-        logger.debug(">> stopScenario");
+        LOG.debug(">> stopScenario");
         for (SensorNode sensorNode : sensorNodeList) {
-            logger.info("Stop node: "+ sensorNode.getID());
+            LOG.info("Stop node: " + sensorNode.getID());
             sensorNode.stopNode();
         }
-        logger.debug("<< stopScenario");
+        LOG.debug("<< stopScenario");
     }
 
     @Subscribe
     public void processEvent(InternalEvent event) {
-        logger.debug(">> processEvent");
+        LOG.debug(">> processEvent");
         switch(event.getEventType()){
 //            case NEW_NODE:
-//                logger.debug("NEW_NODE event");
+//                LOG.debug("NEW_NODE event");
 //                SensorNode sensorNode = (SensorNode) event.getPayload();
 //                actualizeNaighbours(sensorNode);
 //                break;
             case NODE_POSITION_CHANGED:
-                logger.debug("NODE_POSITION_CHANGED event");
+                LOG.debug("NODE_POSITION_CHANGED event");
                 actualizeNaighbours((SensorNode) event.getPayload());
                 break;
         }
-        logger.debug("<< processEvent");
+        LOG.debug("<< processEvent");
     }
 
     public void actualizeNaighbours(SensorNode changedSensor) {
-        logger.debug(">> actualizeNaighbours");
+        LOG.debug(">> actualizeNaighbours");
 
         for (SensorNode sensor : sensorNodeList) {
 
@@ -106,11 +106,11 @@ public class NetworkManager {
             }
 
             double distance = Functions.calculateDistance(changedSensor.getPosition(), sensor.getPosition());
-            logger.debug("distance = " + distance + " radio range: " + changedSensor.getRadioRange());
+            LOG.debug("distance = " + distance + " radio range: " + changedSensor.getRadioRange());
             if(distance <= Math.min(changedSensor.getRadioRange(), sensor.getRadioRange())) {
                 if(!networkGraph.hasEdge(sensor,changedSensor)) {
                     networkGraph.addEdge(changedSensor,sensor);
-                    logger.debug("adding edge: ["+changedSensor.getID()+";"+sensor.getID()+"]");
+                    LOG.debug("adding edge: [" + changedSensor.getID() + ";" + sensor.getID() + "]");
                     // TODO typowanie nie powinno odbywać się tutaj
                     EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_ADDED, new GraphEdge<GeoPosition>(changedSensor,sensor)));
                 }
@@ -118,7 +118,7 @@ public class NetworkManager {
             else {
                 if(networkGraph.hasEdge(sensor,changedSensor)) {
                     networkGraph.removeEdge(sensor,changedSensor);
-                    logger.debug("removing edge: ["+changedSensor.getID()+";"+sensor.getID()+"]");
+                    LOG.debug("removing edge: [" + changedSensor.getID() + ";" + sensor.getID() + "]");
                     // TODO typowanie nie powinno odbywać się tutaj
                     EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_REMOVED, new GraphEdge<GeoPosition>(changedSensor,sensor)));
                 }
@@ -132,7 +132,7 @@ public class NetworkManager {
             neighborhood.get(changedSensor.getID()).add((SensorNode) sensorModel);
         }
 
-        logger.debug("<< actualizeNaighbours");
+        LOG.debug("<< actualizeNaighbours");
     }
 
     public List<SensorNode> getNeighborhood(SensorNode sensorNode) {

@@ -23,7 +23,7 @@ import java.util.List;
 @Singleton
 public class ThreadSimEngine implements SimEngine<SensorNodeThread<?,?>> {
 
-    private Logger logger = Logger.getLogger(ThreadSimEngine.class);
+    private static final Logger LOG = Logger.getLogger(ThreadSimEngine.class);
 
     @Inject
     private NetworkManager networkManager;
@@ -85,32 +85,32 @@ public class ThreadSimEngine implements SimEngine<SensorNodeThread<?,?>> {
 
     @Subscribe
     public void processEvent(InternalEvent event) {
-        logger.debug(">> processEvent");
+        LOG.debug(">> processEvent");
         switch(event.getEventType()){
             case SIM_PAUSE_NODES:
-                logger.debug("SIM_PAUSE_NODES event");
+                LOG.debug("SIM_PAUSE_NODES event");
                 this.pauseScenario();
                 break;
             case SIM_RESUME_NODES:
-                logger.debug("SIM_RESUME_NODES event");
+                LOG.debug("SIM_RESUME_NODES event");
                 this.resumeScenario();
                 break;
             case SIM_START_NODES:
-                logger.debug("SIM_START_NODES event");
+                LOG.debug("SIM_START_NODES event");
                 this.runScenario();
                 break;
             case SIM_STOP_NODES:
-                logger.debug("SIM_STOP_NODES event");
+                LOG.debug("SIM_STOP_NODES event");
                 this.stopScenario();
                 break;
             case SCENARIO_LOADED:
-                logger.debug("SCENARIO_LOADED event");
+                LOG.debug("SCENARIO_LOADED event");
                 File scenarioXML = (File) event.getPayload();
                 Scenario scenario = scenarioFactory.createXMLScenario(scenarioXML);
                 loadScenario(scenario);
                 break;
         }
-        logger.debug("<< processEvent");
+        LOG.debug("<< processEvent");
     }
 
 }

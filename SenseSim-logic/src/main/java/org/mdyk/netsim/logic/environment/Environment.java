@@ -18,7 +18,7 @@ import java.util.List;
 @Singleton
 public class Environment {
 
-    private static final Logger logger = Logger.getLogger(Environment.class);
+    private static final Logger LOG = Logger.getLogger(Environment.class);
 
     private List<IPhenomenonModel<GeoPosition>> phenomena = new LinkedList<>();
 
@@ -35,7 +35,7 @@ public class Environment {
      *      value of the phenomenon. Null if no value is present.
      */
     public Object getEventValue(GeoPosition position, int time, AbilityType ability) {
-        logger.trace(">>> getEventValue [position="+ position +", time="+ time +", ability="+ ability +"]");
+        LOG.trace(">>> getEventValue [position=" + position + ", time=" + time + ", ability=" + ability + "]");
         Object retVal = null;
 
         for(IPhenomenonModel event : phenomena) {
@@ -44,7 +44,7 @@ public class Environment {
             }
         }
 
-        logger.trace("<<< getEventValue");
+        LOG.trace("<<< getEventValue");
         return retVal;
     }
 
@@ -64,16 +64,16 @@ public class Environment {
     }
 
     public void loadPhenomena(List<IPhenomenonModel<GeoPosition>> phenomena) {
-        logger.trace(">>> loadEvents");
+        LOG.trace(">>> loadEvents");
 
-        logger.info("Events size: " + phenomena.size());
+        LOG.info("Events size: " + phenomena.size());
         this.phenomena = phenomena;
 
         for(IPhenomenonModel phenomenon : phenomena) {
             startEvent(phenomenon);
         }
 
-        logger.trace("<<< loadEvents");
+        LOG.trace("<<< loadEvents");
     }
 
 }

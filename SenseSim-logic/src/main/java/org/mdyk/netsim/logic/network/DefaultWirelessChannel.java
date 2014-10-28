@@ -13,16 +13,16 @@ import java.util.List;
 @Singleton
 public class DefaultWirelessChannel implements WirelessChannel {
 
-    private static Logger logger = Logger.getLogger(DefaultWirelessChannel.class);
+    private static final Logger LOG = Logger.getLogger(DefaultWirelessChannel.class);
 
     @Inject
     private NetworkManager networkManager;
 
     @Override
     public List<SensorNode> scanForNeighbors(SensorNode requestedSensorNode) {
-        logger.trace(">>> scanForNeighbors [request sensor: " + requestedSensorNode.getID() + "]");
+        LOG.trace(">>> scanForNeighbors [request sensor: " + requestedSensorNode.getID() + "]");
         List<SensorNode> nodesList = networkManager.getNeighborhood(requestedSensorNode);
-        logger.trace("<<< scanForNeighbors");
+        LOG.trace("<<< scanForNeighbors");
         return nodesList;
     }
 

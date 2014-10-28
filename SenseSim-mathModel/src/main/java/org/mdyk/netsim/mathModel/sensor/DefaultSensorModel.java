@@ -12,7 +12,7 @@ import java.util.Map;
 
 public abstract class DefaultSensorModel<P extends Position> implements ISensorModel<P> {
 
-    private static final Logger logger = Logger.getLogger(DefaultSensorModel.class);
+    private static final Logger LOG = Logger.getLogger(DefaultSensorModel.class);
 
     protected int           id;
     protected P             position;
@@ -94,7 +94,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
 
     @Override
     public void addObservation(Double time, Object value) {
-        logger.info("Adding observation [time="+time+" , value="+value+"]");
+        LOG.info("Adding observation [time=" + time + " , value=" + value + "]");
         List<Object> observationsAtTime;
         if(!observations.containsKey(time)) {
             observationsAtTime = new ArrayList<>();

@@ -10,7 +10,7 @@ import org.mdyk.netsim.logic.util.GeoPosition;
 
 public class EndMoveActivity extends BasicSimStateChange<DisSimRoutedSensorNodeEntity, StartMoveActivity> {
 
-    private static final Logger logger = Logger.getLogger(EndMoveActivity.class);
+    private static final Logger LOG = Logger.getLogger(EndMoveActivity.class);
 
     private DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity;
 
@@ -25,12 +25,12 @@ public class EndMoveActivity extends BasicSimStateChange<DisSimRoutedSensorNodeE
 
         System.out.println("-------- Koniec ruchu [" + simTime() + "] -------");
 
-        logger.debug(">> move node: "+ disSimRoutedSensorNodeEntity.getWrapper().getID());
+        LOG.debug(">> move node: " + disSimRoutedSensorNodeEntity.getWrapper().getID());
         GeoPosition newPosition = disSimRoutedSensorNodeEntity.getWrapper().currentMovementAlg.nextPositionToCheckpoint(disSimRoutedSensorNodeEntity.getWrapper().getPosition(), disSimRoutedSensorNodeEntity.getWrapper().getVelocity());
-        logger.debug(String.format("moveing from position %s to %s ", disSimRoutedSensorNodeEntity.getWrapper().getPosition().toString(),newPosition.toString()));
+        LOG.debug(String.format("moveing from position %s to %s ", disSimRoutedSensorNodeEntity.getWrapper().getPosition().toString(), newPosition.toString()));
         disSimRoutedSensorNodeEntity.getWrapper().setPosition(newPosition);
         EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(disSimRoutedSensorNodeEntity.getWrapper()));
-        logger.debug("<< move node: "+ disSimRoutedSensorNodeEntity.getWrapper().getID());
+        LOG.debug("<< move node: " + disSimRoutedSensorNodeEntity.getWrapper().getID());
 
         disSimRoutedSensorNodeEntity.startMoveActivity = new StartMoveActivity(disSimRoutedSensorNodeEntity, 1.0);
 

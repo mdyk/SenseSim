@@ -2,7 +2,6 @@ package org.mdyk.netsim.mathModel.event;
 
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.ability.IAbilityModel;
 
 import java.util.List;
 

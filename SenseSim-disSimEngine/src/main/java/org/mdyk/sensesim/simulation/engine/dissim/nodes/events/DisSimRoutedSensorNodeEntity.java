@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 
 public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
 
-    private static final Logger logger = Logger.getLogger(DisSimRoutedSensorNodeEntity.class);
+    private static final Logger LOG = Logger.getLogger(DisSimRoutedSensorNodeEntity.class);
 
     protected DisSimRoutedSensorNode wrapper;
 
@@ -25,7 +25,7 @@ public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
             this.startMoveActivity = new StartMoveActivity(this , 0.1);
             this.startSenseActivity = new StartSenseActivity(this , 0.1);
         } catch (SimControlException e) {
-            logger.error(e.getMessage() , e);
+            LOG.error(e.getMessage(), e);
         }
     }
 

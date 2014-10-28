@@ -29,7 +29,7 @@ import java.util.*;
  */
 public class XMLScenario implements Scenario {
 
-    private static final Logger logger = Logger.getLogger(XMLScenario.class);
+    private static final Logger LOG = Logger.getLogger(XMLScenario.class);
     private org.mdyk.sensesim.schema.Scenario scenario;
     private File scenarioFile;
 
@@ -45,7 +45,7 @@ public class XMLScenario implements Scenario {
             scenario = (org.mdyk.sensesim.schema.Scenario) jaxbUnmarshaller.unmarshal(scenarioFile);
             this.sensorNodeFactory = sensorNodeFactory;
         } catch (JAXBException e) {
-            logger.error(e.getMessage(),e);
+            LOG.error(e.getMessage(), e);
             throw new XMLScenarioLoadException("Error loading scenario from file: " + file.getAbsolutePath(), e);
         }
     }
@@ -94,10 +94,10 @@ public class XMLScenario implements Scenario {
 
     @Override
     public List<IPhenomenonModel<GeoPosition>> getPhenomena() {
-        logger.debug(">>> getPhenomena()");
+        LOG.debug(">>> getPhenomena()");
 
         PhenomenaType phenomenaType = scenario.getPhenomena();
-        logger.debug("Size of phenomena: " + phenomenaType.getPhenomenon().size());
+        LOG.debug("Size of phenomena: " + phenomenaType.getPhenomenon().size());
 
         List<IPhenomenonModel<GeoPosition>> phenomenaList = new ArrayList<>(phenomenaType.getPhenomenon().size());
 
@@ -117,7 +117,7 @@ public class XMLScenario implements Scenario {
             phenomenaList.add(phenomenon);
         }
 
-        logger.debug("<<< getPhenomena()");
+        LOG.debug("<<< getPhenomena()");
         return phenomenaList;
     }
 

@@ -3,7 +3,6 @@ package org.mdyk.sensesim.app;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.mdyk.netsim.view.SenseSimView;
-import org.mdyk.netsim.view.ViewModule;
 import org.mdyk.netsim.logic.LogicModule;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.scenario.xml.XMLScenarioLoadException;

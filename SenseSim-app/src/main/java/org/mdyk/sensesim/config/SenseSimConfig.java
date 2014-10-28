@@ -8,8 +8,6 @@ import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.SensorNodeFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
-import org.mdyk.netsim.logic.simEngine.thread.SensorNodeFactoryThread;
-import org.mdyk.netsim.logic.simEngine.thread.ThreadSimEngine;
 import org.mdyk.netsim.view.SenseSimView;
 import org.mdyk.netsim.view.jfx.SenseSimJFXApp;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;

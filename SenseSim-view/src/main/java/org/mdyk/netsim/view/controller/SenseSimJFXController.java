@@ -31,7 +31,7 @@ import java.util.*;
 
 public class SenseSimJFXController implements Initializable {
 
-    private static final Logger logger = Logger.getLogger(SenseSimJFXController.class);
+    private static final Logger LOG = Logger.getLogger(SenseSimJFXController.class);
     private HashMap<Integer , OSMNodeView> nodeViews;
     private HashMap<GraphEdge<GeoPosition>, GraphEdgeViewWrapper<OSMEdge>> edgeViews;
     private HashMap<Integer , OSMEventView> eventViews;
@@ -47,7 +47,7 @@ public class SenseSimJFXController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        logger.debug("JFXML initialization");
+        LOG.debug("JFXML initialization");
         app = new MapApp();
         app.setPreferredSize(new Dimension(950,750));
         createSwingContent(swingMapNode);
@@ -67,16 +67,16 @@ public class SenseSimJFXController implements Initializable {
     }
 
     public void loadScenarioAction() {
-        logger.debug(">>> loadScenarioAction");
+        LOG.debug(">>> loadScenarioAction");
         fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         scenarioFile = fileChooser.showOpenDialog(null);
         EventBusHolder.post(EventType.SCENARIO_LOADED , scenarioFile);
-        logger.debug("<<< loadScenarioAction");
+        LOG.debug("<<< loadScenarioAction");
     }
 
     public void startScenario() {
-        logger.debug(">>> startScenario");
+        LOG.debug(">>> startScenario");
 
         if(scenarioFile == null) {
             Dialogs.create()
@@ -87,23 +87,23 @@ public class SenseSimJFXController implements Initializable {
         }
         EventBusHolder.post(EventType.SIM_START_NODES, null);
 
-        logger.debug("<<< startScenario");
+        LOG.debug("<<< startScenario");
     }
 
     public void addNode(int id, OSMNodeView node) {
-        logger.debug(">> addNode");
+        LOG.debug(">> addNode");
         node.renderNode();
         nodeViews.put(id, node);
         TreeItem<String> treeItem = new TreeItem<>("Node " + id);
         this.nodesTree.getRoot().getChildren().add(treeItem);
-        logger.debug("<< addNode");
+        LOG.debug("<< addNode");
     }
 
     public void addEvent(int id, OSMEventView event) {
-        logger.debug(">> addEvent");
+        LOG.debug(">> addEvent");
         event.renderEvent();
         eventViews.put(id, event);
-        logger.debug("<< addEvent");
+        LOG.debug("<< addEvent");
     }
 
     public void createEdge(GraphEdge<GeoPosition> graphEdge) {
@@ -120,23 +120,23 @@ public class SenseSimJFXController implements Initializable {
     }
 
     public void removeEdge(GraphEdge<GeoPosition> graphEdge){
-        logger.trace(">> removeEdge: " + graphEdge);
+        LOG.trace(">> removeEdge: " + graphEdge);
         if(edgeViews.containsKey(graphEdge)){
-            logger.debug("edgeViews.containsKey(graphEdge="+graphEdge.toString()+")");
+            LOG.debug("edgeViews.containsKey(graphEdge=" + graphEdge.toString() + ")");
             GraphEdgeViewWrapper<OSMEdge> edgeViewWrapper = edgeViews.get(graphEdge);
             app.getMapContainer().removeMapPolygon(edgeViewWrapper.getView());
             edgeViews.remove(graphEdge);
         }
-        logger.trace("<< removeEdge");
+        LOG.trace("<< removeEdge");
     }
 
     @Subscribe
     public synchronized void processEvent(InternalEvent event) {
-        logger.debug(">> processEvent");
+        LOG.debug(">> processEvent");
         GeoSensorNode sensorModelNode;
         switch(event.getEventType()){
             case NEW_NODE:
-                logger.debug("NEW_NODE event");
+                LOG.debug("NEW_NODE event");
                 sensorModelNode = (GeoSensorNode) event.getPayload();
                 OSMNodeView nodeView = new OSMNodeView(sensorModelNode, app.getMapContainer());
                 addNode(sensorModelNode.getID(), nodeView);
@@ -146,17 +146,17 @@ public class SenseSimJFXController implements Initializable {
                 nodeViews.get(sensorModelNode.getID()).relocate(sensorModelNode.getPosition());
                 break;
             case EDGE_ADDED:
-                logger.debug("EDGE_ADDED event");
+                LOG.debug("EDGE_ADDED event");
                 GraphEdge newEdge = (GraphEdge) event.getPayload();
                 createEdge(newEdge);
                 break;
             case EDGE_REMOVED:
-                logger.debug("EDGE_REMOVED event");
+                LOG.debug("EDGE_REMOVED event");
                 GraphEdge edge = (GraphEdge) event.getPayload();
                 removeEdge(edge);
                 break;
             case PHENOMENON_CREATED:
-                logger.debug("PHENOMENON_CREATED event");
+                LOG.debug("PHENOMENON_CREATED event");
                 OSMEventView envEvent = new OSMEventView((IPhenomenonModel<GeoPosition>)event.getPayload(), app.getMapContainer(), "");
                 addEvent(1,envEvent);
                 break;
@@ -169,7 +169,7 @@ public class SenseSimJFXController implements Initializable {
                 nodeViews.get(sensorModelNode.getID()).stopSense();
                 break;
         }
-        logger.debug("<< processEvent");
+        LOG.debug("<< processEvent");
     }
 
 
