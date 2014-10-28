@@ -28,9 +28,6 @@ public class Environment {
 
     /**
      * Returns value of the observed phenomenon
-     * @param position
-     * @param time
-     * @param ability
      * @return
      *      value of the phenomenon. Null if no value is present.
      */

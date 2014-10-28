@@ -20,8 +20,6 @@ public interface IPhenomenonModel<P extends Position> {
 
     /**
      * Returns value of the event with given ability and time.
-     * @param ability
-     * @param time
      * @return
      *      array which represents phenomenon value for given time
      */
