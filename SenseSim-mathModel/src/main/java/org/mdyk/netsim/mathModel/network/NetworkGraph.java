@@ -34,9 +34,6 @@ public class NetworkGraph  {
 
         networkGraph.removeEdge(a,b);
         networkGraph.removeEdge(b,a);
-        // TODO zweryfikować czy potrzebne
-//        networkGraph.removeVertex(a);
-//        networkGraph.removeVertex(b);
     }
 
     public boolean hasEdge(ISensorModel a , ISensorModel b) {

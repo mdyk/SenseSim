@@ -89,35 +89,6 @@ public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable
         }
     }
 
-//    @Override
-//    public void initContext() {
-////        Scenario scenario = scenarioFactory.createXMLScenario(scenarioXML);
-////        loadScenario(scenario);
-//
-//
-//
-//    }
-//
-//    @Override
-//    public void stopContext() {
-//        //To change body of implemented methods use File | Settings | File Templates.
-//    }
-//
-//    @Override
-//    public boolean isReadyToASAPtimeFlow() {
-//        return true;
-//    }
-
-//    @Override
-//    public SimCalendarInterface getSimCalendar() {
-//        return super.getSimCalendar();
-//    }
-
-//    @Override
-//    public void clearContext() {
-//        super.clearContext();
-//    }
-
     @Subscribe
     public void processEvent(InternalEvent event) {
         logger.debug(">> processEvent");

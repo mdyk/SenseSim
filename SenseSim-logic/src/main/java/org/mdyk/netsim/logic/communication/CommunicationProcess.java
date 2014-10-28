@@ -18,7 +18,7 @@ public class CommunicationProcess {
 
     public CommunicationProcess(ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message) {
         this.sender = sender;
-        this.sender = receiver;
+        this.receiver = receiver;
         this.message = message;
         this.startTime = startTime;
         this.communicationStatus = CommunicationStatus.DURING_COMM;

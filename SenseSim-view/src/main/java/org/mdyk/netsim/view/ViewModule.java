@@ -8,7 +8,7 @@ public class ViewModule extends AbstractModule {
 
     @Override
     protected void configure() {
-//        bind(SenseSimView.class).to(SenseSimJFXApp.class);
+
     }
 
 }

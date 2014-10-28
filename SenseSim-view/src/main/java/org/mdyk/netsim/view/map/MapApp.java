@@ -59,50 +59,6 @@ public class MapApp extends JPanel implements JMapViewerEventListener {
         }
     }
 
-
-//    public VBox addTopMenu() {
-//
-//        start = new Button("Start");
-//        start.setPrefSize(100, 20);
-//
-//        pause = new Button("Pause");
-//        pause.setPrefSize(100, 20);
-//
-//        resume = new Button("Resume");
-//        resume.setPrefSize(100, 20);
-//
-//        stop = new Button("Stop");
-//        stop.setPrefSize(100, 20);
-//
-//        ToolBar standardToolbar = ToolBarBuilder.create().items(start, pause, resume, stop).build();
-//
-//        return VBoxBuilder.create().alignment(Pos.CENTER).spacing(20).children(standardToolbar).build();
-//
-//    }
-
-//    private void createScene() {
-//
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                BorderPane border = new BorderPane();
-//                Scene scene = new Scene(border);
-//
-//                border.setTop(addTopMenu());
-//
-//                topMenu.setScene(scene);
-//
-////                BorderPane border2 = new BorderPane();
-////                Scene scene2 = new Scene(border2);
-////                border2.setTop(addTopMenu());
-////                rightMenu.setScene(scene2);
-////
-////                senseSimJFXController.registerEvents();
-//            }
-//        });
-//    }
-
-
     public JMapViewer getMapContainer() {
         return map();
     }

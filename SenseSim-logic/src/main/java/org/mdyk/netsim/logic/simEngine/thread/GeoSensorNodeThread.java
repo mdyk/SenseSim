@@ -63,7 +63,6 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
 
     @Override
     protected void init() {
-//        setRoute(null);
         currentMovementAlg.setRoute(getRoute());
     }
 

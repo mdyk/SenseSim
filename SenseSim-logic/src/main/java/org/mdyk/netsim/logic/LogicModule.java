@@ -18,10 +18,7 @@ public class LogicModule extends AbstractModule {
 
     @Override
     protected void configure() {
-//        bind(WirelessChannel.class).to(DefaultWirelessChannel.class);
-//        bind(NetworkManager.class);
-//        bind(SensorNodeFactory.class).to(SensorNodeFactoryThread.class);
-//        install(new FactoryModuleBuilder().build(ScenarioFactory.class));
+
     }
 
 }
