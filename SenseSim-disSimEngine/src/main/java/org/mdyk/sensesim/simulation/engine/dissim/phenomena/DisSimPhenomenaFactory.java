@@ -7,6 +7,7 @@ import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.event.SimplePhenomenon;
 import org.mdyk.netsim.mathModel.event.time.IPhenomenonTime;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 
@@ -29,6 +30,6 @@ public class DisSimPhenomenaFactory implements PhenomenaFactory {
 
     @Override
     public IPhenomenonModel<GeoPosition> createPhenomenon(Map<IPhenomenonTime, Object> values, AbilityType abilityType, List<GeoPosition> points) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return new SimplePhenomenon(values, abilityType, points);
     }
 }

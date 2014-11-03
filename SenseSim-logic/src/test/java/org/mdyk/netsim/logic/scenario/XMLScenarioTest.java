@@ -9,7 +9,8 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mdyk.netsim.logic.LogicModule;
+import org.mdyk.netsim.logic.environment.phenomena.DefaultPhenomenaFactory;
+import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.SensorNodeFactory;
@@ -38,6 +39,7 @@ public class XMLScenarioTest {
             protected void configure() {
                 bind(WirelessChannel.class).to(DefaultWirelessChannel.class);
                 bind(SensorNodeFactory.class).to(SensorNodeFactoryThread.class);
+                bind(PhenomenaFactory.class).to(DefaultPhenomenaFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
             }
         });
