@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.scenario.xml;
 
 import com.google.inject.assistedinject.Assisted;
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.node.SensorNodeFactory;
 import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
 import org.mdyk.netsim.logic.simEngine.thread.GeoSensorNodeThread;
@@ -34,9 +35,10 @@ public class XMLScenario implements Scenario {
     private File scenarioFile;
 
     private SensorNodeFactory sensorNodeFactory;
+    private PhenomenaFactory phenomenaFactory;
 
     @Inject
-    public XMLScenario(@Assisted File file, SensorNodeFactory sensorNodeFactory) throws XMLScenarioLoadException {
+    public XMLScenario(@Assisted File file, SensorNodeFactory sensorNodeFactory, PhenomenaFactory phenomenaFactory) throws XMLScenarioLoadException {
         JAXBContext jaxbContext;
         try {
             scenarioFile = file;
@@ -44,6 +46,7 @@ public class XMLScenario implements Scenario {
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             scenario = (org.mdyk.sensesim.schema.Scenario) jaxbUnmarshaller.unmarshal(scenarioFile);
             this.sensorNodeFactory = sensorNodeFactory;
+            this.phenomenaFactory = phenomenaFactory;
         } catch (JAXBException e) {
             LOG.error(e.getMessage(), e);
             throw new XMLScenarioLoadException("Error loading scenario from file: " + file.getAbsolutePath(), e);
@@ -112,8 +115,7 @@ public class XMLScenario implements Scenario {
                 phenomenonValues.putAll(XmlTypeConverter.readPhenomenonValuesFromFile(filePath));
             }
 
-            // TODO to powinno być robione przez factory
-            IPhenomenonModel phenomenon = new SimplePhenomenon(phenomenonValues,abilityName,phenomenonArea);
+            IPhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValues, abilityName,phenomenonArea);
             phenomenaList.add(phenomenon);
         }
 

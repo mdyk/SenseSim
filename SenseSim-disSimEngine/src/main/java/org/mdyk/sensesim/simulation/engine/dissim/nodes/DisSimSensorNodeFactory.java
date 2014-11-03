@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Singleton
-public class SensorNodeFactoryDisSim implements SensorNodeFactory {
+public class DisSimSensorNodeFactory implements SensorNodeFactory {
 
     @Inject
     private Environment environment;
