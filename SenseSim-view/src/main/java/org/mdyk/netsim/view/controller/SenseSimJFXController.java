@@ -35,7 +35,6 @@ public class SenseSimJFXController implements Initializable {
     private HashMap<Integer , OSMNodeView> nodeViews;
     private HashMap<GraphEdge<GeoPosition>, GraphEdgeViewWrapper<OSMEdge>> edgeViews;
     private HashMap<Integer , OSMEventView> eventViews;
-    private FileChooser fileChooser;
     private File scenarioFile = null;
 
     @FXML
@@ -68,7 +67,7 @@ public class SenseSimJFXController implements Initializable {
 
     public void loadScenarioAction() {
         LOG.debug(">>> loadScenarioAction");
-        fileChooser = new FileChooser();
+        FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         scenarioFile = fileChooser.showOpenDialog(null);
         EventBusHolder.post(EventType.SCENARIO_LOADED , scenarioFile);

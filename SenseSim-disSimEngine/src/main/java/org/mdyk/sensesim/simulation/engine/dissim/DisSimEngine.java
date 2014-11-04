@@ -16,14 +16,13 @@ import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimRoutedSensorNode;
-import org.mdyk.sensesim.simulation.engine.dissim.phenomena.events.PenomenonSimEntity;
+import org.mdyk.sensesim.simulation.engine.dissim.phenomena.events.PhenomenonSimEntity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.List;
 
 
@@ -48,7 +47,7 @@ public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable
 
     private List<DisSimRoutedSensorNode> sensorsList = new ArrayList<>();
 
-    private List<PenomenonSimEntity> phenomenaList = new ArrayList<>();
+    private List<PhenomenonSimEntity> phenomenaList = new ArrayList<>();
 
     public DisSimEngine() {
         EventBusHolder.getEventBus().register(this);
@@ -65,7 +64,7 @@ public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable
         List<IPhenomenonModel<GeoPosition>> phenomenaModels = scenario.getPhenomena();
 
         for (IPhenomenonModel<GeoPosition> model : phenomenaModels) {
-            phenomenaList.add(new PenomenonSimEntity(model));
+            phenomenaList.add(new PhenomenonSimEntity(model));
         }
 
         environment.loadPhenomena(phenomenaModels);

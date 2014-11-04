@@ -8,11 +8,11 @@ import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.event.SimplePhenomenon;
 
 
-public class PenomenonSimEntity extends BasicSimEntity {
+public class PhenomenonSimEntity extends BasicSimEntity {
 
-    private SimplePhenomenon simplePhenomenon;
+    protected SimplePhenomenon simplePhenomenon;
 
-    public PenomenonSimEntity(IPhenomenonModel<GeoPosition> simplePhenomenon) {
+    public PhenomenonSimEntity(IPhenomenonModel<GeoPosition> simplePhenomenon) {
         super(SimModel.getInstance().getCommonSimContext());
 
         // TODO rzutowanie do poprwy, najlepiej używać tylko interfejsu
