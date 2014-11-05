@@ -36,7 +36,7 @@ public class SimplePhenomenon implements IPhenomenonModel<GeoPosition> {
 
     @Override
     // TODO: uwzględnienie wielu zdolności
-    public Object getPhenomenonValue(AbilityType ability, int time) {
+    public Object getPhenomenonValue(AbilityType ability, double time) {
         Set<IPhenomenonTime> timeSet = values.keySet();
 
         Object value = null;

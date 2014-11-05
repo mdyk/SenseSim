@@ -32,7 +32,7 @@ public class EndMoveActivity extends BasicSimStateChange<DisSimRoutedSensorNodeE
         EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(disSimRoutedSensorNodeEntity.getWrapper()));
         LOG.debug("<< move node: " + disSimRoutedSensorNodeEntity.getWrapper().getID());
 
-        disSimRoutedSensorNodeEntity.startMoveActivity = new StartMoveActivity(disSimRoutedSensorNodeEntity, 1.0);
+        disSimRoutedSensorNodeEntity.startMoveActivity = new StartMoveActivity(disSimRoutedSensorNodeEntity);
 
         System.out.println("<<<< EndMoveActivity.transition");
     }

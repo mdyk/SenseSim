@@ -23,7 +23,7 @@ public interface IPhenomenonModel<P extends Position> {
      * @return
      *      array which represents phenomenon value for given time
      */
-    public Object getPhenomenonValue(AbilityType ability, int time);
+    public Object getPhenomenonValue(AbilityType ability, double time);
 
     public boolean hasAbility(AbilityType ability);
 

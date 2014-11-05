@@ -22,8 +22,8 @@ public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
         super(context);
         this.wrapper = wrapper;
         try {
-            this.startMoveActivity = new StartMoveActivity(this , 0.1);
-            this.startSenseActivity = new StartSenseActivity(this , 0.1);
+            this.startMoveActivity = new StartMoveActivity(this);
+            this.startSenseActivity = new StartSenseActivity(this);
         } catch (SimControlException e) {
             LOG.error(e.getMessage(), e);
         }

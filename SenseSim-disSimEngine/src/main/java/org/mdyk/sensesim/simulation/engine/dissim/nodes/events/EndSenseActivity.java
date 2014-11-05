@@ -3,8 +3,11 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
 import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimControlException;
+import org.apache.log4j.Logger;
 
 public class EndSenseActivity extends BasicSimStateChange<DisSimRoutedSensorNodeEntity, Object> {
+
+    private static final Logger LOG = Logger.getLogger(EndSenseActivity.class);
 
     private DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity;
 
@@ -15,9 +18,11 @@ public class EndSenseActivity extends BasicSimStateChange<DisSimRoutedSensorNode
 
     @Override
     protected void transition() throws SimControlException {
-        System.out.println("Stopping sense " + simTime());
+        LOG.trace(">> EndSenseActivity time" + simTime());
 
-        disSimRoutedSensorNodeEntity.startSenseActivity = new StartSenseActivity(disSimRoutedSensorNodeEntity, 0.1);
+        disSimRoutedSensorNodeEntity.startSenseActivity = new StartSenseActivity(disSimRoutedSensorNodeEntity);
+
+        LOG.trace("<< EndSenseActivity time");
     }
 
     @Override

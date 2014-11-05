@@ -31,7 +31,7 @@ public class Environment {
      * @return
      *      value of the phenomenon. Null if no value is present.
      */
-    public Object getEventValue(GeoPosition position, int time, AbilityType ability) {
+    public Object getEventValue(GeoPosition position, double time, AbilityType ability) {
         LOG.trace(">>> getEventValue [position=" + position + ", time=" + time + ", ability=" + ability + "]");
         Object retVal = null;
 
