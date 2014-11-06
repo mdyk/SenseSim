@@ -1,4 +1,4 @@
-package org.mdyk.netsim.mathModel.event;
+package org.mdyk.netsim.mathModel.phenomena;
 
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -23,7 +23,7 @@ public interface IPhenomenonModel<P extends Position> {
      * @return
      *      array which represents phenomenon value for given time
      */
-    public Object getPhenomenonValue(AbilityType ability, double time);
+    public PhenomenonValue getPhenomenonValue(AbilityType ability, double time);
 
     public boolean hasAbility(AbilityType ability);
 

@@ -1,4 +1,4 @@
-package org.mdyk.netsim.mathModel.event;
+package org.mdyk.netsim.mathModel.phenomena;
 
 import org.junit.Test;
 

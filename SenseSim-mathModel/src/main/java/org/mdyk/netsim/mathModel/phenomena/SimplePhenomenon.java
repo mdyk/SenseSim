@@ -1,8 +1,9 @@
-package org.mdyk.netsim.mathModel.event;
+package org.mdyk.netsim.mathModel.phenomena;
 
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.event.time.IPhenomenonTime;
+import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
+import org.mdyk.netsim.mathModel.phenomena.time.SimplePhenomenonTimeRange;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -13,10 +14,10 @@ public class SimplePhenomenon implements IPhenomenonModel<GeoPosition> {
 
     private List<GeoPosition> region;
     // TODO: uwzględnienie wielu zdolności
-    private Map<IPhenomenonTime , Object> values;
+    private Map<IPhenomenonTimeRange, Object> values;
     private AbilityType abilityType;
 
-    public SimplePhenomenon(Map<IPhenomenonTime, Object> values, AbilityType abilityType, List<GeoPosition> points) {
+    public SimplePhenomenon(Map<IPhenomenonTimeRange, Object> values, AbilityType abilityType, List<GeoPosition> points) {
         region = new LinkedList<>();
 
         for(GeoPosition position : points) {
@@ -36,18 +37,19 @@ public class SimplePhenomenon implements IPhenomenonModel<GeoPosition> {
 
     @Override
     // TODO: uwzględnienie wielu zdolności
-    public Object getPhenomenonValue(AbilityType ability, double time) {
-        Set<IPhenomenonTime> timeSet = values.keySet();
+    public PhenomenonValue getPhenomenonValue(AbilityType ability, double time) {
+        Set<IPhenomenonTimeRange> timeSet = values.keySet();
 
         Object value = null;
 
-        for(IPhenomenonTime timeRange : timeSet) {
-            if(time >= timeRange.fromTime() && time <= timeRange.toTime()) {
+        for(IPhenomenonTimeRange timeRange : timeSet) {
+
+            if(timeRange.isInTime(time)) {
                 value = values.get(timeRange);
             }
         }
 
-        return value;
+        return new PhenomenonValue(time, value, value.getClass());
     }
 
     @Override

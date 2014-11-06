@@ -10,9 +10,8 @@ import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
-import org.mdyk.netsim.mathModel.event.SimplePhenomenon;
-import org.mdyk.netsim.mathModel.event.time.IPhenomenonTime;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 import org.mdyk.sensesim.schema.NodeType;
 import org.mdyk.sensesim.schema.PhenomenaType;
@@ -109,7 +108,7 @@ public class XMLScenario implements Scenario {
             AbilityType abilityName =  AbilityType.valueOf(phenomenonType.getAbilityName());
 
             // TODO obsługa przypadku kiedy nie ma pliku
-            Map<IPhenomenonTime, Object> phenomenonValues = new HashMap<>();
+            Map<IPhenomenonTimeRange, Object> phenomenonValues = new HashMap<>();
             if(phenomenonType.getCsvFile() != null) {
                 String filePath = scenarioFile.getParent() + "/" + phenomenonType.getCsvFile().getCsvFile();
                 phenomenonValues.putAll(XmlTypeConverter.readPhenomenonValuesFromFile(filePath));

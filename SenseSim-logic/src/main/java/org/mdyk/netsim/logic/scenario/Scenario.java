@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.scenario;
 
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
 import java.util.List;

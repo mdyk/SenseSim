@@ -4,8 +4,8 @@ import dissim.simspace.BasicSimEntity;
 import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimModel;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
-import org.mdyk.netsim.mathModel.event.SimplePhenomenon;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.SimplePhenomenon;
 
 
 public class PhenomenonSimEntity extends BasicSimEntity {

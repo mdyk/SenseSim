@@ -6,7 +6,7 @@ import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 
 import javax.inject.Singleton;
 import java.util.LinkedList;

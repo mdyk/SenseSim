@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.event;
 
 import org.mdyk.netsim.logic.node.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 
 
 public class EventFactory {

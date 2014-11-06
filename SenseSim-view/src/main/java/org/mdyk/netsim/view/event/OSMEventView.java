@@ -2,7 +2,7 @@ package org.mdyk.netsim.view.event;
 
 
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;

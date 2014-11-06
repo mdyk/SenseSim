@@ -4,9 +4,9 @@ import au.com.bytecode.opencsv.CSVReader;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
-import org.mdyk.netsim.mathModel.event.time.IPhenomenonTime;
-import org.mdyk.netsim.mathModel.event.time.SimplePhenomenonTime;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
+import org.mdyk.netsim.mathModel.phenomena.time.SimplePhenomenonTimeRange;
 import org.mdyk.sensesim.schema.AbilitiesType;
 import org.mdyk.sensesim.schema.CheckpointType;
 import org.mdyk.sensesim.schema.PhenomenonType;
@@ -43,10 +43,10 @@ public class XmlTypeConverter {
         return null;
     }
 
-    public static Map<IPhenomenonTime , Object> readPhenomenonValuesFromFile(String filePath) {
+    public static Map<IPhenomenonTimeRange, Object> readPhenomenonValuesFromFile(String filePath) {
         LOG.debug(">>> readPhenomenonValuesFromFile [filePath = " + filePath + "]");
 
-        Map<IPhenomenonTime, Object> phenomenonValue = new HashMap<>();
+        Map<IPhenomenonTimeRange, Object> phenomenonValue = new HashMap<>();
 
         CSVReader reader = null;
         try
@@ -55,7 +55,7 @@ public class XmlTypeConverter {
             String [] nextLine;
             while ((nextLine = reader.readNext()) != null)
             {
-                IPhenomenonTime phenomenonTime = new SimplePhenomenonTime(Integer.parseInt(nextLine[0]),Integer.parseInt(nextLine[1]));
+                IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Integer.parseInt(nextLine[0]),Integer.parseInt(nextLine[1]));
                 Object value = null;
                 switch(nextLine[3]) {
                     case "INTEGER":

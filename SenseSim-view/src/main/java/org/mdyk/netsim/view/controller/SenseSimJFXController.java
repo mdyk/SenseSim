@@ -15,7 +15,7 @@ import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.geo.GeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.network.GraphEdge;
 import org.mdyk.netsim.view.edge.OSMEdge;
 import org.mdyk.netsim.view.event.OSMEventView;

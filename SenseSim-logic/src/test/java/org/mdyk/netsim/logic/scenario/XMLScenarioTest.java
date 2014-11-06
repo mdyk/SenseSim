@@ -19,7 +19,8 @@ import org.mdyk.netsim.logic.scenario.xml.XMLScenario;
 import org.mdyk.netsim.logic.simEngine.thread.SensorNodeFactoryThread;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.event.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
 import java.io.File;
@@ -89,9 +90,15 @@ public class XMLScenarioTest {
         List<IPhenomenonModel<GeoPosition>> phenomenonModelList = xmlScenario.getPhenomena();
 
         TestCase.assertEquals(1 , phenomenonModelList.size());
-        TestCase.assertEquals(110 , phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,1));
-        TestCase.assertEquals(110 , phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,500));
-        TestCase.assertEquals(110 , phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,1000));
+
+        PhenomenonValue val1 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,1);
+        TestCase.assertEquals(110 , val1.getValue());
+
+        PhenomenonValue val2 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,500);
+        TestCase.assertEquals(110 , val2.getValue());
+
+        PhenomenonValue val3 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,1000);
+        TestCase.assertEquals(110 , val3.getValue());
     }
 
 }
