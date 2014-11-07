@@ -3,6 +3,7 @@ package org.mdyk.netsim.mathModel.sensor;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     protected P             position;
     protected double        radioRange = 20;
     protected double        velocity = 10;
-    protected Map<Double, List<Object>> observations;
+    protected Map<Double, List<PhenomenonValue>> observations;
     protected List<AbilityType> abilities;
 
     protected DefaultSensorModel(int id, P position, int radioRange, double velocity, List<AbilityType> abilities) {
@@ -83,19 +84,19 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     }
 
     @Override
-    public Map<Double, List<Object>> getObservations() {
+    public Map<Double, List<PhenomenonValue>> getObservations() {
         return observations;
     }
 
     @Override
-    public List<Object> getObservationsAtTime(Double time) {
+    public List<PhenomenonValue> getObservationsAtTime(Double time) {
         return observations.get(time);
     }
 
     @Override
-    public void addObservation(Double time, Object value) {
+    public void addObservation(Double time, PhenomenonValue value) {
         LOG.info("Adding observation [time=" + time + " , value=" + value + "]");
-        List<Object> observationsAtTime;
+        List<PhenomenonValue> observationsAtTime;
         if(!observations.containsKey(time)) {
             observationsAtTime = new ArrayList<>();
             observationsAtTime.add(value);

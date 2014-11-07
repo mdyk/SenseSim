@@ -2,6 +2,7 @@ package org.mdyk.netsim.mathModel.sensor;
 
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 import java.util.List;
 import java.util.Map;
@@ -31,11 +32,11 @@ public interface ISensorModel<P extends Position> {
 
     public List<AbilityType> getAbilities();
 
-    public Map<Double, List<Object>> getObservations();
+    public Map<Double, List<PhenomenonValue>> getObservations();
 
-    public List<Object> getObservationsAtTime(Double time);
+    public List<PhenomenonValue> getObservationsAtTime(Double time);
 
-    public void addObservation(Double time , Object value);
+    public void addObservation(Double time , PhenomenonValue value);
 
 
     // TODO zasoby, programy, SNT

@@ -7,6 +7,7 @@ import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 import javax.inject.Singleton;
 import java.util.LinkedList;
@@ -31,9 +32,9 @@ public class Environment {
      * @return
      *      value of the phenomenon. Null if no value is present.
      */
-    public Object getEventValue(GeoPosition position, double time, AbilityType ability) {
+    public PhenomenonValue getEventValue(GeoPosition position, double time, AbilityType ability) {
         LOG.trace(">>> getEventValue [position=" + position + ", time=" + time + ", ability=" + ability + "]");
-        Object retVal = null;
+        PhenomenonValue retVal = null;
 
         for(IPhenomenonModel event : phenomena) {
             if(event.hasAbility(ability)) {

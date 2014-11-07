@@ -31,7 +31,6 @@ public class SimplePhenomenon implements IPhenomenonModel<GeoPosition> {
 
     @Override
     public List<GeoPosition> getPhenomenonRegionPoints() {
-
         return region;
     }
 
@@ -49,7 +48,7 @@ public class SimplePhenomenon implements IPhenomenonModel<GeoPosition> {
             }
         }
 
-        return new PhenomenonValue(time, value, value.getClass());
+        return new PhenomenonValue(time, value);
     }
 
     @Override
