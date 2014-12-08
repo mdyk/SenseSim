@@ -1,5 +1,7 @@
 package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
+import dissim.broker.IEvent;
+import dissim.broker.IEventPublisher;
 import dissim.simspace.BasicSimContext;
 import dissim.simspace.BasicSimEntity;
 import dissim.simspace.BasicSimStateChange;
@@ -29,12 +31,17 @@ public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
         }
     }
 
-    @Override
-    public void reflect(BasicSimStateChange<?, ?> event) {
-        /* EMPTY */
-    }
-
     public DisSimRoutedSensorNode getWrapper() {
         return wrapper;
+    }
+
+    @Override
+    public void reflect(IEvent iEvent, IEventPublisher iEventPublisher) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void reflect(IEvent iEvent) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

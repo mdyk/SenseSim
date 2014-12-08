@@ -1,5 +1,7 @@
 package org.mdyk.sensesim.simulation.engine.dissim.phenomena.events;
 
+import dissim.broker.IEvent;
+import dissim.broker.IEventPublisher;
 import dissim.simspace.BasicSimEntity;
 import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimModel;
@@ -19,12 +21,17 @@ public class PhenomenonSimEntity extends BasicSimEntity {
         this.simplePhenomenon = (SimplePhenomenon) simplePhenomenon;
     }
 
-    @Override
-    public void reflect(BasicSimStateChange<?, ?> basicSimStateChange) {
-        // EMPTY
-    }
-
     public SimplePhenomenon getSimplePhenomenon() {
         return simplePhenomenon;
+    }
+
+    @Override
+    public void reflect(IEvent iEvent, IEventPublisher iEventPublisher) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void reflect(IEvent iEvent) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

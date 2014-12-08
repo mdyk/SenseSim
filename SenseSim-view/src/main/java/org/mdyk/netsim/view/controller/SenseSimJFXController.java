@@ -1,14 +1,18 @@
 package org.mdyk.netsim.view.controller;
 
 import com.google.common.eventbus.Subscribe;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import org.apache.log4j.Logger;
 import org.controlsfx.dialog.Dialogs;
+import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.view.map.MapApp;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventType;
@@ -35,12 +39,20 @@ public class SenseSimJFXController implements Initializable {
     private HashMap<Integer , OSMNodeView> nodeViews;
     private HashMap<GraphEdge<GeoPosition>, GraphEdgeViewWrapper<OSMEdge>> edgeViews;
     private HashMap<Integer , OSMEventView> eventViews;
+    private HashMap<Integer , TabPane> nodesAbilities;
+
     private File scenarioFile = null;
 
     @FXML
     private TreeView<String> nodesTree;
     @FXML
     private SwingNode swingMapNode;
+    @FXML
+    private Pane observationsPane;
+    @FXML
+    private TextField details_nodeId;
+    @FXML
+    private TextField details_nodePosition;
 
     private MapApp app;
 
@@ -53,9 +65,23 @@ public class SenseSimJFXController implements Initializable {
         nodeViews = new HashMap<>();
         eventViews = new HashMap<>();
         edgeViews = new HashMap<>();
+        nodesAbilities = new HashMap<>();
 
         nodesTree.setRoot(new TreeItem<>("Nodes"));
         nodesTree.getRoot().setExpanded(true);
+
+        nodesTree.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
+            @Override
+            public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> stringTreeItem2) {
+                details_nodeId.setText(observableValue.getValue().getValue());
+
+                OSMNodeView node = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
+                details_nodePosition.setText(node.getNodePosition().toString());
+
+                observationsPane.getChildren().add(nodesAbilities.get(node.getID()));
+
+            }
+        });
 
         EventBusHolder.getEventBus().register(this);
 
@@ -93,8 +119,26 @@ public class SenseSimJFXController implements Initializable {
         LOG.debug(">> addNode");
         node.renderNode();
         nodeViews.put(id, node);
-        TreeItem<String> treeItem = new TreeItem<>("Node " + id);
+        TreeItem<String> treeItem = new TreeItem<>(""+id);
         this.nodesTree.getRoot().getChildren().add(treeItem);
+
+        TabPane abilityPane = new TabPane();
+
+        this.nodesAbilities.put(id , abilityPane);
+
+        for(AbilityType ability : node.getAbilities()) {
+            Tab abilityTab = new Tab(ability.name());
+            TableView abilityTable = new TableView();
+
+            TableColumn timeColumn = new TableColumn("Time");
+            TableColumn valueColumn = new TableColumn("Value");
+
+            abilityTab.setContent(abilityTable);
+
+            abilityTable.getColumns().addAll(timeColumn, valueColumn);
+            nodesAbilities.get(id).getTabs().add(abilityTab);
+        }
+
         LOG.debug("<< addNode");
     }
 

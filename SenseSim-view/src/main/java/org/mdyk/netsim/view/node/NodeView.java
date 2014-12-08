@@ -1,7 +1,10 @@
 package org.mdyk.netsim.view.node;
 
 import org.mdyk.netsim.logic.util.Position;
+import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+
+import java.util.List;
 
 /**
   Abstract class for node view
@@ -31,6 +34,10 @@ public abstract class NodeView<C, P extends Position> {
 
     public int getID() {
         return node.getID();
+    }
+
+    public List<AbilityType> getAbilities() {
+        return node.getAbilities();
     }
 
     public abstract void setEdge(ISensorModel secondEndNode);
