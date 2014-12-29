@@ -4,7 +4,6 @@ import dissim.broker.IEvent;
 import dissim.broker.IEventPublisher;
 import dissim.simspace.BasicSimContext;
 import dissim.simspace.BasicSimEntity;
-import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimControlException;
 import org.apache.log4j.Logger;
 

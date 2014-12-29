@@ -3,16 +3,20 @@ package org.mdyk.netsim.view.controller;
 import com.google.common.eventbus.Subscribe;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import org.apache.log4j.Logger;
 import org.controlsfx.dialog.Dialogs;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.view.map.MapApp;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventType;
@@ -31,6 +35,7 @@ import java.awt.*;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
+import java.util.List;
 
 
 public class SenseSimJFXController implements Initializable {
@@ -128,10 +133,13 @@ public class SenseSimJFXController implements Initializable {
 
         for(AbilityType ability : node.getAbilities()) {
             Tab abilityTab = new Tab(ability.name());
-            TableView abilityTable = new TableView();
+            TableView<PhenomenonValue> abilityTable = new TableView<>();
 
-            TableColumn timeColumn = new TableColumn("Time");
-            TableColumn valueColumn = new TableColumn("Value");
+            TableColumn<PhenomenonValue, String> timeColumn = new TableColumn<>("Time");
+            TableColumn<PhenomenonValue, Object> valueColumn = new TableColumn<>("Value");
+
+            timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
+            valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
 
             abilityTab.setContent(abilityTable);
 
@@ -173,6 +181,24 @@ public class SenseSimJFXController implements Initializable {
         LOG.trace("<< removeEdge");
     }
 
+    @SuppressWarnings("unchecked")
+    private void process_NODE_END_SENSE(GeoSensorNode sensor) {
+        LOG.trace(">> process_NODE_END_SENSE id: " + sensor.getID());
+        nodeViews.get(sensor.getID()).stopSense();
+
+        for(Tab tab : nodesAbilities.get(sensor.getID()).getTabs()) {
+            TableView<PhenomenonValue> abilityTable = (TableView<PhenomenonValue>) tab.getContent();
+            List<PhenomenonValue> observations = sensor.getObservations().get(AbilityType.valueOf(tab.getText()));
+            ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
+            observationsData.addAll(observations);
+            abilityTable.setItems(observationsData);
+            abilityTable.getColumns().get(0).setVisible(false);
+            abilityTable.getColumns().get(0).setVisible(true);
+        }
+
+        LOG.trace("<< process_NODE_END_SENSE id: " + sensor.getID());
+    }
+
     @Subscribe
     public synchronized void processEvent(InternalEvent event) {
         LOG.debug(">> processEvent");
@@ -209,7 +235,7 @@ public class SenseSimJFXController implements Initializable {
                 break;
             case NODE_END_SENSE:
                 sensorModelNode = (GeoSensorNode) event.getPayload();
-                nodeViews.get(sensorModelNode.getID()).stopSense();
+                process_NODE_END_SENSE(sensorModelNode);
                 break;
         }
         LOG.debug("<< processEvent");

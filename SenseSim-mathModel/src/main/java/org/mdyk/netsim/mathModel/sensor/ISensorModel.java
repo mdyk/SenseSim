@@ -32,11 +32,12 @@ public interface ISensorModel<P extends Position> {
 
     public List<AbilityType> getAbilities();
 
-    public Map<Double, List<PhenomenonValue>> getObservations();
+    // TODO uwzględnienie wielu zdolności
+    public Map<AbilityType, List<PhenomenonValue>> getObservations();
 
-    public List<PhenomenonValue> getObservationsAtTime(Double time);
+    public List<PhenomenonValue> getObservationsAtTime(AbilityType ability, Double time);
 
-    public void addObservation(Double time , PhenomenonValue value);
+    public void addObservation(AbilityType ability, Double time , PhenomenonValue value);
 
 
     // TODO zasoby, programy, SNT

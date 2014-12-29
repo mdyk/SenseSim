@@ -31,11 +31,11 @@ public class StartSenseActivity extends BasicSimStateChange<DisSimRoutedSensorNo
     protected void transition() throws SimControlException {
         LOG.trace(">> StartSenseActivity time=" + simTime());
 
-        disSimRoutedSensorNodeEntity.endSenseActivity = new EndSenseActivity(0.1, disSimRoutedSensorNodeEntity);
+        disSimRoutedSensorNodeEntity.endSenseActivity = new EndSenseActivity(0.5, disSimRoutedSensorNodeEntity);
 
         for(AbilityType ability : sensorNode.getAbilities()) {
             PhenomenonValue phenomenonValue = environment.getEventValue(sensorNode.getPosition(),simTime(), ability);
-            sensorNode.addObservation(simTime(), phenomenonValue);
+            sensorNode.addObservation(ability, simTime(), phenomenonValue);
         }
 
         EventBusHolder.getEventBus().post(EventFactory.startSenseEvent(sensorNode));

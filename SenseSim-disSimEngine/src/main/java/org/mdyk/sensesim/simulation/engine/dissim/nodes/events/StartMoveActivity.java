@@ -1,6 +1,5 @@
 package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
-import dissim.random.SimGenerator;
 import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimControlException;
 

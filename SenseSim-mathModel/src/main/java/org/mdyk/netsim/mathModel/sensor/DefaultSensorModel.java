@@ -19,7 +19,8 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     protected P             position;
     protected double        radioRange = 20;
     protected double        velocity = 10;
-    protected Map<Double, List<PhenomenonValue>> observations;
+    // TODO ujednolicenie do jednej listy
+    protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     protected List<AbilityType> abilities;
 
     protected DefaultSensorModel(int id, P position, int radioRange, double velocity, List<AbilityType> abilities) {
@@ -84,26 +85,45 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     }
 
     @Override
-    public Map<Double, List<PhenomenonValue>> getObservations() {
-        return observations;
+    public Map<AbilityType, List<PhenomenonValue>> getObservations() {
+
+        HashMap<AbilityType, List<PhenomenonValue>> observationsByAbilities = new HashMap<>();
+
+        for(AbilityType ability : observations.keySet()) {
+            Map<Double, List<PhenomenonValue>> valuesMap = observations.get(ability);
+            List<PhenomenonValue> values = new ArrayList<>();
+
+            for(Double time : valuesMap.keySet()) {
+                values.addAll(valuesMap.get(time));
+            }
+        }
+        return observationsByAbilities;
     }
 
     @Override
-    public List<PhenomenonValue> getObservationsAtTime(Double time) {
-        return observations.get(time);
+    public List<PhenomenonValue> getObservationsAtTime(AbilityType ability, Double time) {
+        return observations.get(ability).get(time);
     }
 
     @Override
-    public void addObservation(Double time, PhenomenonValue value) {
-        LOG.info("Adding observation [time=" + time + " , value=" + value + "]");
+    public void addObservation(AbilityType ability, Double time, PhenomenonValue value) {
+        LOG.info("Adding observation [ability=" + ability + " time=" + time + " , value=" + value + "]");
         List<PhenomenonValue> observationsAtTime;
-        if(!observations.containsKey(time)) {
+
+        if(!observations.containsKey(ability)) {
             observationsAtTime = new ArrayList<>();
             observationsAtTime.add(value);
-            observations.put(time , observationsAtTime);
+            HashMap<Double , List<PhenomenonValue>> valueMap = new HashMap<>();
+            valueMap.put(time , observationsAtTime);
+            observations.put(ability, valueMap);
+        }
+        else if(!observations.get(ability).containsKey(time)) {
+            observationsAtTime = new ArrayList<>();
+            observationsAtTime.add(value);
+            observations.get(ability).put(time , observationsAtTime);
         }
         else {
-            observations.get(time).add(value);
+            observations.get(ability).get(time).add(value);
         }
     }
 

@@ -50,7 +50,7 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
             EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_START_SENSE,this));
 
             for(AbilityType ability : getAbilities()) {
-                addObservation(1.0, environment.getEventValue(getPosition(), 2, ability));
+            //    addObservation(1.0, environment.getEventValue(getPosition(), 2, ability));
             }
 
         }
