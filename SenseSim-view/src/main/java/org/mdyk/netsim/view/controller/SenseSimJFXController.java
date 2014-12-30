@@ -1,6 +1,7 @@
 package org.mdyk.netsim.view.controller;
 
 import com.google.common.eventbus.Subscribe;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -186,15 +187,20 @@ public class SenseSimJFXController implements Initializable {
         LOG.trace(">> process_NODE_END_SENSE id: " + sensor.getID());
         nodeViews.get(sensor.getID()).stopSense();
 
-        for(Tab tab : nodesAbilities.get(sensor.getID()).getTabs()) {
-            TableView<PhenomenonValue> abilityTable = (TableView<PhenomenonValue>) tab.getContent();
-            List<PhenomenonValue> observations = sensor.getObservations().get(AbilityType.valueOf(tab.getText()));
-            ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
-            observationsData.addAll(observations);
-            abilityTable.setItems(observationsData);
-            abilityTable.getColumns().get(0).setVisible(false);
-            abilityTable.getColumns().get(0).setVisible(true);
-        }
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                for(Tab tab : nodesAbilities.get(sensor.getID()).getTabs()) {
+                    TableView<PhenomenonValue> abilityTable = (TableView<PhenomenonValue>) tab.getContent();
+                    List<PhenomenonValue> observations = sensor.getObservations().get(AbilityType.valueOf(tab.getText()));
+                    ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
+                    observationsData.addAll(observations);
+                    abilityTable.setItems(observationsData);
+                    abilityTable.getColumns().get(0).setVisible(false);
+                    abilityTable.getColumns().get(0).setVisible(true);
+                }
+            }
+        });
 
         LOG.trace("<< process_NODE_END_SENSE id: " + sensor.getID());
     }

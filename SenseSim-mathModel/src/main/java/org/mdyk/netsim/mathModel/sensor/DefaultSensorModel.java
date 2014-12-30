@@ -5,10 +5,7 @@ import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public abstract class DefaultSensorModel<P extends Position> implements ISensorModel<P> {
@@ -86,7 +83,6 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
 
     @Override
     public Map<AbilityType, List<PhenomenonValue>> getObservations() {
-
         HashMap<AbilityType, List<PhenomenonValue>> observationsByAbilities = new HashMap<>();
 
         for(AbilityType ability : observations.keySet()) {
@@ -96,6 +92,11 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
             for(Double time : valuesMap.keySet()) {
                 values.addAll(valuesMap.get(time));
             }
+
+            List<PhenomenonValue> valuesCopy = new ArrayList<>(values.size());
+            Collections.copy(valuesCopy , values);
+
+            observationsByAbilities.put(ability , valuesCopy);
         }
         return observationsByAbilities;
     }
