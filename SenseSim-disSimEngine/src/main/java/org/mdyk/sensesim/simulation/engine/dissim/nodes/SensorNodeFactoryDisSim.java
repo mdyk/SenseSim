@@ -8,7 +8,7 @@ import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimRoutedSensorNode;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimRoutedNode;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -29,6 +29,6 @@ public class SensorNodeFactoryDisSim implements SensorNodeFactory {
 
     @Override
     public RoutedGeoSensorNode createGeoSensorNode(int id, GeoPosition position, int radioRange, double velocity, List<AbilityType> abilities) {
-        return new DisSimRoutedSensorNode( id, position, radioRange, velocity, abilities, environment, wirelessChannel);
+        return new DisSimRoutedNode( id, position, radioRange, velocity, abilities, environment, wirelessChannel);
     }
 }

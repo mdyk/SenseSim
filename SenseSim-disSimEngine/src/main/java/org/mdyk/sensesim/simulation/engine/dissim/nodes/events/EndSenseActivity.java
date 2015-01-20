@@ -7,17 +7,17 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 
-public class EndSenseActivity extends BasicSimStateChange<DisSimRoutedSensorNodeEntity, Object> {
+public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
 
     private static final Logger LOG = Logger.getLogger(EndSenseActivity.class);
 
-    private DisSimRoutedSensorNodeEntity sensorEntity;
-    private DisSimRoutedSensorNode sensorNode;
+    private DisSimNodeEntity sensorEntity;
+    private DisSimRoutedNode sensorNode;
 
-    public EndSenseActivity(double delay, DisSimRoutedSensorNodeEntity sensorEntity) throws SimControlException {
+    public EndSenseActivity(double delay, DisSimNodeEntity sensorEntity) throws SimControlException {
         super(sensorEntity, delay);
         this.sensorEntity = sensorEntity;
-        this.sensorNode = this.sensorEntity.wrapper;
+        this.sensorNode = this.sensorEntity.routedNode;
     }
 
     @Override

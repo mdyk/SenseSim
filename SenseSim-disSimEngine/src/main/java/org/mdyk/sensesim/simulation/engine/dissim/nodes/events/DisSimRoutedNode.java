@@ -5,6 +5,8 @@ import dissim.simspace.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.Environment;
+import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
@@ -18,25 +20,23 @@ import javax.inject.Inject;
 import java.util.List;
 
 
-// TODO zmiana nazwy albo całkowite usunięcie tej klasy
-public class DisSimRoutedSensorNode extends DefaultSensorModel<GeoPosition> implements RoutedGeoSensorNode {
+public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements RoutedGeoSensorNode {
 
 
-    private static final Logger LOG = Logger.getLogger(DisSimRoutedSensorNode.class);
+    private static final Logger LOG = Logger.getLogger(DisSimRoutedNode.class);
 
     protected List<GeoPosition> route;
     protected GeoMovementAlgorithm currentMovementAlg;
     protected Environment environment;
     protected WirelessChannel wirelessChannel;
-    protected DisSimRoutedSensorNodeEntity disSimRoutedSensorNodeEntity;
-
+    protected DisSimNodeEntity disSimNodeEntity;
 
 
     @Inject
-    public DisSimRoutedSensorNode(@Assisted("id") int id, @Assisted GeoPosition position,
-                                  @Assisted("radioRange") int radioRange,
-                                  @Assisted double velocity, @Assisted List<AbilityType> abilities,
-                                  Environment environment, WirelessChannel wirelessChannel) {
+    public DisSimRoutedNode(@Assisted("id") int id, @Assisted GeoPosition position,
+                            @Assisted("radioRange") int radioRange,
+                            @Assisted double velocity, @Assisted List<AbilityType> abilities,
+                            Environment environment, WirelessChannel wirelessChannel) {
         super(id, position, radioRange, velocity, abilities);
 
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
@@ -47,7 +47,6 @@ public class DisSimRoutedSensorNode extends DefaultSensorModel<GeoPosition> impl
 
     @Override
     public void sense() {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -83,42 +82,47 @@ public class DisSimRoutedSensorNode extends DefaultSensorModel<GeoPosition> impl
 
     @Override
     public void startNode() {
-        disSimRoutedSensorNodeEntity = new DisSimRoutedSensorNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
+        disSimNodeEntity = new DisSimNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
     }
 
     @Override
     public void stopNode() {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void pauseNode() {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void resumeNode() {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void work() {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void move() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        LOG.debug(">> move node: " + getID());
+
+        // TODO założenie że pędkość podawana jest w kilomwtrach. Trzeba to przenieść do konfiguracji.
+        double velocityMetersPerSec = this.velocity / 3.6;
+        LOG.trace("Velocity in km/h: " + velocity + " velocity in m/sec: " +velocityMetersPerSec);
+
+        GeoPosition newPosition = currentMovementAlg.nextPositionToCheckpoint(this.position, velocityMetersPerSec*StartMoveActivity.END_MOVE_DELAY);
+        LOG.debug(String.format("moveing from position %s to %s ", this.getPosition().toString(), newPosition.toString()));
+        this.setPosition(newPosition);
+        EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(this));
+        LOG.debug("<< move node: " + getID());
     }
 
     @Override
     public void startCommunication(Object message, ISensorModel<GeoPosition>... receivers) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public CommunicationStatus getCommunicationStatus() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
     }
 
 

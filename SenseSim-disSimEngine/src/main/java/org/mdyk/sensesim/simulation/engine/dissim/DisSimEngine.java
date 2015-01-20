@@ -15,7 +15,7 @@ import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimRoutedSensorNode;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimRoutedNode;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.events.PhenomenonSimEntity;
 
 import javax.inject.Inject;
@@ -30,7 +30,7 @@ import java.util.List;
  * Simulation engine based on DisSim framework
  */
 @Singleton
-public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable {
+public class DisSimEngine implements SimEngine<DisSimRoutedNode>, Runnable {
 
     private static final Logger LOG = Logger.getLogger(DisSimEngine.class);
 
@@ -45,7 +45,7 @@ public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable
 
     private File scenarioXML;
 
-    private List<DisSimRoutedSensorNode> sensorsList = new ArrayList<>();
+    private List<DisSimRoutedNode> sensorsList = new ArrayList<>();
 
     private List<PhenomenonSimEntity> phenomenaList = new ArrayList<>();
 
@@ -62,13 +62,11 @@ public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable
         }
 
         List<IPhenomenonModel<GeoPosition>> phenomenaModels = scenario.getPhenomena();
-
         for (IPhenomenonModel<GeoPosition> model : phenomenaModels) {
             phenomenaList.add(new PhenomenonSimEntity(model));
         }
 
         environment.loadPhenomena(phenomenaModels);
-
     }
 
     @Override
@@ -92,14 +90,14 @@ public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable
     }
 
     @Override
-    public void addNode(DisSimRoutedSensorNode sensorNode) {
+    public void addNode(DisSimRoutedNode sensorNode) {
         networkManager.addNode(sensorNode);
     }
 
     private void addNodes(List<ISensorModel> nodesList) {
         for (ISensorModel sensorModel : nodesList) {
-            addNode((DisSimRoutedSensorNode) sensorModel);
-            sensorsList.add((DisSimRoutedSensorNode) sensorModel);
+            addNode((DisSimRoutedNode) sensorModel);
+            sensorsList.add((DisSimRoutedNode) sensorModel);
         }
     }
 
@@ -135,7 +133,7 @@ public class DisSimEngine implements SimEngine<DisSimRoutedSensorNode>, Runnable
 
     @Override
     public void run() {
-        for(DisSimRoutedSensorNode wrapper : sensorsList) {
+        for(DisSimRoutedNode wrapper : sensorsList) {
             wrapper.startNode();
         }
         try {

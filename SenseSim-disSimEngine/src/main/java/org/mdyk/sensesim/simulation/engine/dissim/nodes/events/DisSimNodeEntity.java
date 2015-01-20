@@ -8,20 +8,20 @@ import dissim.simspace.SimControlException;
 import org.apache.log4j.Logger;
 
 
-public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
+public class DisSimNodeEntity extends BasicSimEntity {
 
-    private static final Logger LOG = Logger.getLogger(DisSimRoutedSensorNodeEntity.class);
+    private static final Logger LOG = Logger.getLogger(DisSimNodeEntity.class);
 
-    protected DisSimRoutedSensorNode wrapper;
+    protected DisSimRoutedNode routedNode;
 
     protected StartMoveActivity startMoveActivity;
     protected EndMoveActivity endMoveActivity;
     protected StartSenseActivity startSenseActivity;
     protected EndSenseActivity endSenseActivity;
 
-    public DisSimRoutedSensorNodeEntity(BasicSimContext context, DisSimRoutedSensorNode wrapper) {
+    public DisSimNodeEntity(BasicSimContext context, DisSimRoutedNode routedNode) {
         super(context);
-        this.wrapper = wrapper;
+        this.routedNode = routedNode;
         try {
             this.startMoveActivity = new StartMoveActivity(this);
             this.startSenseActivity = new StartSenseActivity(this);
@@ -30,17 +30,15 @@ public class DisSimRoutedSensorNodeEntity extends BasicSimEntity {
         }
     }
 
-    public DisSimRoutedSensorNode getWrapper() {
-        return wrapper;
+    public DisSimRoutedNode getRoutedNode() {
+        return routedNode;
     }
 
     @Override
     public void reflect(IEvent iEvent, IEventPublisher iEventPublisher) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void reflect(IEvent iEvent) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
