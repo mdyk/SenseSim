@@ -13,6 +13,7 @@ import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
@@ -47,6 +48,13 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
 
     @Override
     public void sense() {
+
+        for(AbilityType ability : getAbilities()) {
+            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(),SimModel.getInstance().simTime(), ability);
+            this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);
+        }
+
+        EventBusHolder.getEventBus().post(EventFactory.startSenseEvent(this));
     }
 
     @Override
@@ -118,6 +126,7 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
 
     @Override
     public void startCommunication(Object message, ISensorModel<GeoPosition>... receivers) {
+        // TODO powołanie obiektu symulacyjnego odpowiedzialnego za komunikację
     }
 
     @Override

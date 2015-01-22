@@ -33,13 +33,6 @@ public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Ob
 
         disSimNodeEntity.endSenseActivity = new EndSenseActivity(0.5, disSimNodeEntity);
 
-        for(AbilityType ability : sensorNode.getAbilities()) {
-            PhenomenonValue phenomenonValue = environment.getEventValue(sensorNode.getPosition(),simTime(), ability);
-            sensorNode.addObservation(ability, simTime(), phenomenonValue);
-        }
-
-        EventBusHolder.getEventBus().post(EventFactory.startSenseEvent(sensorNode));
-
         LOG.trace("<< StartSenseActivity");
     }
 

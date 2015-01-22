@@ -17,10 +17,12 @@ public interface SensorNode<P extends Position> extends ISensorModel<P> {
 
     public void resumeNode();
 
+    @Deprecated
     public void work();
 
     public void move();
 
+    // TODO wsparcie dla wielu procesów komunikacji równocześnie
     public void startCommunication(Object message, ISensorModel<P> ... receivers);
 
     public CommunicationStatus getCommunicationStatus();

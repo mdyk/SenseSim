@@ -14,8 +14,10 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
 
     protected int           id;
     protected P             position;
-    protected double        radioRange = 20;
-    protected double        velocity = 10;
+    protected double        radioRange;
+    protected double        velocity;
+    // TODO przenisienie do konfiguracji scenarusza
+    protected double        bandwith = 5000;
     // TODO ujednolicenie do jednej listy
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     protected List<AbilityType> abilities;
@@ -128,5 +130,8 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
         }
     }
 
-
+    @Override
+    public double getWirelessBandwith() {
+        return this.bandwith;
+    }
 }

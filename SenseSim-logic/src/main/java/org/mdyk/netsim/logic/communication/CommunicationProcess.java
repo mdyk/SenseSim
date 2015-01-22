@@ -1,30 +1,38 @@
 package org.mdyk.netsim.logic.communication;
 
-import org.mdyk.netsim.logic.communication.message.Message;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
-
 /**
- * Represents process of communication between two nodes.
+ * Interface for communication process in SenseSim
  */
-public class CommunicationProcess {
-
-    private CommunicationStatus communicationStatus;
-    private ISensorModel<?> sender;
-    private ISensorModel<?> receiver;
-    private double startTime;
-
-    // TODO opakować w dedykowaną strukturę
-    private Message message;
-
-    public CommunicationProcess(ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message) {
-        this.sender = sender;
-        this.receiver = receiver;
-        this.message = message;
-        this.startTime = startTime;
-        this.communicationStatus = CommunicationStatus.DURING_COMM;
-    }
+public interface CommunicationProcess {
 
 
+    /**
+     * Return id of the process. Should simulation wide unique.
+     * @return
+     *      id of the process.
+     */
+    public int getID();
+
+    /**
+     * Returns communication status described by CommunicationStatus enum
+     * @return
+     *      communication status.
+     */
+    public CommunicationStatus getCommunicationStatus();
+
+    /**
+     * Returns value of simulation time when process has started
+     * @return
+     *      time when process has started.
+     */
+    public double getStartTime();
+
+    /**
+     * Returns expected simulation time when process should finish.
+     * @return
+     *      simulation time when process should finish successfully.
+     */
+    public double getETA();
 
 
 }

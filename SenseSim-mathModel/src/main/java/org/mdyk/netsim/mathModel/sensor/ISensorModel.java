@@ -32,13 +32,19 @@ public interface ISensorModel<P extends Position> {
 
     public List<AbilityType> getAbilities();
 
-    // TODO uwzględnienie wielu zdolności
     public Map<AbilityType, List<PhenomenonValue>> getObservations();
 
     public List<PhenomenonValue> getObservationsAtTime(AbilityType ability, Double time);
 
     public void addObservation(AbilityType ability, Double time , PhenomenonValue value);
 
+    /**
+     * Returns bandwidth (measured in bits per second) of the sensor's wireless communication module.
+     * Value is the same for in and out communication.
+     * @return
+     *      bandwith of the sensor's wireless module.
+     */
+    public double getWirelessBandwith();
 
     // TODO zasoby, programy, SNT
 

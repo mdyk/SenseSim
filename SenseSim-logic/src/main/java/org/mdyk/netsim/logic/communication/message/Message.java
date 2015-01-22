@@ -3,6 +3,7 @@ package org.mdyk.netsim.logic.communication.message;
 /**
  * Represents message
  */
+// TODO rozważyć przeniesienie do modelu matematycznego
 public interface Message {
 
     /**
