@@ -1,4 +1,4 @@
-package org.mdyk.netsim.logic.communication;
+package org.mdyk.netsim.logic.communication.process;
 
 
 public enum CommunicationStatus {

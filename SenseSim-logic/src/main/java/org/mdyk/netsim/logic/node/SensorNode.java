@@ -1,6 +1,6 @@
 package org.mdyk.netsim.logic.node;
 
-import org.mdyk.netsim.logic.communication.CommunicationStatus;
+import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 

@@ -3,7 +3,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 import com.google.inject.assistedinject.Assisted;
 import dissim.simspace.SimModel;
 import org.apache.log4j.Logger;
-import org.mdyk.netsim.logic.communication.CommunicationStatus;
+import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
