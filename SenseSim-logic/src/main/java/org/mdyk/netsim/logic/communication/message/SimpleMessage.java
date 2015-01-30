@@ -10,6 +10,19 @@ public class SimpleMessage implements Message<Object> {
     private Object content;
     private int size;
 
+    /**
+     *
+     * @param originSource
+     *      sender of the message. It is the origin sensor, which should not change during communication
+     *      process.
+     * @param originDest
+     *      receiver of the message. sender of the message. It is the origin sensor, which should not change during communication
+     *      process.
+     * @param content
+     *      content of the message.
+     * @param size
+     *      size of the message in bytes.
+     */
     public SimpleMessage(ISensorModel<?> originSource, ISensorModel<?> originDest, Object content, int size) {
         this.originSource = originSource;
         this.originDest = originDest;

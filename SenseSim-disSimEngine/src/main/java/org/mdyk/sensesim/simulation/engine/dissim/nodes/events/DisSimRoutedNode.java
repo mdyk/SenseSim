@@ -3,6 +3,9 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 import com.google.inject.assistedinject.Assisted;
 import dissim.simspace.SimModel;
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
+import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.logic.communication.message.SimpleMessage;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
@@ -10,6 +13,7 @@ import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
+import org.mdyk.netsim.logic.node.SensorNode;
 import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -31,19 +35,21 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
     protected Environment environment;
     protected WirelessChannel wirelessChannel;
     protected DisSimNodeEntity disSimNodeEntity;
+    protected CommunicationProcessFactory communicationProcessFactory;
 
+    private int commProcIdx = 0;
 
     @Inject
     public DisSimRoutedNode(@Assisted("id") int id, @Assisted GeoPosition position,
                             @Assisted("radioRange") int radioRange,
                             @Assisted double velocity, @Assisted List<AbilityType> abilities,
-                            Environment environment, WirelessChannel wirelessChannel) {
+                            Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
         super(id, position, radioRange, velocity, abilities);
 
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
-
+        this.communicationProcessFactory = communicationProcessFactory;
     }
 
     @Override
@@ -107,6 +113,15 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
 
     @Override
     public void work() {
+        // TODO opracowanie podstawowych zadań węzła
+        List<SensorNode> neighbours = wirelessChannel.scanForNeighbors(this);
+
+        for (SensorNode node : neighbours) {
+            Message m = new SimpleMessage(this, node, "message", 5000);
+            startCommunication(m,node);
+        }
+
+
     }
 
     @Override
@@ -124,9 +139,14 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
         LOG.debug("<< move node: " + getID());
     }
 
+    @SafeVarargs
     @Override
-    public void startCommunication(Object message, ISensorModel<GeoPosition>... receivers) {
+    public final void startCommunication(Message message, ISensorModel<GeoPosition>... receivers) {
         // TODO powołanie obiektu symulacyjnego odpowiedzialnego za komunikację
+        for(ISensorModel<GeoPosition> receiver : receivers) {
+            communicationProcessFactory.createCommunicationProcess(commProcIdx++, this, receiver, SimModel.getInstance().simTime(), message);
+        }
+
     }
 
     @Override

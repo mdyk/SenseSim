@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mdyk.netsim.logic.communication.message.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.node.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -96,7 +97,8 @@ public class NetworkManagerTest {
         public void move() {}
 
         @Override
-        public void startCommunication(Object message, ISensorModel... receivers) { }
+        public void startCommunication(Message message, ISensorModel... receivers) {
+        }
 
         @Override
         public CommunicationStatus getCommunicationStatus() {return null;}

@@ -28,6 +28,7 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
 
     public CommunicationProcessSimEntity(int id, ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message, WirelessChannel wirelessChannel) {
         super(SimModel.getInstance().getCommonSimContext());
+        this.wirelessChannel = wirelessChannel;
         commProcess = new DefaultCommunicationProcess(id,sender,receiver,startTime,message);
         try {
             startCommunicationActivity = new StartCommunicationActivity(this);

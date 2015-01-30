@@ -1,6 +1,7 @@
 package org.mdyk.sensesim.simulation.engine.dissim.nodes;
 
 
+import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.SensorNodeFactory;
@@ -27,8 +28,11 @@ public class DisSimSensorNodeFactory implements SensorNodeFactory {
     @Inject
     private DisSimEngine disSimEngine;
 
+    @Inject
+    private CommunicationProcessFactory communicationProcessFactory;
+
     @Override
     public RoutedGeoSensorNode createGeoSensorNode(int id, GeoPosition position, int radioRange, double velocity, List<AbilityType> abilities) {
-        return new DisSimRoutedNode( id, position, radioRange, velocity, abilities, environment, wirelessChannel);
+        return new DisSimRoutedNode(id, position, radioRange, velocity, abilities, environment, wirelessChannel, communicationProcessFactory);
     }
 }

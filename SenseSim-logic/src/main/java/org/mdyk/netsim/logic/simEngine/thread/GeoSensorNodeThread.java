@@ -1,6 +1,7 @@
 package org.mdyk.netsim.logic.simEngine.thread;
 
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.communication.message.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventType;
@@ -115,7 +116,7 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
     }
 
     @Override
-    public void startCommunication(Object message, ISensorModel<GeoPosition>... receivers) {
+    public void startCommunication(Message message, ISensorModel<GeoPosition>... receivers) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
