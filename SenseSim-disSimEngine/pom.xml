@@ -31,6 +31,10 @@
             <groupId>jspf</groupId>
             <artifactId>jspf-core</artifactId>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

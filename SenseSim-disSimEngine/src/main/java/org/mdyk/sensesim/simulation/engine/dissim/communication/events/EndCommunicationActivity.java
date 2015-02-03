@@ -29,18 +29,18 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
         List<SensorNode> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(sender);
 
         if(neighbours.contains(receiver)) {
-            LOG.trace("Receiver is not neighbour of a sender");
+            LOG.trace("Receiver is neighbour of a sender");
             double bandwidth = Math.min(sender.getWirelessBandwith() , receiver.getWirelessBandwith());
 
             int sentBits = (int) Math.floor(bandwidth * delay);
             getSimEntity().addBitsSent(sentBits);
 
+            getSimEntity().startCommunicationActivity = new StartCommunicationActivity(getSimEntity());
         }
         else {
             LOG.trace("Receiver is not neighbour of a sender");
             getSimEntity().processInterrupted();
         }
-
         LOG.trace("<< EndCommunicationActivity.transition()");
     }
 

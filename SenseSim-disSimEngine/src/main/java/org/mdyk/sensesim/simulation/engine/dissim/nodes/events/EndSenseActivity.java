@@ -25,8 +25,7 @@ public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Obje
         LOG.trace(">> EndSenseActivity time" + simTime());
 
         sensorEntity.startSenseActivity = new StartSenseActivity(sensorEntity);
-
-        EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(sensorNode));
+        sensorNode.sense();
 
         LOG.trace("<< EndSenseActivity time");
     }

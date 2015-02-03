@@ -61,6 +61,10 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
         }
 
         EventBusHolder.getEventBus().post(EventFactory.startSenseEvent(this));
+
+        // TODO tymczasowo
+        // work();
+
     }
 
     @Override

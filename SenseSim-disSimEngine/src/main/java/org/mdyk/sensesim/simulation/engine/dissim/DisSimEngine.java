@@ -87,6 +87,7 @@ public class DisSimEngine implements SimEngine<DisSimRoutedNode>, Runnable {
     @Override
     public void stopScenario() {
         networkManager.stopNodes();
+        SimModel.getInstance().stopSimulation();
     }
 
     @Override
