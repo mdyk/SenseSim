@@ -17,12 +17,35 @@
         <module>SenseSim-disSimEngine</module>
     </modules>
 
+    <!--http://repository.jboss.org/-->
+    <repositories>
+        <repository>
+            <id>SenseSim</id>
+            <name>SenseSim</name>
+            <url>http://ci.ms4ds.wat.edu.pl:8081/nexus/content/groups/SenseSim/</url>
+        </repository>
+    </repositories>
+
     <properties>
         <main.basedir>${project.basedir}</main.basedir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- DisSim Specific -->
+        <dissim.scripts.path>D:/</dissim.scripts.path>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>ci</id>
+            <properties>
+                <dissim.scripts.path>/var/lib/jenkins</dissim.scripts.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>mdyk</id>
+            <properties/>
+        </profile>
+    </profiles>
 
     <build>
         <resources>
@@ -43,15 +66,6 @@
                 </plugin>
         </plugins>
     </build>
-    <!--http://repository.jboss.org/-->
-    <repositories>
-
-        <repository>
-            <id>SenseSim</id>
-            <name>SenseSim</name>
-            <url>http://ci.ms4ds.wat.edu.pl:8081/nexus/content/groups/SenseSim/</url>
-        </repository>
-    </repositories>
 
     <dependencyManagement>
         <dependencies>

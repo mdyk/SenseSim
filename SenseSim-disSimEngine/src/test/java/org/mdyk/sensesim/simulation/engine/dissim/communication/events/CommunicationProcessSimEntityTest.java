@@ -5,7 +5,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import dissim.simspace.SimControlException;
-import dissim.simspace.SimModel;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +50,7 @@ public class CommunicationProcessSimEntityTest {
 
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testCommunication() throws SimControlException, InterruptedException {
 
         SimEngine<DisSimRoutedNode> simEngine = injector.getInstance(SimEngine.class);
