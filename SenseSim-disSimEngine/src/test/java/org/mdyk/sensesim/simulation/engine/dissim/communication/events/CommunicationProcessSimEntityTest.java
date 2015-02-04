@@ -57,14 +57,13 @@ public class CommunicationProcessSimEntityTest {
         SensorNodeFactory sensorNodeFactory = injector.getInstance(SensorNodeFactory.class);
         CommunicationProcessFactory processFactory = injector.getInstance(CommunicationProcessFactory.class);
 
-
         RoutedGeoSensorNode sender = sensorNodeFactory.createGeoSensorNode(1, new GeoPosition(52.230963,21.004534), 10, 0, new ArrayList<>());
         RoutedGeoSensorNode receiver = sensorNodeFactory.createGeoSensorNode(2, new GeoPosition(52.230963,21.004534), 10, 0, new ArrayList<>());
 
         Message message = new TestMessage() {
             @Override
             public int getSize() {
-                return 10000;
+                return 5000;
             }
         };
 
@@ -74,7 +73,7 @@ public class CommunicationProcessSimEntityTest {
 
         CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(0, sender, receiver, 2, message);
 
-        Thread.sleep(20000);
+        Thread.sleep(5000);
 
         TestCase.assertEquals(CommunicationStatus.SUCCESS , communicationSimEntity.getCommunicationStatus(28.0));
 
