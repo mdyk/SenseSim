@@ -23,7 +23,7 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
 
     @Override
     protected void prepareView() {
-
+        // EMPTY
     }
 
     @Override
@@ -46,12 +46,12 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
 
     @Override
     public void setEdge(ISensorModel secondEndNode) {
-
+        // EMPTY
     }
 
     @Override
     public void removeEdge(ISensorModel secondEndNode) {
-
+        // EMPTY
     }
 
     @Override

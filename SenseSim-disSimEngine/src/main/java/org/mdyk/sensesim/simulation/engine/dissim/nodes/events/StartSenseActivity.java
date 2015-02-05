@@ -5,10 +5,6 @@ import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
-import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.logic.event.EventFactory;
-import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
 

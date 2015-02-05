@@ -47,16 +47,13 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
         if(time <= eta) {
             if(alreadySent >= messageBits) {
                 communicationStatus = CommunicationStatus.SUCCESS;
-            }
-            else if (alreadySent < messageBits) {
+            } else if (alreadySent < messageBits) {
                 communicationStatus = CommunicationStatus.DURING_COMM;
             }
-        }
-        else {
+        } else {
             if(alreadySent >= messageBits) {
                 communicationStatus = CommunicationStatus.SUCCESS;
-            }
-            else {
+            } else {
                 communicationStatus = CommunicationStatus.FAILURE;
             }
         }

@@ -3,7 +3,6 @@ package org.mdyk.netsim.mathModel.phenomena;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
-import org.mdyk.netsim.mathModel.phenomena.time.SimplePhenomenonTimeRange;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -4,8 +4,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimControlException;
 import org.apache.log4j.Logger;
-import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.logic.event.EventFactory;
+
 
 public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
 

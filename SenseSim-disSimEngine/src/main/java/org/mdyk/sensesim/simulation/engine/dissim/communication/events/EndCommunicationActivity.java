@@ -46,11 +46,11 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
 
     @Override
     protected void onTermination() throws SimControlException {
-
+        // Unused
     }
 
     @Override
     protected void onInterruption() throws SimControlException {
-
+        // Unused
     }
 }

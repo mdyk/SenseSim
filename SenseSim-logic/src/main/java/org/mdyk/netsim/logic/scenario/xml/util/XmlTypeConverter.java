@@ -26,6 +26,10 @@ public class XmlTypeConverter {
 
     private static final Logger LOG = Logger.getLogger(XmlTypeConverter.class);
 
+    private XmlTypeConverter() {
+        // Empty constructor, just to hide the default one.
+    }
+
     public static List<GeoPosition> convertRoute(RouteType routeType) {
         List<GeoPosition> route = new LinkedList<>();
         for (CheckpointType checkpointType : routeType.getCheckpoint()){
@@ -49,12 +53,10 @@ public class XmlTypeConverter {
         Map<IPhenomenonTimeRange, Object> phenomenonValue = new HashMap<>();
 
         CSVReader reader = null;
-        try
-        {
+        try {
             reader = new CSVReader(new FileReader(filePath),';');
             String [] nextLine;
-            while ((nextLine = reader.readNext()) != null)
-            {
+            while ((nextLine = reader.readNext()) != null) {
                 IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Integer.parseInt(nextLine[0]),Integer.parseInt(nextLine[1]));
                 Object value = null;
                 switch(nextLine[3]) {
@@ -76,11 +78,9 @@ public class XmlTypeConverter {
 
                 phenomenonValue.put(phenomenonTime, value);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             LOG.error(e.getMessage(), e);
-        }
-        finally {
+        } finally {
             try {
                 if (reader != null) {
                     reader.close();
