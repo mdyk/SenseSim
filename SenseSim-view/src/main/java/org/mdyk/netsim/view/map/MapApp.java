@@ -45,10 +45,12 @@ public class MapApp extends JPanel implements JMapViewerEventListener {
 
 
     private void updateZoomParameters() {
-        if (mperpLabelValue!=null)
+        if (mperpLabelValue!=null) {
             mperpLabelValue.setText(String.format("%s",map().getMeterPerPixel()));
-        if (zoomValue!=null)
+        }
+        if (zoomValue!=null) {
             zoomValue.setText(String.format("%s", map().getZoom()));
+        }
     }
 
     @Override

@@ -25,7 +25,9 @@ public class SimplePhenomenonTimeRange implements IPhenomenonTimeRange {
 
     @Override
     public boolean isInTime(double time) {
-        if (time >= fromTime && time <= toTime) return true;
+        if (time >= fromTime && time <= toTime) {
+            return true;
+        }
         return false;
     }
 
@@ -33,13 +35,20 @@ public class SimplePhenomenonTimeRange implements IPhenomenonTimeRange {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        } else if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         SimplePhenomenonTimeRange that = (SimplePhenomenonTimeRange) o;
 
-        if(isInTime(that.fromTime) && isInTime(that.toTime)) return true;
-        if (fromTime != that.fromTime) return false;
+        if(isInTime(that.fromTime) && isInTime(that.toTime)) {
+            return true;
+        }
+        if (fromTime != that.fromTime) {
+            return false;
+        }
         return toTime == that.toTime;
 
     }
