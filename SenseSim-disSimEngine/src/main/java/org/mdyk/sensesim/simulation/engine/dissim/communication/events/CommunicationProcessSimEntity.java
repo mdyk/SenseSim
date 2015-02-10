@@ -9,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.communication.process.DefaultCommunicationProcess;
-import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 

@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
-import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;

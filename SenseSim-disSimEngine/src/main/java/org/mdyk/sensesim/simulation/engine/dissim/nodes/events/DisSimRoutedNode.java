@@ -4,7 +4,7 @@ import com.google.inject.assistedinject.Assisted;
 import dissim.simspace.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
-import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.message.SimpleMessage;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.Environment;
@@ -62,9 +62,14 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
 
         EventBusHolder.getEventBus().post(EventFactory.startSenseEvent(this));
 
-        // TODO tymczasowo
-        // work();
+    }
 
+    @Override
+    protected void onMessage(double time, Message message) {
+        // TODO execute program
+        if(!message.getMessageDest().equals(this)) {
+            // TODO wykonanie kolejnego skoku
+        }
     }
 
     @Override
@@ -105,14 +110,17 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
 
     @Override
     public void stopNode() {
+        // unused
     }
 
     @Override
     public void pauseNode() {
+        // unused
     }
 
     @Override
     public void resumeNode() {
+        // unused
     }
 
     @Override
@@ -124,7 +132,6 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
             Message m = new SimpleMessage(this, node, "message", 5000);
             startCommunication(m,node);
         }
-
 
     }
 
@@ -157,7 +164,5 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
     public CommunicationStatus getCommunicationStatus() {
         return null;
     }
-
-
 
 }

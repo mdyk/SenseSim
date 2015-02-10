@@ -1,6 +1,6 @@
 package org.mdyk.netsim.logic.node;
 
-import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
@@ -25,6 +25,7 @@ public interface SensorNode<P extends Position> extends ISensorModel<P> {
     // TODO wsparcie dla wielu procesów komunikacji równocześnie
     public void startCommunication(Message message, ISensorModel<P> ... receivers);
 
+    @Deprecated
     public CommunicationStatus getCommunicationStatus();
 
     // TODO instalacja programu i pobieranie danych z sensorów

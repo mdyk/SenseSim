@@ -2,6 +2,7 @@ package org.mdyk.netsim.mathModel.network;
 
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.IAbilityModel;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
 
 import java.util.List;
@@ -19,11 +20,16 @@ public class TestSensorModel extends DefaultSensorModel {
 
     @Override
     public void sense() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // unused
     }
 
     @Override
     public List<IAbilityModel> getAbilities() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return null;
+    }
+
+    @Override
+    protected void onMessage(double time, Message message) {
+        // unused
     }
 }

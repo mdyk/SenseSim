@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.communication;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.communication.process.DefaultCommunicationProcess;
 import org.mdyk.netsim.logic.util.Position;
@@ -15,18 +15,29 @@ import java.util.LinkedList;
 public class DefaultCommunicationProcessTest {
 
     @Test
+    @SuppressWarnings("unchecked")
     public void testGetETA() throws Exception {
         ISensorModel sender = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
+                // unused
+            }
 
+            @Override
+            protected void onMessage(double time, Message message) {
+                // unused
             }
         } ;
 
         ISensorModel receiver = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
+                // unused
+            }
 
+            @Override
+            protected void onMessage(double time, Message message) {
+                // unused
             }
         } ;
 
@@ -59,11 +70,17 @@ public class DefaultCommunicationProcessTest {
     }
 
     @Test
+    @SuppressWarnings("unchecked")
     public void getCommunicationStatusTest() {
         ISensorModel sender = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
+                // unused
+            }
 
+            @Override
+            protected void onMessage(double time, Message message) {
+                // unused
             }
         } ;
 
@@ -71,6 +88,11 @@ public class DefaultCommunicationProcessTest {
             @Override
             public void sense() {
 
+            }
+
+            @Override
+            protected void onMessage(double time, Message message) {
+                // unused
             }
         } ;
 

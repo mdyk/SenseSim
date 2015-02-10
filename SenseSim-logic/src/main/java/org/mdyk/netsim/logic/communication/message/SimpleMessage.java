@@ -1,6 +1,7 @@
 package org.mdyk.netsim.logic.communication.message;
 
 
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
 public class SimpleMessage implements Message<Object> {

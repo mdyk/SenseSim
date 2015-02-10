@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.simEngine.thread;
 
 import org.apache.log4j.Logger;
-import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventType;
@@ -60,6 +60,11 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
             EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_END_SENSE,this));
         }
 
+    }
+
+    @Override
+    protected void onMessage(double time, Message message) {
+        // unused
     }
 
     @Override

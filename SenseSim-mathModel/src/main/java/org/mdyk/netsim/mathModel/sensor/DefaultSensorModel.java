@@ -3,6 +3,7 @@ package org.mdyk.netsim.mathModel.sensor;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 import java.util.*;
@@ -21,6 +22,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     // TODO ujednolicenie do jednej listy
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     protected List<AbilityType> abilities;
+    protected Map<Double, List<Message>> messagesMap;
 
     protected DefaultSensorModel(int id, P position, int radioRange, double velocity, List<AbilityType> abilities) {
         this.id = id;
@@ -29,6 +31,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
         this.velocity = velocity;
         this.abilities = abilities;
         this.observations = new HashMap<>();
+        this.messagesMap = new HashMap<>();
     }
 
     public abstract void sense();
@@ -110,7 +113,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
 
     @Override
     public void addObservation(AbilityType ability, Double time, PhenomenonValue value) {
-        LOG.info("Adding observation [ability=" + ability + " time=" + time + " , value=" + value + "]");
+        LOG.debug("Adding observation [ability=" + ability + " time=" + time + " , value=" + value + "]");
         List<PhenomenonValue> observationsAtTime;
 
         if(!observations.containsKey(ability)) {
@@ -134,4 +137,18 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     public double getWirelessBandwith() {
         return this.bandwith;
     }
+
+    @Override
+    public void receiveMessage(double time, Message message) {
+        LOG.debug(">> receiveMessage[time="+time+"]");
+        if(!this.messagesMap.containsKey(time)) {
+            this.messagesMap.put(time, new ArrayList<>());
+        }
+        this.messagesMap.get(time).add(message);
+        onMessage(time, message);
+        LOG.debug("<< receiveMessage");
+    }
+
+    protected abstract void onMessage(double time, Message message);
+
 }

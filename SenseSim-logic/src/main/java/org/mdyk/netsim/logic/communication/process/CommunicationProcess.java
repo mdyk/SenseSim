@@ -1,6 +1,6 @@
 package org.mdyk.netsim.logic.communication.process;
 
-import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.mathModel.communication.Message;
 
 /**
  * Interface for communication process in SenseSim

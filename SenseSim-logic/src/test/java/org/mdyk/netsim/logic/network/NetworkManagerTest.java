@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mdyk.netsim.logic.communication.message.Message;
+import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.node.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -77,6 +77,11 @@ public class NetworkManagerTest {
 
         @Override
         public void sense() {}
+
+        @Override
+        protected void onMessage(double time, Message message) {
+            // unused
+        }
 
         @Override
         public void startNode() {}
