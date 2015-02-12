@@ -68,7 +68,7 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
     protected void onMessage(double time, Message message) {
         // TODO execute program
         if(!message.getMessageDest().equals(this)) {
-            // TODO wykonanie kolejnego skoku
+            /* TODO wykonanie kolejnego skoku */
         }
     }
 
