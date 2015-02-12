@@ -6,6 +6,7 @@
             <speed>0.5</speed>
             <radioRange>90</radioRange>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
             </sensorAbilities>
@@ -22,16 +23,13 @@
                     <latitude>52.229853</latitude>
                     <longitude>21.004695</longitude>
                 </checkpoint>
-                <!--<checkpoint>-->
-                <!--<latitude>43.604511</latitude>-->
-                <!--<longitude>1.443669</longitude>-->
-                <!--</checkpoint>-->
             </route>
         </node>
         <node id="2">
             <speed>1</speed>
             <radioRange>90</radioRange>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
             </sensorAbilities>
@@ -62,6 +60,7 @@
             <speed>0</speed>
             <radioRange>50</radioRange>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
             </sensorAbilities>
@@ -74,20 +73,13 @@
                     <latitude>52.230963</latitude>
                     <longitude>21.004674</longitude>
                 </checkpoint>
-                <!--<checkpoint>-->
-                <!--<latitude>43.60411</latitude>-->
-                <!--<longitude>1.44411</longitude>-->
-                <!--</checkpoint>-->
-                <!--<checkpoint>-->
-                <!--<latitude>43.60458583589277</latitude>-->
-                <!--<longitude>1.4438488331430568</longitude>-->
-                <!--</checkpoint>-->
             </route>
         </node>
         <node id="4">
             <speed>1</speed>
             <radioRange>90</radioRange>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
             </sensorAbilities>

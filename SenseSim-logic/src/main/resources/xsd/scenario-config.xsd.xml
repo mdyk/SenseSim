@@ -5,6 +5,7 @@
       <speed>string</speed>
       <radioRange>string</radioRange>
       <sesnorImplType>GeoSensorNode</sesnorImplType>
+      <routingAlgType>FloodingRouting</routingAlgType>
       <sensorAbilities>
         <!--1 or more repetitions:-->
         <ability>string</ability>

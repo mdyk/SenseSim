@@ -9,6 +9,7 @@ import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.phenomena.DefaultPhenomenaFactory;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
@@ -76,6 +77,7 @@ public class XMLScenarioTest {
 
         for (ISensorModel node : nodes) {
             TestCase.assertTrue(node instanceof GeoSensorNodeThread);
+            TestCase.assertTrue(node.getRoutingAlgorithm() instanceof FloodingRouting);
             TestCase.assertTrue(node.getAbilities().get(0).equals(AbilityType.TEMPERATURE));
         }
 

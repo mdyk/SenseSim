@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.communication.Message;
+import org.mdyk.netsim.mathModel.communication.RoutingAlgorithm;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 import java.util.*;
@@ -23,6 +24,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
+    protected RoutingAlgorithm routingAlgorithm;
 
     protected DefaultSensorModel(int id, P position, int radioRange, double velocity, List<AbilityType> abilities) {
         this.id = id;
@@ -151,4 +153,13 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
 
     protected abstract void onMessage(double time, Message message);
 
+    @Override
+    public RoutingAlgorithm getRoutingAlgorithm() {
+        return routingAlgorithm;
+    }
+
+    @Override
+    public void setRoutingAlgorithm(RoutingAlgorithm routingAlgorithm) {
+        this.routingAlgorithm = routingAlgorithm;
+    }
 }

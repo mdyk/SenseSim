@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.scenario.xml;
 
 import com.google.inject.assistedinject.Assisted;
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.node.SensorNodeFactory;
 import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
@@ -81,17 +82,28 @@ public class XMLScenario implements Scenario {
                     RoutedGeoSensorNode node = sensorNodeFactory.createGeoSensorNode(Integer.parseInt(nodeType.getId()),
                             position, Integer.parseInt(nodeType.getRadioRange()),
                             Double.parseDouble(nodeType.getSpeed()), abilities);
-
                     node.setRoute(route);
+                    setRoutingAlgorithm(nodeType , node);
                     geoSensorNodes.add(node);
                     break;
 
                 default:
-                    throw new RuntimeException("Wrong type of node");
+                    throw new RuntimeException("Invalid type of node");
             }
         }
 
         return nodesMap;
+    }
+
+    private void setRoutingAlgorithm(NodeType nodeType , ISensorModel<?> sensorModel) {
+        switch (nodeType.getRoutingAlgType()) {
+            case "FloodingRouting":
+                sensorModel.setRoutingAlgorithm(new FloodingRouting());
+                break;
+
+            default:
+                throw new RuntimeException("Invalid type of routing algorithm");
+        }
     }
 
     @Override

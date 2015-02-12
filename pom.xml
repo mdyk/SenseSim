@@ -17,7 +17,6 @@
         <module>SenseSim-disSimEngine</module>
     </modules>
 
-    <!--http://repository.jboss.org/-->
     <repositories>
         <repository>
             <id>SenseSim</id>
