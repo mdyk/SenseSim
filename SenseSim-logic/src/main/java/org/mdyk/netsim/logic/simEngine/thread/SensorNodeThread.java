@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.simEngine.thread;
 
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.movement.MovementAlgorithm;
-import org.mdyk.netsim.logic.node.SensorNode;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;

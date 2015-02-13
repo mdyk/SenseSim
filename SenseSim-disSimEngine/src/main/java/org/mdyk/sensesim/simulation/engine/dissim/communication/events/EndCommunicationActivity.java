@@ -5,7 +5,7 @@ import dissim.simspace.BasicSimStateChange;
 import dissim.simspace.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
-import org.mdyk.netsim.logic.node.SensorNode;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
     protected void transition() throws SimControlException {
         LOG.trace(">> EndCommunicationActivity.transition()");
         // Checking if receiver is still neighbour for sender
-        List<SensorNode> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(sender);
+        List<SensorNode<?>> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(sender);
 
         if(getSimEntity().getCommunicationStatus(simTime()).equals(CommunicationStatus.SUCCESS)) {
             LOG.trace("Communication is successful");

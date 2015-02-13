@@ -8,13 +8,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.mathModel.communication.Message;
-import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
-import org.mdyk.netsim.logic.node.SensorNode;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -55,15 +52,15 @@ public class NetworkManagerTest {
         networkManager.actualizeNaighbours(node2);
         networkManager.actualizeNaighbours(node3);
 
-        List<SensorNode> sensorNodes =  networkManager.getNeighborhood(node2);
+        List<SensorNode<?>> sensorNodes =  networkManager.getNeighborhood(node2);
         TestCase.assertEquals(1 , sensorNodes.size());
         TestCase.assertEquals(1 , sensorNodes.get(0).getID());
 
-        List<SensorNode> sensorNodes2 =  networkManager.getNeighborhood(node1);
+        List<SensorNode<?>> sensorNodes2 =  networkManager.getNeighborhood(node1);
         TestCase.assertEquals(1 , sensorNodes2.size());
         TestCase.assertEquals(2 , sensorNodes2.get(0).getID());
 
-        List<SensorNode> sensorNodes3 =  networkManager.getNeighborhood(node3);
+        List<SensorNode<?>> sensorNodes3 =  networkManager.getNeighborhood(node3);
         TestCase.assertEquals(0 , sensorNodes3.size());
 
     }
@@ -72,7 +69,7 @@ public class NetworkManagerTest {
 
 
         protected TestSensorNode(int id, Position position) {
-            super(id, position, 90, 1, new LinkedList<AbilityType>());
+            super(id, position, 90, 1, new LinkedList<>());
         }
 
         @Override
@@ -102,10 +99,9 @@ public class NetworkManagerTest {
         public void move() {}
 
         @Override
-        public void startCommunication(Message message, ISensorModel... receivers) {
+        public void startCommunication(Message message, SensorNode... receivers) {
+            //To change body of implemented methods use File | Settings | File Templates.
         }
 
-        @Override
-        public CommunicationStatus getCommunicationStatus() {return null;}
     }
 }

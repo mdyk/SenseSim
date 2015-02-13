@@ -2,12 +2,12 @@ package org.mdyk.netsim.logic.communication.message;
 
 
 import org.mdyk.netsim.mathModel.communication.Message;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 public class SimpleMessage implements Message<Object> {
 
-    private ISensorModel<?> originSource;
-    private ISensorModel<?> originDest;
+    private SensorNode<?> originSource;
+    private SensorNode<?> originDest;
     private Object content;
     private int size;
 
@@ -24,7 +24,7 @@ public class SimpleMessage implements Message<Object> {
      * @param size
      *      size of the message in bytes.
      */
-    public SimpleMessage(ISensorModel<?> originSource, ISensorModel<?> originDest, Object content, int size) {
+    public SimpleMessage(SensorNode<?> originSource, SensorNode<?> originDest, Object content, int size) {
         this.originSource = originSource;
         this.originDest = originDest;
         this.content = content;
@@ -42,12 +42,12 @@ public class SimpleMessage implements Message<Object> {
     }
 
     @Override
-    public ISensorModel<?> getMessageSource() {
+    public SensorNode<?> getMessageSource() {
         return originSource;
     }
 
     @Override
-    public ISensorModel<?> getMessageDest() {
+    public SensorNode<?> getMessageDest() {
         return originDest;
     }
 }

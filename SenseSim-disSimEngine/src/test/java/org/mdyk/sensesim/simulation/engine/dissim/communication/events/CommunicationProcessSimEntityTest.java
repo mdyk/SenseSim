@@ -19,7 +19,7 @@ import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorNodeFactory;
@@ -88,15 +88,20 @@ public class CommunicationProcessSimEntityTest {
             return null;
         }
 
-        @Override
-        public ISensorModel<?> getMessageSource() {
+        public SensorNode<?> getMessageSource(){
+           return null;
+        }
+
+        /**
+         * Returns destination sensor of the message. It is the origin sensor, which should not change during communication
+         * process.
+         * @return
+         *      destination (sink) sensor
+         */
+        public SensorNode<?> getMessageDest(){
             return null;
         }
 
-        @Override
-        public ISensorModel<?> getMessageDest() {
-            return null;
-        }
     }
 
 

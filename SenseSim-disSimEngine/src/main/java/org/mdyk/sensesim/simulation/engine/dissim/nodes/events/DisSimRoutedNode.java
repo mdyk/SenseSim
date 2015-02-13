@@ -6,20 +6,18 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.message.SimpleMessage;
-import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
-import org.mdyk.netsim.logic.node.SensorNode;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -65,10 +63,15 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     protected void onMessage(double time, Message message) {
         // TODO execute program
         if(!message.getMessageDest().equals(this)) {
-            /* TODO wykonanie kolejnego skoku */
+            List<SensorNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(this);
+            List<SensorNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this, message.getMessageDest(),message,neighbors);
+
+            startCommunication(message,hopTargets.toArray(new SensorNode[hopTargets.size()]));
+
         }
     }
 
@@ -124,14 +127,8 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public void work() {
-        // TODO opracowanie podstawowych zadań węzła
-        List<SensorNode> neighbours = wirelessChannel.scanForNeighbors(this);
-
-        for (SensorNode node : neighbours) {
-            Message m = new SimpleMessage(this, node, "message", 5000);
-            startCommunication(m,node);
-        }
 
     }
 
@@ -152,17 +149,12 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
 
     @SafeVarargs
     @Override
-    public final void startCommunication(Message message, ISensorModel<GeoPosition>... receivers) {
+    public final void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
         // TODO powołanie obiektu symulacyjnego odpowiedzialnego za komunikację
-        for(ISensorModel<GeoPosition> receiver : receivers) {
+        for(SensorNode<GeoPosition> receiver : receivers) {
             communicationProcessFactory.createCommunicationProcess(commProcIdx++, this, receiver, SimModel.getInstance().simTime(), message);
         }
 
-    }
-
-    @Override
-    public CommunicationStatus getCommunicationStatus() {
-        return null;
     }
 
 }

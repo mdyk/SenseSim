@@ -1,7 +1,8 @@
 package org.mdyk.netsim.mathModel.communication;
 
 
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.logic.util.Position;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ import java.util.List;
  * Interface for sensors' routing algorithms
  */
 // TODO kryteria dla algorytmu trasowania
-public interface RoutingAlgorithm {
+public interface RoutingAlgorithm<P extends Position> {
 
     /**
      * Returns sensors which should receive message in the next hop
@@ -25,6 +26,6 @@ public interface RoutingAlgorithm {
      * @return
      *      list of sensors which are destination for the hop.
      */
-    public List<ISensorModel<?>> getNodesToHop(ISensorModel<?> sender, ISensorModel<?> destination, Message<?> message, List<ISensorModel<?>> knownSensors);
+    public List<SensorNode<P>> getNodesToHop(SensorNode<P> sender, SensorNode<P> destination, Message<?> message, List<SensorNode<P>> knownSensors);
 
 }

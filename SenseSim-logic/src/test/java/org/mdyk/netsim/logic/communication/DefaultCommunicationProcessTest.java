@@ -8,6 +8,7 @@ import org.mdyk.netsim.logic.communication.process.DefaultCommunicationProcess;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.LinkedList;
 
@@ -142,12 +143,12 @@ public class DefaultCommunicationProcessTest {
         }
 
         @Override
-        public ISensorModel<?> getMessageSource() {
+        public SensorNode<?> getMessageSource() {
             return null;
         }
 
         @Override
-        public ISensorModel<?> getMessageDest() {
+        public SensorNode<?> getMessageDest() {
             return null;
         }
     }

@@ -1,6 +1,6 @@
 package org.mdyk.netsim.logic.node.geo;
 
-import org.mdyk.netsim.logic.node.SensorNode;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 
 /**

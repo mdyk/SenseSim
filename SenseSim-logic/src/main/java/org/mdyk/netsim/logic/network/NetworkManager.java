@@ -6,7 +6,8 @@ import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
-import org.mdyk.netsim.logic.node.SensorNode;
+import org.mdyk.netsim.logic.util.Position;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.network.GraphEdge;
@@ -18,13 +19,13 @@ import javax.inject.Singleton;
 import java.util.*;
 
 @Singleton
-public class NetworkManager {
+public class NetworkManager<P extends Position> {
 
     private static final Logger LOG = Logger.getLogger(NetworkManager.class);
-    private List<SensorNode> sensorNodeList;
+    private List<SensorNode<P>> sensorNodeList;
 
     // Map is actualized only when neighborhood changes
-    private Map<Integer , List<SensorNode>> neighborhood;
+    private Map<Integer , List<SensorNode<?>>> neighborhood;
 
     @Inject
     private NetworkGraph networkGraph;
@@ -35,7 +36,7 @@ public class NetworkManager {
         EventBusHolder.getEventBus().register(this);
     }
 
-    public void addNode(SensorNode sensorNode) {
+    public void addNode(SensorNode<P> sensorNode) {
         sensorNodeList.add(sensorNode);
         networkGraph.addVertex(sensorNode);
         neighborhood.put(sensorNode.getID(), new LinkedList<>());
@@ -139,7 +140,7 @@ public class NetworkManager {
         LOG.debug("<< actualizeNaighbours");
     }
 
-    public List<SensorNode> getNeighborhood(SensorNode sensorNode) {
+    public List<SensorNode<?>> getNeighborhood(SensorNode<?> sensorNode) {
         return Optional.ofNullable(neighborhood.get(sensorNode.getID())).orElse(new ArrayList<>());
     }
 }

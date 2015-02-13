@@ -1,6 +1,6 @@
 package org.mdyk.netsim.logic.simEngine;
 
-import org.mdyk.netsim.logic.node.SensorNode;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.scenario.Scenario;
 
 /**

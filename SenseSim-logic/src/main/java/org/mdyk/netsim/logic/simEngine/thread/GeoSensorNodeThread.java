@@ -18,6 +18,7 @@ import org.mdyk.netsim.mathModel.ability.AbilityType;
 import javax.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.List;
 
@@ -121,13 +122,8 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
     }
 
     @Override
-    public void startCommunication(Message message, ISensorModel<GeoPosition>... receivers) {
+    public void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
         //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
-    public CommunicationStatus getCommunicationStatus() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
