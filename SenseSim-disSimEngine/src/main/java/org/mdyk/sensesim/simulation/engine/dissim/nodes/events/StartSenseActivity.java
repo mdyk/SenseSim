@@ -14,7 +14,7 @@ public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Ob
 
     private Environment environment;
 
-    private DisSimRoutedNode sensorNode;
+    private DisSimProgrammableNode sensorNode;
 
     public StartSenseActivity(DisSimNodeEntity disSimNodeEntity) throws SimControlException {
         super(disSimNodeEntity);

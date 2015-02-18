@@ -1,6 +1,6 @@
 package org.mdyk.netsim.mathModel.sensor;
 
-import org.mdyk.netsim.mathModel.communication.Message;
+import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.util.Position;
 
 /**

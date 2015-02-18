@@ -11,7 +11,7 @@ public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Obje
     private static final Logger LOG = Logger.getLogger(EndSenseActivity.class);
 
     private DisSimNodeEntity sensorEntity;
-    private DisSimRoutedNode sensorNode;
+    private DisSimProgrammableNode sensorNode;
 
     public EndSenseActivity(double delay, DisSimNodeEntity sensorEntity) throws SimControlException {
         super(sensorEntity, delay);

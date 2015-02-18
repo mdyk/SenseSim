@@ -1,6 +1,5 @@
 package org.mdyk.netsim.logic.communication;
 
-import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 

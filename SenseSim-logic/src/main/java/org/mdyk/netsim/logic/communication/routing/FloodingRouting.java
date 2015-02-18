@@ -1,9 +1,8 @@
 package org.mdyk.netsim.logic.communication.routing;
 
+import org.mdyk.netsim.logic.communication.Message;
+import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.communication.Message;
-import org.mdyk.netsim.mathModel.communication.RoutingAlgorithm;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.List;
@@ -15,7 +14,7 @@ import java.util.List;
 public class FloodingRouting implements RoutingAlgorithm<GeoPosition> {
 
     @Override
-    public List<SensorNode<GeoPosition>> getNodesToHop(SensorNode<GeoPosition> sender, SensorNode<GeoPosition> destination, Message<?> message, List<SensorNode<GeoPosition>> knownSensors) {
+    public List<SensorNode<GeoPosition>> getNodesToHop(int sender, int destination, Message<?> message, List<SensorNode<GeoPosition>> knownSensors) {
         return knownSensors;
     }
 

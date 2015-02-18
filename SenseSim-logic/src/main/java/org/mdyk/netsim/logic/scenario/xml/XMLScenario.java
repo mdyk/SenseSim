@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.node.SensorNodeFactory;
-import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
+import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
 import org.mdyk.netsim.logic.simEngine.thread.GeoSensorNodeThread;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
@@ -79,7 +79,7 @@ public class XMLScenario implements Scenario {
 
                     List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
 
-                    RoutedGeoSensorNode node = sensorNodeFactory.createGeoSensorNode(Integer.parseInt(nodeType.getId()),
+                    ProgrammableNode node = sensorNodeFactory.createGeoSensorNode(Integer.parseInt(nodeType.getId()),
                             position, Integer.parseInt(nodeType.getRadioRange()),
                             Double.parseDouble(nodeType.getSpeed()), abilities);
                     node.setRoute(route);

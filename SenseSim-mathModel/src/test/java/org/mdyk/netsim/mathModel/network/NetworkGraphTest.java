@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.mdyk.netsim.mathModel.communication.Message;
+import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 

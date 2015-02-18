@@ -1,6 +1,4 @@
-package org.mdyk.netsim.mathModel.communication;
-
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
+package org.mdyk.netsim.logic.communication;
 
 /**
  * Represents message
@@ -28,7 +26,7 @@ public interface Message<M> {
      * @return
      *      source sensor
      */
-    public SensorNode<?> getMessageSource();
+    public int getMessageSource();
 
     /**
      * Returns destination sensor of the message. It is the origin sensor, which should not change during communication
@@ -36,6 +34,6 @@ public interface Message<M> {
      * @return
      *      destination (sink) sensor
      */
-    public SensorNode<?> getMessageDest();
+    public int getMessageDest();
 
 }

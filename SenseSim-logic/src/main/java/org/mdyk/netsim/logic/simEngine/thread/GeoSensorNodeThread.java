@@ -1,8 +1,7 @@
 package org.mdyk.netsim.logic.simEngine.thread;
 
 import org.apache.log4j.Logger;
-import org.mdyk.netsim.mathModel.communication.Message;
-import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
+import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
@@ -11,13 +10,13 @@ import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
-import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
+import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 
 import javax.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.List;
@@ -25,7 +24,7 @@ import java.util.List;
 /**
  * Simple implementation for nodes with geo localization
  */
-public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMovementAlgorithm> implements RoutedGeoSensorNode {
+public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMovementAlgorithm> implements ProgrammableNode {
 
     private static final Logger LOG = Logger.getLogger(GeoSensorNodeThread.class);
     protected List<GeoPosition> route;
@@ -64,8 +63,8 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
     }
 
     @Override
-    protected void onMessage(double time, Message message) {
-        // unused
+    protected void onMessage(double time, org.mdyk.netsim.logic.communication.Message message) {
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -123,8 +122,9 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
 
     @Override
     public void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        // empty
     }
+
 
     @Override
     public List<GeoPosition> getRoute() {
@@ -136,4 +136,8 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
         this.route = route;
     }
 
+    @Override
+    public SensorAPI<GeoPosition> getAPI() {
+        return null;
+    }
 }

@@ -22,7 +22,7 @@ public class SensorNodeFactoryImpl implements SensorNodeFactory {
     private WirelessChannel wirelessChannel;
 
     @Override
-    public RoutedGeoSensorNode createGeoSensorNode(int id, GeoPosition position, int radioRange, double velocity, List<AbilityType> abilities) {
+    public ProgrammableNode createGeoSensorNode(int id, GeoPosition position, int radioRange, double velocity, List<AbilityType> abilities) {
         return new GeoSensorNodeThread(id, position, radioRange, velocity, abilities, environment, wirelessChannel);
     }
 

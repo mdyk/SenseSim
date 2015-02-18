@@ -2,13 +2,11 @@ package org.mdyk.netsim.logic.communication;
 
 import junit.framework.TestCase;
 import org.junit.Test;
-import org.mdyk.netsim.mathModel.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.communication.process.DefaultCommunicationProcess;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.LinkedList;
 
@@ -143,13 +141,13 @@ public class DefaultCommunicationProcessTest {
         }
 
         @Override
-        public SensorNode<?> getMessageSource() {
-            return null;
+        public int getMessageSource() {
+            return -1;
         }
 
         @Override
-        public SensorNode<?> getMessageDest() {
-            return null;
+        public int getMessageDest() {
+            return -1;
         }
     }
 

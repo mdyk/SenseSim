@@ -52,9 +52,6 @@ public class SimplePhenomenon implements IPhenomenonModel<GeoPosition> {
 
     @Override
     public boolean hasAbility(AbilityType ability) {
-        if(ability.name().equals(abilityType.name())){
-            return true;
-        }
-        return false;
+        return ability.name().equals(abilityType.name());
     }
 }

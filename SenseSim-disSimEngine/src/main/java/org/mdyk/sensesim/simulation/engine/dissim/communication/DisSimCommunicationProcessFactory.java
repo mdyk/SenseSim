@@ -3,7 +3,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.communication;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
-import org.mdyk.netsim.mathModel.communication.Message;
+import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;

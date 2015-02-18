@@ -2,8 +2,8 @@ package org.mdyk.netsim.mathModel.sensor;
 
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.communication.Message;
-import org.mdyk.netsim.mathModel.communication.RoutingAlgorithm;
+import org.mdyk.netsim.logic.communication.Message;
+import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 import java.util.List;

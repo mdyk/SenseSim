@@ -1,20 +1,19 @@
-package org.mdyk.sensesim.simulation.engine.dissim.communication.events;
+package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
+
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-import dissim.simspace.SimControlException;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
-import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.SensorNodeFactory;
+import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
@@ -22,12 +21,12 @@ import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorNodeFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimProgrammableNode;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class CommunicationProcessSimEntityTest {
+public class DisSimSensorAPITest {
 
     private Injector injector;
 
@@ -47,61 +46,29 @@ public class CommunicationProcessSimEntityTest {
         });
     }
 
-
     @Test
-    @SuppressWarnings("unchecked")
-    public void testCommunication() throws SimControlException, InterruptedException {
-
+    public void api_moveTest() throws InterruptedException {
         SimEngine<DisSimProgrammableNode> simEngine = injector.getInstance(SimEngine.class);
         SensorNodeFactory sensorNodeFactory = injector.getInstance(SensorNodeFactory.class);
-        CommunicationProcessFactory processFactory = injector.getInstance(CommunicationProcessFactory.class);
 
-        ProgrammableNode sender = sensorNodeFactory.createGeoSensorNode(1, new GeoPosition(52.230963,21.004534), 10, 0, new ArrayList<>());
-        ProgrammableNode receiver = sensorNodeFactory.createGeoSensorNode(2, new GeoPosition(52.230963,21.004534), 10, 0, new ArrayList<>());
-
-        Message message = new TestMessage() {
-            @Override
-            public int getSize() {
-                return 5000;
-            }
-        };
-
-        simEngine.addNode((DisSimProgrammableNode) sender);
-        simEngine.addNode((DisSimProgrammableNode) receiver);
+        ProgrammableNode sensor = sensorNodeFactory.createGeoSensorNode(1, new GeoPosition(52.230963,21.004534), 10, 10, new ArrayList<>());
+        DisSimProgrammableNode disSimNode = (DisSimProgrammableNode) sensor;
+        simEngine.addNode(disSimNode);
         simEngine.runScenario();
+        Thread.sleep(1000);
 
-        CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(0, sender, receiver, 2, message);
+        SensorAPI<GeoPosition> api = disSimNode.getAPI();
 
-        Thread.sleep(5000);
+        List<GeoPosition> route = new ArrayList<>();
+        route.add(new GeoPosition(52.230963,21.004534));
+        route.add(new GeoPosition(52.231594, 21.003547));
+        api.api_setRoute(route);
+        api.api_startMove();
 
-        TestCase.assertEquals(CommunicationStatus.SUCCESS , communicationSimEntity.getCommunicationStatus(28.0));
-
+        Thread.sleep(1000);
         simEngine.stopScenario();
+        TestCase.assertTrue(api.api_getPosition().getLatitude() != 52.231594 || api.api_getPosition().getLongitude() != 21.003547);
 
     }
-
-    private static abstract class TestMessage implements Message<Object> {
-
-        @Override
-        public Object getMessageContent() {
-            return null;
-        }
-
-        public int getMessageSource(){
-           return -1;
-        }
-
-        /**
-         * Returns destination sensor of the message. It is the origin sensor, which should not change during communication
-         * process.
-         * @return
-         *      destination (sink) sensor
-         */
-        public int getMessageDest(){
-            return -1;
-        }
-
-    }
-
 
 }

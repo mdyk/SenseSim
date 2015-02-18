@@ -15,7 +15,7 @@ import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimRoutedNode;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimProgrammableNode;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.events.PhenomenonSimEntity;
 
 import javax.inject.Inject;
@@ -30,7 +30,7 @@ import java.util.List;
  * Simulation engine based on DisSim framework
  */
 @Singleton
-public class DisSimEngine implements SimEngine<DisSimRoutedNode>, Runnable {
+public class DisSimEngine implements SimEngine<DisSimProgrammableNode>, Runnable {
 
     private static final Logger LOG = Logger.getLogger(DisSimEngine.class);
 
@@ -45,7 +45,7 @@ public class DisSimEngine implements SimEngine<DisSimRoutedNode>, Runnable {
 
     private File scenarioXML;
 
-    private List<DisSimRoutedNode> sensorsList = new ArrayList<>();
+    private List<DisSimProgrammableNode> sensorsList = new ArrayList<>();
 
     private List<PhenomenonSimEntity> phenomenaList = new ArrayList<>();
 
@@ -91,14 +91,14 @@ public class DisSimEngine implements SimEngine<DisSimRoutedNode>, Runnable {
     }
 
     @Override
-    public void addNode(DisSimRoutedNode sensorNode) {
+    public void addNode(DisSimProgrammableNode sensorNode) {
         networkManager.addNode(sensorNode);
+        sensorsList.add(sensorNode);
     }
 
     private void addNodes(List<ISensorModel> nodesList) {
         for (ISensorModel sensorModel : nodesList) {
-            addNode((DisSimRoutedNode) sensorModel);
-            sensorsList.add((DisSimRoutedNode) sensorModel);
+            addNode((DisSimProgrammableNode) sensorModel);
         }
     }
 
@@ -134,7 +134,7 @@ public class DisSimEngine implements SimEngine<DisSimRoutedNode>, Runnable {
 
     @Override
     public void run() {
-        for(DisSimRoutedNode wrapper : sensorsList) {
+        for(DisSimProgrammableNode wrapper : sensorsList) {
             wrapper.startNode();
         }
         try {

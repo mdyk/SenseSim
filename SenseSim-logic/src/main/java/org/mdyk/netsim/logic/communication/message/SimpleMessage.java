@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.communication.message;
 
 
-import org.mdyk.netsim.mathModel.communication.Message;
+import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 public class SimpleMessage implements Message<Object> {
@@ -42,12 +42,12 @@ public class SimpleMessage implements Message<Object> {
     }
 
     @Override
-    public SensorNode<?> getMessageSource() {
-        return originSource;
+    public int getMessageSource() {
+        return originSource.getID();
     }
 
     @Override
-    public SensorNode<?> getMessageDest() {
-        return originDest;
+    public int getMessageDest() {
+        return originDest.getID();
     }
 }

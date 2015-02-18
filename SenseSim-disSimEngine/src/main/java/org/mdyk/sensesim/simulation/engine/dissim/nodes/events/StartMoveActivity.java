@@ -35,6 +35,6 @@ public class StartMoveActivity extends BasicSimStateChange<DisSimNodeEntity, Obj
 
     @Override
     protected void onInterruption() throws SimControlException {
-        // EMPTY
+        LOG.trace("<> onInterruption()");
     }
 }

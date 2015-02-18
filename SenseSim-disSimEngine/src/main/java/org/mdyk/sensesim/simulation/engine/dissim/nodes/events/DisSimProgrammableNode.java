@@ -4,16 +4,16 @@ import com.google.inject.assistedinject.Assisted;
 import dissim.simspace.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
-import org.mdyk.netsim.mathModel.communication.Message;
-import org.mdyk.netsim.logic.communication.message.SimpleMessage;
+import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
+import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
-import org.mdyk.netsim.logic.node.geo.RoutedGeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
@@ -23,10 +23,10 @@ import javax.inject.Inject;
 import java.util.List;
 
 
-public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements RoutedGeoSensorNode {
+public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> implements ProgrammableNode {
 
 
-    private static final Logger LOG = Logger.getLogger(DisSimRoutedNode.class);
+    private static final Logger LOG = Logger.getLogger(DisSimProgrammableNode.class);
 
     protected List<GeoPosition> route;
     protected GeoMovementAlgorithm currentMovementAlg;
@@ -38,16 +38,17 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
     private int commProcIdx = 0;
 
     @Inject
-    public DisSimRoutedNode(@Assisted("id") int id, @Assisted GeoPosition position,
-                            @Assisted("radioRange") int radioRange,
-                            @Assisted double velocity, @Assisted List<AbilityType> abilities,
-                            Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
+    public DisSimProgrammableNode(@Assisted("id") int id, @Assisted GeoPosition position,
+                                  @Assisted("radioRange") int radioRange,
+                                  @Assisted double velocity, @Assisted List<AbilityType> abilities,
+                                  Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
         super(id, position, radioRange, velocity, abilities);
 
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
         this.communicationProcessFactory = communicationProcessFactory;
+        this.disSimNodeEntity = new DisSimNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
     }
 
     @Override
@@ -66,9 +67,9 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
     @SuppressWarnings("unchecked")
     protected void onMessage(double time, Message message) {
         // TODO execute program
-        if(!message.getMessageDest().equals(this)) {
+        if(message.getMessageDest() != id) {
             List<SensorNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(this);
-            List<SensorNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this, message.getMessageDest(),message,neighbors);
+            List<SensorNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
 
             startCommunication(message,hopTargets.toArray(new SensorNode[hopTargets.size()]));
 
@@ -108,7 +109,7 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
 
     @Override
     public void startNode() {
-        disSimNodeEntity = new DisSimNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
+        this.disSimNodeEntity.startNode();
     }
 
     @Override
@@ -135,7 +136,7 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
     @Override
     public void move() {
         LOG.debug(">> move node: " + getID());
-
+        if(route == null || route.size() == 0) return;
         // TODO założenie że pędkość podawana jest w kilomwtrach. Trzeba to przenieść do konfiguracji.
         double velocityMetersPerSec = this.velocity / 3.6;
         LOG.trace("Velocity in km/h: " + velocity + " velocity in m/sec: " +velocityMetersPerSec);
@@ -157,4 +158,8 @@ public class DisSimRoutedNode extends DefaultSensorModel<GeoPosition> implements
 
     }
 
+    @Override
+    public SensorAPI<GeoPosition> getAPI() {
+        return disSimNodeEntity;
+    }
 }
