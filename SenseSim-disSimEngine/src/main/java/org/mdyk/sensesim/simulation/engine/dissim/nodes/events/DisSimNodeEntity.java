@@ -22,7 +22,7 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
 
     private static final Logger LOG = Logger.getLogger(DisSimNodeEntity.class);
 
-    protected DisSimProgrammableNode routedNode;
+    protected DisSimProgrammableNode programmableNode;
 
     protected StartMoveActivity startMoveActivity;
     protected EndMoveActivity endMoveActivity;
@@ -31,7 +31,7 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
 
     public DisSimNodeEntity(BasicSimContext context, DisSimProgrammableNode routedNode) {
         super(context);
-        this.routedNode = routedNode;
+        this.programmableNode = routedNode;
     }
 
     public void startNode() {
@@ -43,8 +43,8 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
         }
     }
 
-    public DisSimProgrammableNode getRoutedNode() {
-        return routedNode;
+    public DisSimProgrammableNode getProgrammableNode() {
+        return programmableNode;
     }
 
     @Override
@@ -59,13 +59,14 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
 
     @Override
     public void api_setRoute(List<GeoPosition> route) {
-        this.routedNode.setRoute(route);
+        this.programmableNode.setRoute(route);
     }
 
     @Override
     public void api_startMove() {
         LOG.trace(">> api_startMove()");
         try {
+            programmableNode.startMoveing();
             startMoveActivity = new StartMoveActivity(this);
         } catch (SimControlException e) {
             LOG.error(e.getMessage() , e);
@@ -88,20 +89,20 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
     @Override
     @SuppressWarnings("unchecked")
     public void api_sendMessage(int destinationID, Message<?> message) {
-        List<SensorNode<GeoPosition>> nodesToHop = routedNode.getRoutingAlgorithm().getNodesToHop(routedNode.getID(), destinationID , message , api_scanForNeighbors());
-        routedNode.startCommunication(message, nodesToHop.toArray(new SensorNode[nodesToHop.size()]));
+        List<SensorNode<GeoPosition>> nodesToHop = programmableNode.getRoutingAlgorithm().getNodesToHop(programmableNode.getID(), destinationID , message , api_scanForNeighbors());
+        programmableNode.startCommunication(message, nodesToHop.toArray(new SensorNode[nodesToHop.size()]));
     }
 
     @Override
     public Map<AbilityType, List<PhenomenonValue>> api_getObservations() {
         LOG.trace(">< api_getObservations()");
-        return routedNode.getObservations();
+        return programmableNode.getObservations();
     }
 
     @Override
     public void api_setRoutingAlgorithm(RoutingAlgorithm<?> routingAlgorithm) {
         LOG.trace(">> api_setRoutingAlgorithm()");
-        this.routedNode.setRoutingAlgorithm(routingAlgorithm);
+        this.programmableNode.setRoutingAlgorithm(routingAlgorithm);
         LOG.trace("<< api_setRoutingAlgorithm()");
     }
 
@@ -109,11 +110,11 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
     @SuppressWarnings("unchecked")
     public List<SensorNode<GeoPosition>> api_scanForNeighbors() {
         LOG.trace(">< api_scanForNeighbors()");
-        return routedNode.wirelessChannel.scanForNeighbors(routedNode);
+        return programmableNode.wirelessChannel.scanForNeighbors(programmableNode);
     }
 
     @Override
     public GeoPosition api_getPosition() {
-        return routedNode.getPosition();
+        return programmableNode.getPosition();
     }
 }

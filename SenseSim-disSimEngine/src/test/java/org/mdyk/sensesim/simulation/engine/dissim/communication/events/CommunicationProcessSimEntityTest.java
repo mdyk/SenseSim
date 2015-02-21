@@ -83,6 +83,11 @@ public class CommunicationProcessSimEntityTest {
     private static abstract class TestMessage implements Message<Object> {
 
         @Override
+        public int getID() {
+            return 1;
+        }
+
+        @Override
         public Object getMessageContent() {
             return null;
         }

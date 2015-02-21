@@ -10,6 +10,7 @@ public class SimpleMessage implements Message<Object> {
     private SensorNode<?> originDest;
     private Object content;
     private int size;
+    private int id;
 
     /**
      *
@@ -24,11 +25,17 @@ public class SimpleMessage implements Message<Object> {
      * @param size
      *      size of the message in bytes.
      */
-    public SimpleMessage(SensorNode<?> originSource, SensorNode<?> originDest, Object content, int size) {
+    public SimpleMessage(int id, SensorNode<?> originSource, SensorNode<?> originDest, Object content, int size) {
+        this.id = id;
         this.originSource = originSource;
         this.originDest = originDest;
         this.content = content;
         this.size = size;
+    }
+
+    @Override
+    public int getID() {
+        return this.id;
     }
 
     @Override

@@ -7,6 +7,14 @@ package org.mdyk.netsim.logic.communication;
 public interface Message<M> {
 
     /**
+     * Returns ID number of the message. Should be unique.
+     * Implementation may not guarantee that.
+     * @return
+     *      ID of the message.
+     */
+    public int getID();
+
+    /**
      * Return content of the message.
      * @return
      *      message content.

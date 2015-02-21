@@ -19,8 +19,8 @@ public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Ob
     public StartSenseActivity(DisSimNodeEntity disSimNodeEntity) throws SimControlException {
         super(disSimNodeEntity);
         this.disSimNodeEntity = disSimNodeEntity;
-        this.environment = disSimNodeEntity.routedNode.environment;
-        this.sensorNode = disSimNodeEntity.routedNode;
+        this.environment = disSimNodeEntity.programmableNode.environment;
+        this.sensorNode = disSimNodeEntity.programmableNode;
     }
 
     @Override

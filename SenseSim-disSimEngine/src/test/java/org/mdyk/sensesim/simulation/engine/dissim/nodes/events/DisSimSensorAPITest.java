@@ -5,6 +5,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
+import dissim.simspace.SimModel;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -66,8 +67,26 @@ public class DisSimSensorAPITest {
         api.api_startMove();
 
         Thread.sleep(1000);
-        simEngine.stopScenario();
         TestCase.assertTrue(api.api_getPosition().getLatitude() != 52.231594 || api.api_getPosition().getLongitude() != 21.003547);
+        api.api_stopMove();
+        GeoPosition posAfterStop = api.api_getPosition();
+        Thread.sleep(5000);
+
+        GeoPosition posAfterStop2 = api.api_getPosition();
+        TestCase.assertEquals(posAfterStop , posAfterStop2);
+
+        api.api_startMove();
+
+        Thread.sleep(5000);
+
+        GeoPosition positionAfterStart = api.api_getPosition();
+
+        TestCase.assertTrue(positionAfterStart.getLatitude() != posAfterStop2.getLatitude() && positionAfterStart.getLongitude() != posAfterStop2.getLongitude());
+
+        simEngine.stopScenario();
+    }
+
+    public void api_sendMessageTest() {
 
     }
 

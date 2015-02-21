@@ -37,6 +37,9 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
 
     private int commProcIdx = 0;
 
+    private boolean isMoveing;
+
+
     @Inject
     public DisSimProgrammableNode(@Assisted("id") int id, @Assisted GeoPosition position,
                                   @Assisted("radioRange") int radioRange,
@@ -48,6 +51,7 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
         this.communicationProcessFactory = communicationProcessFactory;
+        this.isMoveing = true;
         this.disSimNodeEntity = new DisSimNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
     }
 
@@ -136,7 +140,7 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
     @Override
     public void move() {
         LOG.debug(">> move node: " + getID());
-        if(route == null || route.size() == 0) return;
+        if(!isMoveing || route == null || route.size() == 0) return;
         // TODO założenie że pędkość podawana jest w kilomwtrach. Trzeba to przenieść do konfiguracji.
         double velocityMetersPerSec = this.velocity / 3.6;
         LOG.trace("Velocity in km/h: " + velocity + " velocity in m/sec: " +velocityMetersPerSec);
@@ -162,4 +166,14 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
     public SensorAPI<GeoPosition> getAPI() {
         return disSimNodeEntity;
     }
+
+    // TODO metody do usunięcia w sytuacji kiedy interrupt będzie działać poprawnie
+    public void stopMoveing() {
+        this.isMoveing = false;
+    }
+
+    public void startMoveing() {
+        this.isMoveing = true;
+    }
+
 }

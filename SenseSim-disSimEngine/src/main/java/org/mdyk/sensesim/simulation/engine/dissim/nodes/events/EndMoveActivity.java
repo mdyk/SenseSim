@@ -20,7 +20,7 @@ public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, Start
     protected void transition() throws SimControlException {
         LOG.debug(">> EndMoveActivity.transition");
         disSimNodeEntity.startMoveActivity = new StartMoveActivity(disSimNodeEntity);
-        disSimNodeEntity.getRoutedNode().move();
+        disSimNodeEntity.getProgrammableNode().move();
         LOG.debug("<< EndMoveActivity.transition");
     }
 
@@ -31,6 +31,6 @@ public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, Start
 
     @Override
     protected void onInterruption() throws SimControlException {
-        /* EMPTY */
+        getSimEntity().getProgrammableNode().stopMoveing();
     }
 }

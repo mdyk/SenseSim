@@ -16,7 +16,7 @@ public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Obje
     public EndSenseActivity(double delay, DisSimNodeEntity sensorEntity) throws SimControlException {
         super(sensorEntity, delay);
         this.sensorEntity = sensorEntity;
-        this.sensorNode = this.sensorEntity.routedNode;
+        this.sensorNode = this.sensorEntity.programmableNode;
     }
 
     @Override
