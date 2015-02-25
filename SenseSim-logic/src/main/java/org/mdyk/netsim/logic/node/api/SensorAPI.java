@@ -9,6 +9,7 @@ import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  * Interface for sensor's API
@@ -48,7 +49,6 @@ public interface SensorAPI<P extends Position> {
      */
     public Map<AbilityType, List<PhenomenonValue>> api_getObservations();
 
-
     /**
      * Sets routing algorithm for sensor
      * @param routingAlgorithm
@@ -63,6 +63,16 @@ public interface SensorAPI<P extends Position> {
      */
     public List<SensorNode<P>> api_scanForNeighbors();
 
+    /**
+     * Returns node's current position.
+     * @return
+     *      node's position.
+     */
     public P api_getPosition();
+
+    /**
+     * Allows to add handler which should be fired when sensor receives a message.
+     */
+    public void api_setOnMessageHandler(Function<Message<?> , Object> handler);
 
 }

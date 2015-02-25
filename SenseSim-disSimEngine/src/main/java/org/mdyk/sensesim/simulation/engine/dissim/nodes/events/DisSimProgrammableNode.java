@@ -21,6 +21,7 @@ import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
 
 import javax.inject.Inject;
 import java.util.List;
+import java.util.function.Function;
 
 
 public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> implements ProgrammableNode {
@@ -34,6 +35,8 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
     protected WirelessChannel wirelessChannel;
     protected DisSimNodeEntity disSimNodeEntity;
     protected CommunicationProcessFactory communicationProcessFactory;
+
+    protected Function<Message<?>, Object> onMessageHandler;
 
     private int commProcIdx = 0;
 
@@ -78,6 +81,11 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
             startCommunication(message,hopTargets.toArray(new SensorNode[hopTargets.size()]));
 
         }
+
+        if(onMessageHandler != null) {
+            onMessageHandler.apply(message);
+        }
+
     }
 
     @Override
@@ -155,7 +163,6 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
     @SafeVarargs
     @Override
     public final void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
-        // TODO powołanie obiektu symulacyjnego odpowiedzialnego za komunikację
         for(SensorNode<GeoPosition> receiver : receivers) {
             communicationProcessFactory.createCommunicationProcess(commProcIdx++, this, receiver, SimModel.getInstance().simTime(), message);
         }

@@ -87,6 +87,9 @@ public class DisSimEngine implements SimEngine<DisSimProgrammableNode>, Runnable
     @Override
     public void stopScenario() {
         networkManager.stopNodes();
+
+        SimModel.getInstance().getCommonSimContext().clearContext();
+        SimModel.getInstance().getCommonSimContext().stopContext();
         SimModel.getInstance().stopSimulation();
     }
 

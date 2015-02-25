@@ -25,7 +25,7 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
 
     @Override
     protected void transition() throws SimControlException {
-        LOG.trace(">> EndCommunicationActivity.transition()");
+        LOG.trace(">> EndCommunicationActivity.transition() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
         // Checking if receiver is still neighbour for sender
         List<SensorNode<?>> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(sender);
 

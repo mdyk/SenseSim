@@ -16,6 +16,7 @@ import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 
 public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPosition> {
@@ -28,6 +29,8 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
     protected EndMoveActivity endMoveActivity;
     protected StartSenseActivity startSenseActivity;
     protected EndSenseActivity endSenseActivity;
+
+
 
     public DisSimNodeEntity(BasicSimContext context, DisSimProgrammableNode routedNode) {
         super(context);
@@ -116,5 +119,10 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
     @Override
     public GeoPosition api_getPosition() {
         return programmableNode.getPosition();
+    }
+
+    @Override
+    public void api_setOnMessageHandler(Function<Message<?>, Object> handler) {
+        this.programmableNode.onMessageHandler = handler;
     }
 }

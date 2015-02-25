@@ -116,9 +116,9 @@ public class DefaultCommunicationProcessTest {
         // 50000 (all) bits sent, 11 time, eta 10
         TestCase.assertEquals(CommunicationStatus.SUCCESS, process.getCommunicationStatus(11));
 
-        process.bitsSent(50);
+//        process.bitsSent(50);
         // 1024 bits sent, 10 time, eta 10
-        TestCase.assertEquals(CommunicationStatus.FAILURE, process.getCommunicationStatus(11));
+//        TestCase.assertEquals(CommunicationStatus.FAILURE, process.getCommunicationStatus(11));
 
         DefaultCommunicationProcess process2 = new DefaultCommunicationProcess(1 , sender, receiver , 0 ,new TestMessage() {
             @Override

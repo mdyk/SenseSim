@@ -9,7 +9,7 @@ public class StartCommunicationActivity extends BasicSimStateChange<Communicatio
     private static final Logger LOG = Logger.getLogger(StartCommunicationActivity.class);
 
     public StartCommunicationActivity(CommunicationProcessSimEntity entity) throws SimControlException {
-        super(entity);
+        super(entity, 0.0);
     }
 
     @Override

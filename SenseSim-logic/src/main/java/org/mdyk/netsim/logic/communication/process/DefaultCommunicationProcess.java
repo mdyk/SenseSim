@@ -39,24 +39,31 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
 
     @Override
     public CommunicationStatus getCommunicationStatus(double time) {
-
+        // Possible only by external interruption
         if(communicationStatus == CommunicationStatus.FAILURE){
             return communicationStatus;
         }
 
-        if(time <= eta) {
-            if(alreadySent >= messageBits) {
-                communicationStatus = CommunicationStatus.SUCCESS;
-            } else if (alreadySent < messageBits) {
-                communicationStatus = CommunicationStatus.DURING_COMM;
-            }
-        } else {
-            if(alreadySent >= messageBits) {
-                communicationStatus = CommunicationStatus.SUCCESS;
-            } else {
-                communicationStatus = CommunicationStatus.FAILURE;
-            }
+        if(alreadySent < messageBits) {
+            communicationStatus = CommunicationStatus.DURING_COMM;
         }
+        else {
+            communicationStatus = CommunicationStatus.SUCCESS;
+        }
+
+//        if(time <= eta) {
+//            if(alreadySent >= messageBits) {
+//                communicationStatus = CommunicationStatus.SUCCESS;
+//            } else if (alreadySent < messageBits) {
+//                communicationStatus = CommunicationStatus.DURING_COMM;
+//            }
+//        } else {
+//            if(alreadySent >= messageBits) {
+//                communicationStatus = CommunicationStatus.SUCCESS;
+//            } else {
+//                communicationStatus = CommunicationStatus.FAILURE;
+//            }
+//        }
 
         return communicationStatus;
     }
