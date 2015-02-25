@@ -1,7 +1,7 @@
 package org.mdyk.sensesim.simulation.engine.dissim.communication.events;
 
-import dissim.simspace.BasicSimStateChange;
-import dissim.simspace.SimControlException;
+import dissim.simspace.core.BasicSimStateChange;
+import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 
 public class StartCommunicationActivity extends BasicSimStateChange<CommunicationProcessSimEntity, Object> {

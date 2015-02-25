@@ -1,10 +1,8 @@
 package org.mdyk.sensesim.simulation.engine.dissim.communication.events;
 
-import dissim.broker.IEvent;
-import dissim.broker.IEventPublisher;
-import dissim.simspace.BasicSimEntity;
-import dissim.simspace.SimControlException;
-import dissim.simspace.SimModel;
+import dissim.simspace.core.BasicSimEntity;
+import dissim.simspace.core.SimControlException;
+import dissim.simspace.core.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
@@ -37,15 +35,6 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
         }
     }
 
-    @Override
-    public void reflect(IEvent event, IEventPublisher publisher) {
-        // Empty
-    }
-
-    @Override
-    public void reflect(IEvent event) {
-        // Empty
-    }
 
     @Override
     public int getID() {

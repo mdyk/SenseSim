@@ -4,7 +4,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
-import dissim.simspace.SimControlException;
+import dissim.simspace.core.SimControlException;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,7 +1,7 @@
 package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
 import com.google.inject.assistedinject.Assisted;
-import dissim.simspace.SimModel;
+import dissim.simspace.core.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.logic.communication.Message;

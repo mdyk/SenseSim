@@ -1,8 +1,7 @@
 package org.mdyk.sensesim.simulation.engine.dissim.communication.events;
 
-
-import dissim.simspace.BasicSimStateChange;
-import dissim.simspace.SimControlException;
+import dissim.simspace.core.BasicSimStateChange;
+import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
@@ -47,13 +46,4 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
         LOG.trace("<< EndCommunicationActivity.transition()");
     }
 
-    @Override
-    protected void onTermination() throws SimControlException {
-        // Unused
-    }
-
-    @Override
-    protected void onInterruption() throws SimControlException {
-        // Unused
-    }
 }

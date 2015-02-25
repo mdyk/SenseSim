@@ -1,10 +1,8 @@
 package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
-import dissim.broker.IEvent;
-import dissim.broker.IEventPublisher;
-import dissim.simspace.BasicSimContext;
-import dissim.simspace.BasicSimEntity;
-import dissim.simspace.SimControlException;
+import dissim.simspace.core.BasicSimContext;
+import dissim.simspace.core.BasicSimEntity;
+import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
@@ -42,23 +40,15 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
             this.startMoveActivity = new StartMoveActivity(this);
             this.startSenseActivity = new StartSenseActivity(this);
         } catch (SimControlException e) {
-            LOG.error(e.getMessage(), e);
+           LOG.error(e.getMessage(),e);
         }
+
     }
 
     public DisSimProgrammableNode getProgrammableNode() {
         return programmableNode;
     }
 
-    @Override
-    public void reflect(IEvent iEvent, IEventPublisher iEventPublisher) {
-        // unused
-    }
-
-    @Override
-    public void reflect(IEvent iEvent) {
-        // unused
-    }
 
     @Override
     public void api_setRoute(List<GeoPosition> route) {
@@ -69,10 +59,10 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorAPI<GeoPos
     public void api_startMove() {
         LOG.trace(">> api_startMove()");
         try {
-            programmableNode.startMoveing();
             startMoveActivity = new StartMoveActivity(this);
+            programmableNode.startMoveing();
         } catch (SimControlException e) {
-            LOG.error(e.getMessage() , e);
+            LOG.error(e.getMessage(),e);
         }
         LOG.trace("<< api_startMove()");
     }

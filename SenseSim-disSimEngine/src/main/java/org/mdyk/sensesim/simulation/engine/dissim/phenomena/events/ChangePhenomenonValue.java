@@ -1,7 +1,7 @@
 package org.mdyk.sensesim.simulation.engine.dissim.phenomena.events;
 
-import dissim.simspace.BasicSimStateChange;
-import dissim.simspace.SimControlException;
+import dissim.simspace.core.BasicSimStateChange;
+import dissim.simspace.core.SimControlException;
 
 
 /**
@@ -23,13 +23,4 @@ public class ChangePhenomenonValue extends BasicSimStateChange<PhenomenonSimEnti
 
     }
 
-    @Override
-    protected void onTermination() throws SimControlException {
-        // EMPTY
-    }
-
-    @Override
-    protected void onInterruption() throws SimControlException {
-        // EMPTY
-    }
 }

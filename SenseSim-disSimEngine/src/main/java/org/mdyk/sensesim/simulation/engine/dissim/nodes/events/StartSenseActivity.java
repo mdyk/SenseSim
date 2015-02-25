@@ -1,8 +1,8 @@
 package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
 
-import dissim.simspace.BasicSimStateChange;
-import dissim.simspace.SimControlException;
+import dissim.simspace.core.BasicSimStateChange;
+import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
 
@@ -13,7 +13,6 @@ public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Ob
     private static final Logger LOG = Logger.getLogger(StartSenseActivity.class);
 
     private Environment environment;
-
     private DisSimProgrammableNode sensorNode;
 
     public StartSenseActivity(DisSimNodeEntity disSimNodeEntity) throws SimControlException {
@@ -32,13 +31,4 @@ public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Ob
         LOG.trace("<< StartSenseActivity");
     }
 
-    @Override
-    protected void onTermination() throws SimControlException {
-        // EMPTY  //
-    }
-
-    @Override
-    protected void onInterruption() throws SimControlException {
-        // EMPTY //
-    }
 }

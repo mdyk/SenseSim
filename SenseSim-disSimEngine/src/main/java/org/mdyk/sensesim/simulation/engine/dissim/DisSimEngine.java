@@ -2,8 +2,8 @@ package org.mdyk.sensesim.simulation.engine.dissim;
 
 import com.google.common.eventbus.Subscribe;
 
-import dissim.simspace.SimControlException;
-import dissim.simspace.SimModel;
+import dissim.simspace.core.SimControlException;
+import dissim.simspace.core.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
