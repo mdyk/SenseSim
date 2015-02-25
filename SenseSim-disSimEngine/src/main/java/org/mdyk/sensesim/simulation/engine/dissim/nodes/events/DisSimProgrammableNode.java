@@ -62,7 +62,7 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
     public void sense() {
 
         for(AbilityType ability : getAbilities()) {
-            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(),SimModel.getInstance().simTime(), ability);
+            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), disSimNodeEntity.simTime(), ability);
             this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);
         }
 
@@ -164,7 +164,7 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
     @Override
     public final void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
         for(SensorNode<GeoPosition> receiver : receivers) {
-            communicationProcessFactory.createCommunicationProcess(commProcIdx++, this, receiver, SimModel.getInstance().simTime(), message);
+            communicationProcessFactory.createCommunicationProcess(commProcIdx++, this, receiver, disSimNodeEntity.simTime(), message);
         }
 
     }

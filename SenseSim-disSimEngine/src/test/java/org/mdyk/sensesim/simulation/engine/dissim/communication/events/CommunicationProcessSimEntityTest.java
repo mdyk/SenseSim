@@ -5,6 +5,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import dissim.simspace.core.SimControlException;
+import dissim.simspace.core.SimModel;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorNodeFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimProgrammableNode;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 public class CommunicationProcessSimEntityTest {
@@ -45,6 +47,10 @@ public class CommunicationProcessSimEntityTest {
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
             }
         });
+
+        Field instance = SimModel.class.getDeclaredField("simModel");
+        instance.setAccessible(true);
+        instance.set(null, null);
     }
 
 
@@ -77,6 +83,7 @@ public class CommunicationProcessSimEntityTest {
         TestCase.assertEquals(CommunicationStatus.SUCCESS , communicationSimEntity.getCommunicationStatus(28.0));
 
         simEngine.stopScenario();
+        Thread.sleep(1000);
 
     }
 

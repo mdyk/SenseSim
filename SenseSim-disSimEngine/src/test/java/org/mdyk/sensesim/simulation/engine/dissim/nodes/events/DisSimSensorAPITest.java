@@ -5,6 +5,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
+import dissim.simspace.core.SimModel;
 import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,6 +26,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicat
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorNodeFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -47,6 +49,11 @@ public class DisSimSensorAPITest {
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
             }
         });
+
+        Field instance = SimModel.class.getDeclaredField("simModel");
+        instance.setAccessible(true);
+        instance.set(null, null);
+
     }
 
     @Test
@@ -86,6 +93,7 @@ public class DisSimSensorAPITest {
         TestCase.assertTrue(positionAfterStart.getLatitude() != posAfterStop2.getLatitude() && positionAfterStart.getLongitude() != posAfterStop2.getLongitude());
 
         simEngine.stopScenario();
+        Thread.sleep(1000);
     }
 
     @Test
@@ -120,6 +128,7 @@ public class DisSimSensorAPITest {
         TestCase.assertEquals("test", content.toString());
 
         simEngine.stopScenario();
+        Thread.sleep(1000);
     }
 
     @Test
@@ -180,6 +189,7 @@ public class DisSimSensorAPITest {
         TestCase.assertEquals("", senderContent.toString());
 
         simEngine.stopScenario();
+        Thread.sleep(1000);
     }
 
     private static class TestMessage implements Message<Object> {
