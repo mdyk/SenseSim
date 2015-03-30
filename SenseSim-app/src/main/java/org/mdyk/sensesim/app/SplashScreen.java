@@ -26,7 +26,7 @@ public class SplashScreen extends Application {
     public static void main(String[] args) throws Exception { launch(args); }
 
     @Override public void init() {
-        ImageView splash = null;
+       /* ImageView splash = null;
         try {
             splash = new ImageView(new Image(new FileInputStream("C:\\Users\\Michal\\Desktop\\SenseSim-logo2.png")));
         } catch (FileNotFoundException e) {
@@ -35,7 +35,7 @@ public class SplashScreen extends Application {
         splashLayout = new VBox();
         splashLayout.getChildren().addAll(splash);
         splashLayout.setStyle("-fx-padding: 5; -fx-background-color: #ffffff; -fx-border-width:5; -fx-border-color: linear-gradient(to bottom, rgba(255,255,255,0), derive(#ffffff, 80%));");
-//        splashLayout.setEffect(new DropShadow());
+//        splashLayout.setEffect(new DropShadow());         */
     }
 
     @Override public void start(final Stage initStage) throws Exception {

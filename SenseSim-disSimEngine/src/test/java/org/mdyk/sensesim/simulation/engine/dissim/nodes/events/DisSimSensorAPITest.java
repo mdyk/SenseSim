@@ -86,7 +86,7 @@ public class DisSimSensorAPITest {
 
         api.api_startMove();
 
-        Thread.sleep(5000);
+        Thread.sleep(10000);
 
         GeoPosition positionAfterStart = api.api_getPosition();
 
@@ -123,7 +123,7 @@ public class DisSimSensorAPITest {
         receiver.getAPI().api_setOnMessageHandler(handler);
         sender.getAPI().api_sendMessage(2, new TestMessage(1,2, 5000));
 
-        Thread.sleep(5000);
+        Thread.sleep(10000);
 
         TestCase.assertEquals("test", content.toString());
 

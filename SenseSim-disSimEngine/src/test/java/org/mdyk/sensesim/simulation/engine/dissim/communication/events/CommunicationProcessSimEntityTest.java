@@ -78,7 +78,7 @@ public class CommunicationProcessSimEntityTest {
 
         CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(0, sender, receiver, 2, message);
 
-        Thread.sleep(5000);
+        Thread.sleep(10000);
 
         TestCase.assertEquals(CommunicationStatus.SUCCESS , communicationSimEntity.getCommunicationStatus(28.0));
 
