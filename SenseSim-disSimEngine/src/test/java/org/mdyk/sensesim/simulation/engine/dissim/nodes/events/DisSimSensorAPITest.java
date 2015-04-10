@@ -15,15 +15,20 @@ import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
-import org.mdyk.netsim.logic.node.SensorNodeFactory;
+import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.SensorAPIFactory;
+import org.mdyk.netsim.logic.node.SensorsFactory;
+import org.mdyk.netsim.logic.node.SimEntityFactory;
 import org.mdyk.netsim.logic.node.api.SensorAPI;
-import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
+import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorNodeFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorAPIFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
 import java.lang.reflect.Field;
@@ -43,7 +48,9 @@ public class DisSimSensorAPITest {
                 bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
                 bind(WirelessChannel.class).to(DefaultWirelessChannel.class);
                 bind(SimEngine.class).to(DisSimEngine.class);
-                bind(SensorNodeFactory.class).to(DisSimSensorNodeFactory.class);
+                bind(SimEntityFactory.class).to(DisSimEntityFactory.class);
+                bind(SensorAPIFactory.class).to(DisSimSensorAPIFactory.class);
+                bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
                 bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
@@ -58,16 +65,15 @@ public class DisSimSensorAPITest {
 
     @Test
     public void api_moveTest() throws InterruptedException {
-        SimEngine<DisSimProgrammableNode> simEngine = injector.getInstance(SimEngine.class);
-        SensorNodeFactory sensorNodeFactory = injector.getInstance(SensorNodeFactory.class);
+        SimEngine simEngine = injector.getInstance(SimEngine.class);
+        SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        ProgrammableNode sensor = sensorNodeFactory.createGeoSensorNode(1, new GeoPosition(52.230963,21.004534), 10, 10, new ArrayList<>());
-        DisSimProgrammableNode disSimNode = (DisSimProgrammableNode) sensor;
-        simEngine.addNode(disSimNode);
+        Sensor sensor = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 10, new ArrayList<>());
+        simEngine.addNode(sensor);
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        SensorAPI<GeoPosition> api = disSimNode.getAPI();
+        SensorAPI<GeoPosition> api = sensor.getSensorAPI();
 
         List<GeoPosition> route = new ArrayList<>();
         route.add(new GeoPosition(52.230963,21.004534));
@@ -98,19 +104,19 @@ public class DisSimSensorAPITest {
 
     @Test
     public void api_communicationTest() throws InterruptedException {
-        SimEngine<DisSimProgrammableNode> simEngine = injector.getInstance(SimEngine.class);
-        SensorNodeFactory sensorNodeFactory = injector.getInstance(SensorNodeFactory.class);
+        SimEngine simEngine = injector.getInstance(SimEngine.class);
+        SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        ProgrammableNode sender = sensorNodeFactory.createGeoSensorNode(1, new GeoPosition(52.230963,21.004534), 10, 0, new ArrayList<>());
-        ProgrammableNode receiver = sensorNodeFactory.createGeoSensorNode(2, new GeoPosition(52.230963,21.004534), 10, 0, new ArrayList<>());
+        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 0, new ArrayList<>());
+        Sensor receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 0, new ArrayList<>());
 
-        simEngine.addNode((DisSimProgrammableNode) sender);
-        simEngine.addNode((DisSimProgrammableNode) receiver);
+        simEngine.addNode(sender);
+        simEngine.addNode(receiver);
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        sender.setRoutingAlgorithm(new FloodingRouting());
-        receiver.setRoutingAlgorithm(new FloodingRouting());
+        sender.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
+        receiver.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
 
         final StringBuilder content = new StringBuilder();
 
@@ -120,8 +126,8 @@ public class DisSimSensorAPITest {
             return null;
         };
 
-        receiver.getAPI().api_setOnMessageHandler(handler);
-        sender.getAPI().api_sendMessage(2, new TestMessage(1,2, 5000));
+        receiver.getSensorAPI().api_setOnMessageHandler(handler);
+        sender.getSensorAPI().api_sendMessage(2, new TestMessage(1,2, 5000));
 
         Thread.sleep(10000);
 
@@ -133,25 +139,25 @@ public class DisSimSensorAPITest {
 
     @Test
     public void api_hopByHopFloodingTest() throws InterruptedException {
-        SimEngine<DisSimProgrammableNode> simEngine = injector.getInstance(SimEngine.class);
-        SensorNodeFactory sensorNodeFactory = injector.getInstance(SensorNodeFactory.class);
+        SimEngine simEngine = injector.getInstance(SimEngine.class);
+        SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        ProgrammableNode sender = sensorNodeFactory.createGeoSensorNode(1, new GeoPosition(52.230532,21.005521), 25, 0, new ArrayList<>());
-        ProgrammableNode hop1 = sensorNodeFactory.createGeoSensorNode(2, new GeoPosition(52.230535,21.005795), 25, 0, new ArrayList<>());
-        ProgrammableNode receiver = sensorNodeFactory.createGeoSensorNode(3, new GeoPosition(52.230556,21.005937), 25, 0, new ArrayList<>());
-        ProgrammableNode hop2 = sensorNodeFactory.createGeoSensorNode(4, new GeoPosition(52.230555,21.005819), 15, 0, new ArrayList<>());
+        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 0, new ArrayList<>());
+        Sensor hop1 = sensorsFactory.buildSensor(2, new GeoPosition(52.230535, 21.005795), 25, 0, new ArrayList<>());
+        Sensor receiver = sensorsFactory.buildSensor(3, new GeoPosition(52.230556, 21.005937), 25, 0, new ArrayList<>());
+        Sensor hop2 = sensorsFactory.buildSensor(4, new GeoPosition(52.230555, 21.005819), 15, 0, new ArrayList<>());
 
-        simEngine.addNode((DisSimProgrammableNode) sender);
-        simEngine.addNode((DisSimProgrammableNode) hop1);
-        simEngine.addNode((DisSimProgrammableNode) receiver);
-        simEngine.addNode((DisSimProgrammableNode) hop2);
+        simEngine.addNode(sender);
+        simEngine.addNode(hop1);
+        simEngine.addNode(receiver);
+        simEngine.addNode(hop2);
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        sender.setRoutingAlgorithm(new FloodingRouting());
-        hop1.setRoutingAlgorithm(new FloodingRouting());
-        receiver.setRoutingAlgorithm(new FloodingRouting());
-        hop2.setRoutingAlgorithm(new FloodingRouting());
+        sender.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
+        hop1.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
+        receiver.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
+        hop2.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
 
 
         final StringBuilder senderContent = new StringBuilder();
@@ -159,24 +165,24 @@ public class DisSimSensorAPITest {
             senderContent.append((String) h.getMessageContent());
             return null;
         };
-        sender.getAPI().api_setOnMessageHandler(senderHandler);
+        sender.getSensorAPI().api_setOnMessageHandler(senderHandler);
 
         final StringBuilder hop1Content = new StringBuilder();
         Function<Message<?> , Object> hop1Handler = h -> {
             hop1Content.append((String) h.getMessageContent());
             return null;
         };
-        hop1.getAPI().api_setOnMessageHandler(hop1Handler);
+        hop1.getSensorAPI().api_setOnMessageHandler(hop1Handler);
 
         final StringBuilder receiverContent = new StringBuilder();
         Function<Message<?> , Object> receiverHandler = h -> {
             receiverContent.append((String) h.getMessageContent());
             return null;
         };
-        receiver.getAPI().api_setOnMessageHandler(receiverHandler);
+        receiver.getSensorAPI().api_setOnMessageHandler(receiverHandler);
 
 
-        sender.getAPI().api_sendMessage(3, new TestMessage(1,3, 512));
+        sender.getSensorAPI().api_sendMessage(3, new TestMessage(1,3, 512));
 
 //        while(true);
 

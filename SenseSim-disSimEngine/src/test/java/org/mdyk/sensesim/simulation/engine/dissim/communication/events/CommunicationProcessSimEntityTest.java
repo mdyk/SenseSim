@@ -15,15 +15,17 @@ import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
-import org.mdyk.netsim.logic.node.SensorNodeFactory;
-import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
+import org.mdyk.netsim.logic.node.*;
+import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorNodeFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimProgrammableNode;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorAPIFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimSensorLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
 import java.lang.reflect.Field;
@@ -41,7 +43,9 @@ public class CommunicationProcessSimEntityTest {
                 bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
                 bind(WirelessChannel.class).to(DefaultWirelessChannel.class);
                 bind(SimEngine.class).to(DisSimEngine.class);
-                bind(SensorNodeFactory.class).to(DisSimSensorNodeFactory.class);
+                bind(SensorLogicFactory.class).to(DisSimSensorsLogicFactory.class);
+                bind(SimEntityFactory.class).to(DisSimEntityFactory.class);
+                bind(SensorAPIFactory.class).to(DisSimSensorAPIFactory.class);
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
                 bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
@@ -58,12 +62,12 @@ public class CommunicationProcessSimEntityTest {
     @SuppressWarnings("unchecked")
     public void testCommunication() throws SimControlException, InterruptedException {
 
-        SimEngine<DisSimProgrammableNode> simEngine = injector.getInstance(SimEngine.class);
-        SensorNodeFactory sensorNodeFactory = injector.getInstance(SensorNodeFactory.class);
+        SimEngine simEngine = injector.getInstance(SimEngine.class);
+        SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
         CommunicationProcessFactory processFactory = injector.getInstance(CommunicationProcessFactory.class);
 
-        ProgrammableNode sender = sensorNodeFactory.createGeoSensorNode(1, new GeoPosition(52.230963,21.004534), 10, 0, new ArrayList<>());
-        ProgrammableNode receiver = sensorNodeFactory.createGeoSensorNode(2, new GeoPosition(52.230963,21.004534), 10, 0, new ArrayList<>());
+        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 0, new ArrayList<>());
+        Sensor receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 0, new ArrayList<>());
 
         Message message = new TestMessage() {
             @Override
@@ -72,11 +76,11 @@ public class CommunicationProcessSimEntityTest {
             }
         };
 
-        simEngine.addNode((DisSimProgrammableNode) sender);
-        simEngine.addNode((DisSimProgrammableNode) receiver);
+        simEngine.addNode(sender);
+        simEngine.addNode(receiver);
         simEngine.runScenario();
 
-        CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(0, sender, receiver, 2, message);
+        CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(0, sender.getSensorLogic(), receiver.getSensorLogic(), 2, message);
 
         Thread.sleep(10000);
 

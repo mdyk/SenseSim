@@ -1,4 +1,4 @@
-package org.mdyk.netsim.logic.node;
+package org.mdyk.netsim.logic.node.geo;
 
 import org.mdyk.netsim.logic.util.Position;
 

@@ -4,8 +4,9 @@ import com.google.inject.assistedinject.Assisted;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
-import org.mdyk.netsim.logic.node.SensorNodeFactory;
-import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
+import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.SensorsFactory;
+import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.simEngine.thread.GeoSensorNodeThread;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
@@ -34,18 +35,18 @@ public class XMLScenario implements Scenario {
     private org.mdyk.sensesim.schema.Scenario scenario;
     private File scenarioFile;
 
-    private SensorNodeFactory sensorNodeFactory;
+    private SensorsFactory sensorsFactory;
     private PhenomenaFactory phenomenaFactory;
 
     @Inject
-    public XMLScenario(@Assisted File file, SensorNodeFactory sensorNodeFactory, PhenomenaFactory phenomenaFactory) throws XMLScenarioLoadException {
+    public XMLScenario(@Assisted File file, SensorsFactory sensorsFactory, PhenomenaFactory phenomenaFactory) throws XMLScenarioLoadException {
         JAXBContext jaxbContext;
         try {
             scenarioFile = file;
             jaxbContext = JAXBContext.newInstance(org.mdyk.sensesim.schema.Scenario.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             scenario = (org.mdyk.sensesim.schema.Scenario) jaxbUnmarshaller.unmarshal(scenarioFile);
-            this.sensorNodeFactory = sensorNodeFactory;
+            this.sensorsFactory = sensorsFactory;
             this.phenomenaFactory = phenomenaFactory;
         } catch (JAXBException e) {
             LOG.error(e.getMessage(), e);
@@ -59,14 +60,14 @@ public class XMLScenario implements Scenario {
     }
 
     @Override
-    public Map<Class, List<ISensorModel>> scenarioSensors() {
+    public Map<Class, List<Sensor>> scenarioSensors() {
 
-        Map<Class, List<ISensorModel>> nodesMap = new HashMap<>();
+        Map<Class, List<Sensor>> nodesMap = new HashMap<>();
 
         for (NodeType nodeType : scenario.getNodes().getNode()){
             switch(nodeType.getSesnorImplType()){
                 case "GeoSensorNode":
-                    List<ISensorModel> geoSensorNodes;
+                    List<Sensor> geoSensorNodes;
                     if(!nodesMap.containsKey(GeoSensorNodeThread.class)){
                         geoSensorNodes = new LinkedList<>();
                         nodesMap.put(GeoSensorNodeThread.class,geoSensorNodes);
@@ -79,11 +80,11 @@ public class XMLScenario implements Scenario {
 
                     List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
 
-                    ProgrammableNode node = sensorNodeFactory.createGeoSensorNode(Integer.parseInt(nodeType.getId()),
+                    Sensor node = sensorsFactory.buildSensor(Integer.parseInt(nodeType.getId()),
                             position, Integer.parseInt(nodeType.getRadioRange()),
                             Double.parseDouble(nodeType.getSpeed()), abilities);
-                    node.setRoute(route);
-                    setRoutingAlgorithm(nodeType , node);
+                    node.getSensorLogic().setRoute(route);
+//                    node.getSensorLogic().setRoutingAlgorithm(nodeType , node);
                     geoSensorNodes.add(node);
                     break;
 

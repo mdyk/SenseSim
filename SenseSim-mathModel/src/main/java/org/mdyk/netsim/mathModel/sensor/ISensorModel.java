@@ -45,6 +45,8 @@ public interface ISensorModel<P extends Position> {
 
     public void addObservation(AbilityType ability, Double time , PhenomenonValue value);
 
+    public void sense();
+
     /**
      * Returns bandwidth (measured in bits per second) of the sensor's wireless communication module.
      * Value is the same for in and out communication.

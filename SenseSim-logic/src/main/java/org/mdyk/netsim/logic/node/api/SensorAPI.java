@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.node.api;
 
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
+import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
@@ -15,6 +16,8 @@ import java.util.function.Function;
  * Interface for sensor's API
  */
 public interface SensorAPI<P extends Position> {
+
+    public void setSimEntity(SensorSimEntity sensorSimEntity);
 
     /**
      * Sets sensor's route.

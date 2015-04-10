@@ -3,6 +3,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 import dissim.simspace.core.BasicSimStateChange;
 import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.node.geo.SensorLogic;
 
 
 public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
@@ -10,12 +11,12 @@ public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Obje
     private static final Logger LOG = Logger.getLogger(EndSenseActivity.class);
 
     private DisSimNodeEntity sensorEntity;
-    private DisSimProgrammableNode sensorNode;
+    private SensorLogic sensorNode;
 
     public EndSenseActivity(double delay, DisSimNodeEntity sensorEntity) throws SimControlException {
         super(sensorEntity, delay);
         this.sensorEntity = sensorEntity;
-        this.sensorNode = this.sensorEntity.programmableNode;
+        this.sensorNode = this.sensorEntity.sensorLogic;
     }
 
     @Override

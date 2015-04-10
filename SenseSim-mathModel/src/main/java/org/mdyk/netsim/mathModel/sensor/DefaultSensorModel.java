@@ -36,7 +36,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
         this.messagesMap = new HashMap<>();
     }
 
-    public abstract void sense();
+//    public abstract void sense();
 
     @Override
     public int getID() {

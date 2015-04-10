@@ -7,14 +7,19 @@ import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.network.WirelessChannel;
-import org.mdyk.netsim.logic.node.SensorNodeFactory;
+import org.mdyk.netsim.logic.node.SensorAPIFactory;
+import org.mdyk.netsim.logic.node.SensorLogicFactory;
+import org.mdyk.netsim.logic.node.SensorsFactory;
+import org.mdyk.netsim.logic.node.SimEntityFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.view.SenseSimView;
 import org.mdyk.netsim.view.jfx.SenseSimJFXApp;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorNodeFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorAPIFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
 
@@ -29,7 +34,9 @@ public class SenseSimConfig extends AbstractModule {
 
         //TODO zebranie w jedną konfigurację dla silnika symulacyjnego
         bind(SimEngine.class).to(DisSimEngine.class);
-        bind(SensorNodeFactory.class).to(DisSimSensorNodeFactory.class);
+        bind(SensorLogicFactory.class).to(DisSimSensorsLogicFactory.class);
+        bind(SimEntityFactory.class).to(DisSimEntityFactory.class);
+        bind(SensorAPIFactory.class).to(DisSimSensorAPIFactory.class);
         bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
         bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
 

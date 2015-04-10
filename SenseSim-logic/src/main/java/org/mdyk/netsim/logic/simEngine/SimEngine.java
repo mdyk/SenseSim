@@ -1,12 +1,13 @@
 package org.mdyk.netsim.logic.simEngine;
 
+import org.mdyk.netsim.logic.node.Sensor;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.scenario.Scenario;
 
 /**
  * Interface to simulation engine
  */
-public interface SimEngine<S extends SensorNode<?>> {
+public interface SimEngine {
 
     public void loadScenario(Scenario scenario);
 
@@ -18,6 +19,6 @@ public interface SimEngine<S extends SensorNode<?>> {
 
     public void stopScenario();
 
-    public void addNode(S sensorNode);
+    public void addNode(Sensor sensorNode);
 
 }

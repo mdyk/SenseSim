@@ -11,7 +11,7 @@ import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.api.SensorAPI;
-import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
+import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 
@@ -24,7 +24,7 @@ import java.util.List;
 /**
  * Simple implementation for nodes with geo localization
  */
-public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMovementAlgorithm> implements ProgrammableNode {
+public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMovementAlgorithm> implements SensorLogic {
 
     private static final Logger LOG = Logger.getLogger(GeoSensorNodeThread.class);
     protected List<GeoPosition> route;
@@ -136,8 +136,8 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
         this.route = route;
     }
 
-    @Override
-    public SensorAPI<GeoPosition> getAPI() {
-        return null;
-    }
+//    @Override
+//    public SensorAPI<GeoPosition> getAPI() {
+//        return null;
+//    }
 }

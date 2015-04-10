@@ -11,8 +11,7 @@ import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
-import org.mdyk.netsim.logic.node.api.SensorAPI;
-import org.mdyk.netsim.logic.node.geo.ProgrammableNode;
+import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -24,19 +23,20 @@ import java.util.List;
 import java.util.function.Function;
 
 
-public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> implements ProgrammableNode {
+public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implements SensorLogic {
 
 
-    private static final Logger LOG = Logger.getLogger(DisSimProgrammableNode.class);
+    private static final Logger LOG = Logger.getLogger(DisSimSensorLogic.class);
 
     protected List<GeoPosition> route;
     protected GeoMovementAlgorithm currentMovementAlg;
     protected Environment environment;
-    protected WirelessChannel wirelessChannel;
+    // FIXME do zmiany
+    public WirelessChannel wirelessChannel;
     protected DisSimNodeEntity disSimNodeEntity;
     protected CommunicationProcessFactory communicationProcessFactory;
-
-    protected Function<Message<?>, Object> onMessageHandler;
+    // FIXME do zmiany
+    public Function<Message<?>, Object> onMessageHandler;
 
     private int commProcIdx = 0;
 
@@ -44,10 +44,10 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
 
 
     @Inject
-    public DisSimProgrammableNode(@Assisted("id") int id, @Assisted GeoPosition position,
-                                  @Assisted("radioRange") int radioRange,
-                                  @Assisted double velocity, @Assisted List<AbilityType> abilities,
-                                  Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
+    public DisSimSensorLogic(@Assisted("id") int id, @Assisted GeoPosition position,
+                             @Assisted("radioRange") int radioRange,
+                             @Assisted double velocity, @Assisted List<AbilityType> abilities,
+                             Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
         super(id, position, radioRange, velocity, abilities);
 
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
@@ -55,7 +55,7 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
         this.wirelessChannel = wirelessChannel;
         this.communicationProcessFactory = communicationProcessFactory;
         this.isMoveing = true;
-        this.disSimNodeEntity = new DisSimNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
+//        this.disSimNodeEntity = new DisSimNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
     }
 
     @Override
@@ -169,10 +169,10 @@ public class DisSimProgrammableNode extends DefaultSensorModel<GeoPosition> impl
 
     }
 
-    @Override
-    public SensorAPI<GeoPosition> getAPI() {
-        return disSimNodeEntity;
-    }
+//    @Override
+//    public SensorAPI<GeoPosition> getAPI() {
+//        return disSimNodeEntity;
+//    }
 
     // TODO metody do usunięcia w sytuacji kiedy interrupt będzie działać poprawnie
     public void stopMoveing() {

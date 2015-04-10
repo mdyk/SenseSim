@@ -19,11 +19,6 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.mdyk</groupId>
-            <artifactId>SenseSim-logic</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>dissim</groupId>
             <artifactId>DisSimEBusPlug</artifactId>
         </dependency>
