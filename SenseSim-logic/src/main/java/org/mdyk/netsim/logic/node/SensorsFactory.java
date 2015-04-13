@@ -31,9 +31,11 @@ public class SensorsFactory {
         SensorSimEntity sensorSimEntity = simEntityFactory.buildSensorSimEntity(sensorLogic);
         SensorAPI sensorAPI = sensorAPIFactory.buildSensorAPI(sensorSimEntity);
 
-        Sensor sensor = new Sensor(sensorLogic,sensorSimEntity,sensorAPI);
+        sensorLogic.setSimEntity(sensorSimEntity);
+        sensorSimEntity.setSensorLogic(sensorLogic);
+        sensorAPI.setSimEntity(sensorSimEntity);
 
-        return sensor;
+        return new Sensor(sensorLogic,sensorSimEntity,sensorAPI);
     }
 
 }

@@ -47,7 +47,6 @@ public class CommunicationProcessSimEntityTest {
                 bind(SimEntityFactory.class).to(DisSimEntityFactory.class);
                 bind(SensorAPIFactory.class).to(DisSimSensorAPIFactory.class);
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
-                bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
             }
         });

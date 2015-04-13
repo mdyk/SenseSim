@@ -12,6 +12,7 @@ import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
+import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -33,7 +34,8 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     protected Environment environment;
     // FIXME do zmiany
     public WirelessChannel wirelessChannel;
-    protected DisSimNodeEntity disSimNodeEntity;
+    private SensorSimEntity sensorSimEntity;
+//    protected DisSimNodeEntity disSimNodeEntity;
     protected CommunicationProcessFactory communicationProcessFactory;
     // FIXME do zmiany
     public Function<Message<?>, Object> onMessageHandler;
@@ -62,7 +64,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     public void sense() {
 
         for(AbilityType ability : getAbilities()) {
-            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), disSimNodeEntity.simTime(), ability);
+            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), sensorSimEntity.getSimTime(), ability);
             this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);
         }
 
@@ -121,7 +123,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
 
     @Override
     public void startNode() {
-        this.disSimNodeEntity.startNode();
+        this.sensorSimEntity.startEntity();
     }
 
     @Override
@@ -164,7 +166,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     @Override
     public final void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
         for(SensorNode<GeoPosition> receiver : receivers) {
-            communicationProcessFactory.createCommunicationProcess(commProcIdx++, this, receiver, disSimNodeEntity.simTime(), message);
+            communicationProcessFactory.createCommunicationProcess(commProcIdx++, this, receiver, sensorSimEntity.getSimTime(), message);
         }
 
     }
@@ -183,4 +185,8 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
         this.isMoveing = true;
     }
 
+    @Override
+    public void setSimEntity(SensorSimEntity simEntity) {
+        this.sensorSimEntity = simEntity;
+    }
 }
