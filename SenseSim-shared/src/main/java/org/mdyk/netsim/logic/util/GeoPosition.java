@@ -5,6 +5,10 @@ package org.mdyk.netsim.logic.util;
  */
 public class GeoPosition extends Position {
 
+    public GeoPosition(GeoPosition geoPosition) {
+        super(geoPosition.getLatitude(), geoPosition.getLongitude(), 0);
+    }
+
     /**
      * Constructor for node geo position.
      * @param latitude
@@ -73,4 +77,6 @@ public class GeoPosition extends Position {
         sb.append("]");
         return sb.toString();
     }
+
+
 }

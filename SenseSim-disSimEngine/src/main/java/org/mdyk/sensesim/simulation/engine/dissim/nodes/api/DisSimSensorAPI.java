@@ -44,7 +44,8 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
         LOG.trace(">> api_startMove()");
         try {
             ((DisSimNodeEntity) sensorSimEntity).startMoveActivity = new StartMoveActivity((DisSimNodeEntity) sensorSimEntity);
-//            programmableNode.startMoveing();
+            // FIXME przeprojektowanie interfejsów tak, żeby nie było konieczne rzutowanie
+            ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).startMoveing();
         } catch (SimControlException e) {
             LOG.error(e.getMessage(),e);
         }
@@ -57,6 +58,8 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
         try {
             ((DisSimNodeEntity) sensorSimEntity).startMoveActivity.interrupt();
             ((DisSimNodeEntity) sensorSimEntity).endMoveActivity.interrupt();
+            // FIXME przeprojektowanie interfejsów tak, żeby nie było konieczne rzutowanie
+            ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).stopMoveing();
         } catch (SimControlException e) {
             LOG.error(e.getMessage() , e);
         }
@@ -93,7 +96,8 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
 
     @Override
     public GeoPosition api_getPosition() {
-        return sensorSimEntity.getSensorLogic().getPosition();
+        LOG.trace(">< api_getPosition()");
+        return new GeoPosition(sensorSimEntity.getSensorLogic().getPosition());
     }
 
     @Override

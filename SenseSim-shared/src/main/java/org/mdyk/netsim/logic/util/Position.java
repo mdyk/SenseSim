@@ -38,4 +38,31 @@ public class Position {
     public double getPositionZ() {
         return positionZ;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Position position = (Position) o;
+
+        if (Double.compare(position.positionX, positionX) != 0) return false;
+        if (Double.compare(position.positionY, positionY) != 0) return false;
+        if (Double.compare(position.positionZ, positionZ) != 0) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(positionX);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(positionY);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(positionZ);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
 }
