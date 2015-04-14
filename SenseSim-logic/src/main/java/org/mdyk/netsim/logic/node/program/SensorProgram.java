@@ -1,4 +1,4 @@
-package org.mdyk.netsim.logic.program;
+package org.mdyk.netsim.logic.node.program;
 
 /**
  * Interface for program executed by sensor

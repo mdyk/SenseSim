@@ -14,6 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.PopupBuilder;
 import org.apache.log4j.Logger;
 import org.controlsfx.dialog.Dialogs;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -90,7 +91,6 @@ public class SenseSimJFXController implements Initializable {
         });
 
         EventBusHolder.getEventBus().register(this);
-
     }
 
     private void createSwingContent(final SwingNode swingNode) {

@@ -35,10 +35,10 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     // FIXME do zmiany
     public WirelessChannel wirelessChannel;
     private SensorSimEntity sensorSimEntity;
-//    protected DisSimNodeEntity disSimNodeEntity;
     protected CommunicationProcessFactory communicationProcessFactory;
     // FIXME do zmiany
     public Function<Message<?>, Object> onMessageHandler;
+
 
     private int commProcIdx = 0;
 
@@ -57,7 +57,6 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
         this.wirelessChannel = wirelessChannel;
         this.communicationProcessFactory = communicationProcessFactory;
         this.isMoveing = true;
-//        this.disSimNodeEntity = new DisSimNodeEntity(SimModel.getInstance().getCommonSimContext() , this);
     }
 
     @Override
@@ -170,11 +169,6 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
         }
 
     }
-
-//    @Override
-//    public SensorAPI<GeoPosition> getAPI() {
-//        return disSimNodeEntity;
-//    }
 
     // TODO metody do usunięcia w sytuacji kiedy interrupt będzie działać poprawnie
     public void stopMoveing() {

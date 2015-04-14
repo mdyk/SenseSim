@@ -19,6 +19,7 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
         super(node, mapViewer);
         mapMaker = new MapMarkerDot(node.getLatitude(), node.getLongitude());
         mapMaker.setBackColor(Color.YELLOW);
+        mapMaker.setName(String.valueOf(node.getID()));
     }
 
     @Override

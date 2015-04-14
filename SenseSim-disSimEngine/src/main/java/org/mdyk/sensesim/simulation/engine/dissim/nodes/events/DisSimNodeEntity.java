@@ -6,6 +6,7 @@ import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
+import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 
 
@@ -23,6 +24,8 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
     public EndSenseActivity endSenseActivity;
 
     protected SensorLogic sensorLogic;
+
+    protected Middleware middleware;
 
     protected Environment environment;
 
@@ -69,5 +72,10 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
     @Override
     public SensorLogic getSensorLogic() {
         return sensorLogic;
+    }
+
+    @Override
+    public void setMiddleware(Middleware middleware) {
+        this.middleware = middleware;
     }
 }

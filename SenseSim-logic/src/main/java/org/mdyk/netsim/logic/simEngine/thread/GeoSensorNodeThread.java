@@ -10,7 +10,6 @@ import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
-import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -51,9 +50,9 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
             LOG.debug("NODE_START_SENSE");
             EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_START_SENSE,this));
 
-            for(AbilityType ability : getAbilities()) {
-            //    addObservation(1.0, environment.getEventValue(getPosition(), 2, ability));
-            }
+//            for(AbilityType ability : getAbilities()) {
+//            //    addObservation(1.0, environment.getEventValue(getPosition(), 2, ability));
+//            }
 
         }
         else {
@@ -142,8 +141,4 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
         //Empty
     }
 
-//    @Override
-//    public SensorAPI<GeoPosition> getAPI() {
-//        return null;
-//    }
 }
