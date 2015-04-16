@@ -120,7 +120,7 @@ public class DisSimSensorAPITest {
 
         final StringBuilder content = new StringBuilder();
 
-        Function<Message<?> , Object> handler = h -> {
+        Function<Message , Object> handler = h -> {
             System.out.println();
             content.append((String) h.getMessageContent());
             return null;
@@ -161,21 +161,21 @@ public class DisSimSensorAPITest {
 
 
         final StringBuilder senderContent = new StringBuilder();
-        Function<Message<?> , Object> senderHandler = h -> {
+        Function<Message , Object> senderHandler = h -> {
             senderContent.append((String) h.getMessageContent());
             return null;
         };
         sender.getSensorAPI().api_setOnMessageHandler(senderHandler);
 
         final StringBuilder hop1Content = new StringBuilder();
-        Function<Message<?> , Object> hop1Handler = h -> {
+        Function<Message , Object> hop1Handler = h -> {
             hop1Content.append((String) h.getMessageContent());
             return null;
         };
         hop1.getSensorAPI().api_setOnMessageHandler(hop1Handler);
 
         final StringBuilder receiverContent = new StringBuilder();
-        Function<Message<?> , Object> receiverHandler = h -> {
+        Function<Message , Object> receiverHandler = h -> {
             receiverContent.append((String) h.getMessageContent());
             return null;
         };
@@ -198,7 +198,7 @@ public class DisSimSensorAPITest {
         Thread.sleep(1000);
     }
 
-    private static class TestMessage implements Message<Object> {
+    private static class TestMessage implements Message {
 
         private int source;
         private int dest;

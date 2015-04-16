@@ -36,10 +36,6 @@ public class SensorsFactory {
         SensorAPI sensorAPI = sensorAPIFactory.buildSensorAPI(sensorSimEntity);
         Middleware middleware = middlewareFactory.buildMiddleware();
 
-        sensorLogic.setSimEntity(sensorSimEntity);
-        sensorSimEntity.setSensorLogic(sensorLogic);
-        sensorAPI.setSimEntity(sensorSimEntity);
-
         return new Sensor(sensorLogic,sensorSimEntity,sensorAPI, middleware);
     }
 

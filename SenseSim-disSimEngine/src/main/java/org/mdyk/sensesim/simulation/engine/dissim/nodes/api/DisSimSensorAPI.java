@@ -68,7 +68,7 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void api_sendMessage(int destinationID, Message<?> message) {
+    public void api_sendMessage(int destinationID, Message message) {
         List<SensorNode<GeoPosition>> nodesToHop = sensorSimEntity.getSensorLogic().getRoutingAlgorithm().getNodesToHop(sensorSimEntity.getSensorLogic().getID(), destinationID , message , api_scanForNeighbors());
         sensorSimEntity.getSensorLogic().startCommunication(message, nodesToHop.toArray(new SensorNode[nodesToHop.size()]));
     }
@@ -101,7 +101,7 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
     }
 
     @Override
-    public void api_setOnMessageHandler(Function<Message<?>, Object> handler) {
+    public void api_setOnMessageHandler(Function<Message, Object> handler) {
         ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).onMessageHandler = handler;
     }
 }

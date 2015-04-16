@@ -23,6 +23,12 @@ public class Sensor {
         this.sensorSimEntity = sensorSimEntity;
         this.sensorAPI = sensorAPI;
         this.middleware = middleware;
+
+        sensorLogic.setSimEntity(sensorSimEntity);
+        sensorSimEntity.setSensorLogic(sensorLogic);
+        sensorSimEntity.setMiddleware(middleware);
+        sensorAPI.setSimEntity(sensorSimEntity);
+        middleware.setSensorAPI(sensorAPI);
     }
 
     public SensorLogic getSensorLogic() {

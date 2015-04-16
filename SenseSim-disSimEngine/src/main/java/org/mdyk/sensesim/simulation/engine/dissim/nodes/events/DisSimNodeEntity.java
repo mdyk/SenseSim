@@ -23,6 +23,8 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
     //FIXME
     public EndSenseActivity endSenseActivity;
 
+    private IdleProcess idleProcess;
+
     protected SensorLogic sensorLogic;
 
     protected Middleware middleware;
@@ -33,6 +35,13 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
         super(context);
         this.setSensorLogic(sensorLogic);
         this.environment = environment;
+        try {
+            idleProcess = new IdleProcess(this);
+            idleProcess.start();
+        } catch (SimControlException e) {
+            LOG.error(e.getMessage() , e);
+            throw new RuntimeException(e.getMessage() ,e);
+        }
     }
 
     protected void startNode() {
@@ -77,5 +86,10 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
     @Override
     public void setMiddleware(Middleware middleware) {
         this.middleware = middleware;
+    }
+
+    @Override
+    public Middleware getMiddleware() {
+        return middleware;
     }
 }

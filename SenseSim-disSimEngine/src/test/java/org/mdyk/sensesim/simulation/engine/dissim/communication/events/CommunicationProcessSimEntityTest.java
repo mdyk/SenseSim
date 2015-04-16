@@ -92,7 +92,7 @@ public class CommunicationProcessSimEntityTest {
 
     }
 
-    private static abstract class TestMessage implements Message<Object> {
+    private static abstract class TestMessage implements Message {
 
         @Override
         public int getID() {

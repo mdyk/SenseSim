@@ -18,4 +18,6 @@ public interface SensorSimEntity {
 
     public void setMiddleware(Middleware middleware);
 
+    public Middleware getMiddleware();
+
 }

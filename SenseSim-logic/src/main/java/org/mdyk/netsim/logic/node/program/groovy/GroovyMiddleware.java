@@ -18,13 +18,18 @@ public class GroovyMiddleware implements Middleware {
     private SensorAPI sensorAPI;
     private List<SensorProgram> programs;
 
+    public GroovyMiddleware() {
+        programs = new ArrayList<>();
+    }
+
     @Override
     public void initialize() {
-        sensorAPI.api_setOnMessageHandler(new Function<Message<?>, Object>() {
+        sensorAPI.api_setOnMessageHandler(new Function<Message, Object>() {
             @Override
-            public Object apply(Message<?> message) {
+            public Object apply(Message message) {
 
-                // TODO
+//                message.getMessageContent();
+
 
                 return null;
             }

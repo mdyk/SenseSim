@@ -26,6 +26,6 @@ public interface RoutingAlgorithm<P extends Position> {
      * @return
      *      list of sensors which are destination for the hop.
      */
-    public List<SensorNode<P>> getNodesToHop(int sender, int destination, Message<?> message, List<SensorNode<P>> knownSensors);
+    public List<SensorNode<P>> getNodesToHop(int sender, int destination, Message message, List<SensorNode<P>> knownSensors);
 
 }

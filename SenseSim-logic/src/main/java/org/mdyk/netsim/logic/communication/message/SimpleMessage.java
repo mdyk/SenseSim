@@ -4,7 +4,7 @@ package org.mdyk.netsim.logic.communication.message;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
-public class SimpleMessage implements Message<Object> {
+public class SimpleMessage implements Message {
 
     private SensorNode<?> originSource;
     private SensorNode<?> originDest;

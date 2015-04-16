@@ -20,7 +20,7 @@ public class FloodingRouting implements RoutingAlgorithm<GeoPosition> {
     }
 
     @Override
-    public List<SensorNode<GeoPosition>> getNodesToHop(int sender, int destination, Message<?> message, List<SensorNode<GeoPosition>> knownSensors) {
+    public List<SensorNode<GeoPosition>> getNodesToHop(int sender, int destination, Message message, List<SensorNode<GeoPosition>> knownSensors) {
         List<SensorNode<GeoPosition>> sensorsToHop = new ArrayList<>(knownSensors);
 
         boolean foundSender = false;

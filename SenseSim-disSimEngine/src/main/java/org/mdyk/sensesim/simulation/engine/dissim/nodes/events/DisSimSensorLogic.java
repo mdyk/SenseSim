@@ -37,7 +37,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     private SensorSimEntity sensorSimEntity;
     protected CommunicationProcessFactory communicationProcessFactory;
     // FIXME do zmiany
-    public Function<Message<?>, Object> onMessageHandler;
+    public Function<Message, Object> onMessageHandler;
 
 
     private int commProcIdx = 0;

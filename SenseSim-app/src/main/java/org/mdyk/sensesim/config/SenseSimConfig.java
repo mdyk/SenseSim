@@ -8,6 +8,7 @@ import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.*;
+import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.view.SenseSimView;
@@ -35,7 +36,7 @@ public class SenseSimConfig extends AbstractModule {
         bind(SimEntityFactory.class).to(DisSimEntityFactory.class);
         bind(SensorAPIFactory.class).to(DisSimSensorAPIFactory.class);
         bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
-//        bind(MiddlewareFactory.class).to(GroovyMiddleware.)
+        bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
         bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
 
     }

@@ -43,7 +43,7 @@ public interface SensorAPI<P extends Position> {
      * @param message
      *      message to be sent.
      */
-    public void api_sendMessage(int id, Message<?> message);
+    public void api_sendMessage(int id, Message message);
 
     /**
      * Returns list of sensor's observations.
@@ -76,6 +76,6 @@ public interface SensorAPI<P extends Position> {
     /**
      * Allows to add handler which should be fired when sensor receives a message.
      */
-    public void api_setOnMessageHandler(Function<Message<?> , Object> handler);
+    public void api_setOnMessageHandler(Function<Message , Object> handler);
 
 }

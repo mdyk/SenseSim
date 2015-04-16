@@ -4,7 +4,7 @@ package org.mdyk.netsim.logic.communication;
  * Represents message
  */
 // TODO rozważyć przeniesienie do modelu matematycznego
-public interface Message<M> {
+public interface Message {
 
     /**
      * Returns ID number of the message. Should be unique.
@@ -19,7 +19,7 @@ public interface Message<M> {
      * @return
      *      message content.
      */
-    public M getMessageContent();
+    public Object getMessageContent();
 
     /**
      * Returns size of the message in bytes
