@@ -8,10 +8,13 @@ public interface SensorProgram {
     /**
      * Executes program
      */
-    public void execute();
+
+    public void setPID(int PID);
+
+    public int getPID();
 
     public void setParams(Object ... params);
 
-    public void getResult();
+    public Object getResult();
 
 }

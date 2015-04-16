@@ -6,6 +6,10 @@ import org.mdyk.netsim.logic.node.program.Middleware;
 
 public interface SensorSimEntity {
 
+    public void startProgramExecution(int PID);
+
+    public void endProgramExecution(int PID);
+
     public void startEntity();
 
     public void stopEntity();

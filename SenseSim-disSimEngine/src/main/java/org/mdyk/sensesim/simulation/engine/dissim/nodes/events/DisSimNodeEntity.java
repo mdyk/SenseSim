@@ -23,7 +23,7 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
     //FIXME
     public EndSenseActivity endSenseActivity;
 
-    private IdleProcess idleProcess;
+//    private IdleProcess idleProcess;
 
     protected SensorLogic sensorLogic;
 
@@ -35,13 +35,13 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
         super(context);
         this.setSensorLogic(sensorLogic);
         this.environment = environment;
-        try {
-            idleProcess = new IdleProcess(this);
-            idleProcess.start();
-        } catch (SimControlException e) {
-            LOG.error(e.getMessage() , e);
-            throw new RuntimeException(e.getMessage() ,e);
-        }
+//        try {
+//            idleProcess = new IdleProcess(this);
+//            idleProcess.start();
+//        } catch (SimControlException e) {
+//            LOG.error(e.getMessage() , e);
+//            throw new RuntimeException(e.getMessage() ,e);
+//        }
     }
 
     protected void startNode() {
@@ -56,6 +56,28 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
 
     public DisSimSensorLogic getProgrammableNode() {
         return (DisSimSensorLogic) sensorLogic;
+    }
+
+    @Override
+    public void startProgramExecution(int PID) {
+        LOG.trace(">> startProgramExecution");
+        try {
+            new StartProgramExecution(this , PID);
+        } catch (SimControlException e) {
+            LOG.error(e.getMessage() ,e);
+        }
+        LOG.trace("<< startProgramExecution");
+    }
+
+    @Override
+    public void endProgramExecution(int PID) {
+        LOG.trace(">> endProgramExecution");
+        try {
+            new EndProgramExecution(this , PID);
+        } catch (SimControlException e) {
+            LOG.error(e.getMessage() ,e);
+        }
+        LOG.trace("<< endProgramExecution");
     }
 
     @Override

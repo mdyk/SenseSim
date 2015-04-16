@@ -30,4 +30,12 @@ public class EventFactory {
     public static InternalEvent endSenseEvent(SensorNode node) {
         return new InternalEvent(EventType.NODE_END_SENSE, node);
     }
+
+    public static InternalEvent startProgramExecutionEvent(int PID) {
+        return new InternalEvent(EventType.START_PROGRAM_EXECUTION, PID);
+    }
+
+    public static InternalEvent endProgramExecutionEvent(int PID) {
+        return new InternalEvent(EventType.END_PROGRAM_EXECUTION, PID);
+    }
 }
