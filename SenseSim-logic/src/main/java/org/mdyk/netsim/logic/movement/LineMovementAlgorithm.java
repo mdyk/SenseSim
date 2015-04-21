@@ -28,7 +28,6 @@ public class LineMovementAlgorithm implements SimpleMovementAlgorithm {
         double newX = currentX + getXIncrement();
         double newY = currentY + getYIncrement();
 
-        // TODO Obsługa 3-go wymiaru
         return new Position(newX , newY, 0);
     }
 
@@ -39,7 +38,6 @@ public class LineMovementAlgorithm implements SimpleMovementAlgorithm {
     private void adjustMovement(Position currentPosition) {
         double currentX = currentPosition.getPositionX();
         double currentY = currentPosition.getPositionY();
-        // TODO zakres ruchu powinien być określony w konfiguracji
         if(currentX >= 400) {
             changeDirectionX(DirectionType.desc);
         }

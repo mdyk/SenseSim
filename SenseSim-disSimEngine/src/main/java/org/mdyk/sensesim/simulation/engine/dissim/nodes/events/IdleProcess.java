@@ -2,15 +2,15 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
 
 import dissim.simspace.core.SimControlException;
-import dissim.simspace.process.BasicSimSimpleProcess;
+import dissim.simspace.process.BasicSimProcess;
 import org.apache.log4j.Logger;
 
-public class IdleProcess extends BasicSimSimpleProcess<DisSimNodeEntity, Object> {
+public class IdleProcess extends BasicSimProcess<DisSimNodeEntity, Object> {
 
     private static final Logger LOG = Logger.getLogger(IdleProcess.class);
 
     public IdleProcess(DisSimNodeEntity entity) throws SimControlException {
-        super(entity, null);
+        super(entity);
     }
 
     @Override

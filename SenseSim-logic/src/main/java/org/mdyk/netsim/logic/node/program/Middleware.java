@@ -1,6 +1,7 @@
 package org.mdyk.netsim.logic.node.program;
 
 import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface Middleware {
     public void initialize();
 
     public void setSensorAPI(SensorAPI api);
+
+    public void setSensorSimEntity(SensorSimEntity simEntity);
 
     public void loadProgram(SensorProgram program);
 

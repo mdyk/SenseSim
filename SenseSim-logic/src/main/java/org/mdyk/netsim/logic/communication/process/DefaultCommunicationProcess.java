@@ -17,7 +17,6 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
     private double messageBits;
     private double alreadySent;
 
-    // TODO opakować w dedykowaną strukturę
     private Message message;
 
     public DefaultCommunicationProcess(int id, ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message) {
