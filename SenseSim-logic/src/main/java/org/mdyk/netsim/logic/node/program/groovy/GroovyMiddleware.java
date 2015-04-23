@@ -9,9 +9,11 @@ import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
 // TODO przeniesienie do oddzielnego modułu
@@ -27,7 +29,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
     int PID = 0;
 
     public GroovyMiddleware() {
-        programs = new HashMap<>();
+        programs = new ConcurrentHashMap<>();
         groovyShell = new GroovyShell();
     }
 
@@ -37,8 +39,14 @@ public class GroovyMiddleware extends Thread implements Middleware {
             @Override
             public Object apply(Message message) {
 
-//                message.getMessageContent();
+                Object messageContent = message.getMessageContent();
 
+                if(messageContent instanceof String){
+                    LOG.trace("messageContent is String");
+
+
+
+                }
 
                 return null;
             }
@@ -63,32 +71,36 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     @Override
     public List<SensorProgram> getPrograms() {
-//        return this.programs.entrySet();
-
-         return null;
+         return new ArrayList<>(programs.values());
     }
 
     @Override
     public void execute() {
 //        LOG.trace(">> execute");
 
-//        for(SensorProgram sensorProgram : programs) {
-//            GroovyProgram groovyProgram = (GroovyProgram) sensorProgram;
-//            Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
-//
-//            final GroovyMiddleware me = this;
-//
-//            new Thread()
-//            {
-//                public void run() {
-//                    me.sensorSimEntity.startProgramExecution(PID++);
-//                    scriptToRun.run();
-//                    me.sensorSimEntity.endProgramExecution(PID++);
-//                }
-//            }.start();
-//
-//
-//        }
+
+//        Iterator<SensorProgram> programsList = programs.values().iterator();
+        Iterator<Map.Entry<Integer,SensorProgram>> iter = programs.entrySet().iterator();
+
+        while(iter.hasNext()) {
+            Map.Entry<Integer,SensorProgram> entry = iter.next();
+            GroovyProgram groovyProgram = (GroovyProgram) entry.getValue();
+            Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
+
+            final GroovyMiddleware me = this;
+
+            new Thread()
+            {
+                public void run() {
+                    me.sensorSimEntity.startProgramExecution(PID);
+                    scriptToRun.run();
+                    me.sensorSimEntity.endProgramExecution(PID);
+
+                }
+            }.start();
+
+            programs.remove(entry.getKey());
+        }
 
         // TODO określenie co jeszcze miałby robić middleware
 

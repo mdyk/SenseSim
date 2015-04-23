@@ -29,6 +29,7 @@ public class Sensor {
         sensorSimEntity.setMiddleware(middleware);
         sensorAPI.setSimEntity(sensorSimEntity);
         middleware.setSensorAPI(sensorAPI);
+        middleware.setSensorSimEntity(sensorSimEntity);
         middleware.initialize();
     }
 

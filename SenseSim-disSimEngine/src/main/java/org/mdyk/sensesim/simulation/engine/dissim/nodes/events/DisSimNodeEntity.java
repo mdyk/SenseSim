@@ -7,6 +7,8 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.node.program.Middleware;
+import org.mdyk.netsim.logic.node.program.SensorProgram;
+import org.mdyk.netsim.logic.node.program.groovy.GroovyProgram;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 
 
@@ -35,13 +37,6 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
         super(context);
         this.setSensorLogic(sensorLogic);
         this.environment = environment;
-//        try {
-//            idleProcess = new IdleProcess(this);
-//            idleProcess.start();
-//        } catch (SimControlException e) {
-//            LOG.error(e.getMessage() , e);
-//            throw new RuntimeException(e.getMessage() ,e);
-//        }
     }
 
     protected void startNode() {
