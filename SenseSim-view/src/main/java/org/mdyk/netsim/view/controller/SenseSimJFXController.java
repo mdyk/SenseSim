@@ -9,14 +9,20 @@ import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.PopupBuilder;
+import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.controlsfx.dialog.Dialogs;
+import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.view.map.MapApp;
@@ -95,6 +101,53 @@ public class SenseSimJFXController implements Initializable {
 
     private void createSwingContent(final SwingNode swingNode) {
         SwingUtilities.invokeLater(() -> swingNode.setContent(app));
+    }
+
+    public void loadProgram() {
+        LOG.debug(">> loadProgram");
+        Dialog<Pair<Integer, String>> dialog = new Dialog<>();
+        dialog.setTitle("Write program for the network");
+        dialog.setHeaderText("Here you can macroprogram you network.");
+        ButtonType loginButtonType = new ButtonType("Send program", ButtonBar.ButtonData.OK_DONE);
+        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
+
+        GridPane grid = new GridPane();
+        grid.setHgap(10);
+        grid.setVgap(10);
+        grid.setPadding(new Insets(20, 150, 10, 10));
+
+        ChoiceBox<Integer> nodeId = new ChoiceBox<>(FXCollections.observableArrayList(nodeViews.keySet()));
+        CheckBox sendToAll = new CheckBox();
+        TextArea codeArea = new TextArea();
+        codeArea.setMinHeight(600);
+        codeArea.setMinWidth(800);
+        codeArea.setPromptText("Program");
+
+        grid.add(new Label("Node's id:"), 0, 0);
+        grid.add(nodeId, 1, 0);
+        grid.add(new Label("Send program to all nodes"),0,1);
+        grid.add(sendToAll,1,1);
+        grid.add(new Label("Code:"), 0, 2);
+        grid.add(codeArea, 1, 2);
+
+        dialog.getDialogPane().setContent(grid);
+
+        Platform.runLater(nodeId::requestFocus);
+
+        dialog.setResultConverter(dialogButton -> {
+            if (dialogButton == loginButtonType) {
+                return new Pair<>(nodeId.getValue(), codeArea.getText());
+            }
+            return null;
+        });
+
+        Optional<Pair<Integer, String>> result = dialog.showAndWait();
+
+        result.ifPresent(program -> {
+//            System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
+            EventBusHolder.getEventBus().post(EventFactory.loadProgram(program.getKey(),program.getValue()));
+        });
+        LOG.debug("<< loadProgram");
     }
 
     public void loadScenarioAction() {

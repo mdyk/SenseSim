@@ -1,5 +1,6 @@
 package org.mdyk.sensesim.simulation.engine.dissim;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 
 import dissim.simspace.core.SimControlException;
@@ -107,31 +108,36 @@ public class DisSimEngine implements SimEngine, Runnable {
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void processEvent(InternalEvent event) {
         LOG.debug(">> processEvent");
-        switch(event.getEventType()){
-            case SIM_PAUSE_NODES:
-                LOG.debug("SIM_PAUSE_NODES event");
-                this.pauseScenario();
-                break;
-            case SIM_RESUME_NODES:
-                LOG.debug("SIM_RESUME_NODES event");
-                this.resumeScenario();
-                break;
-            case SIM_START_NODES:
-                LOG.debug("SIM_START_NODES event");
-                this.runScenario();
-                break;
-            case SIM_STOP_NODES:
-                LOG.debug("SIM_STOP_NODES event");
-                this.stopScenario();
-                break;
-            case SCENARIO_LOADED:
-                LOG.debug("SCENARIO_LOADED event");
-                scenarioXML = (File) event.getPayload();
-                Scenario scenario = scenarioFactory.createXMLScenario(scenarioXML);
-                loadScenario(scenario);
-                break;
+        try {
+            switch(event.getEventType()){
+                case SIM_PAUSE_NODES:
+                    LOG.debug("SIM_PAUSE_NODES event");
+                    this.pauseScenario();
+                    break;
+                case SIM_RESUME_NODES:
+                    LOG.debug("SIM_RESUME_NODES event");
+                    this.resumeScenario();
+                    break;
+                case SIM_START_NODES:
+                    LOG.debug("SIM_START_NODES event");
+                    this.runScenario();
+                    break;
+                case SIM_STOP_NODES:
+                    LOG.debug("SIM_STOP_NODES event");
+                    this.stopScenario();
+                    break;
+                case SCENARIO_LOADED:
+                    LOG.debug("SCENARIO_LOADED event");
+                    scenarioXML = (File) event.getPayload();
+                    Scenario scenario = scenarioFactory.createXMLScenario(scenarioXML);
+                    loadScenario(scenario);
+                    break;
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage() , e);
         }
         LOG.debug("<< processEvent");
     }

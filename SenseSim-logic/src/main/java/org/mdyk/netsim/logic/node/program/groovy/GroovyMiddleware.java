@@ -1,9 +1,14 @@
 package org.mdyk.netsim.logic.node.program.groovy;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
+import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
+import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
@@ -26,11 +31,13 @@ public class GroovyMiddleware extends Thread implements Middleware {
     private Map<Integer, SensorProgram> programs;
     private GroovyShell groovyShell;
 
-    int PID = 0;
+    private int PID = 0;
+    private int nodeId;
 
     public GroovyMiddleware() {
         programs = new ConcurrentHashMap<>();
         groovyShell = new GroovyShell();
+        EventBusHolder.getEventBus().register(this);
     }
 
     @Override
@@ -62,6 +69,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
     @Override
     public void setSensorSimEntity(SensorSimEntity simEntity) {
         this.sensorSimEntity = simEntity;
+        this.nodeId = this.sensorSimEntity.getSensorLogic().getID();
     }
 
     @Override
@@ -76,10 +84,6 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     @Override
     public void execute() {
-//        LOG.trace(">> execute");
-
-
-//        Iterator<SensorProgram> programsList = programs.values().iterator();
         Iterator<Map.Entry<Integer,SensorProgram>> iter = programs.entrySet().iterator();
 
         while(iter.hasNext()) {
@@ -103,8 +107,6 @@ public class GroovyMiddleware extends Thread implements Middleware {
         }
 
         // TODO określenie co jeszcze miałby robić middleware
-
-//        LOG.trace("<< execute");
     }
 
     @Override
@@ -120,4 +122,29 @@ public class GroovyMiddleware extends Thread implements Middleware {
         }
 
     }
+
+    @Subscribe
+    @SuppressWarnings("unchecked")
+    @AllowConcurrentEvents
+    public void processEvent(InternalEvent event) {
+        LOG.trace(">> processEvent");
+        try{
+            switch(event.getEventType()){
+                case LOAD_PROGRAM:
+                    LOG.debug(">> LOAD_PROGRAM event");
+                    Pair<Integer, String> programToInstall = (Pair<Integer, String>) event.getPayload();
+                    // The program should be installed in current node.
+                    if(programToInstall.getKey()!=null && programToInstall.getKey().equals(nodeId)){
+                        LOG.debug("Installing program on node: " + nodeId);
+                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue());
+                        loadProgram(groovyProgram);
+                    }
+                    break;
+            }
+        } catch (Exception exc){
+            LOG.error(exc.getMessage() ,exc);
+        }
+        LOG.trace("<< processEvent");
+    }
+
 }

@@ -83,7 +83,24 @@
 </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="Nodes Managment">
+                        <Tab text="Network">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#loadProgram" text="Load program">
+                                             <HBox.margin>
+                                                <Insets />
+                                             </HBox.margin>
+                                          </Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </Tab>
+    <Tab text="Nodes">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 <children><SplitPane dividerPositions="0.5941828254847645" focusTraversable="true" layoutX="56.0" orientation="VERTICAL" prefHeight="724.0" prefWidth="316.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

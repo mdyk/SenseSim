@@ -1,5 +1,6 @@
 package org.mdyk.netsim.logic.event;
 
+import javafx.util.Pair;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
@@ -37,5 +38,10 @@ public class EventFactory {
 
     public static InternalEvent endProgramExecutionEvent(int PID) {
         return new InternalEvent(EventType.END_PROGRAM_EXECUTION, PID);
+    }
+
+    public static InternalEvent loadProgram(Integer nodeId , String Code) {
+        Pair<Integer, String> programCode = new Pair<>(nodeId,Code);
+        return new InternalEvent(EventType.LOAD_PROGRAM, programCode);
     }
 }
