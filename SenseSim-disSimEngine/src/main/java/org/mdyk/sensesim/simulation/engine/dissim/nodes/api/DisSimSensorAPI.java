@@ -4,6 +4,7 @@ import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
+import org.mdyk.netsim.logic.communication.message.SimpleMessage;
 import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -14,6 +15,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimSensorLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -68,8 +70,10 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void api_sendMessage(int destinationID, Message message) {
-        List<SensorNode<GeoPosition>> nodesToHop = sensorSimEntity.getSensorLogic().getRoutingAlgorithm().getNodesToHop(sensorSimEntity.getSensorLogic().getID(), destinationID , message , api_scanForNeighbors());
+    public void api_sendMessage(int originSource, int originDest, Object content, Integer size) {
+        Message message = new SimpleMessage(originDest, originSource, originDest , content, size);
+        List<SensorNode> neighbours =  ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getSensorLogic());
+        List<SensorNode<GeoPosition>> nodesToHop = sensorSimEntity.getSensorLogic().getRoutingAlgorithm().getNodesToHop(sensorSimEntity.getSensorLogic().getID(), originDest , message , neighbours);
         sensorSimEntity.getSensorLogic().startCommunication(message, nodesToHop.toArray(new SensorNode[nodesToHop.size()]));
     }
 
@@ -88,10 +92,18 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<SensorNode<GeoPosition>> api_scanForNeighbors() {
+    public List<Integer> api_scanForNeighbors() {
         LOG.trace(">< api_scanForNeighbors()");
 
-        return ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getSensorLogic());
+        List<SensorNode> neighbours =  ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getSensorLogic());
+
+        List<Integer> neighboursIds = new ArrayList<>();
+
+        for (SensorNode sensorNode : neighbours)  {
+            neighboursIds.add(sensorNode.getID());
+        }
+
+        return neighboursIds;
     }
 
     @Override
@@ -103,5 +115,10 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
     @Override
     public void api_setOnMessageHandler(Function<Message, Object> handler) {
         ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).onMessageHandler = handler;
+    }
+
+    @Override
+    public Integer api_getMyID() {
+        return sensorSimEntity.getSensorLogic().getID();
     }
 }

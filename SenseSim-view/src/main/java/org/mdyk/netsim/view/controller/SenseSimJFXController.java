@@ -144,7 +144,6 @@ public class SenseSimJFXController implements Initializable {
         Optional<Pair<Integer, String>> result = dialog.showAndWait();
 
         result.ifPresent(program -> {
-//            System.out.println("Username=" + usernamePassword.getKey() + ", Password=" + usernamePassword.getValue());
             EventBusHolder.getEventBus().post(EventFactory.loadProgram(program.getKey(),program.getValue()));
         });
         LOG.debug("<< loadProgram");

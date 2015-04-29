@@ -19,17 +19,18 @@ public class FloodingRouting implements RoutingAlgorithm<GeoPosition> {
         sentMessage = new HashMap<>();
     }
 
+    // TODO konieczne jest zablokowanie możliwości wysyłania wiadomości do węzłów od których ją otrzylamiśmy
     @Override
     public List<SensorNode<GeoPosition>> getNodesToHop(int sender, int destination, Message message, List<SensorNode<GeoPosition>> knownSensors) {
         List<SensorNode<GeoPosition>> sensorsToHop = new ArrayList<>(knownSensors);
 
         boolean foundSender = false;
-        for(int i = 0 ; i < sensorsToHop.size() && !foundSender ; i++) {
-            if(sensorsToHop.get(i).getID() == message.getID()) {
-                foundSender = true;
-                sensorsToHop.remove(i);
-            }
-        }
+//        for(int i = 0 ; i < sensorsToHop.size() && !foundSender ; i++) {
+//            if(sensorsToHop.get(i).getID() == message.getID()) {
+//                foundSender = true;
+//                sensorsToHop.remove(i);
+//            }
+//        }
 
         // Filtering nodes to which the message was already sent.
         if(sentMessage.containsKey(message.getID())) {

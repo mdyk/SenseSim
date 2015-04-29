@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.node.program.groovy;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import groovy.lang.Binding;
 import groovy.lang.GroovyShell;
 import groovy.lang.Script;
 import javafx.util.Pair;
@@ -14,10 +15,7 @@ import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -46,14 +44,20 @@ public class GroovyMiddleware extends Thread implements Middleware {
             @Override
             public Object apply(Message message) {
 
-                Object messageContent = message.getMessageContent();
+            Object messageContent = message.getMessageContent();
 
-                if(messageContent instanceof String){
-                    LOG.trace("messageContent is String");
+            if(messageContent instanceof String){
+                LOG.trace("messageContent is String");
+                String groovyScript = (String) messageContent;
+                Script scriptToRun = groovyShell.parse(groovyScript);
 
-
-
+                if(scriptToRun != null) {
+                    LOG.debug("scriptToRun != null");
+                    GroovyProgram groovyProgram = new GroovyProgram(groovyScript);
+                    loadProgram(groovyProgram);
                 }
+
+            }
 
                 return null;
             }
@@ -97,7 +101,14 @@ public class GroovyMiddleware extends Thread implements Middleware {
             {
                 public void run() {
                     me.sensorSimEntity.startProgramExecution(PID);
-                    scriptToRun.run();
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("api" , sensorAPI);
+                    scriptToRun.setBinding(new Binding(params));
+                    try{
+                        scriptToRun.run();
+                    } catch (Exception exc) {
+                        LOG.error(exc.getMessage(),exc);
+                    }
                     me.sensorSimEntity.endProgramExecution(PID);
 
                 }

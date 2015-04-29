@@ -5,6 +5,7 @@ import dissim.simspace.core.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.logic.communication.Message;
+import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
@@ -55,6 +56,8 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
+        // FIXME powinno być ustawiane w konfiguracji.
+        this.routingAlgorithm = new FloodingRouting();
         this.communicationProcessFactory = communicationProcessFactory;
         this.isMoveing = true;
     }
@@ -75,16 +78,17 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     @SuppressWarnings("unchecked")
     protected void onMessage(double time, Message message) {
         // TODO execute program
+
+        if(onMessageHandler != null) {
+            onMessageHandler.apply(message);
+        }
+
         if(message.getMessageDest() != id) {
             List<SensorNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(this);
             List<SensorNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
 
             startCommunication(message,hopTargets.toArray(new SensorNode[hopTargets.size()]));
 
-        }
-
-        if(onMessageHandler != null) {
-            onMessageHandler.apply(message);
         }
 
     }

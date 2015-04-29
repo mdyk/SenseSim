@@ -126,22 +126,22 @@ public class NetworkManager<P extends Position> {
             }
         }
 
-        neighborhood.get(changedSensor.getID()).clear();
-
-        // TODO: ta konwersja powinna się odbywać w inny sposób (najlepiej bez iterowania za każdym razem po liście)
-        for(ISensorModel sensorModel : networkGraph.listNeighbors(changedSensor)) {
-            neighborhood.get(changedSensor.getID()).add((SensorNode) sensorModel);
-            // To samo trzeba zrobić w drugą stronę
-            if(!neighborhood.get(sensorModel.getID()).contains(changedSensor)) {
-                neighborhood.get(sensorModel.getID()).add(changedSensor);
-            }
-        }
+//        neighborhood.get(changedSensor.getID()).clear();
+//
+//        // TODO: ta konwersja powinna się odbywać w inny sposób (najlepiej bez iterowania za każdym razem po liście)
+//        for(ISensorModel sensorModel : networkGraph.listNeighbors(changedSensor)) {
+//            neighborhood.get(changedSensor.getID()).add((SensorNode) sensorModel);
+//            // To samo trzeba zrobić w drugą stronę
+//            if(!neighborhood.get(sensorModel.getID()).contains(changedSensor)) {
+//                neighborhood.get(sensorModel.getID()).add(changedSensor);
+//            }
+//        }
 
         LOG.debug("<< actualizeNaighbours");
     }
 
-    public List<SensorNode<?>> getNeighborhood(SensorNode<?> sensorNode) {
-        return Optional.ofNullable(neighborhood.get(sensorNode.getID())).orElse(new ArrayList<>());
+    public List<ISensorModel> getNeighborhood(SensorNode<?> sensorNode) {
+        return Optional.ofNullable(networkGraph.listNeighbors(sensorNode)).orElse(new ArrayList<>());
     }
 }
 

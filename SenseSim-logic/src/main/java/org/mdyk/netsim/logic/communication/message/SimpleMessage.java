@@ -6,10 +6,10 @@ import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 public class SimpleMessage implements Message {
 
-    private SensorNode<?> originSource;
-    private SensorNode<?> originDest;
+    private int originSource;
+    private int originDest;
     private Object content;
-    private int size;
+    private Integer size;
     private int id;
 
     /**
@@ -25,7 +25,7 @@ public class SimpleMessage implements Message {
      * @param size
      *      size of the message in bytes.
      */
-    public SimpleMessage(int id, SensorNode<?> originSource, SensorNode<?> originDest, Object content, int size) {
+    public SimpleMessage(int id, int originSource, int originDest, Object content, Integer size) {
         this.id = id;
         this.originSource = originSource;
         this.originDest = originDest;
@@ -45,16 +45,22 @@ public class SimpleMessage implements Message {
 
     @Override
     public int getSize() {
+
+        if(content instanceof  String && size == null) {
+            String contentString = (String) content;
+            size = contentString.getBytes().length;
+        }
+
         return size;
     }
 
     @Override
     public int getMessageSource() {
-        return originSource.getID();
+        return originSource;
     }
 
     @Override
     public int getMessageDest() {
-        return originDest.getID();
+        return originDest;
     }
 }

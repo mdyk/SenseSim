@@ -43,7 +43,7 @@ public interface SensorAPI<P extends Position> {
      * @param message
      *      message to be sent.
      */
-    public void api_sendMessage(int id, Message message);
+    public void api_sendMessage(int originSource, int originDest, Object content , Integer size );
 
     /**
      * Returns list of sensor's observations.
@@ -64,7 +64,8 @@ public interface SensorAPI<P extends Position> {
      * @return
      *      list of found neighbours.
      */
-    public List<SensorNode<P>> api_scanForNeighbors();
+    // public List<SensorNode<P>> api_scanForNeighbors();
+    public List<Integer> api_scanForNeighbors();
 
     /**
      * Returns node's current position.
@@ -78,4 +79,10 @@ public interface SensorAPI<P extends Position> {
      */
     public void api_setOnMessageHandler(Function<Message , Object> handler);
 
+    /**
+     * Returns ID of the sensor
+     * @return
+     *      ID of the sensor.
+     */
+    public Integer api_getMyID();
 }
