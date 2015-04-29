@@ -63,9 +63,10 @@ public class GroovyProgrammingTest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor node1 = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 0, new ArrayList<>());
+        Sensor node1 = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 10, new ArrayList<>());
 
         List<GeoPosition> route = new ArrayList<>();
+        route.add(new GeoPosition(52.230532, 21.005521));
         route.add(new GeoPosition(52.230963,21.004534));
         route.add(new GeoPosition(52.231594, 21.003547));
         node1.getSensorLogic().setRoute(route);
