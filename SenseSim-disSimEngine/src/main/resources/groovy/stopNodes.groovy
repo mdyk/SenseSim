@@ -1,4 +1,5 @@
-//package groovyScripts
+package groovy
+//package org.mdyk.netsim.logic.communication.groovyScripts
 
 import org.mdyk.netsim.logic.node.api.SensorAPI;
 
