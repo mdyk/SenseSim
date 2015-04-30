@@ -126,7 +126,7 @@ public class DisSimSensorAPITest {
         };
 
         receiver.getSensorAPI().api_setOnMessageHandler(handler);
-        sender.getSensorAPI().api_sendMessage(1,2, "test", 5000);
+        sender.getSensorAPI().api_sendMessage(1, 1,2, "test", 5000);
 
         Thread.sleep(10000);
 
@@ -181,7 +181,7 @@ public class DisSimSensorAPITest {
         receiver.getSensorAPI().api_setOnMessageHandler(receiverHandler);
 
 
-        sender.getSensorAPI().api_sendMessage(1,3,"test", 512);
+        sender.getSensorAPI().api_sendMessage(1, 1,3,"test", 512);
 
 //        while(true);
 

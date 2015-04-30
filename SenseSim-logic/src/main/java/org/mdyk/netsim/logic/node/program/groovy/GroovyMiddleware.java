@@ -164,7 +164,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
         if(program.resend()) {
             List<Integer> neighbours = sensorAPI.api_scanForNeighbors();
             for (Integer neighbour : neighbours) {
-                sensorAPI.api_sendMessage(sensorAPI.api_getMyID(), neighbour, program.getGroovyScript() , null );
+                sensorAPI.api_sendMessage(program.getGroovyScript().hashCode(), sensorAPI.api_getMyID(), neighbour, program.getGroovyScript() , null );
             }
         }
         LOG.trace("<< resendProgram");

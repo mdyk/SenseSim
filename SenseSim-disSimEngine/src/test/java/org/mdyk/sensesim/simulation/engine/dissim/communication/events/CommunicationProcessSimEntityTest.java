@@ -16,7 +16,6 @@ import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.*;
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
@@ -26,7 +25,6 @@ import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicat
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorAPIFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimSensorLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
 import java.lang.reflect.Field;

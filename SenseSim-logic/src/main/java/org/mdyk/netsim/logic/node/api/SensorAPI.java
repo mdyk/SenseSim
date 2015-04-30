@@ -38,12 +38,18 @@ public interface SensorAPI<P extends Position> {
 
     /**
      * Sends message to sensor with given id. Method does not ensure delivery.
-     * @param id
-     *      id of the destination sensor.
-     * @param message
-     *      message to be sent.
+     * @param messageId
+     *      id of the message. Should be unique
+     * @param originSource
+     *      sender of the message (will not change during hop by hop communication)
+     * @param originDest
+     *      receiver of the message (will not change during hop by hop communication)
+     * @param content
+     *      content of the message.
+     * @param size
+     *      size of the message. If null, the size will be calculated based on content (if that's possible).
      */
-    public void api_sendMessage(int originSource, int originDest, Object content , Integer size );
+    public void api_sendMessage(int messageId, int originSource, int originDest, Object content , Integer size );
 
     /**
      * Returns list of sensor's observations.
