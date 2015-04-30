@@ -6,11 +6,13 @@ import org.mdyk.netsim.logic.node.program.SensorProgram;
 public class GroovyProgram implements SensorProgram {
 
     private String groovyScript;
+    private boolean resend;
 
     private int PID;
 
-    public GroovyProgram(String groovyScript) {
+    public GroovyProgram(String groovyScript, boolean resend) {
         this.groovyScript = groovyScript;
+        this.resend = resend;
     }
 
     @Override
@@ -31,6 +33,11 @@ public class GroovyProgram implements SensorProgram {
     @Override
     public Object getResult() {
         return null;
+    }
+
+    @Override
+    public boolean resend() {
+        return this.resend;
     }
 
     public String getGroovyScript() {

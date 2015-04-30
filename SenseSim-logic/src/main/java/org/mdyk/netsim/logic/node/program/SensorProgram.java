@@ -17,4 +17,12 @@ public interface SensorProgram {
 
     public Object getResult();
 
+    /**
+     * Flag defines if program should be resent to other
+     * nodes.
+     * @return
+     *      true if program should be resent, false in other case.
+     */
+    public boolean resend();
+
 }

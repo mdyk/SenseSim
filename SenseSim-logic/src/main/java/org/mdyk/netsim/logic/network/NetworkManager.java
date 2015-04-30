@@ -84,11 +84,11 @@ public class NetworkManager<P extends Position> {
     public void processEvent(InternalEvent event) {
         LOG.debug(">> processEvent");
         switch(event.getEventType()){
-//            case NEW_NODE:
-//                LOG.debug("NEW_NODE event");
-//                SensorNode sensorNode = (SensorNode) event.getPayload();
-//                actualizeNaighbours(sensorNode);
-//                break;
+            case NEW_NODE:
+                LOG.debug("NEW_NODE event");
+                SensorNode sensorNode = (SensorNode) event.getPayload();
+                actualizeNaighbours(sensorNode);
+                break;
             case NODE_POSITION_CHANGED:
                 LOG.debug("NODE_POSITION_CHANGED event");
                 actualizeNaighbours((SensorNode) event.getPayload());

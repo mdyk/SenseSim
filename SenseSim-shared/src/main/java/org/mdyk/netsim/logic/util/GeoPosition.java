@@ -79,4 +79,5 @@ public class GeoPosition extends Position {
     }
 
 
+
 }

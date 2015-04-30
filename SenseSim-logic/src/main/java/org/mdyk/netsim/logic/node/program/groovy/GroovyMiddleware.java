@@ -44,20 +44,20 @@ public class GroovyMiddleware extends Thread implements Middleware {
             @Override
             public Object apply(Message message) {
 
-            Object messageContent = message.getMessageContent();
+                Object messageContent = message.getMessageContent();
 
-            if(messageContent instanceof String){
-                LOG.trace("messageContent is String");
-                String groovyScript = (String) messageContent;
-                Script scriptToRun = groovyShell.parse(groovyScript);
+                if(messageContent instanceof String){
+                    LOG.trace("messageContent is String");
+                    String groovyScript = (String) messageContent;
+                    Script scriptToRun = groovyShell.parse(groovyScript);
 
-                if(scriptToRun != null) {
-                    LOG.debug("scriptToRun != null");
-                    GroovyProgram groovyProgram = new GroovyProgram(groovyScript);
-                    loadProgram(groovyProgram);
+                    if(scriptToRun != null) {
+                        LOG.debug("scriptToRun != null");
+                        GroovyProgram groovyProgram = new GroovyProgram(groovyScript, true);
+                        loadProgram(groovyProgram);
+                    }
+
                 }
-
-            }
 
                 return null;
             }
@@ -113,7 +113,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
                 }
             }.start();
-
+            resendProgram(groovyProgram);
             programs.remove(entry.getKey());
         }
 
@@ -135,8 +135,8 @@ public class GroovyMiddleware extends Thread implements Middleware {
     }
 
     @Subscribe
-    @SuppressWarnings("unchecked")
     @AllowConcurrentEvents
+    @SuppressWarnings("unchecked")
     public void processEvent(InternalEvent event) {
         LOG.trace(">> processEvent");
         try{
@@ -147,7 +147,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     // The program should be installed in current node.
                     if(programToInstall.getKey()!=null && programToInstall.getKey().equals(nodeId)){
                         LOG.debug("Installing program on node: " + nodeId);
-                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue());
+                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue(), true);
                         loadProgram(groovyProgram);
                     }
                     break;
@@ -156,6 +156,18 @@ public class GroovyMiddleware extends Thread implements Middleware {
             LOG.error(exc.getMessage() ,exc);
         }
         LOG.trace("<< processEvent");
+    }
+
+    @SuppressWarnings("unchecked")
+    private void resendProgram(GroovyProgram program) {
+        LOG.trace(">> resendProgram");
+        if(program.resend()) {
+            List<Integer> neighbours = sensorAPI.api_scanForNeighbors();
+            for (Integer neighbour : neighbours) {
+                sensorAPI.api_sendMessage(sensorAPI.api_getMyID(), neighbour, program.getGroovyScript() , null );
+            }
+        }
+        LOG.trace("<< resendProgram");
     }
 
 }
