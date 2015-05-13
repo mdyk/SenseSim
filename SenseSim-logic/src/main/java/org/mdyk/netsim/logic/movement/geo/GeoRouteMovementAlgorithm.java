@@ -67,6 +67,8 @@ public class GeoRouteMovementAlgorithm implements GeoMovementAlgorithm {
 
     @Override
     public void setRoute(List<GeoPosition> route) {
+        nearestCheckpointIdx = 0;
+        bearing = Double.NaN;
         this.route = route;
     }
 

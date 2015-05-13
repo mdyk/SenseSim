@@ -10,6 +10,13 @@ sensorAPI.api_stopMove();
 List<Integer> neighbours = sensorAPI.api_scanForNeighbors();
 
 
+(sensorAPI.api_getMyID() == 1) {
+
+    sensorAPI.api_stopMove();
+}
+
+sensorAPI.api_setRoute()
+
 String scriptContent = "api.api_stopMove();";
 
 for (Integer neighbour : neighbours) {

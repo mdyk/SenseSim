@@ -121,7 +121,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     @Override
     public void setRoute(List<GeoPosition> route) {
         this.route = route;
-        currentMovementAlg.setRoute(getRoute());
+        currentMovementAlg.setRoute(route);
     }
 
     @Override

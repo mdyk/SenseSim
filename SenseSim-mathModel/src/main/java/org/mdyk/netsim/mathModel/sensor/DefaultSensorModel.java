@@ -100,8 +100,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
                 values.addAll(valuesMap.get(time));
             }
 
-            List<PhenomenonValue> valuesCopy = new ArrayList<>(values.size());
-            Collections.copy(valuesCopy , values);
+            List<PhenomenonValue> valuesCopy = new ArrayList<>(values);
 
             observationsByAbilities.put(ability , valuesCopy);
         }

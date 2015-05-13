@@ -91,4 +91,8 @@ public interface SensorAPI<P extends Position> {
      *      ID of the sensor.
      */
     public Integer api_getMyID();
+
+
+    public PhenomenonValue api_getCurrentObservation(AbilityType abilityType);
+
 }

@@ -121,4 +121,18 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
     public Integer api_getMyID() {
         return sensorSimEntity.getSensorLogic().getID();
     }
+
+    @Override
+    public PhenomenonValue api_getCurrentObservation(AbilityType abilityType) {
+
+        Map<AbilityType, List<PhenomenonValue>> obserations = sensorSimEntity.getSensorLogic().getObservations();
+
+        List<PhenomenonValue> valueList = obserations.get(abilityType);
+
+        if (valueList.size() > 0){
+            return valueList.get(valueList.size()-1);
+        }   else {
+            return null; // FIXME powinno zwracać NullPhenomenonValue
+        }
+    }
 }
