@@ -70,8 +70,6 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
             this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);
         }
 
-        EventBusHolder.getEventBus().post(EventFactory.startSenseEvent(this));
-
     }
 
     @Override

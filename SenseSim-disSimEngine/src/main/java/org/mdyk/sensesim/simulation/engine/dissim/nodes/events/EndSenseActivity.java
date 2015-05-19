@@ -3,6 +3,8 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 import dissim.simspace.core.BasicSimStateChange;
 import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
 
 
@@ -25,7 +27,7 @@ public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Obje
 
         sensorEntity.startSenseActivity = new StartSenseActivity(sensorEntity);
         sensorNode.sense();
-
+        EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(sensorEntity.getSensorLogic()));
         LOG.trace("<< EndSenseActivity time");
     }
 

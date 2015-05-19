@@ -5,6 +5,8 @@ import dissim.simspace.core.BasicSimStateChange;
 import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
+import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
 
 public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
@@ -26,7 +28,7 @@ public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Ob
     @Override
     protected void transition() throws SimControlException {
         LOG.trace(">> StartSenseActivity time=" + simTime());
-
+        EventBusHolder.getEventBus().post(EventFactory.startSenseEvent(disSimNodeEntity.getSensorLogic()));
         disSimNodeEntity.endSenseActivity = new EndSenseActivity(0.5, disSimNodeEntity);
 
         LOG.trace("<< StartSenseActivity");
