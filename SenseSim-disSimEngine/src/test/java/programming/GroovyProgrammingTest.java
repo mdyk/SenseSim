@@ -193,21 +193,18 @@ public class GroovyProgrammingTest {
         GeoPosition node3Pos3 = (GeoPosition) node3.getSensorAPI().api_getPosition();
         GeoPosition node4Pos3 = (GeoPosition) node4.getSensorAPI().api_getPosition();
 
-//        TestCase.assertTrue(node1Pos1.getLatitude() != node1Pos3.getLatitude());
-//        TestCase.assertTrue(node1Pos1.getLongitude() != node1Pos3.getLongitude());
-//
-//        TestCase.assertTrue(node2Pos1.getLatitude() != node2Pos3.getLatitude());
-//        TestCase.assertTrue(node2Pos1.getLongitude() != node2Pos3.getLongitude());
-//
-//        TestCase.assertTrue(node3Pos1.getLatitude() != node3Pos3.getLatitude());
-//        TestCase.assertTrue(node3Pos1.getLongitude() != node3Pos3.getLongitude());
-//
-//        TestCase.assertTrue(node4Pos1.getLatitude() != node4Pos3.getLatitude());
-//        TestCase.assertTrue(node4Pos1.getLongitude() != node4Pos3.getLongitude());
+        TestCase.assertTrue(node1Pos1.getLatitude() != node1Pos3.getLatitude());
+        TestCase.assertTrue(node1Pos1.getLongitude() != node1Pos3.getLongitude());
 
-        while(true) {
-            Thread.sleep(500);
-        }
+        TestCase.assertTrue(node2Pos1.getLatitude() != node2Pos3.getLatitude());
+        TestCase.assertTrue(node2Pos1.getLongitude() != node2Pos3.getLongitude());
+
+        TestCase.assertTrue(node3Pos1.getLatitude() != node3Pos3.getLatitude());
+        TestCase.assertTrue(node3Pos1.getLongitude() != node3Pos3.getLongitude());
+
+        TestCase.assertTrue(node4Pos1.getLatitude() != node4Pos3.getLatitude());
+        TestCase.assertTrue(node4Pos1.getLongitude() != node4Pos3.getLongitude());
+
     }
 
 }
