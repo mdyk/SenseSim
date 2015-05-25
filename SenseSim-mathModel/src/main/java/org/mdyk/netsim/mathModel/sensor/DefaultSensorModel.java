@@ -117,6 +117,11 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
         LOG.debug("Adding observation [ability=" + ability + " time=" + time + " , value=" + value + "]");
         List<PhenomenonValue> observationsAtTime;
 
+        if(value == null || value.getValueClass().equals(PhenomenonValue.NullPhenomenonValue.class)) {
+            LOG.trace("[sensor "+ this.getID() +"] No value at time + " + time);
+            return;
+        }
+
         if(!observations.containsKey(ability)) {
             observationsAtTime = new ArrayList<>();
             observationsAtTime.add(value);

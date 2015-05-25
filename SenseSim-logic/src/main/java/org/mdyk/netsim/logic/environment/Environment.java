@@ -37,7 +37,7 @@ public class Environment {
         PhenomenonValue retVal = null;
 
         for(IPhenomenonModel event : phenomena) {
-            if(event.hasAbility(ability)) {
+            if(event.hasAbility(ability) && Functions.isPointInRegion(position,event.getPhenomenonRegionPoints())) {
                 retVal = event.getPhenomenonValue(ability, time);
             }
         }
