@@ -1,5 +1,7 @@
 package org.mdyk.netsim.mathModel.phenomena;
 
+import java.util.Comparator;
+
 /**
  * Holds value of the phenomenon
  */
@@ -47,4 +49,20 @@ public class PhenomenonValue {
                 ", valueClass=" + valueClass +
                 '}';
     }
+
+    public static class DescTimeComparator implements Comparator<PhenomenonValue> {
+
+        @Override
+        public int compare(PhenomenonValue o1, PhenomenonValue o2) {
+
+            if(o1.getTime() < o2.getTime()) {
+                return 1;
+            } else if (o1.getTime() > o2.getTime()) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
+    }
+
 }

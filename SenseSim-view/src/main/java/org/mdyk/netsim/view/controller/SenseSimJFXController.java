@@ -65,9 +65,14 @@ public class SenseSimJFXController implements Initializable {
     @FXML
     private TextField details_nodeId;
     @FXML
-    private TextField details_nodePosition;
+    private TextField nodeLatitude;
+    @FXML
+    private TextField nodeLongitude;
 
     private MapApp app;
+
+
+    private OSMNodeView selectedNode;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -86,13 +91,20 @@ public class SenseSimJFXController implements Initializable {
         nodesTree.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
             @Override
             public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> stringTreeItem2) {
-                details_nodeId.setText(observableValue.getValue().getValue());
-
-                OSMNodeView node = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
-                details_nodePosition.setText(node.getNodePosition().toString());
-
-                observationsPane.getChildren().add(nodesAbilities.get(node.getID()));
-
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        details_nodeId.setText(observableValue.getValue().getValue());
+                        selectedNode = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
+//                actualizePositionLabel();
+                        if(selectedNode != null) {
+                            nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
+                            nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
+                        }
+                        observationsPane.getChildren().clear();
+                        observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
+                    }
+                });
             }
         });
 
@@ -188,6 +200,7 @@ public class SenseSimJFXController implements Initializable {
             Tab abilityTab = new Tab(ability.name());
             TableView<PhenomenonValue> abilityTable = new TableView<>();
 
+
             TableColumn<PhenomenonValue, String> timeColumn = new TableColumn<>("Time");
             TableColumn<PhenomenonValue, Object> valueColumn = new TableColumn<>("Value");
 
@@ -242,14 +255,27 @@ public class SenseSimJFXController implements Initializable {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                for(Tab tab : nodesAbilities.get(sensor.getID()).getTabs()) {
-                    TableView<PhenomenonValue> abilityTable = (TableView<PhenomenonValue>) tab.getContent();
-                    List<PhenomenonValue> observations = sensor.getObservations().get(AbilityType.valueOf(tab.getText()));
-                    ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
-                    observationsData.addAll(observations);
-                    abilityTable.setItems(observationsData);
-                    abilityTable.getColumns().get(0).setVisible(false);
-                    abilityTable.getColumns().get(0).setVisible(true);
+                if(selectedNode != null && selectedNode.getID() == sensor.getID()) {
+                    for(Tab tab : nodesAbilities.get(sensor.getID()).getTabs()) {
+                        TableView<PhenomenonValue> abilityTable = (TableView<PhenomenonValue>) tab.getContent();
+                        List<PhenomenonValue> observations = sensor.getObservations().get(AbilityType.valueOf(tab.getText()));
+
+                        if(observations != null) {
+
+                            List<PhenomenonValue> observationsSublist;
+                            if(observations.size() > 50) {
+                                observationsSublist = observations.subList(observations.size()-49 , observations.size()-1);
+                            } else {
+                                observationsSublist = observations;
+                            }
+
+                            observationsSublist.sort(new PhenomenonValue.DescTimeComparator());
+                            ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
+
+                            observationsData.addAll(observationsSublist);
+                            abilityTable.setItems(observationsData);
+                        }
+                    }
                 }
             }
         });
@@ -270,7 +296,9 @@ public class SenseSimJFXController implements Initializable {
                 break;
             case NODE_POSITION_CHANGED:
                 sensorModelNode = (GeoSensorNode) event.getPayload();
-                nodeViews.get(sensorModelNode.getID()).relocate(sensorModelNode.getPosition());
+                OSMNodeView node = nodeViews.get(sensorModelNode.getID());
+                node.relocate(sensorModelNode.getPosition());
+                actualizePositionLabel();
                 break;
             case EDGE_ADDED:
                 LOG.debug("EDGE_ADDED event");
@@ -299,5 +327,16 @@ public class SenseSimJFXController implements Initializable {
         LOG.debug("<< processEvent");
     }
 
+    private void actualizePositionLabel() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                if(selectedNode != null) {
+                    nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
+                    nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
+                }
+            }
+        });
+    }
 
 }
