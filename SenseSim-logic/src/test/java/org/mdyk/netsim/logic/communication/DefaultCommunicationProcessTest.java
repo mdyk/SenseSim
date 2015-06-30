@@ -16,7 +16,7 @@ public class DefaultCommunicationProcessTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testGetETA() throws Exception {
-        ISensorModel sender = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 1 , new LinkedList<>()) {
+        ISensorModel sender = new DefaultSensorModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
                 // unused
@@ -28,7 +28,7 @@ public class DefaultCommunicationProcessTest {
             }
         } ;
 
-        ISensorModel receiver = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 1 , new LinkedList<>()) {
+        ISensorModel receiver = new DefaultSensorModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
                 // unused
@@ -71,7 +71,7 @@ public class DefaultCommunicationProcessTest {
     @Test
     @SuppressWarnings("unchecked")
     public void getCommunicationStatusTest() {
-        ISensorModel sender = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 1 , new LinkedList<>()) {
+        ISensorModel sender = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 5000 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
                 // unused
@@ -83,7 +83,7 @@ public class DefaultCommunicationProcessTest {
             }
         } ;
 
-        ISensorModel receiver = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 1 , new LinkedList<>()) {
+        ISensorModel receiver = new DefaultSensorModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
 

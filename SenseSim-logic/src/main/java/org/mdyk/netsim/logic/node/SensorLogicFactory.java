@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface SensorLogicFactory {
 
-    public SensorLogic buildSensorLogic(int id, GeoPosition position, int radioRange, double velocity, List<AbilityType> abilities);
+    public SensorLogic buildSensorLogic(int id, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities);
 
 }

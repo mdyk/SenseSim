@@ -35,16 +35,6 @@
         </xs:sequence>
     </xs:complexType>
 
-    <!--<xs:complexType name="abilityType">-->
-        <!--<xs:sequence>-->
-            <!--<xs:element name="ability">-->
-                <!--<xs:simpleType>-->
-                    <!--<xs:restriction base="xs:string"/>-->
-                <!--</xs:simpleType>-->
-            <!--</xs:element>-->
-        <!--</xs:sequence>-->
-    <!--</xs:complexType>-->
-
     <xs:complexType name="startPositionType">
         <xs:sequence>
             <xs:element type="xs:string" name="latitude"/>
@@ -56,6 +46,7 @@
         <xs:sequence>
             <xs:element type="xs:string" name="speed"/>
             <xs:element type="xs:string" name="radioRange"/>
+            <xs:element type="xs:string" name="radioBandwidth"/>
             <xs:element name="sesnorImplType">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">

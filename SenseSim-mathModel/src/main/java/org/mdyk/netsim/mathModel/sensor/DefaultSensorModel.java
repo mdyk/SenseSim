@@ -26,10 +26,11 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     protected Map<Double, List<Message>> messagesMap;
     protected RoutingAlgorithm routingAlgorithm;
 
-    protected DefaultSensorModel(int id, P position, int radioRange, double velocity, List<AbilityType> abilities) {
+    protected DefaultSensorModel(int id, P position, int radioRange ,int bandwidth , double velocity, List<AbilityType> abilities) {
         this.id = id;
         this.position = position;
         this.radioRange = radioRange;
+        this.bandwith = bandwidth;
         this.velocity = velocity;
         this.abilities = abilities;
         this.observations = new HashMap<>();

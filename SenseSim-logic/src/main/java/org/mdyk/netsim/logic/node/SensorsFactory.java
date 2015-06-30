@@ -29,9 +29,9 @@ public class SensorsFactory {
     @Inject
     private MiddlewareFactory middlewareFactory;
 
-    public Sensor buildSensor(int id, GeoPosition position, int radioRange, double velocity, List<AbilityType> abilities){
+    public Sensor buildSensor(int id, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities){
 
-        SensorLogic sensorLogic = sensorLogicFactory.buildSensorLogic(id,position,radioRange,velocity, abilities);
+        SensorLogic sensorLogic = sensorLogicFactory.buildSensorLogic(id,position,radioRange, bandwidth, velocity, abilities);
         SensorSimEntity sensorSimEntity = simEntityFactory.buildSensorSimEntity(sensorLogic);
         SensorAPI sensorAPI = sensorAPIFactory.buildSensorAPI(sensorSimEntity);
         Middleware middleware = middlewareFactory.buildMiddleware();

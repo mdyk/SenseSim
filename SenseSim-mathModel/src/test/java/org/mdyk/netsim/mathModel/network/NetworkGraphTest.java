@@ -100,7 +100,7 @@ public class NetworkGraphTest {
     public class TestSensor extends DefaultSensorModel {
 
         protected TestSensor(int id) {
-            super(id, null, 0, 0, null);
+            super(id, null, 0, 0, 0, null);
         }
 
         @Override

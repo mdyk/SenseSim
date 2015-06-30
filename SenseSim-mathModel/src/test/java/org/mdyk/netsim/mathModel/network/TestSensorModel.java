@@ -11,11 +11,11 @@ import java.util.List;
 public class TestSensorModel extends DefaultSensorModel {
 
     protected TestSensorModel(int id, Position position, int radioRange, int velocity) {
-        super(id, position, radioRange, velocity, null);
+        super(id, position, radioRange, 5000, velocity, null);
     }
 
     protected TestSensorModel(int id) {
-        super(id, null, 0, 0, null);
+        super(id, null, 0, 0, 0, null);
     }
 
     @Override

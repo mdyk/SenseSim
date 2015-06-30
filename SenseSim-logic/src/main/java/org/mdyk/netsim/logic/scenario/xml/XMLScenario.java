@@ -81,7 +81,7 @@ public class XMLScenario implements Scenario {
                     List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
 
                     Sensor node = sensorsFactory.buildSensor(Integer.parseInt(nodeType.getId()),
-                            position, Integer.parseInt(nodeType.getRadioRange()),
+                            position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
                             Double.parseDouble(nodeType.getSpeed()), abilities);
                     node.getSensorLogic().setRoute(route);
 //                    node.getSensorLogic().setRoutingAlgorithm(nodeType , node);

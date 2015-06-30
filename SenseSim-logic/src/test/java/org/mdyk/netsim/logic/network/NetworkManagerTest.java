@@ -69,7 +69,7 @@ public class NetworkManagerTest {
 
 
         protected TestSensorNode(int id, Position position) {
-            super(id, position, 90, 1, new LinkedList<>());
+            super(id, position, 90, 5000,  1, new LinkedList<>());
         }
 
         @Override

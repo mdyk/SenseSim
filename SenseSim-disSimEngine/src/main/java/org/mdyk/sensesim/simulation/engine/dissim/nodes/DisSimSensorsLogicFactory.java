@@ -34,7 +34,7 @@ public class DisSimSensorsLogicFactory implements SensorLogicFactory {
     private CommunicationProcessFactory communicationProcessFactory;
 
     @Override
-    public SensorLogic buildSensorLogic(int id, GeoPosition position, int radioRange, double velocity, List<AbilityType> abilities) {
-        return new DisSimSensorLogic(id, position, radioRange, velocity, abilities, environment, wirelessChannel, communicationProcessFactory);
+    public SensorLogic buildSensorLogic(int id, GeoPosition position, int radioRange, int bandwidth , double velocity, List<AbilityType> abilities) {
+        return new DisSimSensorLogic(id, position, radioRange, bandwidth, velocity, abilities, environment, wirelessChannel, communicationProcessFactory);
     }
 }

@@ -48,10 +48,10 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
 
     @Inject
     public DisSimSensorLogic(@Assisted("id") int id, @Assisted GeoPosition position,
-                             @Assisted("radioRange") int radioRange,
+                             @Assisted("radioRange") int radioRange, int bandwidth,
                              @Assisted double velocity, @Assisted List<AbilityType> abilities,
                              Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
-        super(id, position, radioRange, velocity, abilities);
+        super(id, position, radioRange, bandwidth, velocity, abilities);
 
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
         this.environment = environment;

@@ -27,7 +27,7 @@ public abstract class  SensorNodeThread<P extends Position, M extends MovementAl
     private Object lock;
 
     public SensorNodeThread(int id, P position, int radioRange, double velocity, List<AbilityType> abilities) {
-        super(id,position,radioRange,velocity,abilities);
+        super(id,position,radioRange, 5000, velocity,abilities);
         initPosition();
 
         movementAlgs = new LinkedList<>();

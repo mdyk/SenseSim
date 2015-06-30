@@ -68,7 +68,7 @@ public class DisSimSensorAPITest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor sensor = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 10, new ArrayList<>());
+        Sensor sensor = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 10, new ArrayList<>());
         simEngine.addNode(sensor);
         simEngine.runScenario();
         Thread.sleep(1000);
@@ -107,8 +107,8 @@ public class DisSimSensorAPITest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 0, new ArrayList<>());
-        Sensor receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 0, new ArrayList<>());
+        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
+        Sensor receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
 
         simEngine.addNode(sender);
         simEngine.addNode(receiver);
@@ -141,10 +141,10 @@ public class DisSimSensorAPITest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 0, new ArrayList<>());
-        Sensor hop1 = sensorsFactory.buildSensor(2, new GeoPosition(52.230535, 21.005795), 25, 0, new ArrayList<>());
-        Sensor receiver = sensorsFactory.buildSensor(3, new GeoPosition(52.230556, 21.005937), 25, 0, new ArrayList<>());
-        Sensor hop2 = sensorsFactory.buildSensor(4, new GeoPosition(52.230555, 21.005819), 15, 0, new ArrayList<>());
+        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 0, new ArrayList<>());
+        Sensor hop1 = sensorsFactory.buildSensor(2, new GeoPosition(52.230535, 21.005795), 25,5000, 0, new ArrayList<>());
+        Sensor receiver = sensorsFactory.buildSensor(3, new GeoPosition(52.230556, 21.005937), 25,5000, 0, new ArrayList<>());
+        Sensor hop2 = sensorsFactory.buildSensor(4, new GeoPosition(52.230555, 21.005819), 15,5000, 0, new ArrayList<>());
 
         simEngine.addNode(sender);
         simEngine.addNode(hop1);
