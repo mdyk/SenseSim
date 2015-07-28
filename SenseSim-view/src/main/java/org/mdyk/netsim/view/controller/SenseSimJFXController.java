@@ -39,7 +39,7 @@ import org.mdyk.netsim.view.node.GraphEdgeViewWrapper;
 import org.mdyk.netsim.view.node.OSMNodeView;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Dimension;
 import java.io.File;
 import java.net.URL;
 import java.util.*;
