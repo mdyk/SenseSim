@@ -3,10 +3,13 @@ package org.mdyk.netsim.view.jfx;
 
 import com.google.inject.Singleton;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.view.SenseSimView;
 
@@ -30,6 +33,15 @@ public class SenseSimJFXApp extends Application implements Runnable, SenseSimVie
         stage.setTitle("SenseSim");
         stage.setScene(scene);
         stage.show();
+
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
+
         LOG.debug("<< SesnseSim start");
     }
 

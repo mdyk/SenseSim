@@ -108,6 +108,8 @@ public class SenseSimJFXController implements Initializable {
             }
         });
 
+
+
         EventBusHolder.getEventBus().register(this);
     }
 
