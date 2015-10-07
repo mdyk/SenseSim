@@ -46,4 +46,8 @@ public abstract class NodeView<C, P extends Position> {
 
     public abstract P getNodePosition();
 
+    public ISensorModel getNode() {
+        return node;
+    }
+
 }

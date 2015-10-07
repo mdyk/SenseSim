@@ -18,7 +18,6 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     protected P             position;
     protected double        radioRange;
     protected double        velocity;
-    // TODO przenisienie do konfiguracji scenarusza
     protected double        bandwith = 5000; // bity
     // TODO ujednolicenie do jednej listy
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;

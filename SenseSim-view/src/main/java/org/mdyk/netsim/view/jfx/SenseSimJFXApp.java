@@ -34,12 +34,9 @@ public class SenseSimJFXApp extends Application implements Runnable, SenseSimVie
         stage.setScene(scene);
         stage.show();
 
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-            @Override
-            public void handle(WindowEvent event) {
-                Platform.exit();
-                System.exit(0);
-            }
+        stage.setOnCloseRequest(event -> {
+            Platform.exit();
+            System.exit(0);
         });
 
         LOG.debug("<< SesnseSim start");
