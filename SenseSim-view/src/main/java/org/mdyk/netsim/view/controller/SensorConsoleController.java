@@ -65,16 +65,11 @@ public class SensorConsoleController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         EventBusHolder.getEventBus().register(this);
-//        abilityTable.
-//        simTimeColumn = new TableColumn<>();
-//        observationsColumn = new TableColumn<>();
 
         simTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         observationsColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
 
         abilityTable.setItems(observationsData);
-
-//        abilityTable.getColumns().addAll(simTimeColumn, observationsColumn);
 
 
     }
@@ -118,10 +113,6 @@ public class SensorConsoleController implements Initializable {
         String abilityName = (String) abilityChooser.getValue();
         List<PhenomenonValue> observations = nodeView.getNode().getObservations().get(AbilityType.valueOf(abilityName));
 
-//        if(abilityTable.getColumns() != null) {
-//            abilityTable.getColumns().clear();
-//        }
-
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
@@ -138,7 +129,6 @@ public class SensorConsoleController implements Initializable {
 
                     observationsData.clear();
                     observationsData.addAll(observationsSublist);
-//                    abilityTable.setItems(observationsData);
                 }
             }
         });
@@ -146,10 +136,9 @@ public class SensorConsoleController implements Initializable {
     }
 
     private void actualizePositionLabel() {
-        OSMNodeView osmNodeView = (OSMNodeView) nodeView;
         Platform.runLater(() -> {
-            latitude.setText(Double.toString(osmNodeView.getLat()));
-            longitude.setText(Double.toString(osmNodeView.getLon()));
+            latitude.setText(Double.toString(nodeView.getLat()));
+            longitude.setText(Double.toString(nodeView.getLon()));
         });
     }
 
