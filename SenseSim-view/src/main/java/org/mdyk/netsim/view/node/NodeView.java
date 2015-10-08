@@ -4,6 +4,7 @@ import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,13 +41,23 @@ public abstract class NodeView<C, P extends Position> {
         return node.getAbilities();
     }
 
+    public List<String> getAbilitesNames() {
+        ArrayList<String> abilityNames = new ArrayList<>(getAbilities().size());
+
+        for(AbilityType ability : getAbilities()) {
+            abilityNames.add(ability.name());
+        }
+
+        return abilityNames;
+    }
+
     public abstract void setEdge(ISensorModel secondEndNode);
 
     public abstract void removeEdge(ISensorModel secondEndNode);
 
     public abstract P getNodePosition();
 
-    public ISensorModel getNode() {
+    public ISensorModel<P> getNode() {
         return node;
     }
 
