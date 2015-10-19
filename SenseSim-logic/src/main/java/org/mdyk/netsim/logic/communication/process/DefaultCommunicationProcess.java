@@ -12,6 +12,7 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
     private ISensorModel<?> sender;
     private ISensorModel<?> receiver;
     private double startTime;
+    private double endTime;
     private int id;
     private double eta;
     private double messageBits;
@@ -25,6 +26,7 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
         this.receiver = receiver;
         this.message = message;
         this.startTime = startTime;
+        this.endTime = Double.NaN;
         this.communicationStatus = CommunicationStatus.DURING_COMM;
         eta = startTime + calculateExpectedDuration();
         alreadySent = 0;
@@ -40,6 +42,7 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
     public CommunicationStatus getCommunicationStatus(double time) {
         // Possible only by external interruption
         if(communicationStatus == CommunicationStatus.FAILURE){
+            endTime = time;
             return communicationStatus;
         }
 
@@ -47,6 +50,7 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
             communicationStatus = CommunicationStatus.DURING_COMM;
         }
         else {
+            endTime = time;
             communicationStatus = CommunicationStatus.SUCCESS;
         }
 
@@ -70,6 +74,11 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
     @Override
     public double getStartTime() {
         return startTime;
+    }
+
+    @Override
+    public double getEndTime() {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override

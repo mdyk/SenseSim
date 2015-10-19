@@ -17,6 +17,7 @@ import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.*;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
+import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -47,6 +48,7 @@ public class CommunicationProcessSimEntityTest {
                 bind(SensorAPIFactory.class).to(DisSimSensorAPIFactory.class);
                 bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
+                bind(SensorStatisticsFactory.class).to(DefaultStatisticsFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
             }
         });

@@ -52,6 +52,11 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
     }
 
     @Override
+    public double getEndTime() {
+        return commProcess.getEndTime();
+    }
+
+    @Override
     public double getETA() {
         return commProcess.getETA();
     }

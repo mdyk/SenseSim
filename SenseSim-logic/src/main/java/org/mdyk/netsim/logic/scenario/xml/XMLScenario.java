@@ -6,7 +6,6 @@ import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.node.Sensor;
 import org.mdyk.netsim.logic.node.SensorsFactory;
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.simEngine.thread.GeoSensorNodeThread;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;

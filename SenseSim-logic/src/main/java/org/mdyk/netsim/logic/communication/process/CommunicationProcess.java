@@ -31,6 +31,13 @@ public interface CommunicationProcess {
     public double getStartTime();
 
     /**
+     * Returns value of simulation time when process has finished
+     * @return
+     *      time when process has finished.
+     */
+    public double getEndTime();
+
+    /**
      * Returns expected simulation time when process should finish.
      * @return
      *      simulation time when process should finish successfully.
@@ -62,5 +69,7 @@ public interface CommunicationProcess {
      * Marks whole process as failed. Can be caused due to loss of connectivity.
      */
     public void processInterrupted();
+
+
 
 }

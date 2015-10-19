@@ -17,6 +17,7 @@ import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyProgram;
+import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -49,6 +50,7 @@ public class GroovyProgrammingTest {
                 bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
                 bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
+                bind(SensorStatisticsFactory.class).to(DefaultStatisticsFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
             }
         });
