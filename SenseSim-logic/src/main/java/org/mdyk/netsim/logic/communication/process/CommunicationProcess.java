@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.communication.process;
 
 
 import org.mdyk.netsim.logic.communication.Message;
+import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
 /**
  * Interface for communication process in SenseSim
@@ -22,6 +23,13 @@ public interface CommunicationProcess {
      *      communication status.
      */
     public CommunicationStatus getCommunicationStatus(double time);
+
+    /**
+     * Returns current communication status described by CommunicationStatus enum
+     * @return
+     *      communication status.
+     */
+    public CommunicationStatus getCommunicationStatus();
 
     /**
      * Returns value of simulation time when process has started
@@ -70,6 +78,8 @@ public interface CommunicationProcess {
      */
     public void processInterrupted();
 
+    public ISensorModel<?> getSender();
 
+    public ISensorModel<?> getReceiver();
 
 }

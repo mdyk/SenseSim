@@ -47,6 +47,11 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
     }
 
     @Override
+    public CommunicationStatus getCommunicationStatus() {
+        return commProcess.getCommunicationStatus();
+    }
+
+    @Override
     public double getStartTime() {
         return commProcess.getStartTime();
     }
@@ -79,5 +84,15 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
     @Override
     public void processInterrupted() {
         commProcess.processInterrupted();
+    }
+
+    @Override
+    public ISensorModel<?> getSender() {
+        return commProcess.getSender();
+    }
+
+    @Override
+    public ISensorModel<?> getReceiver() {
+        return commProcess.getReceiver();
     }
 }

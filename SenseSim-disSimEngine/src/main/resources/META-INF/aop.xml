@@ -1,0 +1,12 @@
+<aspectj>
+    <aspects>
+        <aspect name="org.mdyk.sensesim.simulation.engine.dissim.aop.SaveStatisticsInterceptor" />
+    </aspects>
+
+    <!--  <weaver options="-verbose -debug -showWeaveInfo"> -->
+    <weaver>
+        <include within="org.mdyk.*" />
+        <!--<include within="com.ghag.rnd.aspects.ltw.*" />-->
+    </weaver>
+
+</aspectj>

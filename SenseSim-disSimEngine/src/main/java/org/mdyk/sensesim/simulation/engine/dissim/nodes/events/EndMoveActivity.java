@@ -3,6 +3,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 import dissim.simspace.core.BasicSimStateChange;
 import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.aop.statistics.SaveStatistics;
 
 
 public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, StartMoveActivity> {
@@ -17,6 +18,7 @@ public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, Start
     }
 
     @Override
+    @SaveStatistics
     protected void transition() throws SimControlException {
         LOG.debug(">> EndMoveActivity.transition");
         disSimNodeEntity.startMoveActivity = new StartMoveActivity(disSimNodeEntity);

@@ -1,5 +1,6 @@
 package org.mdyk.netsim.view.node;
 
+import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
@@ -60,5 +61,9 @@ public abstract class NodeView<C, P extends Position> {
     public ISensorModel<P> getNode() {
         return node;
     }
+
+//    public SensorStatistics getStatistics() {
+//
+//    }
 
 }

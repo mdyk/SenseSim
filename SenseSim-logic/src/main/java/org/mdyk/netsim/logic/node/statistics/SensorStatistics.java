@@ -37,4 +37,6 @@ public interface SensorStatistics {
 
     public void setSensor(Sensor sensor);
 
+    public int getSensorId();
+
 }

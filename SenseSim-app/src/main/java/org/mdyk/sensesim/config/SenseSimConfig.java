@@ -2,6 +2,8 @@ package org.mdyk.sensesim.config;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
+import com.google.inject.matcher.Matchers;
+import org.mdyk.netsim.logic.aop.statistics.SaveStatistics;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
@@ -9,11 +11,13 @@ import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.*;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
+import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.view.SenseSimView;
 import org.mdyk.netsim.view.jfx.SenseSimJFXApp;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
+import org.mdyk.sensesim.simulation.engine.dissim.aop.SaveStatisticsInterceptor;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorAPIFactory;
@@ -37,8 +41,8 @@ public class SenseSimConfig extends AbstractModule {
         bind(SensorAPIFactory.class).to(DisSimSensorAPIFactory.class);
         bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
         bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
+        bind(SensorStatisticsFactory.class).to(DefaultStatisticsFactory.class);
         bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
-
     }
 
 }

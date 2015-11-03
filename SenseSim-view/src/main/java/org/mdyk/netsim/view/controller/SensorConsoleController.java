@@ -9,13 +9,18 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.InternalEvent;
+import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
+import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
+import org.mdyk.netsim.view.controlls.table.CommunicationStatistics;
 import org.mdyk.netsim.view.node.OSMNodeView;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -59,8 +64,30 @@ public class SensorConsoleController implements Initializable {
     @FXML
     private TableColumn<PhenomenonValue, Object> observationsColumn;
 
+    @FXML
+    private TableView<CommunicationStatistics> commTable;
+
+    @FXML
+    private TableColumn<CommunicationStatistics, Integer> commId;
+
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commReceiver;
+
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commStatus;
+
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commStartTime;
+
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commEndTime;
+
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commMessageSize;
+
 
     private ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
+    private ObservableList<CommunicationStatistics> commStatistics = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,9 +95,16 @@ public class SensorConsoleController implements Initializable {
 
         simTimeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         observationsColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-
         abilityTable.setItems(observationsData);
 
+        commId.setCellValueFactory(new PropertyValueFactory<>("commId"));
+        commReceiver.setCellValueFactory(new PropertyValueFactory<>("receiverId"));
+        commStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        commStartTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        commEndTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        commMessageSize.setCellValueFactory(new PropertyValueFactory<>("messageSize"));
+
+        commTable.setItems(commStatistics);
 
     }
 
@@ -106,6 +140,37 @@ public class SensorConsoleController implements Initializable {
                 break;
         }
         LOG.debug("<< processEvent");
+    }
+
+    @Subscribe
+    public void processStatisticsEvent(StatisticsEvent statisticsEvent) {
+        LOG.trace(">> processStatisticsEvent");
+        try{
+        switch (statisticsEvent.getEventType()) {
+            case GUI_UPDATE_STATISTICS:
+                SensorStatistics sensorStatistics = (SensorStatistics) statisticsEvent.getPayload();
+                showCommunication(sensorStatistics);
+                break;
+        }
+        } catch (Exception exc) {
+            LOG.error(exc.getMessage() , exc);
+        }
+        LOG.trace("<< processStatisticsEvent");
+    }
+
+    private void showCommunication(SensorStatistics sensorStatistics) {
+        if (sensorStatistics.getSensorId() == this.nodeView.getID()) {
+
+            List<CommunicationStatistics> communicationStatistics = new ArrayList<>();
+            for(CommunicationProcess process : sensorStatistics.getOutgoingCommunication()) {
+                communicationStatistics.add(new CommunicationStatistics(process));
+            }
+            for(CommunicationProcess process : sensorStatistics.getIncomingCommunication()) {
+                communicationStatistics.add(new CommunicationStatistics(process));
+            }
+            this.commStatistics.clear();
+            this.commStatistics.addAll(communicationStatistics);
+        }
     }
 
     public void showObservationsForAbility() {

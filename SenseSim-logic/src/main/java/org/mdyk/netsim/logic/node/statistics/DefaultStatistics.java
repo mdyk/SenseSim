@@ -1,11 +1,16 @@
 package org.mdyk.netsim.logic.node.statistics;
 
 
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
+import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 public class DefaultStatistics implements SensorStatistics {
@@ -20,19 +25,32 @@ public class DefaultStatistics implements SensorStatistics {
     public DefaultStatistics() {
         this.incomingComms = new ArrayList<>();
         this.outgoingComms = new ArrayList<>();
+        EventBusHolder.getEventBus().register(this);
     }
 
     @Override
     public void addCommunication(CommunicationProcess communicationProcess) {
         LOG.trace(">> addCommunication");
-        if(communicationProcess.getMessage().getMessageSource() == sensor.getSensorLogic().getID()) {
+        if(communicationProcess.getSender().getID() == sensor.getSensorLogic().getID()) {
             LOG.debug("adding process " + communicationProcess.getID() + " as outgoing");
-            this.outgoingComms.add(communicationProcess);
-        } else if (communicationProcess.getMessage().getMessageDest() == sensor.getSensorLogic().getID()) {
+            addCommunication(communicationProcess, outgoingComms);
+        } else if (communicationProcess.getReceiver().getID() == sensor.getSensorLogic().getID()) {
             LOG.debug("adding process " + communicationProcess.getID() + " as incoming");
-            this.incomingComms.add(communicationProcess);
+            addCommunication(communicationProcess, incomingComms);
         }
         LOG.trace("<< addCommunication");
+    }
+
+    private void addCommunication(CommunicationProcess newCommunicationProcess, List<CommunicationProcess> commList) {
+        boolean newProcess = true;
+        for(CommunicationProcess process : commList) {
+            if (process.getID() == newCommunicationProcess.getID()) {
+                newProcess = false;
+            }
+        }
+        if(newProcess) {
+            commList.add(newCommunicationProcess);
+        }
     }
 
     @Override
@@ -48,4 +66,26 @@ public class DefaultStatistics implements SensorStatistics {
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
     }
+
+    @Override
+    public int getSensorId() {
+        return this.sensor.getSensorLogic().getID();
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleEvents(StatisticsEvent event){
+        try {
+            switch (event.getEventType()) {
+                case COMM_PROC_UPDATE:
+                    CommunicationProcess communicationProcess = (CommunicationProcess) event.getPayload();
+                    addCommunication(communicationProcess);
+                    EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
+                    break;
+            }
+        } catch (Exception exc) {
+            LOG.error(exc.getMessage() , exc);
+        }
+    }
+
 }

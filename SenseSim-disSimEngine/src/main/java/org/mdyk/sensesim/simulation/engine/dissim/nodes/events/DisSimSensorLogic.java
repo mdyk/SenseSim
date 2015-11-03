@@ -41,7 +41,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     public Function<Message, Object> onMessageHandler;
 
 
-    private int commProcIdx = 0;
+    //private int commProcIdx = 0;
 
     private boolean isMoveing;
 
@@ -156,7 +156,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
         double velocityMetersPerSec = this.velocity / 3.6;
         LOG.trace("Velocity in km/h: " + velocity + " velocity in m/sec: " +velocityMetersPerSec);
 
-        GeoPosition newPosition = currentMovementAlg.nextPositionToCheckpoint(this.position, velocityMetersPerSec*StartMoveActivity.END_MOVE_DELAY);
+        GeoPosition newPosition = currentMovementAlg.nextPositionToCheckpoint(this.position, velocityMetersPerSec * StartMoveActivity.END_MOVE_DELAY);
         LOG.debug(String.format("moveing from position %s to %s ", this.getPosition().toString(), newPosition.toString()));
         this.setPosition(newPosition);
         EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(this));
@@ -167,7 +167,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     @Override
     public final void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
         for(SensorNode<GeoPosition> receiver : receivers) {
-            communicationProcessFactory.createCommunicationProcess(commProcIdx++, this, receiver, sensorSimEntity.getSimTime(), message);
+            communicationProcessFactory.createCommunicationProcess(this, receiver, sensorSimEntity.getSimTime(), message);
         }
 
     }

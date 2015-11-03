@@ -25,4 +25,19 @@ public interface CommunicationProcessFactory {
      */
     public CommunicationProcess createCommunicationProcess(int id, ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message);
 
+    /**
+     * Creates communication process in hop style (one hop - one process)
+     * @param sender
+     *      reference to the sender in current hop
+     * @param receiver
+     *      reference to the receiver in current hop
+     * @param startTime
+     *      start time of the process
+     * @param message
+     *      message to sent
+     * @return
+     *      instance of the communication process
+     */
+    public CommunicationProcess createCommunicationProcess(ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message);
+
 }

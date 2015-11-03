@@ -15,8 +15,15 @@ public class DisSimCommunicationProcessFactory implements CommunicationProcessFa
     @Inject
     private WirelessChannel wirelessChannel;
 
+    private int idCounter = 0;
+
     @Override
     public CommunicationProcess createCommunicationProcess(int id, ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message) {
         return new CommunicationProcessSimEntity(id , sender, receiver, startTime, message, wirelessChannel);
+    }
+
+    @Override
+    public CommunicationProcess createCommunicationProcess(ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message) {
+        return createCommunicationProcess(idCounter++, sender, receiver, startTime, message);
     }
 }

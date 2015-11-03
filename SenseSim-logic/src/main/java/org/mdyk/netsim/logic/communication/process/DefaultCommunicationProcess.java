@@ -54,20 +54,11 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
             communicationStatus = CommunicationStatus.SUCCESS;
         }
 
-//        if(time <= eta) {
-//            if(alreadySent >= messageBits) {
-//                communicationStatus = CommunicationStatus.SUCCESS;
-//            } else if (alreadySent < messageBits) {
-//                communicationStatus = CommunicationStatus.DURING_COMM;
-//            }
-//        } else {
-//            if(alreadySent >= messageBits) {
-//                communicationStatus = CommunicationStatus.SUCCESS;
-//            } else {
-//                communicationStatus = CommunicationStatus.FAILURE;
-//            }
-//        }
+        return communicationStatus;
+    }
 
+    @Override
+    public CommunicationStatus getCommunicationStatus() {
         return communicationStatus;
     }
 
