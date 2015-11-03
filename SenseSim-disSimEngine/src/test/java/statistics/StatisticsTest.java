@@ -115,7 +115,7 @@ public class StatisticsTest {
             return null;
         }
 
-        public int getMessageSource(){
+        public int getMessageSource() {
             return -1;
         }
 
@@ -125,7 +125,7 @@ public class StatisticsTest {
          * @return
          *      destination (sink) sensor
          */
-        public int getMessageDest(){
+        public int getMessageDest() {
             return -1;
         }
 

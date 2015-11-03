@@ -131,13 +131,17 @@ public class SensorConsoleController implements Initializable {
     @Subscribe
     public synchronized void processEvent(InternalEvent event) {
         LOG.debug(">> processEvent");
-        switch(event.getEventType()){
-            case NODE_POSITION_CHANGED:
-                actualizePositionLabel();
-                break;
-            case NODE_END_SENSE:
-                showObservationsForAbility();
-                break;
+        try {
+            switch (event.getEventType()) {
+                case NODE_POSITION_CHANGED:
+                    actualizePositionLabel();
+                    break;
+                case NODE_END_SENSE:
+                    showObservationsForAbility();
+                    break;
+            }
+        } catch (Exception e) {
+            LOG.error(e.getMessage() , e);
         }
         LOG.debug("<< processEvent");
     }
@@ -146,12 +150,12 @@ public class SensorConsoleController implements Initializable {
     public void processStatisticsEvent(StatisticsEvent statisticsEvent) {
         LOG.trace(">> processStatisticsEvent");
         try{
-        switch (statisticsEvent.getEventType()) {
-            case GUI_UPDATE_STATISTICS:
-                SensorStatistics sensorStatistics = (SensorStatistics) statisticsEvent.getPayload();
-                showCommunication(sensorStatistics);
-                break;
-        }
+            switch (statisticsEvent.getEventType()) {
+                case GUI_UPDATE_STATISTICS:
+                    SensorStatistics sensorStatistics = (SensorStatistics) statisticsEvent.getPayload();
+                    showCommunication(sensorStatistics);
+                    break;
+            }
         } catch (Exception exc) {
             LOG.error(exc.getMessage() , exc);
         }
@@ -176,25 +180,27 @@ public class SensorConsoleController implements Initializable {
     public void showObservationsForAbility() {
 
         String abilityName = (String) abilityChooser.getValue();
+
+        if(abilityName == null) {
+            return;
+        }
+
         List<PhenomenonValue> observations = nodeView.getNode().getObservations().get(AbilityType.valueOf(abilityName));
 
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if(observations != null) {
+        Platform.runLater(() -> {
+            if(observations != null) {
 
-                    List<PhenomenonValue> observationsSublist;
-                    if(observations.size() > 50) {
-                        observationsSublist = observations.subList(observations.size()-49 , observations.size()-1);
-                    } else {
-                        observationsSublist = observations;
-                    }
-
-                    observationsSublist.sort(new PhenomenonValue.DescTimeComparator());
-
-                    observationsData.clear();
-                    observationsData.addAll(observationsSublist);
+                List<PhenomenonValue> observationsSublist;
+                if(observations.size() > 50) {
+                    observationsSublist = observations.subList(observations.size()-49 , observations.size()-1);
+                } else {
+                    observationsSublist = observations;
                 }
+
+                observationsSublist.sort(new PhenomenonValue.DescTimeComparator());
+
+                observationsData.clear();
+                observationsData.addAll(observationsSublist);
             }
         });
 
