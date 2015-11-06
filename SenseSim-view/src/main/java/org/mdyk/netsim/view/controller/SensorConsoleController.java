@@ -29,10 +29,11 @@ public class SensorConsoleController implements Initializable {
 
     private static final Logger LOG = Logger.getLogger(SensorConsoleController.class);
 
+    private enum CommType {Incoming, Outgoing}
+
     private OSMNodeView nodeView;
 
-    @FXML
-    private TabPane consoleTabPane;
+    private SensorStatistics statistics;
 
     @FXML
     private TextField nodeBandwidth;
@@ -54,6 +55,9 @@ public class SensorConsoleController implements Initializable {
 
     @FXML
     private ComboBox abilityChooser;
+
+    @FXML
+    private ComboBox commTypChooser;
 
     @FXML
     private TableView<PhenomenonValue> abilityTable;
@@ -120,6 +124,13 @@ public class SensorConsoleController implements Initializable {
         abilities.addAll(nodeView.getAbilitesNames());
         abilityChooser.setItems(abilities);
 
+        ObservableList<String> commTypes = FXCollections.observableArrayList();
+        commTypes.add(CommType.Incoming.name());
+        commTypes.add(CommType.Outgoing.name());
+
+        commTypChooser.setItems(commTypes);
+        commTypChooser.setValue(CommType.Outgoing.name());
+
         actualizePositionLabel();
     }
 
@@ -153,7 +164,8 @@ public class SensorConsoleController implements Initializable {
             switch (statisticsEvent.getEventType()) {
                 case GUI_UPDATE_STATISTICS:
                     SensorStatistics sensorStatistics = (SensorStatistics) statisticsEvent.getPayload();
-                    showCommunication(sensorStatistics);
+                    this.statistics = sensorStatistics;
+                    showCommunication(this.statistics, CommType.Incoming);
                     break;
             }
         } catch (Exception exc) {
@@ -162,19 +174,38 @@ public class SensorConsoleController implements Initializable {
         LOG.trace("<< processStatisticsEvent");
     }
 
-    private void showCommunication(SensorStatistics sensorStatistics) {
+    private void showCommunication(SensorStatistics sensorStatistics, CommType commType) {
         if (sensorStatistics.getSensorId() == this.nodeView.getID()) {
-
             List<CommunicationStatistics> communicationStatistics = new ArrayList<>();
-            for(CommunicationProcess process : sensorStatistics.getOutgoingCommunication()) {
-                communicationStatistics.add(new CommunicationStatistics(process));
+            switch (commType) {
+                case Incoming:
+                    for(CommunicationProcess process : sensorStatistics.getIncomingCommunication()) {
+                        communicationStatistics.add(new CommunicationStatistics(process));
+                    }
+                    break;
+
+                case Outgoing:
+                    for(CommunicationProcess process : sensorStatistics.getOutgoingCommunication()) {
+                        communicationStatistics.add(new CommunicationStatistics(process));
+                    }
+                    break;
             }
-            for(CommunicationProcess process : sensorStatistics.getIncomingCommunication()) {
-                communicationStatistics.add(new CommunicationStatistics(process));
-            }
-            this.commStatistics.clear();
-            this.commStatistics.addAll(communicationStatistics);
+
+            Platform.runLater(()-> {
+                this.commStatistics.clear();
+                this.commStatistics.addAll(communicationStatistics);
+            });
+
         }
+    }
+
+    public void showCommunicationByType() {
+        String commTypeString = (String) this.commTypChooser.getValue();
+
+        if(commTypeString != null && statistics != null) {
+            showCommunication(statistics , CommType.valueOf(commTypeString));
+        }
+
     }
 
     public void showObservationsForAbility() {
