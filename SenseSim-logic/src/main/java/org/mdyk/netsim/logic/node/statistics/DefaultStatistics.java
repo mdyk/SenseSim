@@ -7,10 +7,10 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
 
 public class DefaultStatistics implements SensorStatistics {
@@ -20,11 +20,12 @@ public class DefaultStatistics implements SensorStatistics {
     private Sensor sensor;
     List<CommunicationProcess> incomingComms;
     List<CommunicationProcess> outgoingComms;
-
+    List<SensorProgram> sensorPrograms;
 
     public DefaultStatistics() {
         this.incomingComms = new ArrayList<>();
         this.outgoingComms = new ArrayList<>();
+        this.sensorPrograms = new ArrayList<>();
         EventBusHolder.getEventBus().register(this);
     }
 
@@ -63,6 +64,19 @@ public class DefaultStatistics implements SensorStatistics {
         return this.outgoingComms;
     }
 
+    @Override
+    public void addProgram(SensorProgram program) {
+        LOG.trace(">> addProgram");
+        this.sensorPrograms.add(program);
+        LOG.trace("<< addProgram");
+    }
+
+
+    @Override
+    public List<SensorProgram> getSensorPrograms() {
+        return this.sensorPrograms;
+    }
+
     public void setSensor(Sensor sensor) {
         this.sensor = sensor;
     }
@@ -82,7 +96,14 @@ public class DefaultStatistics implements SensorStatistics {
                     addCommunication(communicationProcess);
                     EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
                     break;
+
+                case PROGRAM_UPDATE:
+                    SensorProgram sensorProgram = (SensorProgram) event.getPayload();
+                    addProgram(sensorProgram);
+                    EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
+                    break;
             }
+
         } catch (Exception exc) {
             LOG.error(exc.getMessage() , exc);
         }

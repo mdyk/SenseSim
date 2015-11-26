@@ -12,11 +12,13 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.InternalEvent;
+import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.view.controlls.table.CommunicationStatistics;
+import org.mdyk.netsim.view.controlls.table.ProgramStatistics;
 import org.mdyk.netsim.view.node.OSMNodeView;
 
 import java.net.URL;
@@ -89,9 +91,18 @@ public class SensorConsoleController implements Initializable {
     @FXML
     private TableColumn<CommunicationStatistics, String> commMessageSize;
 
+    @FXML
+    private TableView<ProgramStatistics> programsTable;
+
+    @FXML
+    private TableColumn<ProgramStatistics , String> pidColumn;
+
+    @FXML
+    private TableColumn<ProgramStatistics , String> programStatus;
 
     private ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
     private ObservableList<CommunicationStatistics> commStatistics = FXCollections.observableArrayList();
+    private ObservableList<ProgramStatistics> programStatistics = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -107,8 +118,11 @@ public class SensorConsoleController implements Initializable {
         commStartTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
         commEndTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
         commMessageSize.setCellValueFactory(new PropertyValueFactory<>("messageSize"));
-
         commTable.setItems(commStatistics);
+
+        pidColumn.setCellValueFactory(new PropertyValueFactory<>("PID"));
+        programStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        programsTable.setItems(programStatistics);
 
     }
 
@@ -163,15 +177,26 @@ public class SensorConsoleController implements Initializable {
         try{
             switch (statisticsEvent.getEventType()) {
                 case GUI_UPDATE_STATISTICS:
-                    SensorStatistics sensorStatistics = (SensorStatistics) statisticsEvent.getPayload();
-                    this.statistics = sensorStatistics;
+                    this.statistics = (SensorStatistics) statisticsEvent.getPayload();
                     showCommunication(this.statistics, CommType.Incoming);
+                    showPrograms();
                     break;
             }
         } catch (Exception exc) {
             LOG.error(exc.getMessage() , exc);
         }
         LOG.trace("<< processStatisticsEvent");
+    }
+
+    private void showPrograms() {
+
+        Platform.runLater(()-> {
+            this.programStatistics.clear();
+            for (SensorProgram program : this.statistics.getSensorPrograms()) {
+                this.programStatistics.add(new ProgramStatistics(program));
+            }
+        });
+
     }
 
     private void showCommunication(SensorStatistics sensorStatistics, CommType commType) {

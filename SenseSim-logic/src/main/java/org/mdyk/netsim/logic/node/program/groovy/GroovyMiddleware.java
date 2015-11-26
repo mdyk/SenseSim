@@ -14,6 +14,7 @@ import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
+import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -79,6 +80,8 @@ public class GroovyMiddleware extends Thread implements Middleware {
     @Override
     public void loadProgram(SensorProgram program) {
         this.programs.put(PID++,program);
+        ((GroovyProgram)program).setProgramStatus(SensorProgram.ProgramStatus.LOADED);
+        EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.PROGRAM_UPDATE , program));
     }
 
     @Override
@@ -88,33 +91,42 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     @Override
     public void execute() {
-        Iterator<Map.Entry<Integer,SensorProgram>> iter = programs.entrySet().iterator();
 
-        while(iter.hasNext()) {
-            Map.Entry<Integer,SensorProgram> entry = iter.next();
+        for (Map.Entry<Integer, SensorProgram> entry : programs.entrySet()) {
             GroovyProgram groovyProgram = (GroovyProgram) entry.getValue();
+
+            if (groovyProgram.getStatus() != SensorProgram.ProgramStatus.LOADED) {
+                continue;
+            }
+
             Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
 
             final GroovyMiddleware me = this;
 
-            new Thread()
-            {
+            new Thread() {
                 public void run() {
                     me.sensorSimEntity.startProgramExecution(PID);
                     Map<String, Object> params = new HashMap<>();
-                    params.put("api" , sensorAPI);
+                    params.put("api", sensorAPI);
                     scriptToRun.setBinding(new Binding(params));
-                    try{
-                        scriptToRun.run();
+                    try {
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_ECECUTION);
+                        Object result = scriptToRun.run();
+                        groovyProgram.setResult(result);
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_OK);
                     } catch (Exception exc) {
-                        LOG.error(exc.getMessage(),exc);
+                        LOG.error(exc.getMessage(), exc);
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
                     }
                     me.sensorSimEntity.endProgramExecution(PID);
 
                 }
             }.start();
-            resendProgram(groovyProgram);
-            programs.remove(entry.getKey());
+
+            if (groovyProgram.resend()) {
+                resendProgram(groovyProgram);
+            }
+            //programs.remove(entry.getKey());
         }
 
         // TODO określenie co jeszcze miałby robić middleware
@@ -161,11 +173,9 @@ public class GroovyMiddleware extends Thread implements Middleware {
     @SuppressWarnings("unchecked")
     private void resendProgram(GroovyProgram program) {
         LOG.trace(">> resendProgram");
-        if(program.resend()) {
-            List<Integer> neighbours = sensorAPI.api_scanForNeighbors();
-            for (Integer neighbour : neighbours) {
-                sensorAPI.api_sendMessage(program.getGroovyScript().hashCode(), sensorAPI.api_getMyID(), neighbour, program.getGroovyScript() , null );
-            }
+        List<Integer> neighbours = sensorAPI.api_scanForNeighbors();
+        for (Integer neighbour : neighbours) {
+            sensorAPI.api_sendMessage(program.getGroovyScript().hashCode(), sensorAPI.api_getMyID(), neighbour, program.getGroovyScript() , null );
         }
         LOG.trace("<< resendProgram");
     }

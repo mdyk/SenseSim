@@ -5,17 +5,19 @@ package org.mdyk.netsim.logic.node.program;
  */
 public interface SensorProgram {
 
+    public enum ProgramStatus {LOADED, FINISHED_OK, DURING_ECECUTION, FINISHED_ERROR}
+
     /**
      * Executes program
      */
 
-    public void setPID(int PID);
+    void setPID(int PID);
 
-    public int getPID();
+    int getPID();
 
-    public void setParams(Object ... params);
+    void setParams(Object... params);
 
-    public Object getResult();
+    Object getResult();
 
     /**
      * Flag defines if program should be resent to other
@@ -23,6 +25,20 @@ public interface SensorProgram {
      * @return
      *      true if program should be resent, false in other case.
      */
-    public boolean resend();
+    boolean resend();
+
+    /**
+     * Returns program's source code or other description.
+     * @return
+     *      string object which represents program's source code or
+     *      other description.
+     */
+    String getProgram();
+
+    /**
+     * Returns program's execution status.
+     * @return
+     */
+    ProgramStatus getStatus();
 
 }

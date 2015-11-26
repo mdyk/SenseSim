@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.node.statistics;
 
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.program.SensorProgram;
 
 import java.util.List;
 
@@ -17,26 +18,28 @@ public interface SensorStatistics {
      * @param communicationProcess
      *      Started communication process.
      */
-    public void addCommunication(CommunicationProcess communicationProcess);
+    void addCommunication(CommunicationProcess communicationProcess);
 
     /**
      * Returns all communication processes which are incoming for the given sensor
      * @return
      *      List of incoming communication processes
      */
-    public List<CommunicationProcess> getIncomingCommunication();
+    List<CommunicationProcess> getIncomingCommunication();
 
     /**
      * Returns all communication processes which are outgoing for the given sensor
      * @return
      *      List of incoming communication processes
      */
-    public List<CommunicationProcess> getOutgoingCommunication();
+    List<CommunicationProcess> getOutgoingCommunication();
 
+    void addProgram(SensorProgram program);
 
+    List<SensorProgram> getSensorPrograms();
 
-    public void setSensor(Sensor sensor);
+    void setSensor(Sensor sensor);
 
-    public int getSensorId();
+    int getSensorId();
 
 }

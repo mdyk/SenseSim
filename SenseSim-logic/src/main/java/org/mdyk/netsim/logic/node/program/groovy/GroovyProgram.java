@@ -7,6 +7,8 @@ public class GroovyProgram implements SensorProgram {
 
     private String groovyScript;
     private boolean resend;
+    private ProgramStatus programStatus;
+    private Object result;
 
     private int PID;
 
@@ -32,7 +34,7 @@ public class GroovyProgram implements SensorProgram {
 
     @Override
     public Object getResult() {
-        return null;
+        return result;
     }
 
     @Override
@@ -40,8 +42,26 @@ public class GroovyProgram implements SensorProgram {
         return this.resend;
     }
 
+    @Override
+    public String getProgram() {
+        return groovyScript;
+    }
+
+    @Override
+    public ProgramStatus getStatus() {
+        return programStatus;
+    }
+
     public String getGroovyScript() {
         return groovyScript;
+    }
+
+    public void setProgramStatus(ProgramStatus status) {
+        this.programStatus = status;
+    }
+
+    public void setResult(Object result) {
+        this.result = result;
     }
 
 }

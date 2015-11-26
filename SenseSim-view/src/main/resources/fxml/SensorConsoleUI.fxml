@@ -188,7 +188,17 @@
           </Tab>
             <Tab text="Programs">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="programsTable" layoutX="132.0" layoutY="30.0" prefHeight="274.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="pidColumn" prefWidth="75.0" text="PID" />
+                            <TableColumn fx:id="programStatus" prefWidth="122.0" text="PorgramStatus" />
+                              <TableColumn prefWidth="107.0" text="Program" />
+                              <TableColumn prefWidth="128.0" text="Log" />
+                          </columns>
+                        </TableView>
+                     </children></AnchorPane>
                </content>
             </Tab>
         </tabs>
