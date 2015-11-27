@@ -55,7 +55,7 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
 
     @Override
     public void startProgramExecution(int PID) {
-        LOG.trace(">> startProgramExecution");
+        LOG.trace(">> startProgramExecution PID="+PID);
         try {
             new StartProgramExecution(this , PID);
         } catch (SimControlException e) {

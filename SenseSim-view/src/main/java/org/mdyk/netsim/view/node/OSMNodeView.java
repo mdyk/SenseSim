@@ -1,25 +1,54 @@
 package org.mdyk.netsim.view.node;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.node.geo.GeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.view.controller.SensorConsoleController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
 
 import java.awt.*;
+import java.io.IOException;
 
 /**
  * Node implementation as mark in Open Street Map (JMapViewer)
  */
 public class OSMNodeView extends GeoNodeView<JMapViewer> {
 
+    private static final Logger LOG = Logger.getLogger(OSMNodeView.class);
+
     private MapMarkerDot mapMaker;
+    private Stage sensorConsole;
 
     public OSMNodeView(GeoSensorNode node, JMapViewer mapViewer) {
         super(node, mapViewer);
         mapMaker = new MapMarkerDot(node.getLatitude(), node.getLongitude());
         mapMaker.setBackColor(Color.YELLOW);
         mapMaker.setName(String.valueOf(node.getID()));
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SensorConsoleUI.fxml"));
+
+        try {
+            Parent root1 = fxmlLoader.load();
+            sensorConsole = new Stage();
+            sensorConsole.initModality(Modality.NONE);
+            sensorConsole.initStyle(StageStyle.DECORATED);
+            sensorConsole.setTitle("Sensor " + this.getNode().getID());
+            sensorConsole.setScene(new Scene(root1));
+            SensorConsoleController scc = fxmlLoader.getController();
+            scc.setNodeView(this);
+            scc.fillGui();
+        } catch (IOException e) {
+            LOG.error(e.getMessage() , e);
+        }
+
     }
 
     @Override
@@ -86,6 +115,10 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
 
     public void stopSense() {
         mapMaker.setBackColor(Color.YELLOW);
+    }
+
+    public void showConsole() {
+        this.sensorConsole.show();
     }
 
 }

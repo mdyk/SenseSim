@@ -4,6 +4,7 @@ import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.node.Sensor;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -34,7 +35,13 @@ public interface SensorStatistics {
      */
     List<CommunicationProcess> getOutgoingCommunication();
 
-    void addProgram(SensorProgram program);
+    /**
+     * Adds loaded program to sensor's statistics.
+     * @param sensorProgramMap
+     *      map which key is sensor's Id and value is SensorProgram. Map should
+     *      contain only one element.
+     */
+    void addProgram(HashMap<Integer , SensorProgram>sensorProgramMap);
 
     List<SensorProgram> getSensorPrograms();
 

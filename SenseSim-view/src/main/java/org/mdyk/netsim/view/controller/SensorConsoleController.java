@@ -146,6 +146,9 @@ public class SensorConsoleController implements Initializable {
         commTypChooser.setValue(CommType.Outgoing.name());
 
         actualizePositionLabel();
+        showPrograms();
+        showCommunicationByType();
+        showObservationsForAbility();
     }
 
     public void setNodeView(OSMNodeView nodeView) {
@@ -189,14 +192,14 @@ public class SensorConsoleController implements Initializable {
     }
 
     private void showPrograms() {
-
-        Platform.runLater(()-> {
-            this.programStatistics.clear();
-            for (SensorProgram program : this.statistics.getSensorPrograms()) {
-                this.programStatistics.add(new ProgramStatistics(program));
-            }
-        });
-
+        if(statistics != null) {
+            Platform.runLater(() -> {
+                this.programStatistics.clear();
+                for (SensorProgram program : this.statistics.getSensorPrograms()) {
+                    this.programStatistics.add(new ProgramStatistics(program));
+                }
+            });
+        }
     }
 
     private void showCommunication(SensorStatistics sensorStatistics, CommType commType) {

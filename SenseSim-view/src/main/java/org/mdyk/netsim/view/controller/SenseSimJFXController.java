@@ -2,17 +2,12 @@ package org.mdyk.netsim.view.controller;
 
 import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -22,9 +17,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.controlsfx.dialog.Dialogs;
@@ -47,7 +39,6 @@ import org.mdyk.netsim.view.node.OSMNodeView;
 import javax.swing.*;
 import java.awt.Dimension;
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 import java.util.List;
@@ -95,24 +86,18 @@ public class SenseSimJFXController implements Initializable {
         nodesTree.setRoot(new TreeItem<>("Nodes"));
         nodesTree.getRoot().setExpanded(true);
 
-        nodesTree.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<TreeItem<String>>() {
-            @Override
-            public void changed(ObservableValue<? extends TreeItem<String>> observableValue, TreeItem<String> stringTreeItem, TreeItem<String> stringTreeItem2) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        details_nodeId.setText(observableValue.getValue().getValue());
-                        selectedNode = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
-//                actualizePositionLabel();
-                        if(selectedNode != null) {
-                            nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
-                            nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
-                        }
-                        observationsPane.getChildren().clear();
-                        observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
-                    }
-                });
-            }
+        nodesTree.getSelectionModel().selectedItemProperty().addListener((observableValue, stringTreeItem, stringTreeItem2) -> {
+            Platform.runLater(() -> {
+                details_nodeId.setText(observableValue.getValue().getValue());
+                selectedNode = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
+
+                if(selectedNode != null) {
+                    nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
+                    nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
+                }
+                observationsPane.getChildren().clear();
+                observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
+            });
         });
 
         EventBusHolder.getEventBus().register(this);
@@ -133,25 +118,7 @@ public class SenseSimJFXController implements Initializable {
             return;
         }
 
-        try{
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SensorConsoleUI.fxml"));
-
-            Parent root1 = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.NONE);
-            stage.initStyle(StageStyle.DECORATED);
-            stage.setTitle("Sensor " + selectedNode.getID());
-            stage.setScene(new Scene(root1));
-            SensorConsoleController scc = fxmlLoader.getController();
-            scc.setNodeView(selectedNode);
-            scc.fillGui();
-            stage.show();
-
-
-
-        } catch (IOException e) {
-            LOG.error(e.getMessage() , e);
-        }
+        selectedNode.showConsole();
     }
 
     public void loadProgram() {
@@ -367,13 +334,10 @@ public class SenseSimJFXController implements Initializable {
     }
 
     private void actualizePositionLabel() {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                if(selectedNode != null) {
-                    nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
-                    nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
-                }
+        Platform.runLater(() -> {
+            if(selectedNode != null) {
+                nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
+                nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
             }
         });
     }

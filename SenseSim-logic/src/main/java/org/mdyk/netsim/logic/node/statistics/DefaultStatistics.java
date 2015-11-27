@@ -11,6 +11,7 @@ import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class DefaultStatistics implements SensorStatistics {
@@ -65,9 +66,11 @@ public class DefaultStatistics implements SensorStatistics {
     }
 
     @Override
-    public void addProgram(SensorProgram program) {
+    public void addProgram(HashMap<Integer , SensorProgram>  sensorProgramMap) {
         LOG.trace(">> addProgram");
-        this.sensorPrograms.add(program);
+        if(sensorProgramMap.containsKey(this.getSensorId())) {
+            this.sensorPrograms.add(sensorProgramMap.get(this.getSensorId()));
+        }
         LOG.trace("<< addProgram");
     }
 
@@ -97,9 +100,13 @@ public class DefaultStatistics implements SensorStatistics {
                     EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
                     break;
 
-                case PROGRAM_UPDATE:
-                    SensorProgram sensorProgram = (SensorProgram) event.getPayload();
-                    addProgram(sensorProgram);
+                case PROGRAM_LOADED:
+                    HashMap<Integer , SensorProgram>  sensorProgramMap = (HashMap<Integer, SensorProgram>) event.getPayload();
+                    addProgram(sensorProgramMap);
+                    EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
+                    break;
+
+                case PROGRAM_UPDATED:
                     EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
                     break;
             }

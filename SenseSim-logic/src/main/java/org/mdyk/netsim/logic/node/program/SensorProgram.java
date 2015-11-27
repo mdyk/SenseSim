@@ -5,7 +5,7 @@ package org.mdyk.netsim.logic.node.program;
  */
 public interface SensorProgram {
 
-    public enum ProgramStatus {LOADED, FINISHED_OK, DURING_ECECUTION, FINISHED_ERROR}
+    enum ProgramStatus {LOADED, FINISHED_OK, DURING_ECECUTION, FINISHED_ERROR}
 
     /**
      * Executes program

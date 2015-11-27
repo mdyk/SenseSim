@@ -5,7 +5,8 @@ public class StatisticsEvent {
 
     public enum EventType {
         COMM_PROC_UPDATE,
-        PROGRAM_UPDATE,
+        PROGRAM_LOADED,
+        PROGRAM_UPDATED,
         GUI_UPDATE_STATISTICS;
     }
 

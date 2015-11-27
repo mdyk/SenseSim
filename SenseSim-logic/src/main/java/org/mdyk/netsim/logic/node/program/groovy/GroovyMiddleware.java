@@ -79,9 +79,13 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     @Override
     public void loadProgram(SensorProgram program) {
-        this.programs.put(PID++,program);
+        PID++;
+        this.programs.put(PID,program);
+        program.setPID(PID);
         ((GroovyProgram)program).setProgramStatus(SensorProgram.ProgramStatus.LOADED);
-        EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.PROGRAM_UPDATE , program));
+        HashMap<Integer , SensorProgram> sensorIdProgramMap = new HashMap<>();
+        sensorIdProgramMap.put(this.nodeId , program);
+        EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.PROGRAM_LOADED, sensorIdProgramMap));
     }
 
     @Override
@@ -91,7 +95,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     @Override
     public void execute() {
-
+        LOG.trace(">> execute");
         for (Map.Entry<Integer, SensorProgram> entry : programs.entrySet()) {
             GroovyProgram groovyProgram = (GroovyProgram) entry.getValue();
 
@@ -105,18 +109,25 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
             new Thread() {
                 public void run() {
+                    LOG.info("Running program with PID="+PID);
                     me.sensorSimEntity.startProgramExecution(PID);
                     Map<String, Object> params = new HashMap<>();
                     params.put("api", sensorAPI);
                     scriptToRun.setBinding(new Binding(params));
                     try {
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_ECECUTION);
+                        LOG.debug("PID="+PID+" DURING_ECECUTION");
                         Object result = scriptToRun.run();
+                        LOG.debug("PID="+PID+" result="+result);
                         groovyProgram.setResult(result);
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_OK);
+                        LOG.debug("PID="+PID+" FINISHED_OK");
                     } catch (Exception exc) {
                         LOG.error(exc.getMessage(), exc);
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
+                        LOG.debug("PID="+PID+" FINISHED_ERROR");
+                    } finally {
+                        EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.PROGRAM_UPDATED, groovyProgram));
                     }
                     me.sensorSimEntity.endProgramExecution(PID);
 
@@ -126,7 +137,8 @@ public class GroovyMiddleware extends Thread implements Middleware {
             if (groovyProgram.resend()) {
                 resendProgram(groovyProgram);
             }
-            //programs.remove(entry.getKey());
+
+            LOG.trace("<< execute");
         }
 
         // TODO określenie co jeszcze miałby robić middleware
