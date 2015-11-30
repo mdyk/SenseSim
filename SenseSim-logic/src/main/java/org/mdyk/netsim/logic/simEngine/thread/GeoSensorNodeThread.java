@@ -12,6 +12,7 @@ import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
+import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 
@@ -139,6 +140,11 @@ public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
     @Override
     public void setSimEntity(SensorSimEntity simEntity) {
         //Empty
+    }
+
+    @Override
+    public void setSensorStatistics(SensorStatistics statistics) {
+
     }
 
 }

@@ -14,6 +14,7 @@ import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
+import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -36,6 +37,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     // FIXME do zmiany
     public WirelessChannel wirelessChannel;
     private SensorSimEntity sensorSimEntity;
+    private SensorStatistics sensorStatistics;
     protected CommunicationProcessFactory communicationProcessFactory;
     // FIXME do zmiany
     public Function<Message, Object> onMessageHandler;
@@ -57,7 +59,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
         // FIXME powinno być ustawiane w konfiguracji.
-        this.routingAlgorithm = new FloodingRouting();
+//        this.routingAlgorithm = new FloodingRouting(sensorStatistics);
         this.communicationProcessFactory = communicationProcessFactory;
         this.isMoveing = true;
     }
@@ -184,5 +186,10 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     @Override
     public void setSimEntity(SensorSimEntity simEntity) {
         this.sensorSimEntity = simEntity;
+    }
+
+    @Override
+    public void setSensorStatistics(SensorStatistics statistics) {
+        this.sensorStatistics = statistics;
     }
 }

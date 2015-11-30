@@ -3,6 +3,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import dissim.simspace.core.SimModel;
@@ -117,8 +118,8 @@ public class DisSimSensorAPITest {
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        sender.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
-        receiver.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
+        sender.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(sender.getStatistics()));
+        receiver.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(receiver.getStatistics()));
 
         final StringBuilder content = new StringBuilder();
 
@@ -155,29 +156,35 @@ public class DisSimSensorAPITest {
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        sender.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
-        hop1.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
-        receiver.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
-        hop2.getSensorLogic().setRoutingAlgorithm(new FloodingRouting());
+        sender.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(sender.getStatistics()));
+        hop1.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(hop1.getStatistics()));
+        receiver.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(receiver.getStatistics()));
+        hop2.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(hop2.getStatistics()));
 
 
         final StringBuilder senderContent = new StringBuilder();
+        final ArrayList<Integer> senderCount = new ArrayList<>();
         Function<Message , Object> senderHandler = h -> {
             senderContent.append((String) h.getMessageContent());
+            senderCount.add(1);
             return null;
         };
         sender.getSensorAPI().api_setOnMessageHandler(senderHandler);
 
         final StringBuilder hop1Content = new StringBuilder();
+        final ArrayList<Integer> hop1Count = new ArrayList<>();
         Function<Message , Object> hop1Handler = h -> {
             hop1Content.append((String) h.getMessageContent());
+            hop1Count.add(1);
             return null;
         };
         hop1.getSensorAPI().api_setOnMessageHandler(hop1Handler);
 
         final StringBuilder receiverContent = new StringBuilder();
+        final ArrayList<Integer> receiverCount = new ArrayList<>();
         Function<Message , Object> receiverHandler = h -> {
             receiverContent.append((String) h.getMessageContent());
+            receiverCount.add(1);
             return null;
         };
         receiver.getSensorAPI().api_setOnMessageHandler(receiverHandler);
@@ -189,58 +196,22 @@ public class DisSimSensorAPITest {
 
         Thread.sleep(5000);
 
+        System.out.println("SenderCount="+senderCount.size());
+        System.out.println("Hop1Count="+hop1Count.size());
+        System.out.println("ReceiverCount="+receiverCount.size());
+
         // FIXME odblokować po poprawieniu algorytmu routingu
         // the receiver should receive two messages (from hop1 and hop2)
         // so the output string is "testtest"
-//        TestCase.assertEquals("testtest", receiverContent.toString());
-//        TestCase.assertEquals("testtest", hop1Content.toString());
-        // TODO odblokować po poprawie algorytmu flooding
-//        TestCase.assertEquals("", senderContent.toString());
+        TestCase.assertEquals("", senderContent.toString());
+        TestCase.assertEquals("testtesttest", hop1Content.toString());
+        TestCase.assertEquals("testtesttest", receiverContent.toString());
+
 
         simEngine.stopScenario();
         Thread.sleep(1000);
     }
 
-    private static class TestMessage implements Message {
 
-        private int source;
-        private int dest;
-        private int size;
-
-        protected TestMessage(int source, int dest, int size) {
-            this.source = source;
-            this.dest = dest;
-            this.size = size;
-        }
-
-        @Override
-        public int getID() {
-            return 1;
-        }
-
-        @Override
-        public Object getMessageContent() {
-            return "test";
-        }
-
-        public int getMessageSource(){
-            return this.source;
-        }
-
-        /**
-         * Returns destination sensor of the message. It is the origin sensor, which should not change during communication
-         * process.
-         * @return
-         *      destination (sink) sensor
-         */
-        public int getMessageDest(){
-            return this.dest;
-        }
-
-        @Override
-        public int getSize() {
-            return this.size;
-        }
-    }
 
 }

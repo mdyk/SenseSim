@@ -95,16 +95,16 @@ public class XMLScenario implements Scenario {
         return nodesMap;
     }
 
-    private void setRoutingAlgorithm(NodeType nodeType , ISensorModel<?> sensorModel) {
-        switch (nodeType.getRoutingAlgType()) {
-            case "FloodingRouting":
-                sensorModel.setRoutingAlgorithm(new FloodingRouting());
-                break;
-
-            default:
-                throw new RuntimeException("Invalid type of routing algorithm");
-        }
-    }
+//    private void setRoutingAlgorithm(NodeType nodeType , ISensorModel<?> sensorModel) {
+//        switch (nodeType.getRoutingAlgType()) {
+//            case "FloodingRouting":
+//                sensorModel.setRoutingAlgorithm(new FloodingRouting());
+//                break;
+//
+//            default:
+//                throw new RuntimeException("Invalid type of routing algorithm");
+//        }
+//    }
 
     @Override
     public List<IPhenomenonModel<GeoPosition>> getPhenomena() {

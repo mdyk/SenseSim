@@ -28,9 +28,6 @@ public class DisSimSensorsLogicFactory implements SensorLogicFactory {
     private WirelessChannel wirelessChannel;
 
     @Inject
-    private DisSimEngine disSimEngine;
-
-    @Inject
     private CommunicationProcessFactory communicationProcessFactory;
 
     @Override

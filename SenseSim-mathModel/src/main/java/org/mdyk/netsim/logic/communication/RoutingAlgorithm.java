@@ -11,6 +11,7 @@ import java.util.List;
  * Interface for sensors' routing algorithms
  */
 // TODO kryteria dla algorytmu trasowania
+// TODO uzależnić w jakiś sposób ten interfejs od statystyk sensora
 public interface RoutingAlgorithm<P extends Position> {
 
     /**
@@ -26,6 +27,7 @@ public interface RoutingAlgorithm<P extends Position> {
      * @return
      *      list of sensors which are destination for the hop.
      */
-    public List<SensorNode<P>> getNodesToHop(int sender, int destination, Message message, List<SensorNode<P>> knownSensors);
+    List<SensorNode<P>> getNodesToHop(int sender, int destination, Message message, List<SensorNode<P>> knownSensors);
+
 
 }

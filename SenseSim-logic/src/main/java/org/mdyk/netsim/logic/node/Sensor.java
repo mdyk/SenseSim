@@ -1,5 +1,6 @@
 package org.mdyk.netsim.logic.node;
 
+import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.geo.SensorLogic;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
@@ -29,6 +30,9 @@ public class Sensor {
 
         sensorStatistics.setSensor(this);
         sensorLogic.setSimEntity(sensorSimEntity);
+        sensorLogic.setSensorStatistics(sensorStatistics);
+        // FIXME to powinno znajdować się w konfiguracji !!!!
+        sensorLogic.setRoutingAlgorithm(new FloodingRouting(sensorStatistics));
         sensorSimEntity.setSensorLogic(sensorLogic);
         sensorSimEntity.setMiddleware(middleware);
         sensorAPI.setSimEntity(sensorSimEntity);
