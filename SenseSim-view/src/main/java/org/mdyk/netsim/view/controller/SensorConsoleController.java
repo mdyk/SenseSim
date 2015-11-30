@@ -180,9 +180,12 @@ public class SensorConsoleController implements Initializable {
         try{
             switch (statisticsEvent.getEventType()) {
                 case GUI_UPDATE_STATISTICS:
-                    this.statistics = (SensorStatistics) statisticsEvent.getPayload();
-                    showCommunication(this.statistics, CommType.Incoming);
-                    showPrograms();
+                    SensorStatistics statistics = (SensorStatistics) statisticsEvent.getPayload();
+                    if(statistics.getSensorId() == this.nodeView.getID()) {
+                        this.statistics = statistics;
+                        showCommunication(this.statistics, CommType.Incoming);
+                        showPrograms();
+                    }
                     break;
             }
         } catch (Exception exc) {

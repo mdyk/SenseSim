@@ -95,10 +95,10 @@ public class StatisticsTest {
         Thread.sleep(1000);
 
         TestCase.assertEquals(1 , sender.getStatistics().getOutgoingCommunication().size());
-        TestCase.assertEquals(1 , sender.getStatistics().getIncomingCommunication().size());
+        TestCase.assertEquals(0 , sender.getStatistics().getIncomingCommunication().size());
 
-        TestCase.assertEquals(1 , sender.getStatistics().getOutgoingCommunication().size());
-        TestCase.assertEquals(1 , sender.getStatistics().getIncomingCommunication().size());
+        TestCase.assertEquals(0 , receiver.getStatistics().getOutgoingCommunication().size());
+        TestCase.assertEquals(1 , receiver.getStatistics().getIncomingCommunication().size());
 
     }
 
