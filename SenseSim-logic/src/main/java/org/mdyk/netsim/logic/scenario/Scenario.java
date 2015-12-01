@@ -11,10 +11,9 @@ import java.util.Map;
 /**
  * Interface for scenario configuration
  */
-// TODO generalizacja pod kątem położenia
 public interface Scenario {
 
-    public String scenarioName();
+    String scenarioName();
 
     /**
      * Returns map with sensors.
@@ -22,8 +21,8 @@ public interface Scenario {
      *      map where keys are class types of nodes and values are
      *      lists of nodes with desired class.
      */
-    public Map<Class, List<Sensor>> scenarioSensors();
+    Map<Class, List<Sensor>> scenarioSensors();
 
-    public List<IPhenomenonModel<GeoPosition>> getPhenomena();
+    List<IPhenomenonModel<GeoPosition>> getPhenomena();
 
 }

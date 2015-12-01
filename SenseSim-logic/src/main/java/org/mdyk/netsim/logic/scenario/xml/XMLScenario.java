@@ -64,47 +64,41 @@ public class XMLScenario implements Scenario {
         Map<Class, List<Sensor>> nodesMap = new HashMap<>();
 
         for (NodeType nodeType : scenario.getNodes().getNode()){
-            switch(nodeType.getSesnorImplType()){
-                case "GeoSensorNode":
-                    List<Sensor> geoSensorNodes;
-                    if(!nodesMap.containsKey(GeoSensorNodeThread.class)){
-                        geoSensorNodes = new LinkedList<>();
-                        nodesMap.put(GeoSensorNodeThread.class,geoSensorNodes);
-                    }
-                    geoSensorNodes = nodesMap.get(GeoSensorNodeThread.class);
+            try {
+                switch (nodeType.getSesnorImplType()) {
+                    case "GeoSensorNode":
+                        List<Sensor> geoSensorNodes;
+                        if (!nodesMap.containsKey(Sensor.class)) {
+                            geoSensorNodes = new LinkedList<>();
+                            nodesMap.put(Sensor.class, geoSensorNodes);
+                        }
+                        geoSensorNodes = nodesMap.get(Sensor.class);
 
-                    GeoPosition position = new GeoPosition(Double.parseDouble(nodeType.getStartPosition().getLatitude()),
-                                                           Double.parseDouble(nodeType.getStartPosition().getLongitude()));
-                    List<GeoPosition> route = XmlTypeConverter.convertRoute(nodeType.getRoute());
+                        GeoPosition position = new GeoPosition(Double.parseDouble(nodeType.getStartPosition().getLatitude()),
+                                Double.parseDouble(nodeType.getStartPosition().getLongitude()));
+                        List<GeoPosition> route = XmlTypeConverter.convertRoute(nodeType.getRoute());
 
-                    List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
+                        List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
 
-                    Sensor node = sensorsFactory.buildSensor(Integer.parseInt(nodeType.getId()),
-                            position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
-                            Double.parseDouble(nodeType.getSpeed()), abilities);
-                    node.getSensorLogic().setRoute(route);
+                        Sensor node = sensorsFactory.buildSensor(Integer.parseInt(nodeType.getId()),
+                                position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
+                                Double.parseDouble(nodeType.getSpeed()), abilities);
+                        node.getSensorLogic().setRoute(route);
 //                    node.getSensorLogic().setRoutingAlgorithm(nodeType , node);
-                    geoSensorNodes.add(node);
-                    break;
+                        geoSensorNodes.add(node);
+                        break;
 
-                default:
-                    throw new RuntimeException("Invalid type of node");
+                    default:
+                        throw new RuntimeException("Invalid type of node");
+                }
+            } catch (Exception exc) {
+                LOG.error(exc.getMessage() , exc);
+                throw new RuntimeException("Error loading scenario sensors", exc);
             }
         }
 
         return nodesMap;
     }
-
-//    private void setRoutingAlgorithm(NodeType nodeType , ISensorModel<?> sensorModel) {
-//        switch (nodeType.getRoutingAlgType()) {
-//            case "FloodingRouting":
-//                sensorModel.setRoutingAlgorithm(new FloodingRouting());
-//                break;
-//
-//            default:
-//                throw new RuntimeException("Invalid type of routing algorithm");
-//        }
-//    }
 
     @Override
     public List<IPhenomenonModel<GeoPosition>> getPhenomena() {

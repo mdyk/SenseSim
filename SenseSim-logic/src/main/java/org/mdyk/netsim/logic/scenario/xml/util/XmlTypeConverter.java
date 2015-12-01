@@ -1,6 +1,7 @@
 package org.mdyk.netsim.logic.scenario.xml.util;
 
 import au.com.bytecode.opencsv.CSVReader;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -12,8 +13,9 @@ import org.mdyk.sensesim.schema.CheckpointType;
 import org.mdyk.sensesim.schema.PhenomenonType;
 import org.mdyk.sensesim.schema.RouteType;
 
-import java.io.FileReader;
-import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -68,8 +70,13 @@ public class XmlTypeConverter {
                         value = Double.parseDouble(nextLine[2]);
                         break;
 
-                    case "BINARY":
-                        // TODO
+                    case "FOTO_B64":
+                        InputStream stream = new ByteArrayInputStream(Base64.decodeBase64(nextLine[2].getBytes()));
+                        value = ImageIO.read(stream);
+                        break;
+
+                    case "FOTO_FILE":
+                        value = ImageIO.read(new File(nextLine[2]));
                         break;
 
                     default:

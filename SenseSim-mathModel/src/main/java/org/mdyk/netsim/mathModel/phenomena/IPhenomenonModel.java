@@ -16,15 +16,15 @@ public interface IPhenomenonModel<P extends Position> {
      * @return
      *      list of vertex
      */
-    public List<P> getPhenomenonRegionPoints();
+    List<P> getPhenomenonRegionPoints();
 
     /**
      * Returns value of the event with given ability and time.
      * @return
      *      array which represents phenomenon value for given time
      */
-    public PhenomenonValue getPhenomenonValue(AbilityType ability, double time);
+    PhenomenonValue getPhenomenonValue(AbilityType ability, double time);
 
-    public boolean hasAbility(AbilityType ability);
+    boolean hasAbility(AbilityType ability);
 
 }
