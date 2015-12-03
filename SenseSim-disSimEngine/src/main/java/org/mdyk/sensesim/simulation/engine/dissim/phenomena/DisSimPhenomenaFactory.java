@@ -29,7 +29,7 @@ public class DisSimPhenomenaFactory implements PhenomenaFactory {
     private DisSimEngine disSimEngine;
 
     @Override
-    public IPhenomenonModel<GeoPosition> createPhenomenon(Map<IPhenomenonTimeRange, Object> values, AbilityType abilityType, List<GeoPosition> points) {
-        return new SimplePhenomenon(values, abilityType, points);
+    public IPhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points) {
+        return new SimplePhenomenon(values, points);
     }
 }

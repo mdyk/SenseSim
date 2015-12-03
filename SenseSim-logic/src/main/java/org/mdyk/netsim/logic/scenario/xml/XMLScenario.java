@@ -2,21 +2,16 @@ package org.mdyk.netsim.logic.scenario.xml;
 
 import com.google.inject.assistedinject.Assisted;
 import org.apache.log4j.Logger;
-import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.node.Sensor;
 import org.mdyk.netsim.logic.node.SensorsFactory;
-import org.mdyk.netsim.logic.simEngine.thread.GeoSensorNodeThread;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
-import org.mdyk.sensesim.schema.NodeType;
-import org.mdyk.sensesim.schema.PhenomenaType;
-import org.mdyk.sensesim.schema.PhenomenonType;
+import org.mdyk.sensesim.schema.*;
 
 import javax.inject.Inject;
 import javax.xml.bind.JAXBContext;
@@ -102,29 +97,40 @@ public class XMLScenario implements Scenario {
 
     @Override
     public List<IPhenomenonModel<GeoPosition>> getPhenomena() {
-        LOG.debug(">>> getPhenomena()");
+        LOG.debug(">> getPhenomena()");
 
         PhenomenaType phenomenaType = scenario.getPhenomena();
         LOG.debug("Size of phenomena: " + phenomenaType.getPhenomenon().size());
-
         List<IPhenomenonModel<GeoPosition>> phenomenaList = new ArrayList<>(phenomenaType.getPhenomenon().size());
 
         for(PhenomenonType phenomenonType : phenomenaType.getPhenomenon()) {
             List<GeoPosition> phenomenonArea = XmlTypeConverter.convertRoute(phenomenonType.getPhenomenonArea());
-            AbilityType abilityName =  AbilityType.valueOf(phenomenonType.getAbilityName());
 
-            // TODO obsługa przypadku kiedy nie ma pliku
-            Map<IPhenomenonTimeRange, Object> phenomenonValues = new HashMap<>();
-            if(phenomenonType.getCsvFile() != null) {
-                String filePath = scenarioFile.getParent() + "/" + phenomenonType.getCsvFile().getCsvFile();
-                phenomenonValues.putAll(XmlTypeConverter.readPhenomenonValuesFromFile(filePath));
+            Map<AbilityType , Map<IPhenomenonTimeRange, Object>> phenomenonValuesMap = new HashMap<>();
+
+            for(PhenomenonValueConfigType phenomenonValueType : phenomenonType.getPhenomenonValueSet()) {
+                AbilityType abilityName =  AbilityType.valueOf(phenomenonValueType.getAbilityName());
+                Map<IPhenomenonTimeRange, Object> phenomenonValues = new HashMap<>();
+
+                if(phenomenonValueType.getCsvFile() != null) {
+                    String filePath = scenarioFile.getParent() + "/" + phenomenonValueType.getCsvFile().getCsvFile();
+                    phenomenonValues.putAll(XmlTypeConverter.readPhenomenonValuesFromFile(filePath));
+                }
+                else {
+                    for(PhenomenonValueType valueType : phenomenonValueType.getPhenomenonValue()) {
+                        for(PhenomenonDiscreteValueType discreteValueType : valueType.getDiscreteValue()) {
+                            Map<IPhenomenonTimeRange, Object> values = XmlTypeConverter.discreteValueConverter(discreteValueType);
+                            phenomenonValues.putAll(values);
+                        }
+                    }
+                }
+                phenomenonValuesMap.put(abilityName , phenomenonValues);
             }
-
-            IPhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValues, abilityName,phenomenonArea);
+            IPhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
             phenomenaList.add(phenomenon);
         }
 
-        LOG.debug("<<< getPhenomena()");
+        LOG.debug("<< getPhenomena()");
         return phenomenaList;
     }
 

@@ -5,6 +5,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import junit.framework.TestCase;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -20,7 +21,6 @@ import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.scenario.xml.XMLScenario;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
-import org.mdyk.netsim.logic.simEngine.thread.GeoSensorNodeThread;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
@@ -32,6 +32,9 @@ import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorAPIFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +72,7 @@ public class XMLScenarioTest {
 
     @Test
     public void testScenarioName() throws Exception {
-        File scenarioXML = FileUtils.toFile(getClass().getResource("/scenario-1.xml"));
+        File scenarioXML = FileUtils.toFile(getClass().getResource("/src/test/resources/scenario-1.xml"));
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
 
@@ -78,7 +81,7 @@ public class XMLScenarioTest {
 
     @Test
     public void testScenarioSensors() throws Exception {
-        File scenarioXML = FileUtils.toFile(getClass().getResource("/scenario-1.xml"));
+        File scenarioXML = FileUtils.toFile(getClass().getResource("/src/test/resources/scenario-1.xml"));
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
 
@@ -115,6 +118,29 @@ public class XMLScenarioTest {
 
         PhenomenonValue val3 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,1000);
         TestCase.assertEquals(110 , val3.getValue());
+
+        PhenomenonValue valPhoto1 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.PHOTO, 500);
+        TestCase.assertTrue(valPhoto1.getValue() != null);
+
+        byte[] imageArray = FileUtils.readFileToByteArray(FileUtils.toFile(getClass().getResource("/exampleImage.jpg")));
+        BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageArray));
+
+        TestCase.assertTrue(bufferedImagesEqual((BufferedImage) valPhoto1.getValue(), image));
+
+    }
+
+    boolean bufferedImagesEqual(BufferedImage img1, BufferedImage img2) {
+        if (img1.getWidth() == img2.getWidth() && img1.getHeight() == img2.getHeight()) {
+            for (int x = 0; x < img1.getWidth(); x++) {
+                for (int y = 0; y < img1.getHeight(); y++) {
+                    if (img1.getRGB(x, y) != img2.getRGB(x, y))
+                        return false;
+                }
+            }
+        } else {
+            return false;
+        }
+        return true;
     }
 
 }

@@ -17,13 +17,12 @@ public interface PhenomenaFactory {
     /**
      * Creates simple phenomenon with given observation capability, region and values.
      * @param values
-     *      map which holds phenomenon observations (values) indexed by time (keys).
-     * @param abilityType
-     *      type of observation capability {@link AbilityType}.
+     *      map which holds phenomenon observations. Key are types of abilities and value are maps which hold timerange
+     *      and values of the phenomenon for each ability
      * @param points
      *      list of points which defines spatial area of the phenomenon.
      * @return
      */
-    public IPhenomenonModel<GeoPosition> createPhenomenon(Map<IPhenomenonTimeRange, Object> values, AbilityType abilityType, List<GeoPosition> points);
+    public IPhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points);
 
 }

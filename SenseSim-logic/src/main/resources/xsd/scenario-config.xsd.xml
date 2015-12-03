@@ -4,6 +4,7 @@
     <node id="string">
       <speed>string</speed>
       <radioRange>string</radioRange>
+      <radioBandwidth>string</radioBandwidth>
       <sesnorImplType>GeoSensorNode</sesnorImplType>
       <routingAlgType>FloodingRouting</routingAlgType>
       <sensorAbilities>
@@ -25,7 +26,7 @@
   </nodes>
   <phenomena>
     <!--Zero or more repetitions:-->
-    <phenomenon startTime="string" endTime="string" abilityName="string">
+    <phenomenon name="string">
       <phenomenonArea>
         <!--Zero or more repetitions:-->
         <checkpoint>
@@ -33,16 +34,20 @@
           <longitude>string</longitude>
         </checkpoint>
       </phenomenonArea>
-      <!--Optional:-->
-      <phenomenonValue>
-        <discreteValue fromTime="string" toTime="string">
-          <value>string</value>
-        </discreteValue>
-      </phenomenonValue>
-      <!--Optional:-->
-      <csvFile>
-        <csvFile>string</csvFile>
-      </csvFile>
+      <!--Zero or more repetitions:-->
+      <phenomenonValueSet startTime="string" endTime="string" abilityName="string">
+        <!--Zero or more repetitions:-->
+        <phenomenonValue>
+          <!--Zero or more repetitions:-->
+          <discreteValue fromTime="string" toTime="string" format="string">
+            <value>string</value>
+          </discreteValue>
+        </phenomenonValue>
+        <!--Optional:-->
+        <csvFile>
+          <csvFile>string</csvFile>
+        </csvFile>
+      </phenomenonValueSet>
     </phenomenon>
   </phenomena>
 </scenario>

@@ -8,13 +8,9 @@ import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.netsim.mathModel.phenomena.time.SimplePhenomenonTimeRange;
-import org.mdyk.sensesim.schema.AbilitiesType;
-import org.mdyk.sensesim.schema.CheckpointType;
-import org.mdyk.sensesim.schema.PhenomenonType;
-import org.mdyk.sensesim.schema.RouteType;
+import org.mdyk.sensesim.schema.*;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -49,6 +45,22 @@ public class XmlTypeConverter {
         return null;
     }
 
+    public static Map<IPhenomenonTimeRange, Object> discreteValueConverter(PhenomenonDiscreteValueType discreteValueType) {
+        LOG.trace(">> discreteValueConverter");
+        Map<IPhenomenonTimeRange, Object> phenomenonValue = new HashMap<>();
+
+        IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Integer.parseInt(discreteValueType.getFromTime()) , Integer.parseInt(discreteValueType.getToTime()));
+        try {
+            Object value = valueConverter(discreteValueType.getValue() , discreteValueType.getFormat());
+            phenomenonValue.put(phenomenonTime , value);
+        } catch (Exception e) {
+            LOG.error(e.getMessage(),e);
+        }
+
+        LOG.trace("<< discreteValueConverter");
+        return phenomenonValue;
+    }
+
     public static Map<IPhenomenonTimeRange, Object> readPhenomenonValuesFromFile(String filePath) {
         LOG.debug(">>> readPhenomenonValuesFromFile [filePath = " + filePath + "]");
 
@@ -60,29 +72,7 @@ public class XmlTypeConverter {
             String [] nextLine;
             while ((nextLine = reader.readNext()) != null) {
                 IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Integer.parseInt(nextLine[0]),Integer.parseInt(nextLine[1]));
-                Object value = null;
-                switch(nextLine[3]) {
-                    case "INTEGER":
-                        value = Integer.parseInt(nextLine[2]);
-                        break;
-
-                    case "DOUBLE":
-                        value = Double.parseDouble(nextLine[2]);
-                        break;
-
-                    case "FOTO_B64":
-                        InputStream stream = new ByteArrayInputStream(Base64.decodeBase64(nextLine[2].getBytes()));
-                        value = ImageIO.read(stream);
-                        break;
-
-                    case "FOTO_FILE":
-                        value = ImageIO.read(new File(nextLine[2]));
-                        break;
-
-                    default:
-                        throw new RuntimeException("Unknown phenomenon value type " + nextLine[3]);
-                }
-
+                Object value = valueConverter(nextLine[2] , nextLine[3]);
                 phenomenonValue.put(phenomenonTime, value);
             }
         } catch (Exception e) {
@@ -99,6 +89,32 @@ public class XmlTypeConverter {
 
         LOG.debug("<<<t readPhenomenonValuesFromFile");
         return phenomenonValue;
+    }
+
+    private static Object valueConverter(String value , String format) throws Exception{
+        Object convertedValue = null;
+            switch(format) {
+                case "INTEGER":
+                    convertedValue = Integer.parseInt(value);
+                    break;
+
+                case "DOUBLE":
+                    convertedValue = Double.parseDouble(value);
+                    break;
+
+                case "PHOTO_B64":
+                    InputStream stream = new ByteArrayInputStream(Base64.decodeBase64(value.getBytes()));
+                    convertedValue = ImageIO.read(stream);
+                    break;
+
+                case "PHOTO_FILE":
+                    convertedValue = ImageIO.read(new File(value));
+                    break;
+
+                default:
+                    throw new RuntimeException("Unknown phenomenon value type " + value);
+            }
+        return convertedValue;
     }
 
     public static List<AbilityType> convertAbilities(AbilitiesType abilitiesType) {
