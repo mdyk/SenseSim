@@ -72,7 +72,7 @@ public class XMLScenarioTest {
 
     @Test
     public void testScenarioName() throws Exception {
-        File scenarioXML = FileUtils.toFile(getClass().getResource("/src/test/resources/scenario-1.xml"));
+        File scenarioXML = FileUtils.toFile(getClass().getResource("/scenario-1.xml"));
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
 
@@ -81,7 +81,7 @@ public class XMLScenarioTest {
 
     @Test
     public void testScenarioSensors() throws Exception {
-        File scenarioXML = FileUtils.toFile(getClass().getResource("/src/test/resources/scenario-1.xml"));
+        File scenarioXML = FileUtils.toFile(getClass().getResource("/scenario-1.xml"));
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
 
