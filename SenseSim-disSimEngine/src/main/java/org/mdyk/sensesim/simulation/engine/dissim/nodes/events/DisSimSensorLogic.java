@@ -66,7 +66,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
 
     @Override
     public void sense() {
-
+        // TODO uwzględnienie funkcji PI
         for(AbilityType ability : getAbilities()) {
             PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), sensorSimEntity.getSimTime(), ability);
             this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);

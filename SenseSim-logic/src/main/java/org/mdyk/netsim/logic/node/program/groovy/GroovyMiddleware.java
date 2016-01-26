@@ -103,7 +103,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                 continue;
             }
 
-            Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
+            final Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
 
             final GroovyMiddleware me = this;
 

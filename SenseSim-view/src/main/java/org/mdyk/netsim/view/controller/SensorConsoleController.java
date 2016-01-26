@@ -247,7 +247,7 @@ public class SensorConsoleController implements Initializable {
             return;
         }
 
-        List<PhenomenonValue> observations = nodeView.getNode().getObservations().get(AbilityType.valueOf(abilityName));
+        final List<PhenomenonValue> observations = nodeView.getNode().getObservations().get(AbilityType.valueOf(abilityName));
 
         Platform.runLater(() -> {
             if(observations != null) {
