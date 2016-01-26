@@ -87,7 +87,7 @@ public class XmlTypeConverter {
             }
         }
 
-        LOG.debug("<<<t readPhenomenonValuesFromFile");
+        LOG.debug("<<< readPhenomenonValuesFromFile");
         return phenomenonValue;
     }
 

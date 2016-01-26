@@ -5,7 +5,6 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import junit.framework.TestCase;
-import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.Before;
@@ -126,7 +125,6 @@ public class XMLScenarioTest {
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageArray));
 
         TestCase.assertTrue(bufferedImagesEqual((BufferedImage) valPhoto1.getValue(), image));
-
     }
 
     boolean bufferedImagesEqual(BufferedImage img1, BufferedImage img2) {
