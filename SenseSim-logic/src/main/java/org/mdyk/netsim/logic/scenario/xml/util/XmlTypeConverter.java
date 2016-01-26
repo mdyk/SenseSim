@@ -92,7 +92,7 @@ public class XmlTypeConverter {
     }
 
     private static Object valueConverter(String value , String format) throws Exception{
-        Object convertedValue = null;
+        Object convertedValue;
             switch(format) {
                 case "INTEGER":
                     convertedValue = Integer.parseInt(value);
