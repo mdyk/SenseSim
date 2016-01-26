@@ -125,6 +125,13 @@ public class XMLScenarioTest {
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(imageArray));
 
         TestCase.assertTrue(bufferedImagesEqual((BufferedImage) valPhoto1.getValue(), image));
+
+
+        PhenomenonValue valPhoto2 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.PHOTO, 1500);
+        TestCase.assertTrue(valPhoto1.getValue() != null);
+
+        TestCase.assertTrue(bufferedImagesEqual((BufferedImage) valPhoto2.getValue(), image));
+
     }
 
     boolean bufferedImagesEqual(BufferedImage img1, BufferedImage img2) {

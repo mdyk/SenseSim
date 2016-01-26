@@ -108,6 +108,7 @@ public class XmlTypeConverter {
                     break;
 
                 case "PHOTO_FILE":
+                    // TODO poprawa ścieżki do pliku. Tak jak przy obsłudze pliku CSV
                     convertedValue = ImageIO.read(new File(value));
                     break;
 
