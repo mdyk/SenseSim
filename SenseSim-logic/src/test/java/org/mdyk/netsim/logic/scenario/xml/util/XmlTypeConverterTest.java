@@ -16,7 +16,9 @@ public class XmlTypeConverterTest {
     @Test
     public void testReadPhenomenonValuesFromFile() throws Exception {
         File csv = FileUtils.toFile(getClass().getResource("/phenomenaValueTest.csv"));
-        Map<IPhenomenonTimeRange, Object> map = XmlTypeConverter.readPhenomenonValuesFromFile(csv.getAbsolutePath());
+        String scenario1Path = FileUtils.toFile(getClass().getResource("/scenario-1.xml")).getAbsolutePath();
+        XmlTypeConverter xmlTypeConverter = new XmlTypeConverter(scenario1Path);
+        Map<IPhenomenonTimeRange, Object> map = xmlTypeConverter.readPhenomenonValuesFromFile(csv.getAbsolutePath());
 
         IPhenomenonTimeRange time = new SimplePhenomenonTimeRange(1,1000);
         Object value = map.get(time);

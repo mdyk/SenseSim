@@ -24,11 +24,13 @@ public class XmlTypeConverter {
 
     private static final Logger LOG = Logger.getLogger(XmlTypeConverter.class);
 
-    private XmlTypeConverter() {
-        // Empty constructor, just to hide the default one.
+    private String scenarioFilePath;
+
+    public XmlTypeConverter(String scenarioFilePath) {
+        this.scenarioFilePath = scenarioFilePath;
     }
 
-    public static List<GeoPosition> convertRoute(RouteType routeType) {
+    public List<GeoPosition> convertRoute(RouteType routeType) {
         List<GeoPosition> route = new LinkedList<>();
         for (CheckpointType checkpointType : routeType.getCheckpoint()){
             route.add(covertCheckpointToPosiotion(checkpointType));
@@ -36,16 +38,16 @@ public class XmlTypeConverter {
         return route;
     }
 
-    public static GeoPosition covertCheckpointToPosiotion(CheckpointType checkpointType) {
+    public GeoPosition covertCheckpointToPosiotion(CheckpointType checkpointType) {
         return new GeoPosition(Double.parseDouble(checkpointType.getLatitude()),Double.parseDouble(checkpointType.getLongitude()));
     }
 
-    public static IPhenomenonModel convertPhenomenon(PhenomenonType phenomenonType) {
+    public IPhenomenonModel convertPhenomenon(PhenomenonType phenomenonType) {
         // TODO
         return null;
     }
 
-    public static Map<IPhenomenonTimeRange, Object> discreteValueConverter(PhenomenonDiscreteValueType discreteValueType) {
+    public Map<IPhenomenonTimeRange, Object> discreteValueConverter(PhenomenonDiscreteValueType discreteValueType) {
         LOG.trace(">> discreteValueConverter");
         Map<IPhenomenonTimeRange, Object> phenomenonValue = new HashMap<>();
 
@@ -61,14 +63,14 @@ public class XmlTypeConverter {
         return phenomenonValue;
     }
 
-    public static Map<IPhenomenonTimeRange, Object> readPhenomenonValuesFromFile(String filePath) {
-        LOG.debug(">>> readPhenomenonValuesFromFile [filePath = " + filePath + "]");
+    public Map<IPhenomenonTimeRange, Object> readPhenomenonValuesFromFile(String valuefilePath) {
+        LOG.debug(">>> readPhenomenonValuesFromFile [filePath = " + valuefilePath + "]");
 
         Map<IPhenomenonTimeRange, Object> phenomenonValue = new HashMap<>();
 
         CSVReader reader = null;
         try {
-            reader = new CSVReader(new FileReader(filePath),';');
+            reader = new CSVReader(new FileReader(valuefilePath),';');
             String [] nextLine;
             while ((nextLine = reader.readNext()) != null) {
                 IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Integer.parseInt(nextLine[0]),Integer.parseInt(nextLine[1]));
@@ -91,7 +93,7 @@ public class XmlTypeConverter {
         return phenomenonValue;
     }
 
-    private static Object valueConverter(String value , String format) throws Exception{
+    private Object valueConverter(String value , String format) throws Exception{
         Object convertedValue;
             switch(format) {
                 case "INTEGER":
@@ -108,8 +110,14 @@ public class XmlTypeConverter {
                     break;
 
                 case "PHOTO_FILE":
-                    // TODO poprawa ścieżki do pliku. Tak jak przy obsłudze pliku CSV
-                    convertedValue = ImageIO.read(new File(value));
+                    String photoFilePath = scenarioFilePath +'/'+ value;
+                    File imageFile = new File(photoFilePath);
+
+                    if(!imageFile.exists()) {
+                        throw new RuntimeException("Cannot open file " + photoFilePath);
+                    }
+
+                    convertedValue = ImageIO.read(imageFile);
                     break;
 
                 default:

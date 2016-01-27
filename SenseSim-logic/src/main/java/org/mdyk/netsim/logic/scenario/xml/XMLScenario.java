@@ -31,6 +31,7 @@ public class XMLScenario implements Scenario {
 
     private SensorsFactory sensorsFactory;
     private PhenomenaFactory phenomenaFactory;
+    private XmlTypeConverter xmlTypeConverter;
 
     @Inject
     public XMLScenario(@Assisted File file, SensorsFactory sensorsFactory, PhenomenaFactory phenomenaFactory) throws XMLScenarioLoadException {
@@ -42,6 +43,7 @@ public class XMLScenario implements Scenario {
             scenario = (org.mdyk.sensesim.schema.Scenario) jaxbUnmarshaller.unmarshal(scenarioFile);
             this.sensorsFactory = sensorsFactory;
             this.phenomenaFactory = phenomenaFactory;
+            this.xmlTypeConverter = new XmlTypeConverter(scenarioFile.getParent());
         } catch (JAXBException e) {
             LOG.error(e.getMessage(), e);
             throw new XMLScenarioLoadException("Error loading scenario from file: " + file.getAbsolutePath(), e);
@@ -71,7 +73,7 @@ public class XMLScenario implements Scenario {
 
                         GeoPosition position = new GeoPosition(Double.parseDouble(nodeType.getStartPosition().getLatitude()),
                                 Double.parseDouble(nodeType.getStartPosition().getLongitude()));
-                        List<GeoPosition> route = XmlTypeConverter.convertRoute(nodeType.getRoute());
+                        List<GeoPosition> route = xmlTypeConverter.convertRoute(nodeType.getRoute());
 
                         List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
 
@@ -104,7 +106,7 @@ public class XMLScenario implements Scenario {
         List<IPhenomenonModel<GeoPosition>> phenomenaList = new ArrayList<>(phenomenaType.getPhenomenon().size());
 
         for(PhenomenonType phenomenonType : phenomenaType.getPhenomenon()) {
-            List<GeoPosition> phenomenonArea = XmlTypeConverter.convertRoute(phenomenonType.getPhenomenonArea());
+            List<GeoPosition> phenomenonArea = xmlTypeConverter.convertRoute(phenomenonType.getPhenomenonArea());
 
             Map<AbilityType , Map<IPhenomenonTimeRange, Object>> phenomenonValuesMap = new HashMap<>();
 
@@ -114,12 +116,12 @@ public class XMLScenario implements Scenario {
 
                 if(phenomenonValueType.getCsvFile() != null) {
                     String filePath = scenarioFile.getParent() + "/" + phenomenonValueType.getCsvFile().getCsvFile();
-                    phenomenonValues.putAll(XmlTypeConverter.readPhenomenonValuesFromFile(filePath));
+                    phenomenonValues.putAll(xmlTypeConverter.readPhenomenonValuesFromFile(filePath));
                 }
                 else {
                     for(PhenomenonValueType valueType : phenomenonValueType.getPhenomenonValue()) {
                         for(PhenomenonDiscreteValueType discreteValueType : valueType.getDiscreteValue()) {
-                            Map<IPhenomenonTimeRange, Object> values = XmlTypeConverter.discreteValueConverter(discreteValueType);
+                            Map<IPhenomenonTimeRange, Object> values = xmlTypeConverter.discreteValueConverter(discreteValueType);
                             phenomenonValues.putAll(values);
                         }
                     }
