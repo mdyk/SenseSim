@@ -25,7 +25,6 @@ public class FloodingRouting implements RoutingAlgorithm<GeoPosition> {
         this.statistics = sensor;
     }
 
-    // FIXME konieczne jest zablokowanie możliwości wysyłania wiadomości do węzłów od których ją otrzylamiśmy
     @Override
     public List<SensorNode<GeoPosition>> getNodesToHop(int sender, int destination, Message message, List<SensorNode<GeoPosition>> knownSensors) {
         List<SensorNode<GeoPosition>> sensorsToHop = new ArrayList<>(knownSensors);
