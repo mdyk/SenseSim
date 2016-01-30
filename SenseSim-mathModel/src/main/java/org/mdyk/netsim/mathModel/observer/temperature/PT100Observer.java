@@ -55,6 +55,21 @@ public class PT100Observer implements Observer<TemperatureConfigurationSpace , R
         return null;
     }
 
+
+    /**
+     * Calculates temperature from given resistance using equasion:
+     *  temp = (res - 100) / S, where:
+     *      - S - sensitivity for given temperature (i.e. 0,39 for 40 celsius degrees)
+     * @param resistance
+     *      input resistance
+     * @return
+     *      temperature for given resistance
+     */
+    private double calculateTempForResistance(double resistance) {
+//        double temp = ()
+        return 0;
+    }
+
     /**
      * Calculates resistance for a given temperature.
      * Equasion: res = S x t + 100 +/- err, where:

@@ -20,5 +20,7 @@ public class PT100ObserverTest {
 
         TestCase.assertTrue(premise.getResistance()<= (114.274 + 0.07) && premise.getResistance()>= (114.274 - 0.07));
 
+
+
     }
 }

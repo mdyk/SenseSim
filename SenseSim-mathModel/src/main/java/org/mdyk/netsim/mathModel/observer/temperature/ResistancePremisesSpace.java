@@ -8,6 +8,7 @@ import org.mdyk.netsim.mathModel.observer.PresmisesSpace;
 public class ResistancePremisesSpace extends PresmisesSpace {
 
     private double resistance;
+    private double resistanceSensitivity;
 
     public ResistancePremisesSpace(double resistance) {
         this.resistance = resistance;
