@@ -15,22 +15,22 @@ public class PT100Observer implements Observer<TemperatureConfigurationSpace , R
 
     private static final Logger LOG = Logger.getLogger(PT100Observer.class);
 
-    // resistance for platinium for 100 ceclsius degrees.
+    // resistance for platinium for 0 ceclsius degrees.
     private final double referenceResistance = 100.0;
 
     private List<TempRangeResistance> resistanceRange;
 
     public PT100Observer() {
-        this.resistanceRange = new ArrayList<>();
+        this.resistanceRange = new ArrayList<>(8);
 
-        resistanceRange.add(new TempRangeResistance(-200 , -150, 0.43, 0.24));
-        resistanceRange.add(new TempRangeResistance(-150 , -100, 0.42, 0.19));
-        resistanceRange.add(new TempRangeResistance(-100 , -50, 0.41, 0.14));
-        resistanceRange.add(new TempRangeResistance(-50 , 0, 0.40, 0.14));
-        resistanceRange.add(new TempRangeResistance(0 , 50, 0.39, 0.07));
-        resistanceRange.add(new TempRangeResistance(50 , 100, 0.38, 0.12));
-        resistanceRange.add(new TempRangeResistance(100 , 200, 0.37, 0.15));
-        resistanceRange.add(new TempRangeResistance(200 , 350, 0.36, 0.27));
+        resistanceRange.add(new TempRangeResistance(-200 , -150, 18.52 , 39.72, 0.43, 0.24));
+        resistanceRange.add(new TempRangeResistance(-150 , -100, 39.72, 60.26, 0.42, 0.19));
+        resistanceRange.add(new TempRangeResistance(-100 , -50, 60.26 , 80.31, 0.41, 0.14));
+        resistanceRange.add(new TempRangeResistance(-50 , 0, 80.31 , 100.0,  0.40, 0.14));
+        resistanceRange.add(new TempRangeResistance(0 , 50, 100.0 , 119.40,  0.39, 0.07));
+        resistanceRange.add(new TempRangeResistance(50 , 100, 119.40 , 138.51,  0.38, 0.12));
+        resistanceRange.add(new TempRangeResistance(100 , 200, 138.51 , 175.86, 0.37, 0.15));
+        resistanceRange.add(new TempRangeResistance(200 , 350, 175.86 , 229.72, 0.36, 0.27));
 
     }
 
@@ -52,7 +52,14 @@ public class PT100Observer implements Observer<TemperatureConfigurationSpace , R
 
     @Override
     public TemperatureConfigurationSpace getConclusion(ResistancePremisesSpace premises) {
-        return null;
+        LOG.trace(">> getConclusion");
+        double conclusionTemperature = calculateTempForResistance(premises.getResistance());
+
+        TemperatureConfigurationSpace conclusion = new TemperatureConfigurationSpace(conclusionTemperature);
+        LOG.debug("Temperature for resistance "+ premises.getResistance() +" is "+ conclusionTemperature);
+
+        LOG.trace(">> getConclusion");
+        return conclusion;
     }
 
 
@@ -66,8 +73,26 @@ public class PT100Observer implements Observer<TemperatureConfigurationSpace , R
      *      temperature for given resistance
      */
     private double calculateTempForResistance(double resistance) {
-//        double temp = ()
-        return 0;
+
+        double temperature = Double.NaN;
+        boolean found = false;
+
+        Iterator<TempRangeResistance> rangeIt = this.resistanceRange.iterator();
+        TempRangeResistance resistaneRange = null;
+        while(rangeIt.hasNext() && !found) {
+            TempRangeResistance range = rangeIt.next();
+            if(range.isInResistanceRange(resistance)) {
+                found = true;
+                resistaneRange = range;
+            }
+        }
+
+        if (found) {
+            temperature = (resistance - this.referenceResistance) / resistaneRange.getSensitivity();
+        }
+
+
+        return temperature;
     }
 
     /**
@@ -89,14 +114,14 @@ public class PT100Observer implements Observer<TemperatureConfigurationSpace , R
         TempRangeResistance resistaneRange = null;
         while(rangeIt.hasNext() && !found) {
             TempRangeResistance range = rangeIt.next();
-            if(range.isInRange(temperature)) {
+            if(range.isInTempRange(temperature)) {
                 found = true;
                 resistaneRange = range;
             }
         }
 
         if(found) {
-            resistance = (temperature * resistaneRange.getSensitivity()) + 100 + resistaneRange.randomError();
+            resistance = (temperature * resistaneRange.getSensitivity()) + referenceResistance + resistaneRange.randomError();
         }
 
         return resistance;
@@ -107,12 +132,17 @@ public class PT100Observer implements Observer<TemperatureConfigurationSpace , R
 
         private double minTemp;
         private double maxTemp;
+        private double minNominalResistance;
+        private double maxNomminalResistance;
         private double sensitivity;
         private double resistanceError;
 
-        public TempRangeResistance(double minTemp, double maxTemp, double sensitivity, double resistanceError) {
+
+        public TempRangeResistance(double minTemp, double maxTemp, double minNominalResistance, double maxNomminalResistance, double sensitivity, double resistanceError) {
             this.minTemp = minTemp;
             this.maxTemp = maxTemp;
+            this.minNominalResistance = minNominalResistance;
+            this.maxNomminalResistance = maxNomminalResistance;
             this.sensitivity = sensitivity;
             this.resistanceError = resistanceError;
         }
@@ -121,8 +151,12 @@ public class PT100Observer implements Observer<TemperatureConfigurationSpace , R
             return sensitivity;
         }
 
-        public boolean isInRange(double temperature) {
+        public boolean isInTempRange(double temperature) {
             return temperature >= minTemp && temperature < maxTemp;
+        }
+
+        public boolean isInResistanceRange(double resistance) {
+            return resistance >= minNominalResistance && resistance < maxNomminalResistance;
         }
 
         public double randomError() {
