@@ -42,9 +42,6 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     // FIXME do zmiany
     public Function<Message, Object> onMessageHandler;
 
-
-    //private int commProcIdx = 0;
-
     private boolean isMoveing;
 
 
@@ -65,6 +62,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
     }
 
     @Override
+    // FIXME przenieść do bardziej generycznej klasy
     public void sense() {
         // TODO uwzględnienie funkcji PI
         for(AbilityType ability : getAbilities()) {

@@ -5,9 +5,13 @@ import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
+import org.mdyk.netsim.mathModel.observer.ObserverModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public abstract class DefaultSensorModel<P extends Position> implements ISensorModel<P> {
@@ -22,9 +26,22 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
     // TODO ujednolicenie do jednej listy
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     protected List<AbilityType> abilities;
+    protected List<ObserverModel> observers;
     protected Map<Double, List<Message>> messagesMap;
     protected RoutingAlgorithm routingAlgorithm;
 
+    protected DefaultSensorModel(int id, P position, int radioRange ,int bandwidth , double velocity, ObserverModel ... observers) {
+        this.id = id;
+        this.position = position;
+        this.radioRange = radioRange;
+        this.bandwith = bandwidth;
+        this.velocity = velocity;
+        this.observations = new HashMap<>();
+        this.messagesMap = new HashMap<>();
+        this.observers = new ArrayList<>();
+    }
+
+    @Deprecated
     protected DefaultSensorModel(int id, P position, int radioRange ,int bandwidth , double velocity, List<AbilityType> abilities) {
         this.id = id;
         this.position = position;

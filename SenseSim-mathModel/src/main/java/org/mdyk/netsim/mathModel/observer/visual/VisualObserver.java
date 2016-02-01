@@ -1,11 +1,11 @@
 package org.mdyk.netsim.mathModel.observer.visual;
 
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
-import org.mdyk.netsim.mathModel.observer.Observer;
+import org.mdyk.netsim.mathModel.observer.ObserverModel;
 import org.mdyk.netsim.mathModel.observer.PresmisesSpace;
 
 
-public class VisualObserver implements Observer {
+public class VisualObserver implements ObserverModel {
     @Override
     public ConfigurationSpace getConfigurationSpace() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
@@ -18,6 +18,11 @@ public class VisualObserver implements Observer {
 
     @Override
     public ConfigurationSpace getConclusion(PresmisesSpace premises) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public String getName() {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

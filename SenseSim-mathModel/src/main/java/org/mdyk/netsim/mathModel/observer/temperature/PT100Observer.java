@@ -1,7 +1,7 @@
 package org.mdyk.netsim.mathModel.observer.temperature;
 
 import org.apache.log4j.Logger;
-import org.mdyk.netsim.mathModel.observer.Observer;
+import org.mdyk.netsim.mathModel.observer.ObserverModel;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -11,9 +11,11 @@ import java.util.Random;
 /**
  * Represents PT100 class thermometer sensor
  */
-public class PT100Observer implements Observer<TemperatureConfigurationSpace , ResistancePremisesSpace>{
+public class PT100Observer implements ObserverModel<TemperatureConfigurationSpace , ResistancePremisesSpace> {
 
     private static final Logger LOG = Logger.getLogger(PT100Observer.class);
+
+    private final String name = "PT100";
 
     // resistance for platinium for 0 ceclsius degrees.
     private final double referenceResistance = 100.0;
@@ -60,6 +62,11 @@ public class PT100Observer implements Observer<TemperatureConfigurationSpace , R
 
         LOG.trace(">> getConclusion");
         return conclusion;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
 

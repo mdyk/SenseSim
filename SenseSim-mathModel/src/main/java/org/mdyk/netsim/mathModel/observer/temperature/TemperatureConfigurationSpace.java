@@ -7,7 +7,7 @@ public class TemperatureConfigurationSpace extends ConfigurationSpace {
 
     private double value;
     public static final double MIN = -273;
-    public static final double MAX = Double.MAX_VALUE; // Should be equal to Absolut Hot
+    public static final double MAX = Double.MAX_VALUE; // Should be equal to Absolute Hot
 
     public TemperatureConfigurationSpace(double temperature) {
         if(temperature > MAX || temperature < MIN) {

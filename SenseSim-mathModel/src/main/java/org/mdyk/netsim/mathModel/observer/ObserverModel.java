@@ -3,7 +3,7 @@ package org.mdyk.netsim.mathModel.observer;
 /**
  * Represents an observer
  */
-public interface Observer<X extends ConfigurationSpace, Y extends PresmisesSpace> {
+public interface ObserverModel<X extends ConfigurationSpace, Y extends PresmisesSpace> {
 
     // TODO prawdopodobnie do usunięci
     X getConfigurationSpace();
@@ -23,5 +23,7 @@ public interface Observer<X extends ConfigurationSpace, Y extends PresmisesSpace
      * @return
      */
     X getConclusion(Y premises);
+
+    String getName();
 
 }
