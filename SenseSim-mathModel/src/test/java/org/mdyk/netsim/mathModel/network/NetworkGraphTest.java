@@ -8,9 +8,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.logic.communication.Message;
+import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
 import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -100,7 +102,7 @@ public class NetworkGraphTest {
     public class TestSensor extends DefaultSensorModel {
 
         protected TestSensor(int id) {
-            super(id, null, 0, 0, 0, null);
+            super(id, null, 0, 0, 0, new ArrayList<AbilityType>());
         }
 
         @Override
