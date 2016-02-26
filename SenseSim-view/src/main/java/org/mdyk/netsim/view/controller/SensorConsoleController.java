@@ -129,7 +129,7 @@ public class SensorConsoleController implements Initializable {
 
     @SuppressWarnings("unchecked")
     public void fillGui() {
-        consoleLabel.setText("Sensor " + nodeView.getID());
+        consoleLabel.setText("Device " + nodeView.getID());
         nodeBandwidth.setText(Double.toString(nodeView.getNode().getWirelessBandwith()));
         velocity.setText(Double.toString(nodeView.getNode().getVelocity()));
         radioRange.setText(Double.toString(nodeView.getNode().getRadioRange()));

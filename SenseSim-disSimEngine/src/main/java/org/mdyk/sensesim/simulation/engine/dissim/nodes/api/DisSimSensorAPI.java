@@ -11,8 +11,8 @@ import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimSensorLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity;
 
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
 
     @Override
     public void api_setRoute(List<GeoPosition> route) {
-        this.sensorSimEntity.getSensorLogic().setRoute(route);
+        this.sensorSimEntity.getDeviceLogic().setRoute(route);
     }
 
     @Override
@@ -47,7 +47,7 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
         try {
             ((DisSimNodeEntity) sensorSimEntity).startMoveActivity = new StartMoveActivity((DisSimNodeEntity) sensorSimEntity);
             // FIXME przeprojektowanie interfejsów tak, żeby nie było konieczne rzutowanie
-            ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).startMoveing();
+            ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).startMoveing();
         } catch (SimControlException e) {
             LOG.error(e.getMessage(),e);
         }
@@ -61,7 +61,7 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
             ((DisSimNodeEntity) sensorSimEntity).startMoveActivity.interrupt();
             ((DisSimNodeEntity) sensorSimEntity).endMoveActivity.interrupt();
             // FIXME przeprojektowanie interfejsów tak, żeby nie było konieczne rzutowanie
-            ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).stopMoveing();
+            ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).stopMoveing();
         } catch (SimControlException e) {
             LOG.error(e.getMessage() , e);
         }
@@ -72,21 +72,21 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
     @SuppressWarnings("unchecked")
     public void api_sendMessage(int messageId, int originSource, int originDest, Object content, Integer size) {
         Message message = new SimpleMessage(messageId, originSource, originDest , content, size);
-        List<SensorNode> neighbours =  ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getSensorLogic());
-        List<SensorNode<GeoPosition>> nodesToHop = sensorSimEntity.getSensorLogic().getRoutingAlgorithm().getNodesToHop(sensorSimEntity.getSensorLogic().getID(), originDest , message , neighbours);
-        sensorSimEntity.getSensorLogic().startCommunication(message, nodesToHop.toArray(new SensorNode[nodesToHop.size()]));
+        List<SensorNode> neighbours =  ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getDeviceLogic());
+        List<SensorNode<GeoPosition>> nodesToHop = sensorSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(sensorSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
+        sensorSimEntity.getDeviceLogic().startCommunication(message, nodesToHop.toArray(new SensorNode[nodesToHop.size()]));
     }
 
     @Override
     public Map<AbilityType, List<PhenomenonValue>> api_getObservations() {
         LOG.trace(">< api_getObservations()");
-        return sensorSimEntity.getSensorLogic().getObservations();
+        return sensorSimEntity.getDeviceLogic().getObservations();
     }
 
     @Override
     public void api_setRoutingAlgorithm(RoutingAlgorithm<?> routingAlgorithm) {
         LOG.trace(">> api_setRoutingAlgorithm()");
-        this.sensorSimEntity.getSensorLogic().setRoutingAlgorithm(routingAlgorithm);
+        this.sensorSimEntity.getDeviceLogic().setRoutingAlgorithm(routingAlgorithm);
         LOG.trace("<< api_setRoutingAlgorithm()");
     }
 
@@ -95,7 +95,7 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
     public List<Integer> api_scanForNeighbors() {
         LOG.trace(">< api_scanForNeighbors()");
 
-        List<SensorNode> neighbours =  ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getSensorLogic());
+        List<SensorNode> neighbours =  ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getDeviceLogic());
 
         List<Integer> neighboursIds = new ArrayList<>();
 
@@ -109,23 +109,23 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
     @Override
     public GeoPosition api_getPosition() {
         LOG.trace(">< api_getPosition()");
-        return new GeoPosition(sensorSimEntity.getSensorLogic().getPosition());
+        return new GeoPosition(sensorSimEntity.getDeviceLogic().getPosition());
     }
 
     @Override
     public void api_setOnMessageHandler(Function<Message, Object> handler) {
-        ((DisSimSensorLogic) sensorSimEntity.getSensorLogic()).onMessageHandler = handler;
+        ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).onMessageHandler = handler;
     }
 
     @Override
     public Integer api_getMyID() {
-        return sensorSimEntity.getSensorLogic().getID();
+        return sensorSimEntity.getDeviceLogic().getID();
     }
 
     @Override
     public PhenomenonValue api_getCurrentObservation(AbilityType abilityType) {
 
-        Map<AbilityType, List<PhenomenonValue>> obserations = sensorSimEntity.getSensorLogic().getObservations();
+        Map<AbilityType, List<PhenomenonValue>> obserations = sensorSimEntity.getDeviceLogic().getObservations();
 
         List<PhenomenonValue> valueList = obserations.get(abilityType);
 

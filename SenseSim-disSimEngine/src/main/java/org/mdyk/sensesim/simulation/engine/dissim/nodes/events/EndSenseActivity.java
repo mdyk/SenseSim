@@ -5,7 +5,7 @@ import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
+import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 
 
 public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
@@ -13,12 +13,12 @@ public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Obje
     private static final Logger LOG = Logger.getLogger(EndSenseActivity.class);
 
     private DisSimNodeEntity sensorEntity;
-    private SensorLogic sensorNode;
+    private DeviceLogic sensorNode;
 
     public EndSenseActivity(double delay, DisSimNodeEntity sensorEntity) throws SimControlException {
         super(sensorEntity, delay);
         this.sensorEntity = sensorEntity;
-        this.sensorNode = this.sensorEntity.sensorLogic;
+        this.sensorNode = this.sensorEntity.deviceLogic;
     }
 
     @Override
@@ -26,7 +26,7 @@ public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Obje
         LOG.trace(">> EndSenseActivity time" + simTime());
         sensorEntity.startSenseActivity = new StartSenseActivity(sensorEntity);
         sensorNode.sense();
-        EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(sensorEntity.getSensorLogic()));
+        EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(sensorEntity.getDeviceLogic()));
         LOG.trace("<< EndSenseActivity time");
     }
 

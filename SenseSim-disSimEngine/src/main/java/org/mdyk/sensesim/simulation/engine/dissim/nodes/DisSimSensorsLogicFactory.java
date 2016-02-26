@@ -5,13 +5,10 @@ import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.SensorLogicFactory;
-import org.mdyk.netsim.logic.node.SimEntityFactory;
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
-import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
+import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimSensorLogic;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -31,7 +28,7 @@ public class DisSimSensorsLogicFactory implements SensorLogicFactory {
     private CommunicationProcessFactory communicationProcessFactory;
 
     @Override
-    public SensorLogic buildSensorLogic(int id, GeoPosition position, int radioRange, int bandwidth , double velocity, List<AbilityType> abilities) {
-        return new DisSimSensorLogic(id, position, radioRange, bandwidth, velocity, abilities, environment, wirelessChannel, communicationProcessFactory);
+    public DeviceLogic buildSensorLogic(int id, GeoPosition position, int radioRange, int bandwidth , double velocity, List<AbilityType> abilities) {
+        return new DisSimDeviceLogic(id, position, radioRange, bandwidth, velocity, abilities, environment, wirelessChannel, communicationProcessFactory);
     }
 }

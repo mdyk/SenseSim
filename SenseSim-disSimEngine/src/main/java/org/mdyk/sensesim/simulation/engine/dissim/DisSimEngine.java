@@ -10,7 +10,7 @@ import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.network.NetworkManager;
-import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
@@ -45,7 +45,7 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     private File scenarioXML;
 
-    private List<Sensor> sensorsList = new ArrayList<>();
+    private List<Device> sensorsList = new ArrayList<>();
 
     private List<PhenomenonSimEntity> phenomenaList = new ArrayList<>();
 
@@ -55,9 +55,9 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     @Override
     public void loadScenario(Scenario scenario) {
-        Collection<List<Sensor>> sensorLists = scenario.scenarioSensors().values();
+        Collection<List<Device>> sensorLists = scenario.scenarioSensors().values();
 
-        for (List<Sensor> nodeList : sensorLists) {
+        for (List<Device> nodeList : sensorLists) {
             addNodes(nodeList);
         }
 
@@ -96,14 +96,14 @@ public class DisSimEngine implements SimEngine, Runnable {
     }
 
     @Override
-    public void addNode(Sensor sensorNode) {
-        networkManager.addNode(sensorNode.getSensorLogic());
-        sensorsList.add(sensorNode);
+    public void addNode(Device deviceNode) {
+        networkManager.addNode(deviceNode.getDeviceLogic());
+        sensorsList.add(deviceNode);
     }
 
-    private void addNodes(List<Sensor> nodesList) {
-        for (Sensor sensorModel : nodesList) {
-            addNode(sensorModel);
+    private void addNodes(List<Device> nodesList) {
+        for (Device deviceModel : nodesList) {
+            addNode(deviceModel);
         }
     }
 
@@ -144,8 +144,8 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     @Override
     public void run() {
-        for(Sensor wrapper : sensorsList) {
-            wrapper.getSensorLogic().startNode();
+        for(Device wrapper : sensorsList) {
+            wrapper.getDeviceLogic().startNode();
         }
         try {
             SimModel.getInstance().startSimulation();

@@ -1,9 +1,8 @@
 package org.mdyk.netsim.logic.scenario;
 
-import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
 import java.util.List;
 import java.util.Map;
@@ -21,7 +20,7 @@ public interface Scenario {
      *      map where keys are class types of nodes and values are
      *      lists of nodes with desired class.
      */
-    Map<Class, List<Sensor>> scenarioSensors();
+    Map<Class, List<Device>> scenarioSensors();
 
     List<IPhenomenonModel<GeoPosition>> getPhenomena();
 

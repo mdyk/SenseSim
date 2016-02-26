@@ -3,7 +3,6 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes.events;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.assistedinject.FactoryModuleBuilder;
 import dissim.simspace.core.SimModel;
@@ -18,8 +17,6 @@ import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.*;
 import org.mdyk.netsim.logic.node.api.SensorAPI;
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
-import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddleware;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
 import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
@@ -37,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-public class DisSimSensorAPITest {
+public class DisSimDeviceAPITest {
 
     private Injector injector;
 
@@ -71,12 +68,12 @@ public class DisSimSensorAPITest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor sensor = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 10, new ArrayList<>());
-        simEngine.addNode(sensor);
+        Device device = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 10, new ArrayList<>());
+        simEngine.addNode(device);
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        SensorAPI<GeoPosition> api = sensor.getSensorAPI();
+        SensorAPI<GeoPosition> api = device.getSensorAPI();
 
         List<GeoPosition> route = new ArrayList<>();
         route.add(new GeoPosition(52.230963,21.004534));
@@ -110,16 +107,16 @@ public class DisSimSensorAPITest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
-        Sensor receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
+        Device sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
+        Device receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
 
         simEngine.addNode(sender);
         simEngine.addNode(receiver);
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        sender.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(sender.getStatistics()));
-        receiver.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(receiver.getStatistics()));
+        sender.getDeviceLogic().setRoutingAlgorithm(new FloodingRouting(sender.getStatistics()));
+        receiver.getDeviceLogic().setRoutingAlgorithm(new FloodingRouting(receiver.getStatistics()));
 
         final StringBuilder content = new StringBuilder();
 
@@ -144,10 +141,10 @@ public class DisSimSensorAPITest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 0, new ArrayList<>());
-        Sensor hop1 = sensorsFactory.buildSensor(2, new GeoPosition(52.230535, 21.005795), 25,5000, 0, new ArrayList<>());
-        Sensor receiver = sensorsFactory.buildSensor(3, new GeoPosition(52.230556, 21.005937), 25,5000, 0, new ArrayList<>());
-        Sensor hop2 = sensorsFactory.buildSensor(4, new GeoPosition(52.230555, 21.005819), 15,5000, 0, new ArrayList<>());
+        Device sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 0, new ArrayList<>());
+        Device hop1 = sensorsFactory.buildSensor(2, new GeoPosition(52.230535, 21.005795), 25,5000, 0, new ArrayList<>());
+        Device receiver = sensorsFactory.buildSensor(3, new GeoPosition(52.230556, 21.005937), 25,5000, 0, new ArrayList<>());
+        Device hop2 = sensorsFactory.buildSensor(4, new GeoPosition(52.230555, 21.005819), 15,5000, 0, new ArrayList<>());
 
         simEngine.addNode(sender);
         simEngine.addNode(hop1);
@@ -156,10 +153,10 @@ public class DisSimSensorAPITest {
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        sender.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(sender.getStatistics()));
-        hop1.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(hop1.getStatistics()));
-        receiver.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(receiver.getStatistics()));
-        hop2.getSensorLogic().setRoutingAlgorithm(new FloodingRouting(hop2.getStatistics()));
+        sender.getDeviceLogic().setRoutingAlgorithm(new FloodingRouting(sender.getStatistics()));
+        hop1.getDeviceLogic().setRoutingAlgorithm(new FloodingRouting(hop1.getStatistics()));
+        receiver.getDeviceLogic().setRoutingAlgorithm(new FloodingRouting(receiver.getStatistics()));
+        hop2.getDeviceLogic().setRoutingAlgorithm(new FloodingRouting(hop2.getStatistics()));
 
 
         final StringBuilder senderContent = new StringBuilder();

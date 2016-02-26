@@ -6,7 +6,7 @@ import com.google.common.eventbus.Subscribe;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 
@@ -18,7 +18,7 @@ public class DefaultStatistics implements SensorStatistics {
 
     private static final Logger LOG = Logger.getLogger(DefaultStatistics.class);
 
-    private Sensor sensor;
+    private Device device;
     List<CommunicationProcess> incomingComms;
     List<CommunicationProcess> outgoingComms;
     List<SensorProgram> sensorPrograms;
@@ -33,10 +33,10 @@ public class DefaultStatistics implements SensorStatistics {
     @Override
     public void addCommunication(CommunicationProcess communicationProcess) {
         LOG.trace(">> addCommunication");
-        if(communicationProcess.getSender().getID() == sensor.getSensorLogic().getID()) {
+        if(communicationProcess.getSender().getID() == device.getDeviceLogic().getID()) {
             LOG.debug("adding process " + communicationProcess.getID() + " as outgoing");
             addCommunication(communicationProcess, outgoingComms);
-        } else if (communicationProcess.getReceiver().getID() == sensor.getSensorLogic().getID()) {
+        } else if (communicationProcess.getReceiver().getID() == device.getDeviceLogic().getID()) {
             LOG.debug("adding process " + communicationProcess.getID() + " as incoming");
             addCommunication(communicationProcess, incomingComms);
         }
@@ -80,13 +80,13 @@ public class DefaultStatistics implements SensorStatistics {
         return this.sensorPrograms;
     }
 
-    public void setSensor(Sensor sensor) {
-        this.sensor = sensor;
+    public void setDevice(Device device) {
+        this.device = device;
     }
 
     @Override
     public int getSensorId() {
-        return this.sensor.getSensorLogic().getID();
+        return this.device.getDeviceLogic().getID();
     }
 
     @Subscribe

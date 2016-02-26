@@ -69,8 +69,8 @@ public class StatisticsTest {
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
         CommunicationProcessFactory processFactory = injector.getInstance(CommunicationProcessFactory.class);
 
-        Sensor sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
-        Sensor receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
+        Device sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
+        Device receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
 
         Message message = new TestMessage() {
             @Override
@@ -83,7 +83,7 @@ public class StatisticsTest {
         simEngine.addNode(receiver);
         simEngine.runScenario();
 
-        CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(sender.getSensorLogic(), receiver.getSensorLogic(), 2, message);
+        CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(sender.getDeviceLogic(), receiver.getDeviceLogic(), 2, message);
 
         Thread.sleep(10000);
 

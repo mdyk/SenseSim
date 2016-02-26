@@ -3,7 +3,7 @@ package org.mdyk.netsim.logic.scenario.xml;
 import com.google.inject.assistedinject.Assisted;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
-import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.node.SensorsFactory;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
@@ -56,20 +56,20 @@ public class XMLScenario implements Scenario {
     }
 
     @Override
-    public Map<Class, List<Sensor>> scenarioSensors() {
+    public Map<Class, List<Device>> scenarioSensors() {
 
-        Map<Class, List<Sensor>> nodesMap = new HashMap<>();
+        Map<Class, List<Device>> nodesMap = new HashMap<>();
 
         for (NodeType nodeType : scenario.getNodes().getNode()){
             try {
                 switch (nodeType.getSesnorImplType()) {
                     case "GeoSensorNode":
-                        List<Sensor> geoSensorNodes;
-                        if (!nodesMap.containsKey(Sensor.class)) {
-                            geoSensorNodes = new LinkedList<>();
-                            nodesMap.put(Sensor.class, geoSensorNodes);
+                        List<Device> geoDeviceNodes;
+                        if (!nodesMap.containsKey(Device.class)) {
+                            geoDeviceNodes = new LinkedList<>();
+                            nodesMap.put(Device.class, geoDeviceNodes);
                         }
-                        geoSensorNodes = nodesMap.get(Sensor.class);
+                        geoDeviceNodes = nodesMap.get(Device.class);
 
                         GeoPosition position = new GeoPosition(Double.parseDouble(nodeType.getStartPosition().getLatitude()),
                                 Double.parseDouble(nodeType.getStartPosition().getLongitude()));
@@ -77,12 +77,12 @@ public class XMLScenario implements Scenario {
 
                         List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
 
-                        Sensor node = sensorsFactory.buildSensor(Integer.parseInt(nodeType.getId()),
+                        Device node = sensorsFactory.buildSensor(Integer.parseInt(nodeType.getId()),
                                 position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
                                 Double.parseDouble(nodeType.getSpeed()), abilities);
-                        node.getSensorLogic().setRoute(route);
-//                    node.getSensorLogic().setRoutingAlgorithm(nodeType , node);
-                        geoSensorNodes.add(node);
+                        node.getDeviceLogic().setRoute(route);
+//                    node.getDeviceLogic().setRoutingAlgorithm(nodeType , node);
+                        geoDeviceNodes.add(node);
                         break;
 
                     default:

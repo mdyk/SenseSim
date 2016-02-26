@@ -10,7 +10,7 @@ import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
+import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -25,15 +25,15 @@ import java.util.List;
 /**
  * Simple implementation for nodes with geo localization
  */
-public class GeoSensorNodeThread extends SensorNodeThread<GeoPosition, GeoMovementAlgorithm> implements SensorLogic {
+public class GeoDeviceNodeThread extends SensorNodeThread<GeoPosition, GeoMovementAlgorithm> implements DeviceLogic {
 
-    private static final Logger LOG = Logger.getLogger(GeoSensorNodeThread.class);
+    private static final Logger LOG = Logger.getLogger(GeoDeviceNodeThread.class);
     protected List<GeoPosition> route;
     protected Environment environment;
     protected WirelessChannel wirelessChannel;
 
     @Inject
-    public GeoSensorNodeThread(@Assisted("id") int id, @Assisted GeoPosition position,
+    public GeoDeviceNodeThread(@Assisted("id") int id, @Assisted GeoPosition position,
                                @Assisted("radioRange") int radioRange,
                                @Assisted double velocity, @Assisted List<AbilityType> abilities,
                                Environment environment, WirelessChannel wirelessChannel) {

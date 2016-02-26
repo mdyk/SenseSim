@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.node.simentity;
 
 
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
+import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.program.Middleware;
 
 public interface SensorSimEntity {
@@ -16,9 +16,9 @@ public interface SensorSimEntity {
 
     public double getSimTime();
 
-    public void setSensorLogic(SensorLogic sensorLogic);
+    public void setDeviceLogic(DeviceLogic deviceLogic);
 
-    public SensorLogic getSensorLogic();
+    public DeviceLogic getDeviceLogic();
 
     public void setMiddleware(Middleware middleware);
 

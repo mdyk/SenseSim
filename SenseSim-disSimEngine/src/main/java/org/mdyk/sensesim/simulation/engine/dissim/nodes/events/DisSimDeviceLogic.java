@@ -5,14 +5,13 @@ import dissim.simspace.core.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
+import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.mathModel.sensor.SensorNode;
@@ -26,10 +25,10 @@ import java.util.List;
 import java.util.function.Function;
 
 
-public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implements SensorLogic {
+public class DisSimDeviceLogic extends DefaultSensorModel<GeoPosition> implements DeviceLogic {
 
 
-    private static final Logger LOG = Logger.getLogger(DisSimSensorLogic.class);
+    private static final Logger LOG = Logger.getLogger(DisSimDeviceLogic.class);
 
     protected List<GeoPosition> route;
     protected GeoMovementAlgorithm currentMovementAlg;
@@ -46,7 +45,7 @@ public class DisSimSensorLogic extends DefaultSensorModel<GeoPosition> implement
 
 
     @Inject
-    public DisSimSensorLogic(@Assisted("id") int id, @Assisted GeoPosition position,
+    public DisSimDeviceLogic(@Assisted("id") int id, @Assisted GeoPosition position,
                              @Assisted("radioRange") int radioRange, int bandwidth,
                              @Assisted double velocity, @Assisted List<AbilityType> abilities,
                              Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {

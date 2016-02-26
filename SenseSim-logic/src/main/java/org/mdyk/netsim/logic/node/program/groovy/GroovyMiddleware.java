@@ -74,7 +74,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
     @Override
     public void setSensorSimEntity(SensorSimEntity simEntity) {
         this.sensorSimEntity = simEntity;
-        this.nodeId = this.sensorSimEntity.getSensorLogic().getID();
+        this.nodeId = this.sensorSimEntity.getDeviceLogic().getID();
     }
 
     @Override

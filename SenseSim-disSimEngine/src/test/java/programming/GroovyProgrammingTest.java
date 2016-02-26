@@ -66,13 +66,13 @@ public class GroovyProgrammingTest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor node1 = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000 , 10, new ArrayList<>());
+        Device node1 = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000 , 10, new ArrayList<>());
 
         List<GeoPosition> route = new ArrayList<>();
         route.add(new GeoPosition(52.230532, 21.005521));
         route.add(new GeoPosition(52.230963,21.004534));
         route.add(new GeoPosition(52.231594, 21.003547));
-        node1.getSensorLogic().setRoute(route);
+        node1.getDeviceLogic().setRoute(route);
 
         simEngine.addNode(node1);
         simEngine.runScenario();
@@ -122,10 +122,10 @@ public class GroovyProgrammingTest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
 
-        Sensor node1 = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 10, new ArrayList<>());
-        Sensor node2 = sensorsFactory.buildSensor(2, new GeoPosition(52.230553, 21.005862), 25, 5000, 10, new ArrayList<>());
-        Sensor node3 = sensorsFactory.buildSensor(3, new GeoPosition(52.230562, 21.006125), 25, 5000, 10, new ArrayList<>());
-        Sensor node4 = sensorsFactory.buildSensor(4, new GeoPosition(52.230572, 21.006419), 25, 5000, 10, new ArrayList<>());
+        Device node1 = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 10, new ArrayList<>());
+        Device node2 = sensorsFactory.buildSensor(2, new GeoPosition(52.230553, 21.005862), 25, 5000, 10, new ArrayList<>());
+        Device node3 = sensorsFactory.buildSensor(3, new GeoPosition(52.230562, 21.006125), 25, 5000, 10, new ArrayList<>());
+        Device node4 = sensorsFactory.buildSensor(4, new GeoPosition(52.230572, 21.006419), 25, 5000, 10, new ArrayList<>());
 
         simEngine.addNode(node1);
         simEngine.addNode(node2);

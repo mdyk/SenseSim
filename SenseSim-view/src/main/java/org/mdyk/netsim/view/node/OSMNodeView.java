@@ -40,7 +40,7 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
             sensorConsole = new Stage();
             sensorConsole.initModality(Modality.NONE);
             sensorConsole.initStyle(StageStyle.DECORATED);
-            sensorConsole.setTitle("Sensor " + this.getNode().getID());
+            sensorConsole.setTitle("Device " + this.getNode().getID());
             sensorConsole.setScene(new Scene(root1));
             SensorConsoleController scc = fxmlLoader.getController();
             scc.setNodeView(this);

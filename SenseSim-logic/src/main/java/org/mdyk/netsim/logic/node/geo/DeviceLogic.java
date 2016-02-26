@@ -4,7 +4,7 @@ import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.logic.util.GeoPosition;
 
-public interface SensorLogic extends GeoSensorNode, RoutedNode<GeoPosition> {
+public interface DeviceLogic extends GeoSensorNode, RoutedNode<GeoPosition> {
 
     void setSimEntity(SensorSimEntity simEntity);
 

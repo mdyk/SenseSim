@@ -15,37 +15,37 @@ import java.util.Map;
  */
 public interface ISensorModel<P extends Position> {
 
-    public int getID();
+    int getID();
 
-    public P getPosition();
+    P getPosition();
 
-    public void setPosition(P position);
+    void setPosition(P position);
 
-    public void setPositionX(double x);
+    void setPositionX(double x);
 
-    public void setPositionY(double y);
+    void setPositionY(double y);
 
-    public double getVelocity();
+    double getVelocity();
 
-    public void setVelocity(double velocity);
+    void setVelocity(double velocity);
 
-    public double getRadioRange();
+    double getRadioRange();
 
-    public void setRadioRange(double radioRange);
+    void setRadioRange(double radioRange);
 
-    public List<AbilityType> getAbilities();
+    List<AbilityType> getAbilities();
 
-    public RoutingAlgorithm getRoutingAlgorithm();
+    RoutingAlgorithm getRoutingAlgorithm();
 
-    public void setRoutingAlgorithm(RoutingAlgorithm routingAlgorithm);
+    void setRoutingAlgorithm(RoutingAlgorithm routingAlgorithm);
 
-    public Map<AbilityType, List<PhenomenonValue>> getObservations();
+    Map<AbilityType, List<PhenomenonValue>> getObservations();
 
-    public List<PhenomenonValue> getObservationsAtTime(AbilityType ability, Double time);
+    List<PhenomenonValue> getObservationsAtTime(AbilityType ability, Double time);
 
-    public void addObservation(AbilityType ability, Double time , PhenomenonValue value);
+    void addObservation(AbilityType ability, Double time , PhenomenonValue value);
 
-    public void sense();
+    void sense();
 
     /**
      * Returns bandwidth (measured in bits per second) of the sensor's wireless communication module.
@@ -53,7 +53,7 @@ public interface ISensorModel<P extends Position> {
      * @return
      *      bandwith of the sensor's wireless module.
      */
-    public double getWirelessBandwith();
+    double getWirelessBandwith();
 
     /**
      * Method executed when sensor receives message from neighbour.
@@ -62,7 +62,7 @@ public interface ISensorModel<P extends Position> {
      * @param message
      *      message which was received by sensor.
      */
-    public void receiveMessage(double time, Message message);
+    void receiveMessage(double time, Message message);
 
     // TODO zasoby, programy, SNT
 

@@ -84,17 +84,17 @@ public class XMLScenarioTest {
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
 
-        Map<Class, List<Sensor>> nodesMap = xmlScenario.scenarioSensors();
+        Map<Class, List<Device>> nodesMap = xmlScenario.scenarioSensors();
 
         TestCase.assertTrue(nodesMap.size() == 1);
-        TestCase.assertTrue(nodesMap.containsKey(Sensor.class));
+        TestCase.assertTrue(nodesMap.containsKey(Device.class));
 
-        List<Sensor> nodes = nodesMap.get(Sensor.class);
+        List<Device> nodes = nodesMap.get(Device.class);
         TestCase.assertTrue(nodes.size() == 4);
 
-        for (Sensor node : nodes) {
-            TestCase.assertTrue(node.getSensorLogic().getRoutingAlgorithm() instanceof FloodingRouting);
-            TestCase.assertTrue(node.getSensorLogic().getAbilities().get(0).equals(AbilityType.TEMPERATURE));
+        for (Device node : nodes) {
+            TestCase.assertTrue(node.getDeviceLogic().getRoutingAlgorithm() instanceof FloodingRouting);
+            TestCase.assertTrue(node.getDeviceLogic().getAbilities().get(0).equals(AbilityType.TEMPERATURE));
         }
 
     }

@@ -5,10 +5,8 @@ import dissim.simspace.core.BasicSimEntity;
 import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
-import org.mdyk.netsim.logic.node.geo.SensorLogic;
+import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.program.Middleware;
-import org.mdyk.netsim.logic.node.program.SensorProgram;
-import org.mdyk.netsim.logic.node.program.groovy.GroovyProgram;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 
 
@@ -27,15 +25,15 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
 
 //    private IdleProcess idleProcess;
 
-    protected SensorLogic sensorLogic;
+    protected DeviceLogic deviceLogic;
 
     protected Middleware middleware;
 
     protected Environment environment;
 
-    public DisSimNodeEntity(BasicSimContext context, SensorLogic sensorLogic, Environment environment) {
+    public DisSimNodeEntity(BasicSimContext context, DeviceLogic deviceLogic, Environment environment) {
         super(context);
-        this.setSensorLogic(sensorLogic);
+        this.setDeviceLogic(deviceLogic);
         this.environment = environment;
     }
 
@@ -49,8 +47,8 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
 
     }
 
-    public DisSimSensorLogic getProgrammableNode() {
-        return (DisSimSensorLogic) sensorLogic;
+    public DisSimDeviceLogic getProgrammableNode() {
+        return (DisSimDeviceLogic) deviceLogic;
     }
 
     @Override
@@ -90,14 +88,12 @@ public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity 
         return simTime();
     }
 
-    @Override
-    public void setSensorLogic(SensorLogic sensorLogic) {
-        this.sensorLogic = sensorLogic;
+    public void setDeviceLogic(DeviceLogic deviceLogic) {
+        this.deviceLogic = deviceLogic;
     }
 
-    @Override
-    public SensorLogic getSensorLogic() {
-        return sensorLogic;
+    public DeviceLogic getDeviceLogic() {
+        return deviceLogic;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.node.statistics;
 
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
-import org.mdyk.netsim.logic.node.Sensor;
+import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 
 import java.util.HashMap;
@@ -45,7 +45,7 @@ public interface SensorStatistics {
 
     List<SensorProgram> getSensorPrograms();
 
-    void setSensor(Sensor sensor);
+    void setDevice(Device device);
 
     int getSensorId();
 
