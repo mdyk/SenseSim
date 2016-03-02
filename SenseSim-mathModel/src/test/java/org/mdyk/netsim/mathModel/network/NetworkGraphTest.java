@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,16 +37,16 @@ public class NetworkGraphTest {
     public void testListNeighbors() throws Exception {
         NetworkGraph networkGraph = injector.getInstance(NetworkGraph.class);
 
-        ISensorModel a = new TestSensor(1);
-        ISensorModel b = new TestSensor(2);
-        ISensorModel c = new TestSensor(3);
-        ISensorModel d = new TestSensor(4);
+        IDeviceModel a = new TestDevice(1);
+        IDeviceModel b = new TestDevice(2);
+        IDeviceModel c = new TestDevice(3);
+        IDeviceModel d = new TestDevice(4);
 
         networkGraph.addEdge(a,b);
         networkGraph.addEdge(a,c);
         networkGraph.addEdge(b,d);
 
-        List<ISensorModel> neighbors = networkGraph.listNeighbors(a);
+        List<IDeviceModel> neighbors = networkGraph.listNeighbors(a);
         TestCase.assertEquals(2 , neighbors.size());
         TestCase.assertTrue(neighbors.contains(b));
         TestCase.assertTrue(neighbors.contains(c));
@@ -69,9 +69,9 @@ public class NetworkGraphTest {
     public void addEdgeTest() throws Exception {
         NetworkGraph ng = new NetworkGraph();
 
-        ISensorModel s1 = new TestSensorModel(1);
-        ISensorModel s2 = new TestSensorModel(2);
-        ISensorModel s3 = new TestSensorModel(3);
+        IDeviceModel s1 = new TestDeviceModel(1);
+        IDeviceModel s2 = new TestDeviceModel(2);
+        IDeviceModel s3 = new TestDeviceModel(3);
 
         ng.addEdge(s1,s2);
 
@@ -86,8 +86,8 @@ public class NetworkGraphTest {
     public void removeEdgeTest() throws Exception {
         NetworkGraph ng = new NetworkGraph();
 
-        ISensorModel s1 = new TestSensorModel(1);
-        ISensorModel s2 = new TestSensorModel(2);
+        IDeviceModel s1 = new TestDeviceModel(1);
+        IDeviceModel s2 = new TestDeviceModel(2);
 
         ng.addEdge(s1,s2);
 
@@ -99,9 +99,9 @@ public class NetworkGraphTest {
 
     }
 
-    public class TestSensor extends DefaultSensorModel {
+    public class TestDevice extends DefaultDeviceModel {
 
-        protected TestSensor(int id) {
+        protected TestDevice(int id) {
             super(id, null, 0, 0, 0, new ArrayList<AbilityType>());
         }
 

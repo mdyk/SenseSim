@@ -1,12 +1,12 @@
 package org.mdyk.netsim.logic.node.geo;
 
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 
 /**
  * Interface for nodes with geo positioning
  */
-public interface GeoSensorNode extends SensorNode<GeoPosition> {
+public interface GeoDeviceNode extends DeviceNode<GeoPosition> {
 
     public void setLatitude(double latitude);
 

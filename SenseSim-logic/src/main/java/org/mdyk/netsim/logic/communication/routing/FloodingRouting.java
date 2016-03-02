@@ -6,7 +6,7 @@ import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 
 import java.util.*;
 
@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class FloodingRouting implements RoutingAlgorithm<GeoPosition> {
 
-    private Map<Integer , List<SensorNode<GeoPosition>>> sentMessage;
+    private Map<Integer , List<DeviceNode<GeoPosition>>> sentMessage;
 
     private SensorStatistics statistics;
 
@@ -26,11 +26,11 @@ public class FloodingRouting implements RoutingAlgorithm<GeoPosition> {
     }
 
     @Override
-    public List<SensorNode<GeoPosition>> getNodesToHop(int sender, int destination, Message message, List<SensorNode<GeoPosition>> knownSensors) {
-        List<SensorNode<GeoPosition>> sensorsToHop = new ArrayList<>(knownSensors);
+    public List<DeviceNode<GeoPosition>> getNodesToHop(int sender, int destination, Message message, List<DeviceNode<GeoPosition>> knownSensors) {
+        List<DeviceNode<GeoPosition>> sensorsToHop = new ArrayList<>(knownSensors);
 
         for(CommunicationProcess comm : statistics.getIncomingCommunication()) {
-            SensorNode<GeoPosition> sensor = (SensorNode<GeoPosition>) comm.getSender();
+            DeviceNode<GeoPosition> sensor = (DeviceNode<GeoPosition>) comm.getSender();
             Message sentMessage = comm.getMessage();
 
             if(sentMessage.getID() == message.getID() && comm.getCommunicationStatus().equals(CommunicationStatus.SUCCESS)) {

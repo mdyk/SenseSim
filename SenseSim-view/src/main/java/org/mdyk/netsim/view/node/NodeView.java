@@ -2,7 +2,7 @@ package org.mdyk.netsim.view.node;
 
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +13,10 @@ import java.util.List;
  */
 public abstract class NodeView<C, P extends Position> {
 
-    protected ISensorModel<P> node;
+    protected IDeviceModel<P> node;
     protected C nodeContainer;
 
-    public NodeView(ISensorModel node, C nodeContainer) {
+    public NodeView(IDeviceModel node, C nodeContainer) {
         this.node = node;
         this.nodeContainer = nodeContainer;
         prepareView();
@@ -51,13 +51,13 @@ public abstract class NodeView<C, P extends Position> {
         return abilityNames;
     }
 
-    public abstract void setEdge(ISensorModel secondEndNode);
+    public abstract void setEdge(IDeviceModel secondEndNode);
 
-    public abstract void removeEdge(ISensorModel secondEndNode);
+    public abstract void removeEdge(IDeviceModel secondEndNode);
 
     public abstract P getNodePosition();
 
-    public ISensorModel<P> getNode() {
+    public IDeviceModel<P> getNode() {
         return node;
     }
 

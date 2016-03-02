@@ -9,7 +9,7 @@ import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.communication.process.DefaultCommunicationProcess;
 import org.mdyk.netsim.logic.network.WirelessChannel;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 /**
  * SensorSimEntity which represents state of communication process
@@ -24,7 +24,7 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
     protected EndCommunicationActivity endCommunicationActivity;
 
 
-    public CommunicationProcessSimEntity(int id, ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message, WirelessChannel wirelessChannel) {
+    public CommunicationProcessSimEntity(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message, WirelessChannel wirelessChannel) {
         super(SimModel.getInstance().getCommonSimContext());
         this.wirelessChannel = wirelessChannel;
         commProcess = new DefaultCommunicationProcess(id,sender,receiver,startTime,message);
@@ -87,12 +87,12 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
     }
 
     @Override
-    public ISensorModel<?> getSender() {
+    public IDeviceModel<?> getSender() {
         return commProcess.getSender();
     }
 
     @Override
-    public ISensorModel<?> getReceiver() {
+    public IDeviceModel<?> getReceiver() {
         return commProcess.getReceiver();
     }
 }

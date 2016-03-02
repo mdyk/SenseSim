@@ -7,12 +7,12 @@ import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.network.GraphEdge;
 import org.mdyk.netsim.mathModel.network.NetworkGraph;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -22,10 +22,10 @@ import java.util.*;
 public class NetworkManager<P extends Position> {
 
     private static final Logger LOG = Logger.getLogger(NetworkManager.class);
-    private List<SensorNode<P>> sensorNodeList;
+    private List<DeviceNode<P>> sensorNodeList;
 
     // Map is actualized only when neighborhood changes
-    private Map<Integer , List<SensorNode<?>>> neighborhood;
+    private Map<Integer , List<DeviceNode<?>>> neighborhood;
 
     @Inject
     private NetworkGraph networkGraph;
@@ -36,7 +36,7 @@ public class NetworkManager<P extends Position> {
         EventBusHolder.getEventBus().register(this);
     }
 
-    public void addNode(SensorNode<P> sensorNode) {
+    public void addNode(DeviceNode<P> sensorNode) {
         sensorNodeList.add(sensorNode);
         networkGraph.addVertex(sensorNode);
         neighborhood.put(sensorNode.getID(), new LinkedList<>());
@@ -46,7 +46,7 @@ public class NetworkManager<P extends Position> {
 
     public void runNodes() {
         LOG.debug(">> runScenario");
-        for (SensorNode sensorNode : sensorNodeList) {
+        for (DeviceNode sensorNode : sensorNodeList) {
             LOG.info("Starting node: " + sensorNode.getID());
             sensorNode.startNode();
         }
@@ -55,7 +55,7 @@ public class NetworkManager<P extends Position> {
 
     public void pauseNodes() {
         LOG.debug(">> pauseScenario");
-        for (SensorNode sensorNode : sensorNodeList) {
+        for (DeviceNode sensorNode : sensorNodeList) {
             LOG.info("Pausing node: " + sensorNode.getID());
             sensorNode.pauseNode();
         }
@@ -64,7 +64,7 @@ public class NetworkManager<P extends Position> {
 
     public void resumeNodes() {
         LOG.debug(">> resumeScenario");
-        for (SensorNode sensorNode : sensorNodeList) {
+        for (DeviceNode sensorNode : sensorNodeList) {
             LOG.info("Resume node: " + sensorNode.getID());
             sensorNode.resumeNode();
         }
@@ -73,7 +73,7 @@ public class NetworkManager<P extends Position> {
 
     public void stopNodes() {
         LOG.debug(">> stopScenario");
-        for (SensorNode sensorNode : sensorNodeList) {
+        for (DeviceNode sensorNode : sensorNodeList) {
             LOG.info("Stop node: " + sensorNode.getID());
             sensorNode.stopNode();
         }
@@ -86,21 +86,21 @@ public class NetworkManager<P extends Position> {
         switch(event.getEventType()){
             case NEW_NODE:
                 LOG.debug("NEW_NODE event");
-                SensorNode sensorNode = (SensorNode) event.getPayload();
+                DeviceNode sensorNode = (DeviceNode) event.getPayload();
                 actualizeNaighbours(sensorNode);
                 break;
             case NODE_POSITION_CHANGED:
                 LOG.debug("NODE_POSITION_CHANGED event");
-                actualizeNaighbours((SensorNode) event.getPayload());
+                actualizeNaighbours((DeviceNode) event.getPayload());
                 break;
         }
         LOG.debug("<< processEvent");
     }
 
-    public void actualizeNaighbours(SensorNode changedSensor) {
+    public void actualizeNaighbours(DeviceNode changedSensor) {
         LOG.debug(">> actualizeNaighbours");
 
-        for (SensorNode sensor : sensorNodeList) {
+        for (DeviceNode sensor : sensorNodeList) {
 
             if(sensor == changedSensor){
                 continue;
@@ -129,8 +129,8 @@ public class NetworkManager<P extends Position> {
 //        neighborhood.get(changedSensor.getID()).clear();
 //
 //        // TODO: ta konwersja powinna się odbywać w inny sposób (najlepiej bez iterowania za każdym razem po liście)
-//        for(ISensorModel sensorModel : networkGraph.listNeighbors(changedSensor)) {
-//            neighborhood.get(changedSensor.getID()).add((SensorNode) sensorModel);
+//        for(IDeviceModel sensorModel : networkGraph.listNeighbors(changedSensor)) {
+//            neighborhood.get(changedSensor.getID()).add((DeviceNode) sensorModel);
 //            // To samo trzeba zrobić w drugą stronę
 //            if(!neighborhood.get(sensorModel.getID()).contains(changedSensor)) {
 //                neighborhood.get(sensorModel.getID()).add(changedSensor);
@@ -140,7 +140,7 @@ public class NetworkManager<P extends Position> {
         LOG.debug("<< actualizeNaighbours");
     }
 
-    public List<ISensorModel> getNeighborhood(SensorNode<?> sensorNode) {
+    public List<IDeviceModel> getNeighborhood(DeviceNode<?> sensorNode) {
         return Optional.ofNullable(networkGraph.listNeighbors(sensorNode)).orElse(new ArrayList<>());
     }
 }

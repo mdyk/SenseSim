@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  Description of device based on mathematical mathModel
  */
-public interface ISensorModel<P extends Position> {
+public interface IDeviceModel<P extends Position> {
 
     int getID();
 

@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.communication;
 
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 /**
  * Factory for communication processes
@@ -23,7 +23,7 @@ public interface CommunicationProcessFactory {
      * @return
      *      instance of the communication process
      */
-    public CommunicationProcess createCommunicationProcess(int id, ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message);
+    public CommunicationProcess createCommunicationProcess(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message);
 
     /**
      * Creates communication process in hop style (one hop - one process)
@@ -38,6 +38,6 @@ public interface CommunicationProcessFactory {
      * @return
      *      instance of the communication process
      */
-    public CommunicationProcess createCommunicationProcess(ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message);
+    public CommunicationProcess createCommunicationProcess(IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message);
 
 }

@@ -14,18 +14,18 @@ import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
-import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
 
 import javax.inject.Inject;
 import java.util.List;
 import java.util.function.Function;
 
 
-public class DisSimDeviceLogic extends DefaultSensorModel<GeoPosition> implements DeviceLogic {
+public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implements DeviceLogic {
 
 
     private static final Logger LOG = Logger.getLogger(DisSimDeviceLogic.class);
@@ -81,10 +81,10 @@ public class DisSimDeviceLogic extends DefaultSensorModel<GeoPosition> implement
         }
 
         if(message.getMessageDest() != id) {
-            List<SensorNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(this);
-            List<SensorNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
+            List<DeviceNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(this);
+            List<DeviceNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
 
-            startCommunication(message,hopTargets.toArray(new SensorNode[hopTargets.size()]));
+            startCommunication(message,hopTargets.toArray(new DeviceNode[hopTargets.size()]));
 
         }
 
@@ -164,8 +164,8 @@ public class DisSimDeviceLogic extends DefaultSensorModel<GeoPosition> implement
 
     @SafeVarargs
     @Override
-    public final void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
-        for(SensorNode<GeoPosition> receiver : receivers) {
+    public final void startCommunication(Message message, DeviceNode<GeoPosition>... receivers) {
+        for(DeviceNode<GeoPosition> receiver : receivers) {
             communicationProcessFactory.createCommunicationProcess(this, receiver, sensorSimEntity.getSimTime(), message);
         }
 

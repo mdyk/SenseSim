@@ -21,13 +21,13 @@ import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.controlsfx.dialog.Dialogs;
 import org.mdyk.netsim.logic.event.EventFactory;
+import org.mdyk.netsim.logic.node.geo.GeoDeviceNode;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.view.map.MapApp;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
-import org.mdyk.netsim.logic.node.geo.GeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.network.GraphEdge;
@@ -254,7 +254,7 @@ public class SenseSimJFXController implements Initializable {
     }
 
     @SuppressWarnings("unchecked")
-    private void process_NODE_END_SENSE(GeoSensorNode sensor) {
+    private void process_NODE_END_SENSE(GeoDeviceNode sensor) {
         LOG.trace(">> process_NODE_END_SENSE id: " + sensor.getID());
         nodeViews.get(sensor.getID()).stopSense();
 
@@ -292,16 +292,16 @@ public class SenseSimJFXController implements Initializable {
     @Subscribe
     public synchronized void processEvent(InternalEvent event) {
         LOG.debug(">> processEvent");
-        GeoSensorNode sensorModelNode;
+        GeoDeviceNode sensorModelNode;
         switch(event.getEventType()){
             case NEW_NODE:
                 LOG.debug("NEW_NODE event");
-                sensorModelNode = (GeoSensorNode) event.getPayload();
+                sensorModelNode = (GeoDeviceNode) event.getPayload();
                 OSMNodeView nodeView = new OSMNodeView(sensorModelNode, app.getMapContainer());
                 addNode(sensorModelNode.getID(), nodeView);
                 break;
             case NODE_POSITION_CHANGED:
-                sensorModelNode = (GeoSensorNode) event.getPayload();
+                sensorModelNode = (GeoDeviceNode) event.getPayload();
                 OSMNodeView node = nodeViews.get(sensorModelNode.getID());
                 node.relocate(sensorModelNode.getPosition());
                 actualizePositionLabel();
@@ -322,11 +322,11 @@ public class SenseSimJFXController implements Initializable {
                 addEvent(1,envEvent);
                 break;
             case NODE_START_SENSE:
-                sensorModelNode = (GeoSensorNode) event.getPayload();
+                sensorModelNode = (GeoDeviceNode) event.getPayload();
                 nodeViews.get(sensorModelNode.getID()).startSense();
                 break;
             case NODE_END_SENSE:
-                sensorModelNode = (GeoSensorNode) event.getPayload();
+                sensorModelNode = (GeoDeviceNode) event.getPayload();
                 process_NODE_END_SENSE(sensorModelNode);
                 break;
         }

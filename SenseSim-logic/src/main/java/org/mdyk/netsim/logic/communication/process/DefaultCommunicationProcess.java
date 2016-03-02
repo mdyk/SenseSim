@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.communication.process;
 
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 /**
  * Represents process of communication between two nodes.
@@ -9,8 +9,8 @@ import org.mdyk.netsim.mathModel.device.ISensorModel;
 public class DefaultCommunicationProcess implements CommunicationProcess {
 
     private CommunicationStatus communicationStatus;
-    private ISensorModel<?> sender;
-    private ISensorModel<?> receiver;
+    private IDeviceModel<?> sender;
+    private IDeviceModel<?> receiver;
     private double startTime;
     private double endTime;
     private int id;
@@ -20,7 +20,7 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
 
     private Message message;
 
-    public DefaultCommunicationProcess(int id, ISensorModel<?> sender, ISensorModel<?> receiver, double startTime, Message message) {
+    public DefaultCommunicationProcess(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
@@ -97,11 +97,11 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
         this.communicationStatus = CommunicationStatus.FAILURE;
     }
 
-    public ISensorModel<?> getSender() {
+    public IDeviceModel<?> getSender() {
         return sender;
     }
 
-    public ISensorModel<?> getReceiver() {
+    public IDeviceModel<?> getReceiver() {
         return receiver;
     }
 

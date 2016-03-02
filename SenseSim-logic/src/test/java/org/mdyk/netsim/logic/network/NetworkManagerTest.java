@@ -8,10 +8,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
+import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -39,36 +39,36 @@ public class NetworkManagerTest {
     public void testGetNeighborhood() throws Exception {
         NetworkManager networkManager = injector.getInstance(NetworkManager.class);
 
-        TestSensorNode node1 = new TestSensorNode(1, new GeoPosition(52.231594, 21.003547));
+        TestDeviceNode node1 = new TestDeviceNode(1, new GeoPosition(52.231594, 21.003547));
         networkManager.addNode(node1);
 
-        TestSensorNode node2 = new TestSensorNode(2, new GeoPosition(52.231594, 21.003547));
+        TestDeviceNode node2 = new TestDeviceNode(2, new GeoPosition(52.231594, 21.003547));
         networkManager.addNode(node2);
 
-        TestSensorNode node3 = new TestSensorNode(3, new GeoPosition(30.230786, 21.005350));
+        TestDeviceNode node3 = new TestDeviceNode(3, new GeoPosition(30.230786, 21.005350));
         networkManager.addNode(node3);
 
         networkManager.actualizeNaighbours(node1);
         networkManager.actualizeNaighbours(node2);
         networkManager.actualizeNaighbours(node3);
 
-        List<SensorNode<?>> sensorNodes =  networkManager.getNeighborhood(node2);
+        List<DeviceNode<?>> sensorNodes =  networkManager.getNeighborhood(node2);
         TestCase.assertEquals(1 , sensorNodes.size());
         TestCase.assertEquals(1 , sensorNodes.get(0).getID());
 
-        List<SensorNode<?>> sensorNodes2 =  networkManager.getNeighborhood(node1);
+        List<DeviceNode<?>> sensorNodes2 =  networkManager.getNeighborhood(node1);
         TestCase.assertEquals(1 , sensorNodes2.size());
         TestCase.assertEquals(2 , sensorNodes2.get(0).getID());
 
-        List<SensorNode<?>> sensorNodes3 =  networkManager.getNeighborhood(node3);
+        List<DeviceNode<?>> sensorNodes3 =  networkManager.getNeighborhood(node3);
         TestCase.assertEquals(0 , sensorNodes3.size());
 
     }
 
-    public class TestSensorNode extends DefaultSensorModel implements SensorNode {
+    public class TestDeviceNode extends DefaultDeviceModel implements DeviceNode {
 
 
-        protected TestSensorNode(int id, Position position) {
+        protected TestDeviceNode(int id, Position position) {
             super(id, position, 90, 5000,  1, new LinkedList<>());
         }
 
@@ -99,7 +99,7 @@ public class NetworkManagerTest {
         public void move() {}
 
         @Override
-        public void startCommunication(Message message, SensorNode... receivers) {
+        public void startCommunication(Message message, DeviceNode... receivers) {
             //To change body of implemented methods use File | Settings | File Templates.
         }
 

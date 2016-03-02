@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.communication;
 
 
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public interface RoutingAlgorithm<P extends Position> {
      * @return
      *      list of sensors which are destination for the hop.
      */
-    List<SensorNode<P>> getNodesToHop(int sender, int destination, Message message, List<SensorNode<P>> knownSensors);
+    List<DeviceNode<P>> getNodesToHop(int sender, int destination, Message message, List<DeviceNode<P>> knownSensors);
 
 
 }

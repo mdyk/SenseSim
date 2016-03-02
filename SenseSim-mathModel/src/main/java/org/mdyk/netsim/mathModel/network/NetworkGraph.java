@@ -5,7 +5,7 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.ListenableUndirectedGraph;
 import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 import javax.inject.Singleton;
 import java.util.LinkedList;
@@ -14,7 +14,7 @@ import java.util.List;
 @Singleton
 public class NetworkGraph  {
 
-    private UndirectedGraph<ISensorModel, DefaultEdge> networkGraph;
+    private UndirectedGraph<IDeviceModel, DefaultEdge> networkGraph;
 
     public NetworkGraph() {
         networkGraph = new ListenableUndirectedGraph<>( DefaultEdge.class );
@@ -22,7 +22,7 @@ public class NetworkGraph  {
         EventBusHolder.getEventBus().register(this);
     }
 
-    public void addEdge(ISensorModel a , ISensorModel b) {
+    public void addEdge(IDeviceModel a , IDeviceModel b) {
         networkGraph.addVertex(a);
         networkGraph.addVertex(b);
 
@@ -30,23 +30,23 @@ public class NetworkGraph  {
         networkGraph.addEdge(b,a);
     }
 
-    public void removeEdge(ISensorModel a , ISensorModel b) {
+    public void removeEdge(IDeviceModel a , IDeviceModel b) {
 
         networkGraph.removeEdge(a,b);
         networkGraph.removeEdge(b,a);
     }
 
-    public boolean hasEdge(ISensorModel a , ISensorModel b) {
+    public boolean hasEdge(IDeviceModel a , IDeviceModel b) {
         return networkGraph.containsEdge(a,b) || networkGraph.containsEdge(b,a);
     }
 
-    public List<ISensorModel> listNeighbors(ISensorModel a) {
-        List<ISensorModel> neighbors = new LinkedList<>();
+    public List<IDeviceModel> listNeighbors(IDeviceModel a) {
+        List<IDeviceModel> neighbors = new LinkedList<>();
 
         networkGraph.containsVertex(a);
 
         for(DefaultEdge edge : networkGraph.edgesOf(a)){
-            ISensorModel neighbor = networkGraph.getEdgeTarget(edge);
+            IDeviceModel neighbor = networkGraph.getEdgeTarget(edge);
 
             // If edge target equals given device a, than we take edge source
             // as neighbor
@@ -60,7 +60,7 @@ public class NetworkGraph  {
         return neighbors;
     }
 
-    public void addVertex(ISensorModel a) {
+    public void addVertex(IDeviceModel a) {
         networkGraph.addVertex(a);
     }
 }

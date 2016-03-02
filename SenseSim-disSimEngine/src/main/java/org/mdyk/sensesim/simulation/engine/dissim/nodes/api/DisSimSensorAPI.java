@@ -9,8 +9,8 @@ import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
-import org.mdyk.netsim.mathModel.device.SensorNode;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity;
@@ -72,9 +72,9 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
     @SuppressWarnings("unchecked")
     public void api_sendMessage(int messageId, int originSource, int originDest, Object content, Integer size) {
         Message message = new SimpleMessage(messageId, originSource, originDest , content, size);
-        List<SensorNode> neighbours =  ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getDeviceLogic());
-        List<SensorNode<GeoPosition>> nodesToHop = sensorSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(sensorSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
-        sensorSimEntity.getDeviceLogic().startCommunication(message, nodesToHop.toArray(new SensorNode[nodesToHop.size()]));
+        List<DeviceNode> neighbours =  ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getDeviceLogic());
+        List<DeviceNode<GeoPosition>> nodesToHop = sensorSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(sensorSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
+        sensorSimEntity.getDeviceLogic().startCommunication(message, nodesToHop.toArray(new DeviceNode[nodesToHop.size()]));
     }
 
     @Override
@@ -95,11 +95,11 @@ public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
     public List<Integer> api_scanForNeighbors() {
         LOG.trace(">< api_scanForNeighbors()");
 
-        List<SensorNode> neighbours =  ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getDeviceLogic());
+        List<DeviceNode> neighbours =  ((DisSimDeviceLogic) sensorSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(sensorSimEntity.getDeviceLogic());
 
         List<Integer> neighboursIds = new ArrayList<>();
 
-        for (SensorNode sensorNode : neighbours)  {
+        for (DeviceNode sensorNode : neighbours)  {
             neighboursIds.add(sensorNode.getID());
         }
 

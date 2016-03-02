@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.communication.process.DefaultCommunicationProcess;
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 import java.util.LinkedList;
 
@@ -16,7 +16,7 @@ public class DefaultCommunicationProcessTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testGetETA() throws Exception {
-        ISensorModel sender = new DefaultSensorModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
+        IDeviceModel sender = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
                 // unused
@@ -28,7 +28,7 @@ public class DefaultCommunicationProcessTest {
             }
         } ;
 
-        ISensorModel receiver = new DefaultSensorModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
+        IDeviceModel receiver = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
                 // unused
@@ -71,7 +71,7 @@ public class DefaultCommunicationProcessTest {
     @Test
     @SuppressWarnings("unchecked")
     public void getCommunicationStatusTest() {
-        ISensorModel sender = new DefaultSensorModel(1 , new Position(0,0,0), 10 , 5000 , 1 , new LinkedList<>()) {
+        IDeviceModel sender = new DefaultDeviceModel(1 , new Position(0,0,0), 10 , 5000 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
                 // unused
@@ -83,7 +83,7 @@ public class DefaultCommunicationProcessTest {
             }
         } ;
 
-        ISensorModel receiver = new DefaultSensorModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
+        IDeviceModel receiver = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
             @Override
             public void sense() {
 

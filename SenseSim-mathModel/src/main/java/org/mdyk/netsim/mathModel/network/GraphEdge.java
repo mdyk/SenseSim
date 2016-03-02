@@ -1,16 +1,16 @@
 package org.mdyk.netsim.mathModel.network;
 
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 public class GraphEdge<P extends Position> {
 
-    public ISensorModel<P> idA;
-    public ISensorModel<P> idB;
+    public IDeviceModel<P> idA;
+    public IDeviceModel<P> idB;
 
     public Class<P> positionType;
 
-    public GraphEdge(ISensorModel<P> idA, ISensorModel<P> idB) {
+    public GraphEdge(IDeviceModel<P> idA, IDeviceModel<P> idB) {
         this.idA = idA;
         this.idB = idB;
     }

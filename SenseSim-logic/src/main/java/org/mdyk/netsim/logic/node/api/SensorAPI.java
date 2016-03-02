@@ -69,7 +69,7 @@ public interface SensorAPI<P extends Position> {
      * @return
      *      list of found neighbours.
      */
-    // public List<SensorNode<P>> api_scanForNeighbors();
+    // public List<DeviceNode<P>> api_scanForNeighbors();
     public List<Integer> api_scanForNeighbors();
 
     /**

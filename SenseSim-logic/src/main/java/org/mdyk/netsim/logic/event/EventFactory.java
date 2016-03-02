@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.event;
 
 import javafx.util.Pair;
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 
@@ -10,11 +10,11 @@ public class EventFactory {
 
     private EventFactory() {}
 
-    public static InternalEvent createNewNodeEvent(SensorNode node)  {
+    public static InternalEvent createNewNodeEvent(DeviceNode node)  {
         return new InternalEvent(EventType.NEW_NODE, node);
     }
 
-    public static InternalEvent createNodePositionChangedEvent(SensorNode node)  {
+    public static InternalEvent createNodePositionChangedEvent(DeviceNode node)  {
         return new InternalEvent(EventType.NODE_POSITION_CHANGED, node);
     }
 
@@ -23,12 +23,12 @@ public class EventFactory {
         return new InternalEvent(EventType.PHENOMENON_CREATED, phenomenon);
     }
 
-    public static InternalEvent startSenseEvent(SensorNode node) {
+    public static InternalEvent startSenseEvent(DeviceNode node) {
         return new InternalEvent(EventType.NODE_START_SENSE, node);
     }
 
 
-    public static InternalEvent endSenseEvent(SensorNode node) {
+    public static InternalEvent endSenseEvent(DeviceNode node) {
         return new InternalEvent(EventType.NODE_END_SENSE, node);
     }
 

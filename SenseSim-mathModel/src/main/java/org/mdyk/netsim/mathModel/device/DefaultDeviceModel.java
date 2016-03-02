@@ -13,9 +13,9 @@ import java.util.List;
 import java.util.Map;
 
 
-public abstract class DefaultSensorModel<P extends Position> implements ISensorModel<P> {
+public abstract class DefaultDeviceModel<P extends Position> implements IDeviceModel<P> {
 
-    private static final Logger LOG = Logger.getLogger(DefaultSensorModel.class);
+    private static final Logger LOG = Logger.getLogger(DefaultDeviceModel.class);
 
     protected int           id;
     protected P             position;
@@ -31,7 +31,7 @@ public abstract class DefaultSensorModel<P extends Position> implements ISensorM
 
 
     @Deprecated
-    protected DefaultSensorModel(int id, P position, int radioRange ,int bandwidth , double velocity, List<AbilityType> abilities) {
+    protected DefaultDeviceModel(int id, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities) {
         this.id = id;
         this.position = position;
         this.radioRange = radioRange;

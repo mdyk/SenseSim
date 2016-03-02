@@ -18,14 +18,14 @@ import org.mdyk.netsim.mathModel.ability.AbilityType;
 
 import javax.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 
 import java.util.List;
 
 /**
  * Simple implementation for nodes with geo localization
  */
-public class GeoDeviceNodeThread extends SensorNodeThread<GeoPosition, GeoMovementAlgorithm> implements DeviceLogic {
+public class GeoDeviceNodeThread extends DeviceNodeThread<GeoPosition, GeoMovementAlgorithm> implements DeviceLogic {
 
     private static final Logger LOG = Logger.getLogger(GeoDeviceNodeThread.class);
     protected List<GeoPosition> route;
@@ -122,7 +122,7 @@ public class GeoDeviceNodeThread extends SensorNodeThread<GeoPosition, GeoMoveme
     }
 
     @Override
-    public void startCommunication(Message message, SensorNode<GeoPosition>... receivers) {
+    public void startCommunication(Message message, DeviceNode<GeoPosition>... receivers) {
         // empty
     }
 

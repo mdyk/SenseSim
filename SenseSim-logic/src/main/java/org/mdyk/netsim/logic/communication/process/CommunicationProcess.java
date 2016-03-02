@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.communication.process;
 
 
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 /**
  * Interface for communication process in SenseSim
@@ -78,8 +78,8 @@ public interface CommunicationProcess {
      */
     public void processInterrupted();
 
-    public ISensorModel<?> getSender();
+    public IDeviceModel<?> getSender();
 
-    public ISensorModel<?> getReceiver();
+    public IDeviceModel<?> getReceiver();
 
 }

@@ -14,7 +14,7 @@ import javax.inject.Singleton;
  * Implementation of sim engine based on threads
  */
 @Singleton
-public class ThreadSimEngine /*implements SimEngine<SensorNodeThread<?,?>>*/ {
+public class ThreadSimEngine /*implements SimEngine<DeviceNodeThread<?,?>>*/ {
 
     private static final Logger LOG = Logger.getLogger(ThreadSimEngine.class);
 
@@ -35,9 +35,9 @@ public class ThreadSimEngine /*implements SimEngine<SensorNodeThread<?,?>>*/ {
 //    @Override
     public void loadScenario(Scenario scenario) {
 
-     /*       Collection<List<ISensorModel>> sensorLists = scenario.scenarioSensors().values();
+     /*       Collection<List<IDeviceModel>> sensorLists = scenario.scenarioSensors().values();
 
-            for (List<ISensorModel> nodeList : sensorLists) {
+            for (List<IDeviceModel> nodeList : sensorLists) {
                 addNodes(nodeList);
             }
 
@@ -66,13 +66,13 @@ public class ThreadSimEngine /*implements SimEngine<SensorNodeThread<?,?>>*/ {
 //    }
 
 //    @Override
-//    public void addNode(SensorNodeThread sensorNode) {
+//    public void addNode(DeviceNodeThread sensorNode) {
 //        networkManager.addNode(sensorNode);
 //    }
 
-//    private void addNodes(List<ISensorModel> nodesList) {
-//        for (ISensorModel sensorModel : nodesList) {
-//            addNode((SensorNodeThread) sensorModel);
+//    private void addNodes(List<IDeviceModel> nodesList) {
+//        for (IDeviceModel sensorModel : nodesList) {
+//            addNode((DeviceNodeThread) sensorModel);
 //        }
 //    }
 //

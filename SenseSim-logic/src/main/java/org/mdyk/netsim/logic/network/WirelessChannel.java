@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.network;
 
 
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.device.SensorNode;
+import org.mdyk.netsim.mathModel.device.DeviceNode;
 
 import java.util.List;
 
@@ -14,6 +14,6 @@ public interface WirelessChannel<P extends Position> {
      * @return
      *      list of neighbors.
      */
-    public List<SensorNode<P>> scanForNeighbors(SensorNode<P> requestedSensorNode);
+    public List<DeviceNode<P>> scanForNeighbors(DeviceNode<P> requestedSensorNode);
 
 }

@@ -7,9 +7,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
-import org.mdyk.netsim.logic.node.geo.GeoSensorNode;
+import org.mdyk.netsim.logic.node.geo.GeoDeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.device.ISensorModel;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 import org.mdyk.netsim.view.controller.SensorConsoleController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
@@ -27,7 +27,7 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
     private MapMarkerDot mapMaker;
     private Stage sensorConsole;
 
-    public OSMNodeView(GeoSensorNode node, JMapViewer mapViewer) {
+    public OSMNodeView(GeoDeviceNode node, JMapViewer mapViewer) {
         super(node, mapViewer);
         mapMaker = new MapMarkerDot(node.getLatitude(), node.getLongitude());
         mapMaker.setBackColor(Color.YELLOW);
@@ -75,12 +75,12 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
 
 
     @Override
-    public void setEdge(ISensorModel secondEndNode) {
+    public void setEdge(IDeviceModel secondEndNode) {
         // EMPTY
     }
 
     @Override
-    public void removeEdge(ISensorModel secondEndNode) {
+    public void removeEdge(IDeviceModel secondEndNode) {
         // EMPTY
     }
 
