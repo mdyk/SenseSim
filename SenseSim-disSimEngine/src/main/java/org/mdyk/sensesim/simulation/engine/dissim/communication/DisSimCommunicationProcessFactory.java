@@ -6,7 +6,7 @@ import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.network.WirelessChannel;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.events.CommunicationProcessSimEntity;
 
 @Singleton

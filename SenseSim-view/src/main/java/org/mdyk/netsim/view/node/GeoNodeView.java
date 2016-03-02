@@ -3,7 +3,7 @@ package org.mdyk.netsim.view.node;
 
 import org.mdyk.netsim.logic.node.geo.GeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 public abstract class GeoNodeView<C> extends NodeView<C, GeoPosition> {
 

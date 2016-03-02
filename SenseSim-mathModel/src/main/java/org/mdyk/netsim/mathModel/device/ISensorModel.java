@@ -1,4 +1,4 @@
-package org.mdyk.netsim.mathModel.sensor;
+package org.mdyk.netsim.mathModel.device;
 
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 
 /**
- Description of sensor based on mathematical mathModel
+ Description of device based on mathematical mathModel
  */
 public interface ISensorModel<P extends Position> {
 
@@ -48,19 +48,19 @@ public interface ISensorModel<P extends Position> {
     void sense();
 
     /**
-     * Returns bandwidth (measured in bits per second) of the sensor's wireless communication module.
+     * Returns bandwidth (measured in bits per second) of the device's wireless communication module.
      * Value is the same for in and out communication.
      * @return
-     *      bandwith of the sensor's wireless module.
+     *      bandwith of the device's wireless module.
      */
     double getWirelessBandwith();
 
     /**
-     * Method executed when sensor receives message from neighbour.
+     * Method executed when device receives message from neighbour.
      * @param time
      *      time at which the message was received.
      * @param message
-     *      message which was received by sensor.
+     *      message which was received by device.
      */
     void receiveMessage(double time, Message message);
 

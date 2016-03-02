@@ -1,9 +1,8 @@
 package org.mdyk.netsim.view.node;
 
-import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 import java.util.ArrayList;
 import java.util.List;

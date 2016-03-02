@@ -18,7 +18,7 @@ import org.mdyk.netsim.mathModel.ability.AbilityType;
 
 import javax.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
+import org.mdyk.netsim.mathModel.device.SensorNode;
 
 import java.util.List;
 

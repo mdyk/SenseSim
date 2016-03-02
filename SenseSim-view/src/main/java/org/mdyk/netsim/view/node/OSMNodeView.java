@@ -9,7 +9,7 @@ import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.node.geo.GeoSensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 import org.mdyk.netsim.view.controller.SensorConsoleController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;

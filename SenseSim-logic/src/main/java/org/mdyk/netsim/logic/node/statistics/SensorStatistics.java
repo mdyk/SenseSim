@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Holds and calculates all important statistics about sensor.
+ * Holds and calculates all important statistics about device.
  */
 public interface SensorStatistics {
 
@@ -22,23 +22,23 @@ public interface SensorStatistics {
     void addCommunication(CommunicationProcess communicationProcess);
 
     /**
-     * Returns all communication processes which are incoming for the given sensor
+     * Returns all communication processes which are incoming for the given device
      * @return
      *      List of incoming communication processes
      */
     List<CommunicationProcess> getIncomingCommunication();
 
     /**
-     * Returns all communication processes which are outgoing for the given sensor
+     * Returns all communication processes which are outgoing for the given device
      * @return
      *      List of incoming communication processes
      */
     List<CommunicationProcess> getOutgoingCommunication();
 
     /**
-     * Adds loaded program to sensor's statistics.
+     * Adds loaded program to device's statistics.
      * @param sensorProgramMap
-     *      map which key is sensor's Id and value is SensorProgram. Map should
+     *      map which key is device's Id and value is SensorProgram. Map should
      *      contain only one element.
      */
     void addProgram(HashMap<Integer , SensorProgram>sensorProgramMap);

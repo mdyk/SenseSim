@@ -14,11 +14,11 @@ import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
+import org.mdyk.netsim.mathModel.device.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
-import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
+import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
 
 import javax.inject.Inject;
 import java.util.List;

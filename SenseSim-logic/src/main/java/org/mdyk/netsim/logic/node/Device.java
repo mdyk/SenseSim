@@ -10,7 +10,7 @@ import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
 import javax.inject.Inject;
 
 /**
- * Main wrapper which describes construct of a sensor.
+ * Main wrapper which describes construct of a device.
  */
 public class Device {
 

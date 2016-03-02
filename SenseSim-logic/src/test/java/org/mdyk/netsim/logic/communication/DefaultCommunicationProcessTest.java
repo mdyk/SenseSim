@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.communication.process.DefaultCommunicationProcess;
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 import java.util.LinkedList;
 

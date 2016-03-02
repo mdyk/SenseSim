@@ -1,21 +1,14 @@
 package org.mdyk.netsim.logic.simEngine.thread;
 
-import com.google.common.eventbus.Subscribe;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
-import org.mdyk.netsim.logic.simEngine.SimEngine;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.io.File;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Implementation of sim engine based on threads

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * Represents PT100 class thermometer sensor
+ * Represents PT100 class thermometer device
  */
 public class PT100Observer implements ObserverModel<TemperatureConfigurationSpace , ResistancePremisesSpace> {
 
@@ -107,7 +107,7 @@ public class PT100Observer implements ObserverModel<TemperatureConfigurationSpac
      * Equasion: res = S x t + 100 +/- err, where:
      *      - S - sensitivity for given temperature (i.e. 0,39 for 40 celsius degrees)
      *      - t - given temperature
-     *      - err - error of the sensor (i.e. 0,07 for 40 celsius degrees)
+     *      - err - error of the device (i.e. 0,07 for 40 celsius degrees)
      * @return
      *      value of the resistance
      */

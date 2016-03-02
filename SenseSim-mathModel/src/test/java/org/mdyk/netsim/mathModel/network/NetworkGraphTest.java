@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 import java.util.ArrayList;
 import java.util.List;

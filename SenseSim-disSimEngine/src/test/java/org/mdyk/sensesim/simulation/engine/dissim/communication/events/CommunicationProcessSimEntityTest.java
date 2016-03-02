@@ -109,10 +109,10 @@ public class CommunicationProcessSimEntityTest {
         }
 
         /**
-         * Returns destination sensor of the message. It is the origin sensor, which should not change during communication
+         * Returns destination device of the message. It is the origin device, which should not change during communication
          * process.
          * @return
-         *      destination (sink) sensor
+         *      destination (sink) device
          */
         public int getMessageDest(){
             return -1;

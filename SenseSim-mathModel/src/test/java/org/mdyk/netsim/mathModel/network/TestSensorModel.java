@@ -4,7 +4,7 @@ import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.ability.IAbilityModel;
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
+import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
 
 import java.util.ArrayList;
 import java.util.List;

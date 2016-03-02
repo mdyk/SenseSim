@@ -5,7 +5,7 @@ import org.jgrapht.UndirectedGraph;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.ListenableUndirectedGraph;
 import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 import javax.inject.Singleton;
 import java.util.LinkedList;
@@ -48,7 +48,7 @@ public class NetworkGraph  {
         for(DefaultEdge edge : networkGraph.edgesOf(a)){
             ISensorModel neighbor = networkGraph.getEdgeTarget(edge);
 
-            // If edge target equals given sensor a, than we take edge source
+            // If edge target equals given device a, than we take edge source
             // as neighbor
             if (neighbor.equals(a)) {
                 neighbor = networkGraph.getEdgeSource(edge);

@@ -5,10 +5,8 @@ import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.logic.event.EventType;
-import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
+import org.mdyk.netsim.mathModel.device.SensorNode;
 
 import java.util.List;
 

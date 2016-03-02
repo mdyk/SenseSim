@@ -1,4 +1,4 @@
-package org.mdyk.netsim.mathModel.sensor;
+package org.mdyk.netsim.mathModel.device;
 
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.util.Position;

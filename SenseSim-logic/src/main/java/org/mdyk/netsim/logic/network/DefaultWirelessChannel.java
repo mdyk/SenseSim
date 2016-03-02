@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.network;
 
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
+import org.mdyk.netsim.mathModel.device.SensorNode;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -21,7 +21,7 @@ public class DefaultWirelessChannel implements WirelessChannel<GeoPosition> {
 
     @Override
     public List<SensorNode<GeoPosition>> scanForNeighbors(SensorNode<GeoPosition> requestedSensorNode) {
-        LOG.trace(">>> scanForNeighbors [request sensor: " + requestedSensorNode.getID() + "]");
+        LOG.trace(">>> scanForNeighbors [request device: " + requestedSensorNode.getID() + "]");
         List<SensorNode<GeoPosition>> nodesList = networkManager.getNeighborhood(requestedSensorNode);
         LOG.trace("<<< scanForNeighbors");
         return nodesList;

@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.communication.process;
 
 
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 /**
  * Interface for communication process in SenseSim

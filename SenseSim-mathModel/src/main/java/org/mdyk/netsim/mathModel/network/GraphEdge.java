@@ -1,7 +1,7 @@
 package org.mdyk.netsim.mathModel.network;
 
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 public class GraphEdge<P extends Position> {
 

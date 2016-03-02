@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.node.program;
 
 /**
- * Interface for program executed by sensor
+ * Interface for program executed by device
  */
 public interface SensorProgram {
 

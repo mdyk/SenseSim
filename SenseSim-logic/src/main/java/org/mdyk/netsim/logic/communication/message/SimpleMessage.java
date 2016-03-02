@@ -2,7 +2,6 @@ package org.mdyk.netsim.logic.communication.message;
 
 
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 public class SimpleMessage implements Message {
 
@@ -15,10 +14,10 @@ public class SimpleMessage implements Message {
     /**
      *
      * @param originSource
-     *      sender of the message. It is the origin sensor, which should not change during communication
+     *      sender of the message. It is the origin device, which should not change during communication
      *      process.
      * @param originDest
-     *      receiver of the message. sender of the message. It is the origin sensor, which should not change during communication
+     *      receiver of the message. sender of the message. It is the origin device, which should not change during communication
      *      process.
      * @param content
      *      content of the message.

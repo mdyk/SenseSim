@@ -8,10 +8,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
+import org.mdyk.netsim.mathModel.device.SensorNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.sensor.DefaultSensorModel;
+import org.mdyk.netsim.mathModel.device.DefaultSensorModel;
 
 import java.util.LinkedList;
 import java.util.List;

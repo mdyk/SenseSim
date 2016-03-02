@@ -11,7 +11,7 @@ import java.util.List;
 public interface Middleware {
 
     /**
-     * Initializes middleware when sensor is created.
+     * Initializes middleware when device is created.
      */
     public void initialize();
 

@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.communication.process;
 
 import org.mdyk.netsim.logic.communication.Message;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
+import org.mdyk.netsim.mathModel.device.ISensorModel;
 
 /**
  * Represents process of communication between two nodes.

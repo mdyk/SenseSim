@@ -13,7 +13,7 @@ import javax.inject.Singleton;
 import java.util.List;
 
 /**
- * Factory which provides instances of sensor nodes
+ * Factory which provides instances of device nodes
  */
 @Singleton
 public class SensorsFactory {

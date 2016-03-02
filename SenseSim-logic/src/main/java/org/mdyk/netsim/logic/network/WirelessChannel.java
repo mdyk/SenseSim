@@ -2,8 +2,7 @@ package org.mdyk.netsim.logic.network;
 
 
 import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.sensor.ISensorModel;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
+import org.mdyk.netsim.mathModel.device.SensorNode;
 
 import java.util.List;
 

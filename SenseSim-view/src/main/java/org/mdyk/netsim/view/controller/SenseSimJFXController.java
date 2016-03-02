@@ -112,7 +112,7 @@ public class SenseSimJFXController implements Initializable {
         if (selectedNode == null) {
             Dialogs.create()
                     .owner(null)
-                    .title("No sensor seleceted")
+                    .title("No device seleceted")
                     .message("Cannot open console. Select node first.")
                     .showWarning();
             return;

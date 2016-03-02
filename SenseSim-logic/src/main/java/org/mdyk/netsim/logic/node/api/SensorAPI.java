@@ -6,38 +6,37 @@ import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
-import org.mdyk.netsim.mathModel.sensor.SensorNode;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
 /**
- * Interface for sensor's API
+ * Interface for device's API
  */
 public interface SensorAPI<P extends Position> {
 
     public void setSimEntity(SensorSimEntity sensorSimEntity);
 
     /**
-     * Sets sensor's route.
+     * Sets device's route.
      * @param route
      *      list of points which define route.
      */
     public void api_setRoute(List<P> route);
 
     /**
-     * Starts sensor's move according the given route.
+     * Starts device's move according the given route.
      */
     public void api_startMove();
 
     /**
-     * Stops sensor's move.
+     * Stops device's move.
      */
     public void api_stopMove();
 
     /**
-     * Sends message to sensor with given id. Method does not ensure delivery.
+     * Sends message to device with given id. Method does not ensure delivery.
      * @param messageId
      *      id of the message. Should be unique
      * @param originSource
@@ -52,21 +51,21 @@ public interface SensorAPI<P extends Position> {
     public void api_sendMessage(int messageId, int originSource, int originDest, Object content , Integer size );
 
     /**
-     * Returns list of sensor's observations.
+     * Returns list of device's observations.
      * @return
      *      list of observations.
      */
     public Map<AbilityType, List<PhenomenonValue>> api_getObservations();
 
     /**
-     * Sets routing algorithm for sensor
+     * Sets routing algorithm for device
      * @param routingAlgorithm
      *      implementation of routing algorithm
      */
     public void api_setRoutingAlgorithm(RoutingAlgorithm<?> routingAlgorithm);
 
     /**
-     * Orders a sensor to scan for its neighbours.
+     * Orders a device to scan for its neighbours.
      * @return
      *      list of found neighbours.
      */
@@ -81,14 +80,14 @@ public interface SensorAPI<P extends Position> {
     public P api_getPosition();
 
     /**
-     * Allows to add handler which should be fired when sensor receives a message.
+     * Allows to add handler which should be fired when device receives a message.
      */
     public void api_setOnMessageHandler(Function<Message , Object> handler);
 
     /**
-     * Returns ID of the sensor
+     * Returns ID of the device
      * @return
-     *      ID of the sensor.
+     *      ID of the device.
      */
     public Integer api_getMyID();
 
