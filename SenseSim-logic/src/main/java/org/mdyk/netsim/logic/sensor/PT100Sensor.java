@@ -1,0 +1,35 @@
+package org.mdyk.netsim.logic.sensor;
+
+import org.mdyk.netsim.mathModel.observer.temperature.PT100Observer;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
+
+
+public class PT100Sensor implements SensorModel<PT100Observer> {
+
+
+    private PT100Observer observer;
+    private double frequency = 0.3; // milisekundy
+    private double sensingTime = 0.05; // milisekundy
+
+
+    public PT100Sensor() {
+        this.observer = new PT100Observer();
+    }
+
+
+    @Override
+    public PT100Observer getObserver() {
+        return observer;
+    }
+
+    @Override
+    public double samplingFrequency() {
+        return this.frequency;
+    }
+
+    @Override
+    public double sensingTime() {
+        return sensingTime;
+    }
+
+}

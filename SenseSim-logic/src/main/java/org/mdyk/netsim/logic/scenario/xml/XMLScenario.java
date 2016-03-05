@@ -4,7 +4,7 @@ import com.google.inject.assistedinject.Assisted;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.node.Device;
-import org.mdyk.netsim.logic.node.SensorsFactory;
+import org.mdyk.netsim.logic.node.DevicesFactory;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -29,19 +29,19 @@ public class XMLScenario implements Scenario {
     private org.mdyk.sensesim.schema.Scenario scenario;
     private File scenarioFile;
 
-    private SensorsFactory sensorsFactory;
+    private DevicesFactory devicesFactory;
     private PhenomenaFactory phenomenaFactory;
     private XmlTypeConverter xmlTypeConverter;
 
     @Inject
-    public XMLScenario(@Assisted File file, SensorsFactory sensorsFactory, PhenomenaFactory phenomenaFactory) throws XMLScenarioLoadException {
+    public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory) throws XMLScenarioLoadException {
         JAXBContext jaxbContext;
         try {
             scenarioFile = file;
             jaxbContext = JAXBContext.newInstance(org.mdyk.sensesim.schema.Scenario.class);
             Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
             scenario = (org.mdyk.sensesim.schema.Scenario) jaxbUnmarshaller.unmarshal(scenarioFile);
-            this.sensorsFactory = sensorsFactory;
+            this.devicesFactory = devicesFactory;
             this.phenomenaFactory = phenomenaFactory;
             this.xmlTypeConverter = new XmlTypeConverter(scenarioFile.getParent());
         } catch (JAXBException e) {
@@ -77,7 +77,7 @@ public class XMLScenario implements Scenario {
 
                         List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
 
-                        Device node = sensorsFactory.buildSensor(Integer.parseInt(nodeType.getId()),
+                        Device node = devicesFactory.buildSensor(Integer.parseInt(nodeType.getId()),
                                 position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
                                 Double.parseDouble(nodeType.getSpeed()), abilities);
                         node.getDeviceLogic().setRoute(route);

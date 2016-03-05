@@ -10,7 +10,7 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
-public class SensorsFactoryThread/* implements SensorsFactory */{
+public class SensorsFactoryThread/* implements DevicesFactory */{
 
     @Inject
     private Environment environment;

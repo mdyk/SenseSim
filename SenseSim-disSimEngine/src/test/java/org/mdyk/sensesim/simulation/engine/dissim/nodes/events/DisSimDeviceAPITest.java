@@ -66,9 +66,9 @@ public class DisSimDeviceAPITest {
     @Test
     public void api_moveTest() throws InterruptedException {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
-        SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
+        DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
 
-        Device device = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 10, new ArrayList<>());
+        Device device = devicesFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 10, new ArrayList<>());
         simEngine.addNode(device);
         simEngine.runScenario();
         Thread.sleep(1000);
@@ -105,10 +105,10 @@ public class DisSimDeviceAPITest {
     @Test
     public void api_communicationTest() throws InterruptedException {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
-        SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
+        DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
 
-        Device sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
-        Device receiver = sensorsFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
+        Device sender = devicesFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
+        Device receiver = devicesFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
 
         simEngine.addNode(sender);
         simEngine.addNode(receiver);
@@ -139,12 +139,12 @@ public class DisSimDeviceAPITest {
     @Test
     public void api_hopByHopFloodingTest() throws InterruptedException {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
-        SensorsFactory sensorsFactory = injector.getInstance(SensorsFactory.class);
+        DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
 
-        Device sender = sensorsFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 0, new ArrayList<>());
-        Device hop1 = sensorsFactory.buildSensor(2, new GeoPosition(52.230535, 21.005795), 25,5000, 0, new ArrayList<>());
-        Device receiver = sensorsFactory.buildSensor(3, new GeoPosition(52.230556, 21.005937), 25,5000, 0, new ArrayList<>());
-        Device hop2 = sensorsFactory.buildSensor(4, new GeoPosition(52.230555, 21.005819), 15,5000, 0, new ArrayList<>());
+        Device sender = devicesFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 0, new ArrayList<>());
+        Device hop1 = devicesFactory.buildSensor(2, new GeoPosition(52.230535, 21.005795), 25,5000, 0, new ArrayList<>());
+        Device receiver = devicesFactory.buildSensor(3, new GeoPosition(52.230556, 21.005937), 25,5000, 0, new ArrayList<>());
+        Device hop2 = devicesFactory.buildSensor(4, new GeoPosition(52.230555, 21.005819), 15,5000, 0, new ArrayList<>());
 
         simEngine.addNode(sender);
         simEngine.addNode(hop1);

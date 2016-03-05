@@ -6,6 +6,7 @@ import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +29,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     protected Map<Double, List<Message>> messagesMap;
     protected RoutingAlgorithm routingAlgorithm;
 
-
+    protected List<SensorModel<?>> sensors;
 
     @Deprecated
     protected DefaultDeviceModel(int id, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities) {
@@ -42,7 +43,22 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.messagesMap = new HashMap<>();
     }
 
-//    public abstract void sense();
+
+    protected DefaultDeviceModel(int id, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities , List<SensorModel<?>> sensors) {
+        this.id = id;
+        this.position = position;
+        this.radioRange = radioRange;
+        this.bandwith = bandwidth;
+        this.velocity = velocity;
+        this.abilities = abilities;
+        this.observations = new HashMap<>();
+        this.messagesMap = new HashMap<>();
+
+        this.sensors = sensors;
+
+    }
+
+
 
     @Override
     public int getID() {

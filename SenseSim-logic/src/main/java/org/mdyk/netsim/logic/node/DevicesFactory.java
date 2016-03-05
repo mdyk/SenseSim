@@ -16,7 +16,7 @@ import java.util.List;
  * Factory which provides instances of device nodes
  */
 @Singleton
-public class SensorsFactory {
+public class DevicesFactory {
 
     @Inject
     private SensorLogicFactory sensorLogicFactory;

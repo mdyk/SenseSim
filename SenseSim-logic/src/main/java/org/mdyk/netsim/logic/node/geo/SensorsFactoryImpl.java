@@ -11,7 +11,7 @@ import javax.inject.Singleton;
 import java.util.List;
 
 @Singleton
-public class SensorsFactoryImpl /*implements SensorsFactory*/ {
+public class SensorsFactoryImpl /*implements DevicesFactory*/ {
 
 
     @Inject
