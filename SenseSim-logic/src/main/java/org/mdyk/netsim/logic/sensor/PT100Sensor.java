@@ -1,10 +1,12 @@
 package org.mdyk.netsim.logic.sensor;
 
 import org.mdyk.netsim.mathModel.observer.temperature.PT100Observer;
+import org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 
-public class PT100Sensor implements SensorModel<PT100Observer> {
+public class PT100Sensor implements SensorModel<PT100Observer , TemperatureConfigurationSpace> {
 
 
     private PT100Observer observer;
@@ -30,6 +32,14 @@ public class PT100Sensor implements SensorModel<PT100Observer> {
     @Override
     public double sensingTime() {
         return sensingTime;
+    }
+
+    @Override
+    public TemperatureConfigurationSpace getObservation(PhenomenonModel phenomenonModel, double distance) {
+
+//        observer.getConclusion(observer.getPremises())
+
+        return null;
     }
 
 }

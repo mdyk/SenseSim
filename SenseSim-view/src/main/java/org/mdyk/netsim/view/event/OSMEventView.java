@@ -2,7 +2,7 @@ package org.mdyk.netsim.view.event;
 
 
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.openstreetmap.gui.jmapviewer.Coordinate;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
@@ -17,7 +17,7 @@ public class OSMEventView {
     private MapPolygon polygon;
     private JMapViewer mapViewer;
 
-    public OSMEventView(IPhenomenonModel<GeoPosition> eventModel, JMapViewer mapViewer, String name) {
+    public OSMEventView(PhenomenonModel<GeoPosition> eventModel, JMapViewer mapViewer, String name) {
 
         List<Coordinate> coordinates = new LinkedList<>();
 

@@ -6,14 +6,21 @@ import org.mdyk.netsim.mathModel.observer.PresmisesSpace;
 
 
 public class VisualObserver implements ObserverModel {
+
+
     @Override
-    public ConfigurationSpace getConfigurationSpace() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public Class getConfigurationSpaceClass() {
+        return null;
     }
 
     @Override
     public PresmisesSpace getPremises(ConfigurationSpace event, Object... parameters) {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public PresmisesSpace getPremises(ConfigurationSpace event, double distance, Object... parameters) {
+        return null;
     }
 
     @Override

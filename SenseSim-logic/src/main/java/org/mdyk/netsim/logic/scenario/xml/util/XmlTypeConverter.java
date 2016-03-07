@@ -5,7 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.netsim.mathModel.phenomena.time.SimplePhenomenonTimeRange;
 import org.mdyk.sensesim.schema.*;
@@ -42,7 +42,7 @@ public class XmlTypeConverter {
         return new GeoPosition(Double.parseDouble(checkpointType.getLatitude()),Double.parseDouble(checkpointType.getLongitude()));
     }
 
-    public IPhenomenonModel convertPhenomenon(PhenomenonType phenomenonType) {
+    public PhenomenonModel convertPhenomenon(PhenomenonType phenomenonType) {
         // TODO
         return null;
     }

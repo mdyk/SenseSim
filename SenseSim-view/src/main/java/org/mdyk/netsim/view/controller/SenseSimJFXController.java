@@ -23,13 +23,13 @@ import org.controlsfx.dialog.Dialogs;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.geo.GeoDeviceNode;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.view.map.MapApp;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
 import org.mdyk.netsim.mathModel.network.GraphEdge;
 import org.mdyk.netsim.view.edge.OSMEdge;
 import org.mdyk.netsim.view.event.OSMEventView;
@@ -318,7 +318,7 @@ public class SenseSimJFXController implements Initializable {
                 break;
             case PHENOMENON_CREATED:
                 LOG.debug("PHENOMENON_CREATED event");
-                OSMEventView envEvent = new OSMEventView((IPhenomenonModel<GeoPosition>)event.getPayload(), app.getMapContainer(), "");
+                OSMEventView envEvent = new OSMEventView((PhenomenonModel<GeoPosition>)event.getPayload(), app.getMapContainer(), "");
                 addEvent(1,envEvent);
                 break;
             case NODE_START_SENSE:

@@ -6,7 +6,7 @@ import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 import javax.inject.Singleton;
@@ -21,7 +21,7 @@ public class Environment {
 
     private static final Logger LOG = Logger.getLogger(Environment.class);
 
-    private List<IPhenomenonModel<GeoPosition>> phenomena = new LinkedList<>();
+    private List<PhenomenonModel<GeoPosition>> phenomena = new LinkedList<>();
 
     public Environment() {
         EventBusHolder.getEventBus().register(this);
@@ -36,7 +36,7 @@ public class Environment {
         LOG.trace(">>> getEventValue [position=" + position + ", time=" + time + ", ability=" + ability + "]");
         PhenomenonValue retVal = null;
 
-        for(IPhenomenonModel event : phenomena) {
+        for(PhenomenonModel event : phenomena) {
             if(event.hasAbility(ability) && Functions.isPointInRegion(position,event.getPhenomenonRegionPoints())) {
                 retVal = event.getPhenomenonValue(ability, time);
             }
@@ -47,13 +47,13 @@ public class Environment {
     }
 
     // TODO pełna obsługa
-    public void startEvent(IPhenomenonModel<GeoPosition> phenomenon) {
+    public void startEvent(PhenomenonModel<GeoPosition> phenomenon) {
         EventBusHolder.getEventBus().post(EventFactory.createNewPhenomenonEvent(phenomenon));
     }
 
     // TODO tymczasowe
     public boolean isNodeInEventRegion(GeoPosition position) {
-        for(IPhenomenonModel event : phenomena) {
+        for(PhenomenonModel event : phenomena) {
             if(Functions.isPointInRegion(position,event.getPhenomenonRegionPoints())) {
                 return true;
             }
@@ -61,13 +61,13 @@ public class Environment {
         return false;
     }
 
-    public void loadPhenomena(List<IPhenomenonModel<GeoPosition>> phenomena) {
+    public void loadPhenomena(List<PhenomenonModel<GeoPosition>> phenomena) {
         LOG.trace(">>> loadEvents");
 
         LOG.info("Events size: " + phenomena.size());
         this.phenomena = phenomena;
 
-        for(IPhenomenonModel phenomenon : phenomena) {
+        for(PhenomenonModel phenomenon : phenomena) {
             startEvent(phenomenon);
         }
 

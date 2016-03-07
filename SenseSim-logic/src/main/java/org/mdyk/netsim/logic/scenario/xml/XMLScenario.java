@@ -9,7 +9,7 @@ import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.sensesim.schema.*;
 
@@ -98,12 +98,12 @@ public class XMLScenario implements Scenario {
     }
 
     @Override
-    public List<IPhenomenonModel<GeoPosition>> getPhenomena() {
+    public List<PhenomenonModel<GeoPosition>> getPhenomena() {
         LOG.debug(">> getPhenomena()");
 
         PhenomenaType phenomenaType = scenario.getPhenomena();
         LOG.debug("Size of phenomena: " + phenomenaType.getPhenomenon().size());
-        List<IPhenomenonModel<GeoPosition>> phenomenaList = new ArrayList<>(phenomenaType.getPhenomenon().size());
+        List<PhenomenonModel<GeoPosition>> phenomenaList = new ArrayList<>(phenomenaType.getPhenomenon().size());
 
         for(PhenomenonType phenomenonType : phenomenaType.getPhenomenon()) {
             List<GeoPosition> phenomenonArea = xmlTypeConverter.convertRoute(phenomenonType.getPhenomenonArea());
@@ -128,7 +128,7 @@ public class XMLScenario implements Scenario {
                 }
                 phenomenonValuesMap.put(abilityName , phenomenonValues);
             }
-            IPhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
+            PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
             phenomenaList.add(phenomenon);
         }
 

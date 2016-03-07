@@ -29,7 +29,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     protected Map<Double, List<Message>> messagesMap;
     protected RoutingAlgorithm routingAlgorithm;
 
-    protected List<SensorModel<?>> sensors;
+    protected List<SensorModel<?,?>> sensors;
 
     @Deprecated
     protected DefaultDeviceModel(int id, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities) {
@@ -44,7 +44,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     }
 
 
-    protected DefaultDeviceModel(int id, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities , List<SensorModel<?>> sensors) {
+    protected DefaultDeviceModel(int id, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities , List<SensorModel<?,?>> sensors) {
         this.id = id;
         this.position = position;
         this.radioRange = radioRange;

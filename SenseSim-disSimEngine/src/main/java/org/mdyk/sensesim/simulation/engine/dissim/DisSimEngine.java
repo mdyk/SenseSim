@@ -15,7 +15,7 @@ import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.events.PhenomenonSimEntity;
 
 import javax.inject.Inject;
@@ -61,8 +61,8 @@ public class DisSimEngine implements SimEngine, Runnable {
             addNodes(nodeList);
         }
 
-        List<IPhenomenonModel<GeoPosition>> phenomenaModels = scenario.getPhenomena();
-        for (IPhenomenonModel<GeoPosition> model : phenomenaModels) {
+        List<PhenomenonModel<GeoPosition>> phenomenaModels = scenario.getPhenomena();
+        for (PhenomenonModel<GeoPosition> model : phenomenaModels) {
             phenomenaList.add(new PhenomenonSimEntity(model));
         }
 

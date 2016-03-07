@@ -1,6 +1,7 @@
 package org.mdyk.netsim.mathModel.observer.temperature;
 
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.observer.ObserverModel;
 
 import java.util.ArrayList;
@@ -36,9 +37,10 @@ public class PT100Observer implements ObserverModel<TemperatureConfigurationSpac
 
     }
 
+
     @Override
-    public TemperatureConfigurationSpace getConfigurationSpace() {
-        return null;
+    public Class<TemperatureConfigurationSpace> getConfigurationSpaceClass() {
+        return TemperatureConfigurationSpace.class;
     }
 
     @Override
@@ -50,6 +52,11 @@ public class PT100Observer implements ObserverModel<TemperatureConfigurationSpac
 
         LOG.trace("<< getPremises");
         return new ResistancePremisesSpace(resistance);
+    }
+
+    @Override
+    public ResistancePremisesSpace getPremises(TemperatureConfigurationSpace event, double distance, Object... parameters) {
+        return getPremises(event,parameters);
     }
 
     @Override
@@ -97,7 +104,6 @@ public class PT100Observer implements ObserverModel<TemperatureConfigurationSpac
         if (found) {
             temperature = (resistance - this.referenceResistance) / resistaneRange.getSensitivity();
         }
-
 
         return temperature;
     }

@@ -2,7 +2,7 @@ package org.mdyk.netsim.logic.scenario;
 
 import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 
 import java.util.List;
 import java.util.Map;
@@ -22,6 +22,6 @@ public interface Scenario {
      */
     Map<Class, List<Device>> scenarioSensors();
 
-    List<IPhenomenonModel<GeoPosition>> getPhenomena();
+    List<PhenomenonModel<GeoPosition>> getPhenomena();
 
 }

@@ -22,7 +22,7 @@ import org.mdyk.netsim.logic.scenario.xml.XMLScenario;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
@@ -105,7 +105,7 @@ public class XMLScenarioTest {
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
 
-        List<IPhenomenonModel<GeoPosition>> phenomenonModelList = xmlScenario.getPhenomena();
+        List<PhenomenonModel<GeoPosition>> phenomenonModelList = xmlScenario.getPhenomena();
 
         TestCase.assertEquals(1 , phenomenonModelList.size());
 

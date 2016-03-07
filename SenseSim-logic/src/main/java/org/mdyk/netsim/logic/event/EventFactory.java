@@ -3,7 +3,7 @@ package org.mdyk.netsim.logic.event;
 import javafx.util.Pair;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.phenomena.IPhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 
 
 public class EventFactory {
@@ -18,8 +18,8 @@ public class EventFactory {
         return new InternalEvent(EventType.NODE_POSITION_CHANGED, node);
     }
 
-    // TODO: niekoniecznie musi to być IPhenomenonModel<GeoPosition> (trzeba wprowadzić mapowanie typów przez Guice)
-    public static InternalEvent createNewPhenomenonEvent(IPhenomenonModel<GeoPosition> phenomenon)  {
+    // TODO: niekoniecznie musi to być PhenomenonModel<GeoPosition> (trzeba wprowadzić mapowanie typów przez Guice)
+    public static InternalEvent createNewPhenomenonEvent(PhenomenonModel<GeoPosition> phenomenon)  {
         return new InternalEvent(EventType.PHENOMENON_CREATED, phenomenon);
     }
 
