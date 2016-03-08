@@ -13,7 +13,7 @@ import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
-import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
+import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 
 import java.util.*;
@@ -26,7 +26,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
     private static final Logger LOG = Logger.getLogger(GroovyMiddleware.class);
 
     private SensorAPI sensorAPI;
-    private SensorSimEntity sensorSimEntity;
+    private DeviceSimEntity deviceSimEntity;
     private Map<Integer, SensorProgram> programs;
     private GroovyShell groovyShell;
 
@@ -71,10 +71,9 @@ public class GroovyMiddleware extends Thread implements Middleware {
         this.sensorAPI = api;
     }
 
-    @Override
-    public void setSensorSimEntity(SensorSimEntity simEntity) {
-        this.sensorSimEntity = simEntity;
-        this.nodeId = this.sensorSimEntity.getDeviceLogic().getID();
+    public void setDeviceSimEntity(DeviceSimEntity simEntity) {
+        this.deviceSimEntity = simEntity;
+        this.nodeId = this.deviceSimEntity.getDeviceLogic().getID();
     }
 
     @Override
@@ -110,7 +109,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
             new Thread() {
                 public void run() {
                     LOG.info("Running program with PID="+PID);
-                    me.sensorSimEntity.startProgramExecution(PID);
+                    me.deviceSimEntity.startProgramExecution(PID);
                     Map<String, Object> params = new HashMap<>();
                     params.put("api", sensorAPI);
                     scriptToRun.setBinding(new Binding(params));
@@ -129,7 +128,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     } finally {
                         EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.PROGRAM_UPDATED, groovyProgram));
                     }
-                    me.sensorSimEntity.endProgramExecution(PID);
+                    me.deviceSimEntity.endProgramExecution(PID);
 
                 }
             }.start();

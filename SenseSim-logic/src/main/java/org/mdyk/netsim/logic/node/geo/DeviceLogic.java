@@ -1,13 +1,13 @@
 package org.mdyk.netsim.logic.node.geo;
 
-import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
-import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
+import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
+import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 import org.mdyk.netsim.logic.util.GeoPosition;
 
 public interface DeviceLogic extends GeoDeviceNode, RoutedNode<GeoPosition> {
 
-    void setSimEntity(SensorSimEntity simEntity);
+    void setSimEntity(DeviceSimEntity simEntity);
 
-    void setSensorStatistics(SensorStatistics statistics);
+    void setDeviceStatistics(DeviceStatistics statistics);
 
 }

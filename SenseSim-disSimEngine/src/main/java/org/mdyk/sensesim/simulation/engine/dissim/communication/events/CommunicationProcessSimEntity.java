@@ -12,7 +12,7 @@ import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.mathModel.device.IDeviceModel;
 
 /**
- * SensorSimEntity which represents state of communication process
+ * DeviceSimEntity which represents state of communication process
  */
 public class CommunicationProcessSimEntity extends BasicSimEntity implements CommunicationProcess {
 

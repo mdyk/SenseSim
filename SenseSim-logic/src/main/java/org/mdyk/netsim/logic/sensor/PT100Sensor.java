@@ -35,11 +35,11 @@ public class PT100Sensor implements SensorModel<PT100Observer , TemperatureConfi
     }
 
     @Override
-    public TemperatureConfigurationSpace getObservation(PhenomenonModel phenomenonModel, double distance) {
+    public TemperatureConfigurationSpace getObservation(PhenomenonModel phenomenonModel, double time, double distance) {
 
-//        observer.getConclusion(observer.getPremises())
+        TemperatureConfigurationSpace event = (TemperatureConfigurationSpace) phenomenonModel.getEventValue(TemperatureConfigurationSpace.class , time);
 
-        return null;
+        return observer.getConclusion(observer.getPremises(event));
     }
 
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class DefaultStatistics implements SensorStatistics {
+public class DefaultStatistics implements DeviceStatistics {
 
     private static final Logger LOG = Logger.getLogger(DefaultStatistics.class);
 

@@ -13,7 +13,7 @@ import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
-import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
+import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
@@ -35,7 +35,7 @@ public class SensorConsoleController implements Initializable {
 
     private OSMNodeView nodeView;
 
-    private SensorStatistics statistics;
+    private DeviceStatistics statistics;
 
     @FXML
     private TextField nodeBandwidth;
@@ -180,7 +180,7 @@ public class SensorConsoleController implements Initializable {
         try{
             switch (statisticsEvent.getEventType()) {
                 case GUI_UPDATE_STATISTICS:
-                    SensorStatistics statistics = (SensorStatistics) statisticsEvent.getPayload();
+                    DeviceStatistics statistics = (DeviceStatistics) statisticsEvent.getPayload();
                     if(statistics.getSensorId() == this.nodeView.getID()) {
                         this.statistics = statistics;
                         showCommunication(this.statistics, CommType.Incoming);
@@ -205,18 +205,18 @@ public class SensorConsoleController implements Initializable {
         }
     }
 
-    private void showCommunication(SensorStatistics sensorStatistics, CommType commType) {
-        if (sensorStatistics.getSensorId() == this.nodeView.getID()) {
+    private void showCommunication(DeviceStatistics deviceStatistics, CommType commType) {
+        if (deviceStatistics.getSensorId() == this.nodeView.getID()) {
             List<CommunicationStatistics> communicationStatistics = new ArrayList<>();
             switch (commType) {
                 case Incoming:
-                    for(CommunicationProcess process : sensorStatistics.getIncomingCommunication()) {
+                    for(CommunicationProcess process : deviceStatistics.getIncomingCommunication()) {
                         communicationStatistics.add(new CommunicationStatistics(process));
                     }
                     break;
 
                 case Outgoing:
-                    for(CommunicationProcess process : sensorStatistics.getOutgoingCommunication()) {
+                    for(CommunicationProcess process : deviceStatistics.getOutgoingCommunication()) {
                         communicationStatistics.add(new CommunicationStatistics(process));
                     }
                     break;

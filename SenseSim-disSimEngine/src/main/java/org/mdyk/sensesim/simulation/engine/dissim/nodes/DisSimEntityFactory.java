@@ -6,7 +6,7 @@ import dissim.simspace.core.SimModel;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.node.SimEntityFactory;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
-import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
+import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
 
 
@@ -17,7 +17,7 @@ public class DisSimEntityFactory implements SimEntityFactory {
     private Environment environment;
 
     @Override
-    public SensorSimEntity buildSensorSimEntity(DeviceLogic deviceLogic) {
+    public DeviceSimEntity buildSensorSimEntity(DeviceLogic deviceLogic) {
         return new DisSimNodeEntity(SimModel.getInstance().getCommonSimContext(), deviceLogic, environment);
     }
 

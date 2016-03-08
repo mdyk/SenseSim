@@ -11,8 +11,8 @@ import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
-import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
-import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
+import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
+import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 
@@ -138,12 +138,11 @@ public class GeoDeviceNodeThread extends DeviceNodeThread<GeoPosition, GeoMoveme
     }
 
     @Override
-    public void setSimEntity(SensorSimEntity simEntity) {
+    public void setSimEntity(DeviceSimEntity simEntity) {
         //Empty
     }
 
-    @Override
-    public void setSensorStatistics(SensorStatistics statistics) {
+    public void setDeviceStatistics(DeviceStatistics statistics) {
 
     }
 

@@ -7,6 +7,7 @@ import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.node.DevicesFactory;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
+import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
@@ -31,10 +32,11 @@ public class XMLScenario implements Scenario {
 
     private DevicesFactory devicesFactory;
     private PhenomenaFactory phenomenaFactory;
+    private SensorFactory sensorFactory;
     private XmlTypeConverter xmlTypeConverter;
 
     @Inject
-    public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory) throws XMLScenarioLoadException {
+    public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory, SensorFactory sensorFactory) throws XMLScenarioLoadException {
         JAXBContext jaxbContext;
         try {
             scenarioFile = file;
@@ -43,6 +45,7 @@ public class XMLScenario implements Scenario {
             scenario = (org.mdyk.sensesim.schema.Scenario) jaxbUnmarshaller.unmarshal(scenarioFile);
             this.devicesFactory = devicesFactory;
             this.phenomenaFactory = phenomenaFactory;
+            this.sensorFactory = sensorFactory;
             this.xmlTypeConverter = new XmlTypeConverter(scenarioFile.getParent());
         } catch (JAXBException e) {
             LOG.error(e.getMessage(), e);
@@ -81,7 +84,6 @@ public class XMLScenario implements Scenario {
                                 position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
                                 Double.parseDouble(nodeType.getSpeed()), abilities);
                         node.getDeviceLogic().setRoute(route);
-//                    node.getDeviceLogic().setRoutingAlgorithm(nodeType , node);
                         geoDeviceNodes.add(node);
                         break;
 

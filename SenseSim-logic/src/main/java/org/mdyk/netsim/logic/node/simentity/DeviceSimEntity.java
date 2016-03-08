@@ -4,7 +4,7 @@ package org.mdyk.netsim.logic.node.simentity;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.program.Middleware;
 
-public interface SensorSimEntity {
+public interface DeviceSimEntity {
 
     public void startProgramExecution(int PID);
 

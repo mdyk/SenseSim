@@ -7,10 +7,10 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.program.Middleware;
-import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
+import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 
 
-public class DisSimNodeEntity extends BasicSimEntity implements SensorSimEntity {
+public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity {
 
     private static final Logger LOG = Logger.getLogger(DisSimNodeEntity.class);
 

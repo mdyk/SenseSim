@@ -61,7 +61,7 @@ public abstract class NodeView<C, P extends Position> {
         return node;
     }
 
-//    public SensorStatistics getStatistics() {
+//    public DeviceStatistics getStatistics() {
 //
 //    }
 

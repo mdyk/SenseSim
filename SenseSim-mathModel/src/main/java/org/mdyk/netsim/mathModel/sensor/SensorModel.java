@@ -36,6 +36,6 @@ public interface SensorModel<O extends ObserverModel<?,?> , R extends Configurat
      * @param distance
      * @return
      */
-    R getObservation(PhenomenonModel phenomenonModel , double distance);
+    R getObservation(PhenomenonModel phenomenonModel , double time , double distance);
 
 }

@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Holds and calculates all important statistics about device.
  */
-public interface SensorStatistics {
+public interface DeviceStatistics {
 
 
     /**

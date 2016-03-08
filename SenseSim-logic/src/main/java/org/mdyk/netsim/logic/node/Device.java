@@ -3,9 +3,9 @@ package org.mdyk.netsim.logic.node;
 import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
-import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
+import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.node.program.*;
-import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
+import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 
 import javax.inject.Inject;
 
@@ -15,29 +15,29 @@ import javax.inject.Inject;
 public class Device {
 
     private DeviceLogic deviceLogic;
-    private SensorSimEntity sensorSimEntity;
+    private DeviceSimEntity deviceSimEntity;
     private SensorAPI sensorAPI;
     private Middleware middleware;
-    private SensorStatistics statistics;
+    private DeviceStatistics statistics;
 
     @Inject
-    public Device(DeviceLogic deviceLogic, SensorSimEntity sensorSimEntity, SensorAPI sensorAPI, Middleware middleware, SensorStatistics sensorStatistics) {
+    public Device(DeviceLogic deviceLogic, DeviceSimEntity deviceSimEntity, SensorAPI sensorAPI, Middleware middleware, DeviceStatistics deviceStatistics) {
         this.deviceLogic = deviceLogic;
-        this.sensorSimEntity = sensorSimEntity;
+        this.deviceSimEntity = deviceSimEntity;
         this.sensorAPI = sensorAPI;
         this.middleware = middleware;
-        this.statistics = sensorStatistics;
+        this.statistics = deviceStatistics;
 
-        sensorStatistics.setDevice(this);
-        deviceLogic.setSimEntity(sensorSimEntity);
-        deviceLogic.setSensorStatistics(sensorStatistics);
+        deviceStatistics.setDevice(this);
+        deviceLogic.setSimEntity(deviceSimEntity);
+        deviceLogic.setDeviceStatistics(deviceStatistics);
         // FIXME to powinno znajdować się w konfiguracji !!!!
-        deviceLogic.setRoutingAlgorithm(new FloodingRouting(sensorStatistics));
-        sensorSimEntity.setDeviceLogic(deviceLogic);
-        sensorSimEntity.setMiddleware(middleware);
-        sensorAPI.setSimEntity(sensorSimEntity);
+        deviceLogic.setRoutingAlgorithm(new FloodingRouting(deviceStatistics));
+        deviceSimEntity.setDeviceLogic(deviceLogic);
+        deviceSimEntity.setMiddleware(middleware);
+        sensorAPI.setSimEntity(deviceSimEntity);
         middleware.setSensorAPI(sensorAPI);
-        middleware.setSensorSimEntity(sensorSimEntity);
+        middleware.setDeviceSimEntity(deviceSimEntity);
         middleware.initialize();
     }
 
@@ -45,8 +45,8 @@ public class Device {
         return deviceLogic;
     }
 
-    public SensorSimEntity getSensorSimEntity() {
-        return sensorSimEntity;
+    public DeviceSimEntity getDeviceSimEntity() {
+        return deviceSimEntity;
     }
 
     public SensorAPI getSensorAPI() {
@@ -57,7 +57,7 @@ public class Device {
         return middleware;
     }
 
-    public SensorStatistics getStatistics() {
+    public DeviceStatistics getStatistics() {
         return this.statistics;
     }
 }

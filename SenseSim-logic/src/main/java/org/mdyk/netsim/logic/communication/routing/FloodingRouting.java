@@ -4,7 +4,7 @@ import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
-import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
+import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
 
@@ -18,9 +18,9 @@ public class FloodingRouting implements RoutingAlgorithm<GeoPosition> {
 
     private Map<Integer , List<DeviceNode<GeoPosition>>> sentMessage;
 
-    private SensorStatistics statistics;
+    private DeviceStatistics statistics;
 
-    public FloodingRouting(SensorStatistics sensor) {
+    public FloodingRouting(DeviceStatistics sensor) {
         sentMessage = new HashMap<>();
         this.statistics = sensor;
     }

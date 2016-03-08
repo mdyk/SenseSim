@@ -25,7 +25,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.events.CommunicationProcessSimEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorAPIFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimAPIFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
@@ -46,12 +46,12 @@ public class StatisticsTest {
                 bind(WirelessChannel.class).to(DefaultWirelessChannel.class);
                 bind(SimEngine.class).to(DisSimEngine.class);
                 bind(SimEntityFactory.class).to(DisSimEntityFactory.class);
-                bind(SensorAPIFactory.class).to(DisSimSensorAPIFactory.class);
-                bind(SensorLogicFactory.class).to(DisSimSensorsLogicFactory.class);
+                bind(APIFactory.class).to(DisSimAPIFactory.class);
+                bind(DeviceLogicFactory.class).to(DisSimSensorsLogicFactory.class);
                 bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
                 bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
-                bind(SensorStatisticsFactory.class).to(DefaultStatisticsFactory.class);
+                bind(DeviceStatisticsFactory.class).to(DefaultStatisticsFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
             }
         });

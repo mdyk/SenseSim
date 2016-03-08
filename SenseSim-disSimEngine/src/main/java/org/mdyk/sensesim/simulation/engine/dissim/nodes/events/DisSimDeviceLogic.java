@@ -12,13 +12,14 @@ import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
-import org.mdyk.netsim.logic.node.simentity.SensorSimEntity;
-import org.mdyk.netsim.logic.node.statistics.SensorStatistics;
+import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
+import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 import javax.inject.Inject;
 import java.util.List;
@@ -35,8 +36,8 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     protected Environment environment;
     // FIXME do zmiany
     public WirelessChannel wirelessChannel;
-    private SensorSimEntity sensorSimEntity;
-    private SensorStatistics sensorStatistics;
+    private DeviceSimEntity deviceSimEntity;
+    private DeviceStatistics deviceStatistics;
     protected CommunicationProcessFactory communicationProcessFactory;
     // FIXME do zmiany
     public Function<Message, Object> onMessageHandler;
@@ -47,6 +48,23 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     @Inject
     public DisSimDeviceLogic(@Assisted("id") int id, @Assisted GeoPosition position,
                              @Assisted("radioRange") int radioRange, int bandwidth,
+                             @Assisted double velocity, @Assisted List<AbilityType> abilities, List<SensorModel<?,?>> sensors,
+                             Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
+        super(id, position, radioRange, bandwidth, velocity, abilities, sensors);
+
+        this.currentMovementAlg = new GeoRouteMovementAlgorithm();
+        this.environment = environment;
+        this.wirelessChannel = wirelessChannel;
+        // FIXME powinno być ustawiane w konfiguracji.
+//        this.routingAlgorithm = new FloodingRouting(deviceStatistics);
+        this.communicationProcessFactory = communicationProcessFactory;
+        this.isMoveing = true;
+    }
+
+    @Inject
+    @Deprecated
+    public DisSimDeviceLogic(@Assisted("id") int id, @Assisted GeoPosition position,
+                             @Assisted("radioRange") int radioRange, int bandwidth,
                              @Assisted double velocity, @Assisted List<AbilityType> abilities,
                              Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
         super(id, position, radioRange, bandwidth, velocity, abilities);
@@ -55,7 +73,7 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
         // FIXME powinno być ustawiane w konfiguracji.
-//        this.routingAlgorithm = new FloodingRouting(sensorStatistics);
+//        this.routingAlgorithm = new FloodingRouting(deviceStatistics);
         this.communicationProcessFactory = communicationProcessFactory;
         this.isMoveing = true;
     }
@@ -65,7 +83,7 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     public void sense() {
         // TODO uwzględnienie funkcji PI
         for(AbilityType ability : getAbilities()) {
-            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), sensorSimEntity.getSimTime(), ability);
+            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), deviceSimEntity.getSimTime(), ability);
             this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);
         }
 
@@ -123,7 +141,7 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
 
     @Override
     public void startNode() {
-        this.sensorSimEntity.startEntity();
+        this.deviceSimEntity.startEntity();
     }
 
     @Override
@@ -166,7 +184,7 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     @Override
     public final void startCommunication(Message message, DeviceNode<GeoPosition>... receivers) {
         for(DeviceNode<GeoPosition> receiver : receivers) {
-            communicationProcessFactory.createCommunicationProcess(this, receiver, sensorSimEntity.getSimTime(), message);
+            communicationProcessFactory.createCommunicationProcess(this, receiver, deviceSimEntity.getSimTime(), message);
         }
 
     }
@@ -181,12 +199,11 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     }
 
     @Override
-    public void setSimEntity(SensorSimEntity simEntity) {
-        this.sensorSimEntity = simEntity;
+    public void setSimEntity(DeviceSimEntity simEntity) {
+        this.deviceSimEntity = simEntity;
     }
 
-    @Override
-    public void setSensorStatistics(SensorStatistics statistics) {
-        this.sensorStatistics = statistics;
+    public void setDeviceStatistics(DeviceStatistics statistics) {
+        this.deviceStatistics = statistics;
     }
 }
