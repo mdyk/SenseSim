@@ -12,6 +12,7 @@ import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.sensesim.schema.*;
 
 import javax.inject.Inject;
@@ -80,9 +81,16 @@ public class XMLScenario implements Scenario {
 
                         List<AbilityType> abilities = XmlTypeConverter.convertAbilities(nodeType.getSensorAbilities());
 
+                        List<SensorModel<?, ?>> sensorModels = new ArrayList<>();
+                        if(nodeType.getSensors() != null) {
+                            for (String sensorClassName : nodeType.getSensors().getSensorClass()) {
+                                sensorModels.add(sensorFactory.buildSensor(sensorClassName));
+                            }
+                        }
+
                         Device node = devicesFactory.buildSensor(Integer.parseInt(nodeType.getId()),
                                 position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
-                                Double.parseDouble(nodeType.getSpeed()), abilities);
+                                Double.parseDouble(nodeType.getSpeed()), abilities, sensorModels);
                         node.getDeviceLogic().setRoute(route);
                         geoDeviceNodes.add(node);
                         break;

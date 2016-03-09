@@ -29,9 +29,15 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="sensorsType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="sensorClass" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="abilitiesType">
         <xs:sequence>
-            <xs:element type="xs:string" name="ability" maxOccurs="unbounded" minOccurs="1"/>
+            <xs:element type="xs:string" name="ability" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -62,6 +68,7 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element type="abilitiesType" name="sensorAbilities" />
+            <xs:element type="sensorsType" name="sensors" />
             <xs:element type="startPositionType" name="startPosition"/>
             <xs:element type="routeType" name="route"/>
         </xs:sequence>

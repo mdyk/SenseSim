@@ -12,6 +12,9 @@
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
             </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
             <startPosition>
                 <latitude>52.231594</latitude>
                 <longitude>21.003547</longitude>
@@ -36,6 +39,9 @@
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
             </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
             <startPosition>
                 <latitude>52.230963</latitude>
                 <longitude>21.004534</longitude>
@@ -68,6 +74,9 @@
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
             </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
             <startPosition>
                 <latitude>52.230963</latitude>
                 <longitude>21.004674</longitude>
@@ -88,6 +97,9 @@
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
             </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
             <startPosition>
                 <latitude>52.230786</latitude>
                 <longitude>21.005350</longitude>

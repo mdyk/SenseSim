@@ -5,6 +5,7 @@ import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,10 @@ public interface IDeviceModel<P extends Position> {
 
     void setRadioRange(double radioRange);
 
+    @Deprecated
     List<AbilityType> getAbilities();
+
+    List<SensorModel<?, ?>> getSensors();
 
     RoutingAlgorithm getRoutingAlgorithm();
 

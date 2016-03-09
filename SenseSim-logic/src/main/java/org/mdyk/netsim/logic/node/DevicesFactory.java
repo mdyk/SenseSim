@@ -7,6 +7,7 @@ import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.logic.node.program.*;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,10 +34,10 @@ public class DevicesFactory {
     @Inject
     private DeviceStatisticsFactory deviceStatisticsFactory;
 
-    public Device buildSensor(int id, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities){
+    public Device buildSensor(int id, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities , List<SensorModel<?,?>> sensors){
 
         DeviceStatistics deviceStatistics = deviceStatisticsFactory.buildSensorStatistics();
-        DeviceLogic deviceLogic = deviceLogicFactory.buildSensorLogic(id,position,radioRange, bandwidth, velocity, abilities);
+        DeviceLogic deviceLogic = deviceLogicFactory.buildSensorLogic(id,position,radioRange, bandwidth, velocity, abilities, sensors);
         DeviceSimEntity deviceSimEntity = simEntityFactory.buildSensorSimEntity(deviceLogic);
         SensorAPI sensorAPI = APIFactory.buildSensorAPI(deviceSimEntity);
         Middleware middleware = middlewareFactory.buildMiddleware();

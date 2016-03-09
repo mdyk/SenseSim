@@ -69,7 +69,7 @@ public class GroovyProgrammingTest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
 
-        Device node1 = devicesFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000 , 10, new ArrayList<>());
+        Device node1 = devicesFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000 , 10, new ArrayList<>() , new ArrayList<>());
 
         List<GeoPosition> route = new ArrayList<>();
         route.add(new GeoPosition(52.230532, 21.005521));
@@ -125,10 +125,10 @@ public class GroovyProgrammingTest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
 
-        Device node1 = devicesFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 10, new ArrayList<>());
-        Device node2 = devicesFactory.buildSensor(2, new GeoPosition(52.230553, 21.005862), 25, 5000, 10, new ArrayList<>());
-        Device node3 = devicesFactory.buildSensor(3, new GeoPosition(52.230562, 21.006125), 25, 5000, 10, new ArrayList<>());
-        Device node4 = devicesFactory.buildSensor(4, new GeoPosition(52.230572, 21.006419), 25, 5000, 10, new ArrayList<>());
+        Device node1 = devicesFactory.buildSensor(1, new GeoPosition(52.230532, 21.005521), 25, 5000, 10, new ArrayList<>(), new ArrayList<>());
+        Device node2 = devicesFactory.buildSensor(2, new GeoPosition(52.230553, 21.005862), 25, 5000, 10, new ArrayList<>(), new ArrayList<>());
+        Device node3 = devicesFactory.buildSensor(3, new GeoPosition(52.230562, 21.006125), 25, 5000, 10, new ArrayList<>(), new ArrayList<>());
+        Device node4 = devicesFactory.buildSensor(4, new GeoPosition(52.230572, 21.006419), 25, 5000, 10, new ArrayList<>(), new ArrayList<>());
 
         simEngine.addNode(node1);
         simEngine.addNode(node2);

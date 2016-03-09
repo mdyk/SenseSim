@@ -12,6 +12,7 @@ public class DefaultSensorFactoryTest {
 
         SensorModel sensorModel = sensorFactory.buildSensor(PT100Sensor.class.getName());
 
+
         TestCase.assertNotNull(sensorModel);
         TestCase.assertTrue(sensorModel instanceof PT100Sensor);
 

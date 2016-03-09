@@ -20,6 +20,7 @@ import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.scenario.xml.XMLScenario;
 import org.mdyk.netsim.logic.sensor.DefaultSensorFactory;
+import org.mdyk.netsim.logic.sensor.PT100Sensor;
 import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
@@ -98,6 +99,7 @@ public class XMLScenarioTest {
         for (Device node : nodes) {
             TestCase.assertTrue(node.getDeviceLogic().getRoutingAlgorithm() instanceof FloodingRouting);
             TestCase.assertTrue(node.getDeviceLogic().getAbilities().get(0).equals(AbilityType.TEMPERATURE));
+            TestCase.assertTrue(node.getDeviceLogic().getSensors().get(0) instanceof PT100Sensor);
         }
 
     }

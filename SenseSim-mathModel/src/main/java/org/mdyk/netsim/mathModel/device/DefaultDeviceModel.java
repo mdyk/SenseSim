@@ -110,6 +110,10 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         return abilities;
     }
 
+    public List<SensorModel<?, ?>> getSensors() {
+        return sensors;
+    }
+
     @Override
     public Map<AbilityType, List<PhenomenonValue>> getObservations() {
         HashMap<AbilityType, List<PhenomenonValue>> observationsByAbilities = new HashMap<>();

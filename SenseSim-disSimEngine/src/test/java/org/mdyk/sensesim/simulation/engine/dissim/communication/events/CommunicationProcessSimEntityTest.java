@@ -70,8 +70,8 @@ public class CommunicationProcessSimEntityTest {
         DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
         CommunicationProcessFactory processFactory = injector.getInstance(CommunicationProcessFactory.class);
 
-        Device sender = devicesFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
-        Device receiver = devicesFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>());
+        Device sender = devicesFactory.buildSensor(1, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>(), new ArrayList<>());
+        Device receiver = devicesFactory.buildSensor(2, new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>(), new ArrayList<>());
 
         Message message = new TestMessage() {
             @Override

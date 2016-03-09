@@ -8,9 +8,13 @@
       <sesnorImplType>GeoSensorNode</sesnorImplType>
       <routingAlgType>FloodingRouting</routingAlgType>
       <sensorAbilities>
-        <!--1 or more repetitions:-->
+        <!--Zero or more repetitions:-->
         <ability>string</ability>
       </sensorAbilities>
+      <sensors>
+        <!--Zero or more repetitions:-->
+        <sensorClass>string</sensorClass>
+      </sensors>
       <startPosition>
         <latitude>string</latitude>
         <longitude>string</longitude>
