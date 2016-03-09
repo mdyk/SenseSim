@@ -20,6 +20,8 @@ import org.mdyk.netsim.logic.node.api.SensorAPI;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
 import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
+import org.mdyk.netsim.logic.sensor.DefaultSensorFactory;
+import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
@@ -48,6 +50,7 @@ public class DisSimDeviceAPITest {
                 bind(SimEngine.class).to(DisSimEngine.class);
                 bind(SimEntityFactory.class).to(DisSimEntityFactory.class);
                 bind(APIFactory.class).to(DisSimAPIFactory.class);
+                bind(SensorFactory.class).to(DefaultSensorFactory.class);
                 bind(DeviceLogicFactory.class).to(DisSimSensorsLogicFactory.class);
                 bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
