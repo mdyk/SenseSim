@@ -83,10 +83,20 @@
         <xs:attribute type="xs:string" name="toTime"/>
         <xs:attribute type="xs:string" name="format" />
     </xs:complexType>
-    
+
+    <xs:complexType name="phenomenonObserverValueType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="value" />
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="fromTime"/>
+        <xs:attribute type="xs:string" name="toTime"/>
+        <xs:attribute type="xs:string" name="configurationSpaceClass" />
+    </xs:complexType>
+
     <xs:complexType name="phenomenonValueType">
         <xs:sequence>
             <xs:element type="phenomenonDiscreteValueType" name="discreteValue"  minOccurs="0" maxOccurs="unbounded" />
+            <xs:element type="phenomenonObserverValueType" name="observerValue"  minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 

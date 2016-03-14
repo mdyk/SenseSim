@@ -46,6 +46,10 @@
           <discreteValue fromTime="string" toTime="string" format="string">
             <value>string</value>
           </discreteValue>
+          <!--Zero or more repetitions:-->
+          <observerValue fromTime="string" toTime="string" configurationSpaceClass="string">
+            <value>string</value>
+          </observerValue>
         </phenomenonValue>
         <!--Optional:-->
         <csvFile>
