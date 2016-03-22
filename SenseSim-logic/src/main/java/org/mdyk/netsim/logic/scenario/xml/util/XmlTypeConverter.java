@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.netsim.mathModel.phenomena.time.SimplePhenomenonTimeRange;
@@ -60,6 +61,22 @@ public class XmlTypeConverter {
         }
 
         LOG.trace("<< discreteValueConverter");
+        return phenomenonValue;
+    }
+
+    public Map<IPhenomenonTimeRange, ConfigurationSpace> observerValueConverter(PhenomenonObserverValueType observerValueType) {
+        LOG.trace(">> observerValueConverter");
+        Map<IPhenomenonTimeRange, ConfigurationSpace> phenomenonValue = new HashMap<>();
+
+//        IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Integer.parseInt(observerValueType.getFromTime()) , Integer.parseInt(observerValueType.getToTime()));
+//        try {
+//            Object value = valueConverter(discreteValueType.getValue() , discreteValueType.getFormat());
+//            phenomenonValue.put(phenomenonTime , value);
+//        } catch (Exception e) {
+//            LOG.error(e.getMessage(),e);
+//        }
+
+        LOG.trace("<< observerValueConverter");
         return phenomenonValue;
     }
 
