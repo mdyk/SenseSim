@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpaceFactory;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.netsim.mathModel.phenomena.time.SimplePhenomenonTimeRange;
@@ -13,6 +14,7 @@ import org.mdyk.sensesim.schema.*;
 
 import javax.imageio.ImageIO;
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -67,14 +69,22 @@ public class XmlTypeConverter {
     public Map<IPhenomenonTimeRange, ConfigurationSpace> observerValueConverter(PhenomenonObserverValueType observerValueType) {
         LOG.trace(">> observerValueConverter");
         Map<IPhenomenonTimeRange, ConfigurationSpace> phenomenonValue = new HashMap<>();
+        IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Integer.parseInt(observerValueType.getFromTime()) , Integer.parseInt(observerValueType.getToTime()));
 
-//        IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Integer.parseInt(observerValueType.getFromTime()) , Integer.parseInt(observerValueType.getToTime()));
-//        try {
-//            Object value = valueConverter(discreteValueType.getValue() , discreteValueType.getFormat());
-//            phenomenonValue.put(phenomenonTime , value);
-//        } catch (Exception e) {
-//            LOG.error(e.getMessage(),e);
-//        }
+
+        String factoryClassName = observerValueType.getConfigurationSpaceFactory();
+        LOG.debug("factoryClassName="+factoryClassName);
+        try {
+            Class factoryClass = Class.forName(factoryClassName);
+            Constructor factoryConstructor = factoryClass.getConstructor();
+            ConfigurationSpaceFactory factory = (ConfigurationSpaceFactory) factoryConstructor.newInstance();
+
+            ConfigurationSpace confSpace = factory.buildConfigurationSpace(observerValueType.getValue());
+            phenomenonValue.put(phenomenonTime , confSpace);
+        } catch (Exception e) {
+            LOG.error(e.getMessage(),e);
+            throw new RuntimeException(e);
+        }
 
         LOG.trace("<< observerValueConverter");
         return phenomenonValue;

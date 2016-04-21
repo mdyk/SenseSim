@@ -47,7 +47,7 @@
             <value>string</value>
           </discreteValue>
           <!--Zero or more repetitions:-->
-          <observerValue fromTime="string" toTime="string" configurationSpaceClass="string">
+          <observerValue fromTime="string" toTime="string" configurationSpaceFactory="string">
             <value>string</value>
           </observerValue>
         </phenomenonValue>

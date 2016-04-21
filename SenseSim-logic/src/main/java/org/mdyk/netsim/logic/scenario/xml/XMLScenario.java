@@ -11,6 +11,7 @@ import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpaceFactory;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
@@ -21,6 +22,8 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -137,10 +140,12 @@ public class XMLScenario implements Scenario {
                             Map<IPhenomenonTimeRange, Object> values = xmlTypeConverter.discreteValueConverter(discreteValueType);
                             phenomenonValues.putAll(values);
                         }
-//                        for(PhenomenonObserverValueType discreteValueType : valueType.getObserverValue()) {
-//                            Map<IPhenomenonTimeRange, ConfigurationSpace> values = xmlTypeConverter.discreteValueConverter(discreteValueType);
-//                            phenomenonValues.putAll(values);
-//                        }
+
+
+                        for(PhenomenonObserverValueType observerValueType : valueType.getObserverValue()) {
+                            Map<IPhenomenonTimeRange, ConfigurationSpace> values = xmlTypeConverter.observerValueConverter(observerValueType);
+                            phenomenonValues.putAll(values);
+                        }
                     }
                 }
                 phenomenonValuesMap.put(abilityName , phenomenonValues);
