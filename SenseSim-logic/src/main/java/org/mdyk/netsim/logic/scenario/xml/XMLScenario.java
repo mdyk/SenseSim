@@ -141,7 +141,6 @@ public class XMLScenario implements Scenario {
                             phenomenonValues.putAll(values);
                         }
 
-
                         for(PhenomenonObserverValueType observerValueType : valueType.getObserverValue()) {
                             Map<IPhenomenonTimeRange, ConfigurationSpace> values = xmlTypeConverter.observerValueConverter(observerValueType);
                             phenomenonValues.putAll(values);
@@ -150,8 +149,18 @@ public class XMLScenario implements Scenario {
                 }
                 phenomenonValuesMap.put(abilityName , phenomenonValues);
             }
-            PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
-            phenomenaList.add(phenomenon);
+
+            //FIXME do poprawy po pełnym przejściu na zdarzenia budowane w oparciu o teorię percepcji
+            if(phenomenonValuesMap.size() > 0) {
+                PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
+                phenomenaList.add(phenomenon);
+            }
+            else if(phenomenonObserverValues.size() > 0) {
+                PhenomenonModel phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, phenomenonArea);
+                phenomenaList.add(phenomenonObserver);
+            }
+
+
         }
 
         LOG.debug("<< getPhenomena()");

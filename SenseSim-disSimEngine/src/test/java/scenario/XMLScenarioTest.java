@@ -25,6 +25,7 @@ import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
@@ -112,18 +113,18 @@ public class XMLScenarioTest {
 
         List<PhenomenonModel<GeoPosition>> phenomenonModelList = xmlScenario.getPhenomena();
 
-        TestCase.assertEquals(1 , phenomenonModelList.size());
+        TestCase.assertEquals(2 , phenomenonModelList.size());
 
-        PhenomenonValue val1 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,1);
+        PhenomenonValue val1 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,1);
         TestCase.assertEquals(110 , val1.getValue());
 
-        PhenomenonValue val2 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,500);
+        PhenomenonValue val2 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,500);
         TestCase.assertEquals(110 , val2.getValue());
 
-        PhenomenonValue val3 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.TEMPERATURE,1000);
+        PhenomenonValue val3 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,1000);
         TestCase.assertEquals(110 , val3.getValue());
 
-        PhenomenonValue valPhoto1 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.PHOTO, 500);
+        PhenomenonValue valPhoto1 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.PHOTO, 500);
         TestCase.assertTrue(valPhoto1.getValue() != null);
 
         byte[] imageArray = FileUtils.readFileToByteArray(FileUtils.toFile(getClass().getResource("/exampleImage.jpg")));
@@ -132,10 +133,17 @@ public class XMLScenarioTest {
         TestCase.assertTrue(bufferedImagesEqual((BufferedImage) valPhoto1.getValue(), image));
 
 
-        PhenomenonValue valPhoto2 = phenomenonModelList.get(0).getPhenomenonValue(AbilityType.PHOTO, 1500);
+        PhenomenonValue valPhoto2 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.PHOTO, 1500);
         TestCase.assertTrue(valPhoto1.getValue() != null);
 
         TestCase.assertTrue(bufferedImagesEqual((BufferedImage) valPhoto2.getValue(), image));
+
+        // Test zdarzenia opartego o model percepcji
+        PhenomenonModel observerPhenomenon = phenomenonModelList.get(0);
+
+        TemperatureConfigurationSpace configurationSpace = (TemperatureConfigurationSpace) observerPhenomenon.getEventValue(TemperatureConfigurationSpace.class , 5);
+
+        TestCase.assertEquals(100 , configurationSpace.getTemperature());
 
     }
 

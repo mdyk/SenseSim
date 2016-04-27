@@ -1,7 +1,6 @@
 package org.mdyk.netsim.mathModel.observer.temperature;
 
 import org.apache.log4j.Logger;
-import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.observer.ObserverModel;
 
 import java.util.ArrayList;

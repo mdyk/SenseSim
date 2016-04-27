@@ -125,6 +125,33 @@
         </node>
     </nodes>
     <phenomena>
+        <phenomenon name="string">
+            <phenomenonArea>
+                <checkpoint>
+                    <latitude>52.230963</latitude>
+                    <longitude>21.004534</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>52.231804</latitude>
+                    <longitude>21.004974</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>52.231541</latitude>
+                    <longitude>21.005822</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>52.230786</latitude>
+                    <longitude>21.005350</longitude>
+                </checkpoint>
+            </phenomenonArea>
+            <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE">
+                <phenomenonValue>
+                    <observerValue fromTime="1" toTime="50" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                        <value>10</value>
+                    </observerValue>
+                </phenomenonValue>
+            </phenomenonValueSet>
+        </phenomenon>
         <phenomenon name="fire">
             <phenomenonArea>
                 <checkpoint>
