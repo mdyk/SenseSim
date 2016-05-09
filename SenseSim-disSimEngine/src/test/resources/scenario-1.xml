@@ -146,7 +146,7 @@
             </phenomenonArea>
             <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE">
                 <phenomenonValue>
-                    <observerValue fromTime="1" toTime="50" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                    <observerValue fromTime="1" toTime="50" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
                         <value>10</value>
                     </observerValue>
                 </phenomenonValue>

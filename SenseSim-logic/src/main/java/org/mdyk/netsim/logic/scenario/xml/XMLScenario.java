@@ -143,7 +143,13 @@ public class XMLScenario implements Scenario {
 
                         for(PhenomenonObserverValueType observerValueType : valueType.getObserverValue()) {
                             Map<IPhenomenonTimeRange, ConfigurationSpace> values = xmlTypeConverter.observerValueConverter(observerValueType);
-                            phenomenonValues.putAll(values);
+                            try {
+                                Class<?> configurationClass = Class.forName(observerValueType.getConfigurationClass());
+                                phenomenonObserverValues.put(configurationClass , values);
+                            } catch (ClassNotFoundException e) {
+                                LOG.error(e.getMessage() , e);
+                                throw new RuntimeException("Error while determinig configuration class for phenomenon: " + phenomenonType.getName(),e);
+                            }
                         }
                     }
                 }
