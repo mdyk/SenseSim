@@ -11,6 +11,12 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 public interface SensorModel<O extends ObserverModel<?,?> , R extends ConfigurationSpace> {
 
     /**
+     * Returns sensor name.
+     * @return
+     */
+    String getName();
+
+    /**
      * Returns observer associated with sensor.
      * @return
      */

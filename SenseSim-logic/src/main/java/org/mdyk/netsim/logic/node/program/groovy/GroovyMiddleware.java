@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.InternalEvent;
-import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
@@ -25,7 +25,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     private static final Logger LOG = Logger.getLogger(GroovyMiddleware.class);
 
-    private SensorAPI sensorAPI;
+    private DeviceAPI deviceAPI;
     private DeviceSimEntity deviceSimEntity;
     private Map<Integer, SensorProgram> programs;
     private GroovyShell groovyShell;
@@ -41,7 +41,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     @Override
     public void initialize() {
-        sensorAPI.api_setOnMessageHandler(new Function<Message, Object>() {
+        deviceAPI.api_setOnMessageHandler(new Function<Message, Object>() {
             @Override
             public Object apply(Message message) {
 
@@ -66,9 +66,8 @@ public class GroovyMiddleware extends Thread implements Middleware {
         this.start();
     }
 
-    @Override
-    public void setSensorAPI(SensorAPI api) {
-        this.sensorAPI = api;
+    public void setDeviceAPI(DeviceAPI api) {
+        this.deviceAPI = api;
     }
 
     public void setDeviceSimEntity(DeviceSimEntity simEntity) {
@@ -111,7 +110,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     LOG.info("Running program with PID="+PID);
                     me.deviceSimEntity.startProgramExecution(PID);
                     Map<String, Object> params = new HashMap<>();
-                    params.put("api", sensorAPI);
+                    params.put("api", deviceAPI);
                     scriptToRun.setBinding(new Binding(params));
                     try {
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_ECECUTION);
@@ -184,9 +183,9 @@ public class GroovyMiddleware extends Thread implements Middleware {
     @SuppressWarnings("unchecked")
     private void resendProgram(GroovyProgram program) {
         LOG.trace(">> resendProgram");
-        List<Integer> neighbours = sensorAPI.api_scanForNeighbors();
+        List<Integer> neighbours = deviceAPI.api_scanForNeighbors();
         for (Integer neighbour : neighbours) {
-            sensorAPI.api_sendMessage(program.getGroovyScript().hashCode(), sensorAPI.api_getMyID(), neighbour, program.getGroovyScript() , null );
+            deviceAPI.api_sendMessage(program.getGroovyScript().hashCode(), deviceAPI.api_getMyID(), neighbour, program.getGroovyScript() , null );
         }
         LOG.trace("<< resendProgram");
     }

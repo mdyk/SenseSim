@@ -1,11 +1,11 @@
 package groovy
 
-import org.mdyk.netsim.logic.node.api.SensorAPI
+import org.mdyk.netsim.logic.node.api.DeviceAPI
 import org.mdyk.netsim.logic.util.GeoPosition
 import org.mdyk.netsim.mathModel.ability.AbilityType
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue
 
-SensorAPI sensorAPI = (SensorAPI) api;
+DeviceAPI sensorAPI = (DeviceAPI) api;
 
 def temp = 0;
 

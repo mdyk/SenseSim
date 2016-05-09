@@ -1,9 +1,9 @@
 package groovy
 //package org.mdyk.netsim.logic.communication.groovyScripts
 
-import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.api.DeviceAPI;
 
-SensorAPI sensorAPI = (SensorAPI) api;
+DeviceAPI sensorAPI = (DeviceAPI) api;
 
 sensorAPI.api_stopMove();
 

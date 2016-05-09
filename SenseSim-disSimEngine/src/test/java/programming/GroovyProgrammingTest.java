@@ -13,7 +13,7 @@ import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.*;
-import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyProgram;
@@ -81,7 +81,7 @@ public class GroovyProgrammingTest {
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        SensorAPI<GeoPosition> api = node1.getSensorAPI();
+        DeviceAPI<GeoPosition> api = node1.getDeviceAPI();
         api.api_startMove();
 
         Thread.sleep(1000);
@@ -96,9 +96,9 @@ public class GroovyProgrammingTest {
         middleware.loadProgram(stopPrgram);
 
         Thread.sleep(1000);
-        GeoPosition nodePosition1 = (GeoPosition) node1.getSensorAPI().api_getPosition();
+        GeoPosition nodePosition1 = (GeoPosition) node1.getDeviceAPI().api_getPosition();
         Thread.sleep(2000);
-        GeoPosition nodePosition2 = (GeoPosition) node1.getSensorAPI().api_getPosition();
+        GeoPosition nodePosition2 = (GeoPosition) node1.getDeviceAPI().api_getPosition();
 
         TestCase.assertEquals(nodePosition1.getLatitude() , nodePosition2.getLatitude());
         TestCase.assertEquals(nodePosition1.getLongitude() , nodePosition2.getLongitude());
@@ -110,9 +110,9 @@ public class GroovyProgrammingTest {
         middleware.loadProgram(startProgram);
 
         Thread.sleep(1000);
-        nodePosition1 = (GeoPosition) node1.getSensorAPI().api_getPosition();
+        nodePosition1 = (GeoPosition) node1.getDeviceAPI().api_getPosition();
         Thread.sleep(2000);
-        nodePosition2 = (GeoPosition) node1.getSensorAPI().api_getPosition();
+        nodePosition2 = (GeoPosition) node1.getDeviceAPI().api_getPosition();
 
         TestCase.assertNotSame(nodePosition1.getLatitude() , nodePosition2.getLatitude());
         TestCase.assertNotSame(nodePosition1.getLongitude() , nodePosition2.getLongitude());
@@ -139,22 +139,22 @@ public class GroovyProgrammingTest {
 
         Thread.sleep(1000);
 
-        node1.getSensorAPI().api_stopMove();
-        node2.getSensorAPI().api_stopMove();
-        node3.getSensorAPI().api_stopMove();
-        node4.getSensorAPI().api_stopMove();
+        node1.getDeviceAPI().api_stopMove();
+        node2.getDeviceAPI().api_stopMove();
+        node3.getDeviceAPI().api_stopMove();
+        node4.getDeviceAPI().api_stopMove();
 
-        GeoPosition node1Pos1 = (GeoPosition) node1.getSensorAPI().api_getPosition();
-        GeoPosition node2Pos1 = (GeoPosition) node2.getSensorAPI().api_getPosition();
-        GeoPosition node3Pos1 = (GeoPosition) node3.getSensorAPI().api_getPosition();
-        GeoPosition node4Pos1 = (GeoPosition) node4.getSensorAPI().api_getPosition();
+        GeoPosition node1Pos1 = (GeoPosition) node1.getDeviceAPI().api_getPosition();
+        GeoPosition node2Pos1 = (GeoPosition) node2.getDeviceAPI().api_getPosition();
+        GeoPosition node3Pos1 = (GeoPosition) node3.getDeviceAPI().api_getPosition();
+        GeoPosition node4Pos1 = (GeoPosition) node4.getDeviceAPI().api_getPosition();
 
         Thread.sleep(2000);
 
-        GeoPosition node1Pos2 = (GeoPosition) node1.getSensorAPI().api_getPosition();
-        GeoPosition node2Pos2 = (GeoPosition) node2.getSensorAPI().api_getPosition();
-        GeoPosition node3Pos2 = (GeoPosition) node3.getSensorAPI().api_getPosition();
-        GeoPosition node4Pos2 = (GeoPosition) node4.getSensorAPI().api_getPosition();
+        GeoPosition node1Pos2 = (GeoPosition) node1.getDeviceAPI().api_getPosition();
+        GeoPosition node2Pos2 = (GeoPosition) node2.getDeviceAPI().api_getPosition();
+        GeoPosition node3Pos2 = (GeoPosition) node3.getDeviceAPI().api_getPosition();
+        GeoPosition node4Pos2 = (GeoPosition) node4.getDeviceAPI().api_getPosition();
 
         TestCase.assertEquals(node1Pos1,node1Pos2);
         TestCase.assertEquals(node2Pos1,node2Pos2);
@@ -165,25 +165,25 @@ public class GroovyProgrammingTest {
         node1Route.add(new GeoPosition(52.230532, 21.005521));
         node1Route.add(new GeoPosition(52.230553, 21.005862));
 
-        node1.getSensorAPI().api_setRoute(node1Route);
+        node1.getDeviceAPI().api_setRoute(node1Route);
 
         List<GeoPosition> node2Route = new ArrayList<>();
         node2Route.add(new GeoPosition(52.230553, 21.005862));
         node2Route.add(new GeoPosition(52.230562, 21.006125));
 
-        node2.getSensorAPI().api_setRoute(node2Route);
+        node2.getDeviceAPI().api_setRoute(node2Route);
 
         List<GeoPosition> node3Route = new ArrayList<>();
         node3Route.add(new GeoPosition(52.230562, 21.006125));
         node3Route.add(new GeoPosition(52.230572, 21.006419));
 
-        node3.getSensorAPI().api_setRoute(node3Route);
+        node3.getDeviceAPI().api_setRoute(node3Route);
 
         List<GeoPosition> node4Route = new ArrayList<>();
         node4Route.add(new GeoPosition(52.230572, 21.006419));
         node4Route.add(new GeoPosition(52.230588, 21.00665));
 
-        node4.getSensorAPI().api_setRoute(node4Route);
+        node4.getDeviceAPI().api_setRoute(node4Route);
 
         // Program should start node's movement
         String startMoveScript = "api.api_startMove();";
@@ -193,10 +193,10 @@ public class GroovyProgrammingTest {
 
         Thread.sleep(5000);
 
-        GeoPosition node1Pos3 = (GeoPosition) node1.getSensorAPI().api_getPosition();
-        GeoPosition node2Pos3 = (GeoPosition) node2.getSensorAPI().api_getPosition();
-        GeoPosition node3Pos3 = (GeoPosition) node3.getSensorAPI().api_getPosition();
-        GeoPosition node4Pos3 = (GeoPosition) node4.getSensorAPI().api_getPosition();
+        GeoPosition node1Pos3 = (GeoPosition) node1.getDeviceAPI().api_getPosition();
+        GeoPosition node2Pos3 = (GeoPosition) node2.getDeviceAPI().api_getPosition();
+        GeoPosition node3Pos3 = (GeoPosition) node3.getDeviceAPI().api_getPosition();
+        GeoPosition node4Pos3 = (GeoPosition) node4.getDeviceAPI().api_getPosition();
 
         TestCase.assertTrue(node1Pos1.getLatitude() != node1Pos3.getLatitude());
         TestCase.assertTrue(node1Pos1.getLongitude() != node1Pos3.getLongitude());

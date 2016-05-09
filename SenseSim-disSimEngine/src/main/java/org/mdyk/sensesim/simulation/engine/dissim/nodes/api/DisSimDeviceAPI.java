@@ -5,7 +5,7 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
 import org.mdyk.netsim.logic.communication.message.SimpleMessage;
-import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -21,13 +21,13 @@ import java.util.Map;
 import java.util.function.Function;
 
 
-public class DisSimSensorAPI implements SensorAPI<GeoPosition> {
+public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
 
-    private static final Logger LOG = Logger.getLogger(DisSimSensorAPI.class);
+    private static final Logger LOG = Logger.getLogger(DisSimDeviceAPI.class);
 
     private DeviceSimEntity deviceSimEntity;
 
-    public DisSimSensorAPI(DeviceSimEntity deviceSimEntity) {
+    public DisSimDeviceAPI(DeviceSimEntity deviceSimEntity) {
         this.deviceSimEntity = deviceSimEntity;
     }
 

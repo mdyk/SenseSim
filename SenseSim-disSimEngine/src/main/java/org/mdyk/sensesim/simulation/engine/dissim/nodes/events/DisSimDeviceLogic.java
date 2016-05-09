@@ -55,8 +55,6 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
-        // FIXME powinno być ustawiane w konfiguracji.
-//        this.routingAlgorithm = new FloodingRouting(deviceStatistics);
         this.communicationProcessFactory = communicationProcessFactory;
         this.isMoveing = true;
     }
@@ -72,20 +70,18 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
-        // FIXME powinno być ustawiane w konfiguracji.
-//        this.routingAlgorithm = new FloodingRouting(deviceStatistics);
         this.communicationProcessFactory = communicationProcessFactory;
         this.isMoveing = true;
     }
 
     @Override
-    // FIXME przenieść do bardziej generycznej klasy
+    @Deprecated
+    // FIXME Do usunięcia
     public void sense() {
-        // TODO uwzględnienie funkcji PI
-        for(AbilityType ability : getAbilities()) {
-            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), deviceSimEntity.getSimTime(), ability);
-            this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);
-        }
+//        for(AbilityType ability : getAbilities()) {
+//            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), deviceSimEntity.getSimTime(), ability);
+//            this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);
+//        }
 
     }
 

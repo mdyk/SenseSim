@@ -20,6 +20,11 @@ public class PT100Sensor implements SensorModel<PT100Observer , TemperatureConfi
 
 
     @Override
+    public String getName() {
+        return "PT100Sensor";
+    }
+
+    @Override
     public PT100Observer getObserver() {
         return observer;
     }

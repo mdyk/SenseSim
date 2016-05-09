@@ -14,26 +14,26 @@ import java.util.function.Function;
 /**
  * Interface for device's API
  */
-public interface SensorAPI<P extends Position> {
+public interface DeviceAPI<P extends Position> {
 
-    public void setSimEntity(DeviceSimEntity deviceSimEntity);
+    void setSimEntity(DeviceSimEntity deviceSimEntity);
 
     /**
      * Sets device's route.
      * @param route
      *      list of points which define route.
      */
-    public void api_setRoute(List<P> route);
+    void api_setRoute(List<P> route);
 
     /**
      * Starts device's move according the given route.
      */
-    public void api_startMove();
+    void api_startMove();
 
     /**
      * Stops device's move.
      */
-    public void api_stopMove();
+    void api_stopMove();
 
     /**
      * Sends message to device with given id. Method does not ensure delivery.
@@ -48,21 +48,21 @@ public interface SensorAPI<P extends Position> {
      * @param size
      *      size of the message. If null, the size will be calculated based on content (if that's possible).
      */
-    public void api_sendMessage(int messageId, int originSource, int originDest, Object content , Integer size );
+    void api_sendMessage(int messageId, int originSource, int originDest, Object content , Integer size );
 
     /**
      * Returns list of device's observations.
      * @return
      *      list of observations.
      */
-    public Map<AbilityType, List<PhenomenonValue>> api_getObservations();
+    Map<AbilityType, List<PhenomenonValue>> api_getObservations();
 
     /**
      * Sets routing algorithm for device
      * @param routingAlgorithm
      *      implementation of routing algorithm
      */
-    public void api_setRoutingAlgorithm(RoutingAlgorithm<?> routingAlgorithm);
+    void api_setRoutingAlgorithm(RoutingAlgorithm<?> routingAlgorithm);
 
     /**
      * Orders a device to scan for its neighbours.
@@ -70,28 +70,28 @@ public interface SensorAPI<P extends Position> {
      *      list of found neighbours.
      */
     // public List<DeviceNode<P>> api_scanForNeighbors();
-    public List<Integer> api_scanForNeighbors();
+    List<Integer> api_scanForNeighbors();
 
     /**
      * Returns node's current position.
      * @return
      *      node's position.
      */
-    public P api_getPosition();
+    P api_getPosition();
 
     /**
      * Allows to add handler which should be fired when device receives a message.
      */
-    public void api_setOnMessageHandler(Function<Message , Object> handler);
+    void api_setOnMessageHandler(Function<Message , Object> handler);
 
     /**
      * Returns ID of the device
      * @return
      *      ID of the device.
      */
-    public Integer api_getMyID();
+    Integer api_getMyID();
 
 
-    public PhenomenonValue api_getCurrentObservation(AbilityType abilityType);
+    PhenomenonValue api_getCurrentObservation(AbilityType abilityType);
 
 }

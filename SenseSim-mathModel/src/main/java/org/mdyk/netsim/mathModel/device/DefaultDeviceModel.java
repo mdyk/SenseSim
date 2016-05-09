@@ -53,9 +53,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.abilities = abilities;
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
-
         this.sensors = sensors;
-
     }
 
 

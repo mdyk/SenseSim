@@ -16,7 +16,7 @@ import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.*;
-import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
 import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
@@ -76,7 +76,7 @@ public class DisSimDeviceAPITest {
         simEngine.runScenario();
         Thread.sleep(1000);
 
-        SensorAPI<GeoPosition> api = device.getSensorAPI();
+        DeviceAPI<GeoPosition> api = device.getDeviceAPI();
 
         List<GeoPosition> route = new ArrayList<>();
         route.add(new GeoPosition(52.230963,21.004534));
@@ -128,8 +128,8 @@ public class DisSimDeviceAPITest {
             return null;
         };
 
-        receiver.getSensorAPI().api_setOnMessageHandler(handler);
-        sender.getSensorAPI().api_sendMessage(1, 1,2, "test", 5000);
+        receiver.getDeviceAPI().api_setOnMessageHandler(handler);
+        sender.getDeviceAPI().api_sendMessage(1, 1,2, "test", 5000);
 
         Thread.sleep(10000);
 
@@ -169,7 +169,7 @@ public class DisSimDeviceAPITest {
             senderCount.add(1);
             return null;
         };
-        sender.getSensorAPI().api_setOnMessageHandler(senderHandler);
+        sender.getDeviceAPI().api_setOnMessageHandler(senderHandler);
 
         final StringBuilder hop1Content = new StringBuilder();
         final ArrayList<Integer> hop1Count = new ArrayList<>();
@@ -178,7 +178,7 @@ public class DisSimDeviceAPITest {
             hop1Count.add(1);
             return null;
         };
-        hop1.getSensorAPI().api_setOnMessageHandler(hop1Handler);
+        hop1.getDeviceAPI().api_setOnMessageHandler(hop1Handler);
 
         final StringBuilder receiverContent = new StringBuilder();
         final ArrayList<Integer> receiverCount = new ArrayList<>();
@@ -187,10 +187,10 @@ public class DisSimDeviceAPITest {
             receiverCount.add(1);
             return null;
         };
-        receiver.getSensorAPI().api_setOnMessageHandler(receiverHandler);
+        receiver.getDeviceAPI().api_setOnMessageHandler(receiverHandler);
 
 
-        sender.getSensorAPI().api_sendMessage(1, 1,3,"test", 512);
+        sender.getDeviceAPI().api_sendMessage(1, 1,3,"test", 512);
 
 //        while(true);
 

@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.node;
 
 import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
-import org.mdyk.netsim.logic.node.api.SensorAPI;
+import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.node.program.*;
@@ -16,15 +16,15 @@ public class Device {
 
     private DeviceLogic deviceLogic;
     private DeviceSimEntity deviceSimEntity;
-    private SensorAPI sensorAPI;
+    private DeviceAPI deviceAPI;
     private Middleware middleware;
     private DeviceStatistics statistics;
 
     @Inject
-    public Device(DeviceLogic deviceLogic, DeviceSimEntity deviceSimEntity, SensorAPI sensorAPI, Middleware middleware, DeviceStatistics deviceStatistics) {
+    public Device(DeviceLogic deviceLogic, DeviceSimEntity deviceSimEntity, DeviceAPI deviceAPI, Middleware middleware, DeviceStatistics deviceStatistics) {
         this.deviceLogic = deviceLogic;
         this.deviceSimEntity = deviceSimEntity;
-        this.sensorAPI = sensorAPI;
+        this.deviceAPI = deviceAPI;
         this.middleware = middleware;
         this.statistics = deviceStatistics;
 
@@ -35,8 +35,8 @@ public class Device {
         deviceLogic.setRoutingAlgorithm(new FloodingRouting(deviceStatistics));
         deviceSimEntity.setDeviceLogic(deviceLogic);
         deviceSimEntity.setMiddleware(middleware);
-        sensorAPI.setSimEntity(deviceSimEntity);
-        middleware.setSensorAPI(sensorAPI);
+        deviceAPI.setSimEntity(deviceSimEntity);
+        middleware.setDeviceAPI(deviceAPI);
         middleware.setDeviceSimEntity(deviceSimEntity);
         middleware.initialize();
     }
@@ -49,8 +49,8 @@ public class Device {
         return deviceSimEntity;
     }
 
-    public SensorAPI getSensorAPI() {
-        return sensorAPI;
+    public DeviceAPI getDeviceAPI() {
+        return deviceAPI;
     }
 
     public Middleware getMiddleware() {
