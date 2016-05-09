@@ -125,7 +125,7 @@
         </node>
     </nodes>
     <phenomena>
-        <phenomenon name="string">
+        <phenomenon name="string" phenomenonType="observer">
             <phenomenonArea>
                 <checkpoint>
                     <latitude>52.230963</latitude>
@@ -152,7 +152,7 @@
                 </phenomenonValue>
             </phenomenonValueSet>
         </phenomenon>
-        <phenomenon name="fire">
+        <phenomenon name="fire"  phenomenonType="discrete">
             <phenomenonArea>
                 <checkpoint>
                     <latitude>52.230963</latitude>

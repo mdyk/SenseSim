@@ -30,7 +30,7 @@
   </nodes>
   <phenomena>
     <!--Zero or more repetitions:-->
-    <phenomenon name="string">
+    <phenomenon name="string" phenomenonType="string">
       <phenomenonArea>
         <!--Zero or more repetitions:-->
         <checkpoint>
@@ -47,7 +47,7 @@
             <value>string</value>
           </discreteValue>
           <!--Zero or more repetitions:-->
-          <observerValue fromTime="string" toTime="string" configurationSpaceFactory="string">
+          <observerValue fromTime="string" toTime="string" configurationClass="string" configurationSpaceFactory="string">
             <value>string</value>
           </observerValue>
         </phenomenonValue>

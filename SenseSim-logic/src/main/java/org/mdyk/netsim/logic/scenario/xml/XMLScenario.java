@@ -157,16 +157,21 @@ public class XMLScenario implements Scenario {
             }
 
             //FIXME do poprawy po pełnym przejściu na zdarzenia budowane w oparciu o teorię percepcji
-            if(phenomenonValuesMap.size() > 0) {
-                PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
-                phenomenaList.add(phenomenon);
-            }
-            else if(phenomenonObserverValues.size() > 0) {
-                PhenomenonModel phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, phenomenonArea);
-                phenomenaList.add(phenomenonObserver);
-            }
 
+            switch(phenomenonType.getPhenomenonType()) {
+                case "observer":
+                    PhenomenonModel phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, phenomenonArea);
+                    phenomenaList.add(phenomenonObserver);
+                    break;
 
+                case "discrete":
+                    PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
+                    phenomenaList.add(phenomenon);
+                    break;
+
+                default:
+                    throw new RuntimeException("Phenomenon type should be 'observer' or 'discrete'");
+            }
         }
 
         LOG.debug("<< getPhenomena()");

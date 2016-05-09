@@ -143,7 +143,7 @@ public class XMLScenarioTest {
 
         TemperatureConfigurationSpace configurationSpace = (TemperatureConfigurationSpace) observerPhenomenon.getEventValue(TemperatureConfigurationSpace.class , 5);
 
-        TestCase.assertEquals(100 , configurationSpace.getTemperature());
+        TestCase.assertEquals(10d , configurationSpace.getTemperature());
 
     }
 
