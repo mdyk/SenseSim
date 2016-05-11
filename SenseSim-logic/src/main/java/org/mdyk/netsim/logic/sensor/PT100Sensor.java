@@ -47,4 +47,9 @@ public class PT100Sensor implements SensorModel<PT100Observer , TemperatureConfi
         return observer.getConclusion(observer.getPremises(event));
     }
 
+    @Override
+    public Class getConfigurationSpaceClass() {
+        return TemperatureConfigurationSpace.class;
+    }
+
 }

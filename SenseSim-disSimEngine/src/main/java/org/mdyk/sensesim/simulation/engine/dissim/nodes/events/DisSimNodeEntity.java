@@ -38,13 +38,13 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
     }
 
     protected void startNode() {
+        LOG.debug(">> Starting node " + this.deviceLogic.getID());
         try {
             this.startMoveActivity = new StartMoveActivity(this);
             this.startSenseActivity = new StartSenseActivity(this);
         } catch (SimControlException e) {
            LOG.error(e.getMessage(),e);
         }
-
     }
 
     public DisSimDeviceLogic getProgrammableNode() {

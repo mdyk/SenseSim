@@ -44,4 +44,6 @@ public interface SensorModel<O extends ObserverModel<?,?> , R extends Configurat
      */
     R getObservation(PhenomenonModel phenomenonModel , double time , double distance);
 
+    Class getConfigurationSpaceClass();
+
 }

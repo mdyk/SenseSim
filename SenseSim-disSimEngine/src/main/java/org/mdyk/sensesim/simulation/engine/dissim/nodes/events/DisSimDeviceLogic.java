@@ -74,7 +74,6 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
         this.isMoveing = true;
     }
 
-    @Override
     @Deprecated
     // FIXME Do usunięcia
     public void sense() {

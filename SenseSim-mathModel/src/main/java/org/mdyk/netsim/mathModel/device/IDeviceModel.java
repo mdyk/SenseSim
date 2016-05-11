@@ -49,8 +49,6 @@ public interface IDeviceModel<P extends Position> {
 
     void addObservation(AbilityType ability, Double time , PhenomenonValue value);
 
-    void sense();
-
     /**
      * Returns bandwidth (measured in bits per second) of the device's wireless communication module.
      * Value is the same for in and out communication.
