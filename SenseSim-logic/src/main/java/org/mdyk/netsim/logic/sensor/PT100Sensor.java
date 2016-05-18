@@ -42,6 +42,11 @@ public class PT100Sensor implements SensorModel<PT100Observer , TemperatureConfi
     @Override
     public TemperatureConfigurationSpace getObservation(PhenomenonModel phenomenonModel, double time, double distance) {
 
+        //FIXME poprawne uwzględnienie odległości
+        if(distance > 0 ) {
+            return null;
+        }
+
         TemperatureConfigurationSpace event = (TemperatureConfigurationSpace) phenomenonModel.getEventValue(TemperatureConfigurationSpace.class , time);
 
         return observer.getConclusion(observer.getPremises(event));
