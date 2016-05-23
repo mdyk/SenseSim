@@ -18,22 +18,12 @@ public class DefaultCommunicationProcessTest {
     public void testGetETA() throws Exception {
         IDeviceModel sender = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
             @Override
-            public void sense() {
-                // unused
-            }
-
-            @Override
             protected void onMessage(double time, Message message) {
                 // unused
             }
         } ;
 
         IDeviceModel receiver = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
-            @Override
-            public void sense() {
-                // unused
-            }
-
             @Override
             protected void onMessage(double time, Message message) {
                 // unused
@@ -73,22 +63,12 @@ public class DefaultCommunicationProcessTest {
     public void getCommunicationStatusTest() {
         IDeviceModel sender = new DefaultDeviceModel(1 , new Position(0,0,0), 10 , 5000 , 1 , new LinkedList<>()) {
             @Override
-            public void sense() {
-                // unused
-            }
-
-            @Override
             protected void onMessage(double time, Message message) {
                 // unused
             }
         } ;
 
         IDeviceModel receiver = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
-            @Override
-            public void sense() {
-
-            }
-
             @Override
             protected void onMessage(double time, Message message) {
                 // unused

@@ -5,6 +5,7 @@ import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
@@ -24,7 +25,11 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     protected double        velocity;
     protected double        bandwith = 5000; // bity
     // TODO ujednolicenie do jednej listy
+    @Deprecated
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
+
+    protected Map<Class<? extends ConfigurationSpace>, Map<Double, List<PhenomenonValue>>> observationsFromObserver;
+
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
     protected RoutingAlgorithm routingAlgorithm;

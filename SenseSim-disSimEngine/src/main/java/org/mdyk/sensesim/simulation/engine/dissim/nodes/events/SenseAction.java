@@ -4,7 +4,11 @@ import dissim.simspace.core.SimControlException;
 import dissim.simspace.process.BasicSimAction;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SenseAction extends BasicSimAction<DisSimNodeEntity, Object> {
@@ -32,5 +36,11 @@ public class SenseAction extends BasicSimAction<DisSimNodeEntity, Object> {
     @Override
     protected void transitionOnFinish() throws SimControlException {
         LOG.trace(">> stop SenseAction; time=" + this.simTime());
+        List<PhenomenonModel> observedPhenomena = environment.getPhenomenaByType(sensorModel.getConfigurationSpaceClass());
+//        entity.deviceLogic.
+//        for() {
+//
+//        }
+
     }
 }

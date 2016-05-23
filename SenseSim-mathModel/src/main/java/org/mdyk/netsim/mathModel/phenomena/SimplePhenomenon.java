@@ -98,4 +98,9 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
         LOG.trace("<< getEventValue");
         return phenomenonValue;
     }
+
+    @Override
+    public boolean hasConfigurationSpace(Class configurationSpaceClass) {
+        return phenomenonValues.containsKey(configurationSpaceClass);
+    }
 }

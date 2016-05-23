@@ -73,9 +73,6 @@ public class NetworkManagerTest {
         }
 
         @Override
-        public void sense() {}
-
-        @Override
         protected void onMessage(double time, Message message) {
             // unused
         }

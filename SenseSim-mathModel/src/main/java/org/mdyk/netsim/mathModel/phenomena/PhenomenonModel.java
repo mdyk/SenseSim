@@ -46,4 +46,12 @@ public interface PhenomenonModel<P extends Position> {
      */
     ConfigurationSpace getEventValue(Class configurationSpaceClass , double time);
 
+
+    /**
+     * Verifies if phenomenon has given
+     * @param configurationSpaceClass
+     * @return
+     */
+    boolean hasConfigurationSpace(Class configurationSpaceClass);
+
 }

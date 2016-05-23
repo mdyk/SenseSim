@@ -20,10 +20,6 @@ public class TestDeviceModel extends DefaultDeviceModel {
         super(id, null, 0, 0, 0, new ArrayList<AbilityType>());
     }
 
-    @Override
-    public void sense() {
-        // unused
-    }
 
     @Override
     public List<IAbilityModel> getAbilities() {

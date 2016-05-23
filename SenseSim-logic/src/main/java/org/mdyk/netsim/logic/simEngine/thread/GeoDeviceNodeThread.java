@@ -44,24 +44,24 @@ public class GeoDeviceNodeThread extends DeviceNodeThread<GeoPosition, GeoMoveme
         this.wirelessChannel = wirelessChannel;
     }
 
-    @Override
-    public void sense() {
-
-        if(environment.isNodeInEventRegion(getPosition())){
-            LOG.debug("NODE_START_SENSE");
-            EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_START_SENSE,this));
-
-//            for(AbilityType ability : getAbilities()) {
-//            //    addObservation(1.0, environment.getEventValue(getPosition(), 2, ability));
-//            }
-
-        }
-        else {
-            LOG.debug("NODE_END_SENSE");
-            EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_END_SENSE,this));
-        }
-
-    }
+//    @Override
+//    public void sense() {
+//
+//        if(environment.isNodeInEventRegion(getPosition())){
+//            LOG.debug("NODE_START_SENSE");
+//            EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_START_SENSE,this));
+//
+////            for(AbilityType ability : getAbilities()) {
+////            //    addObservation(1.0, environment.getEventValue(getPosition(), 2, ability));
+////            }
+//
+//        }
+//        else {
+//            LOG.debug("NODE_END_SENSE");
+//            EventBusHolder.getEventBus().post(new InternalEvent(EventType.NODE_END_SENSE,this));
+//        }
+//
+//    }
 
     @Override
     protected void onMessage(double time, org.mdyk.netsim.logic.communication.Message message) {
@@ -101,7 +101,7 @@ public class GeoDeviceNodeThread extends DeviceNodeThread<GeoPosition, GeoMoveme
 
     @Override
     public void work() {
-        sense();
+//        sense();
         move();
         try {
             // TODO konfigurowanie prędkości węzłów

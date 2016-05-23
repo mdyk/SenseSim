@@ -6,11 +6,11 @@ import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 
 import javax.inject.Singleton;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,6 +45,23 @@ public class Environment {
 
         LOG.trace("<<< getEventValue");
         return retVal;
+    }
+
+    /**
+     * Returns phenomena with given configuration space
+     * @return
+     *      list of phenomena with given configuration space
+     */
+    public List<PhenomenonModel> getPhenomenaByType(Class configurationClass) {
+        LOG.trace(">> getPhenomenaByType type=" + configurationClass);
+        List<PhenomenonModel> selectedPhenomena = new ArrayList<>();
+        for(PhenomenonModel<GeoPosition> phenomenonModel : phenomena) {
+            if(phenomenonModel.hasConfigurationSpace(configurationClass)) {
+                selectedPhenomena.add(phenomenonModel);
+            }
+        }
+        LOG.trace("<< getPhenomenaByType");
+        return selectedPhenomena;
     }
 
     // TODO pełna obsługa
