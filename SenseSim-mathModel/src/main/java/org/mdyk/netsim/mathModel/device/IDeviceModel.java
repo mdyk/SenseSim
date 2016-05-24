@@ -4,6 +4,7 @@ import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
@@ -43,11 +44,12 @@ public interface IDeviceModel<P extends Position> {
 
     void setRoutingAlgorithm(RoutingAlgorithm routingAlgorithm);
 
-    Map<AbilityType, List<PhenomenonValue>> getObservations();
+    @Deprecated
+    Map<AbilityType, List<PhenomenonValue>> old_getObservations();
 
     List<PhenomenonValue> getObservationsAtTime(AbilityType ability, Double time);
 
-    void addObservation(AbilityType ability, Double time , PhenomenonValue value);
+    void addObservation(Class<? extends ConfigurationSpace> configurationSpaceClass, Double time, ConfigurationSpace value);
 
     /**
      * Returns bandwidth (measured in bits per second) of the device's wireless communication module.

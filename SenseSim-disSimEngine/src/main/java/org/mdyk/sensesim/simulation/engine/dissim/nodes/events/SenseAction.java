@@ -4,10 +4,10 @@ import dissim.simspace.core.SimControlException;
 import dissim.simspace.process.BasicSimAction;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
+import org.mdyk.netsim.mathModel.Functions;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,10 +37,19 @@ public class SenseAction extends BasicSimAction<DisSimNodeEntity, Object> {
     protected void transitionOnFinish() throws SimControlException {
         LOG.trace(">> stop SenseAction; time=" + this.simTime());
         List<PhenomenonModel> observedPhenomena = environment.getPhenomenaByType(sensorModel.getConfigurationSpaceClass());
-//        entity.deviceLogic.
-//        for() {
-//
-//        }
+
+        // TODO rozważenie wielu zjawisk, które w danym momencie sensor może obserwować
+        for(PhenomenonModel phenomenon : observedPhenomena) {
+            // FIXME poprawne wyliczanie odległości
+            if(!Functions.isPointInRegion(entity.deviceLogic.getPosition(), phenomenon.getPhenomenonRegionPoints())) {
+                continue;
+            }
+
+            ConfigurationSpace observation = sensorModel.getObservation(phenomenon, simTime() , 0);
+            if(observation != null) {
+                entity.deviceLogic.addObservation(sensorModel.getConfigurationSpaceClass() , simTime() , observation);
+            }
+        }
 
     }
 }

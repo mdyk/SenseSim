@@ -7,7 +7,7 @@ import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 
-
+@Deprecated
 public class EndSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
 
     private static final Logger LOG = Logger.getLogger(EndSenseActivity.class);

@@ -80,7 +80,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     @Override
     public Map<AbilityType, List<PhenomenonValue>> api_getObservations() {
         LOG.trace(">< api_getObservations()");
-        return deviceSimEntity.getDeviceLogic().getObservations();
+        return deviceSimEntity.getDeviceLogic().old_getObservations();
     }
 
     @Override
@@ -125,7 +125,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     @Override
     public PhenomenonValue api_getCurrentObservation(AbilityType abilityType) {
 
-        Map<AbilityType, List<PhenomenonValue>> obserations = deviceSimEntity.getDeviceLogic().getObservations();
+        Map<AbilityType, List<PhenomenonValue>> obserations = deviceSimEntity.getDeviceLogic().old_getObservations();
 
         List<PhenomenonValue> valueList = obserations.get(abilityType);
 

@@ -28,7 +28,10 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     @Deprecated
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
 
-    protected Map<Class<? extends ConfigurationSpace>, Map<Double, List<PhenomenonValue>>> observationsFromObserver;
+    /*
+     Holds device observations
+      */
+    protected Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observationsFromObserver;
 
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
@@ -118,7 +121,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     }
 
     @Override
-    public Map<AbilityType, List<PhenomenonValue>> getObservations() {
+    public Map<AbilityType, List<PhenomenonValue>> old_getObservations() {
         HashMap<AbilityType, List<PhenomenonValue>> observationsByAbilities = new HashMap<>();
 
         for(AbilityType ability : observations.keySet()) {
@@ -142,30 +145,32 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     }
 
     @Override
-    public void addObservation(AbilityType ability, Double time, PhenomenonValue value) {
-        LOG.debug("Adding observation [ability=" + ability + " time=" + time + " , value=" + value + "]");
-        List<PhenomenonValue> observationsAtTime;
+    public void addObservation(Class<? extends ConfigurationSpace> configurationSpaceClass, Double time, ConfigurationSpace value) {
+        LOG.debug("Adding observation [confClass=" + configurationSpaceClass.getName() + " time=" + time + " , value=" + value + "]");
 
-        if(value == null || value.getValueClass().equals(PhenomenonValue.NullPhenomenonValue.class)) {
+        List<ConfigurationSpace> observationsAtTime;
+
+        if(value == null ) {
             LOG.trace("[device "+ this.getID() +"] No value at time + " + time);
             return;
         }
 
-        if(!observations.containsKey(ability)) {
+        if(!observationsFromObserver.containsKey(configurationSpaceClass)) {
             observationsAtTime = new ArrayList<>();
             observationsAtTime.add(value);
-            HashMap<Double , List<PhenomenonValue>> valueMap = new HashMap<>();
+            HashMap<Double , List<ConfigurationSpace>> valueMap = new HashMap<>();
             valueMap.put(time , observationsAtTime);
-            observations.put(ability, valueMap);
+            observationsFromObserver.put(configurationSpaceClass, valueMap);
         }
-        else if(!observations.get(ability).containsKey(time)) {
+        else if(!observationsFromObserver.get(configurationSpaceClass).containsKey(time)) {
             observationsAtTime = new ArrayList<>();
             observationsAtTime.add(value);
-            observations.get(ability).put(time , observationsAtTime);
+            observationsFromObserver.get(configurationSpaceClass).put(time , observationsAtTime);
         }
         else {
-            observations.get(ability).get(time).add(value);
+            observationsFromObserver.get(configurationSpaceClass).get(time).add(value);
         }
+
     }
 
     @Override

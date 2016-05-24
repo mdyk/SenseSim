@@ -9,6 +9,7 @@ import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 
+@Deprecated
 public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
 
     private DisSimNodeEntity disSimNodeEntity;

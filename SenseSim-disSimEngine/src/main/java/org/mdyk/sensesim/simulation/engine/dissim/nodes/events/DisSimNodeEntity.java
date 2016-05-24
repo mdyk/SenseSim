@@ -8,6 +8,10 @@ import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity {
@@ -23,6 +27,8 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
     //FIXME
     public EndSenseActivity endSenseActivity;
 
+    private Map<SensorModel , SenseAction> senseActions;
+
 //    private IdleProcess idleProcess;
 
     protected DeviceLogic deviceLogic;
@@ -35,6 +41,7 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
         super(context);
         this.setDeviceLogic(deviceLogic);
         this.environment = environment;
+        this.senseActions = new HashMap<>();
     }
 
     protected void startNode() {
@@ -42,6 +49,12 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
         try {
             this.startMoveActivity = new StartMoveActivity(this);
             this.startSenseActivity = new StartSenseActivity(this);
+
+            for(SensorModel sensorModel : this.deviceLogic.getSensors()) {
+                SenseAction senseAction = new SenseAction(this, sensorModel, environment , sensorModel.samplingFrequency() , sensorModel.sensingTime());
+                senseActions.put(sensorModel , senseAction);
+            }
+
         } catch (SimControlException e) {
            LOG.error(e.getMessage(),e);
         }

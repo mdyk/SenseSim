@@ -264,7 +264,7 @@ public class SenseSimJFXController implements Initializable {
                 if(selectedNode != null && selectedNode.getID() == sensor.getID()) {
                     for(Tab tab : nodesAbilities.get(sensor.getID()).getTabs()) {
                         TableView<PhenomenonValue> abilityTable = (TableView<PhenomenonValue>) tab.getContent();
-                        List<PhenomenonValue> observations = sensor.getObservations().get(AbilityType.valueOf(tab.getText()));
+                        List<PhenomenonValue> observations = sensor.old_getObservations().get(AbilityType.valueOf(tab.getText()));
 
                         if(observations != null) {
 
