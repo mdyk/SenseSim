@@ -24,13 +24,13 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     protected double        radioRange;
     protected double        velocity;
     protected double        bandwith = 5000; // bity
-    // TODO ujednolicenie do jednej listy
+
     @Deprecated
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
 
-    /*
-     Holds device observations
-      */
+    /**
+     * Holds device observations
+     */
     protected Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observationsFromObserver;
 
     protected List<AbilityType> abilities;
@@ -49,6 +49,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.abilities = abilities;
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
+        observationsFromObserver = new HashMap<>();
     }
 
 
@@ -62,6 +63,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
         this.sensors = sensors;
+        observationsFromObserver = new HashMap<>();
     }
 
 
@@ -118,6 +120,11 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
 
     public List<SensorModel<?, ?>> getSensors() {
         return sensors;
+    }
+
+    @Override
+    public Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> getObservations() {
+        return this.observationsFromObserver;
     }
 
     @Override

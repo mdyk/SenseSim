@@ -27,7 +27,7 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
     //FIXME
     public EndSenseActivity endSenseActivity;
 
-    private Map<SensorModel , SenseAction> senseActions;
+    private Map<SensorModel , SenseActivity> senseActions;
 
 //    private IdleProcess idleProcess;
 
@@ -51,8 +51,8 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
             this.startSenseActivity = new StartSenseActivity(this);
 
             for(SensorModel sensorModel : this.deviceLogic.getSensors()) {
-                SenseAction senseAction = new SenseAction(this, sensorModel, environment , sensorModel.samplingFrequency() , sensorModel.sensingTime());
-                senseActions.put(sensorModel , senseAction);
+                SenseActivity senseActivity = new SenseActivity(this, sensorModel, environment , sensorModel.samplingFrequency() , sensorModel.sensingTime());
+                senseActions.put(sensorModel , senseActivity);
             }
 
         } catch (SimControlException e) {

@@ -7,6 +7,7 @@ import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
 
     private String phenomenonName;
     private List<GeoPosition> region;
-    private Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues;
+    private Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues = new HashMap<>();
 
     @Deprecated
     private Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values;
@@ -29,7 +30,7 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
             region.add(position);
         }
         this.phenomenonName = phenomenonName;
-        this.phenomenonValues = phenomenonValues;
+        this.phenomenonValues.putAll(phenomenonValues);
     }
 
     @Deprecated

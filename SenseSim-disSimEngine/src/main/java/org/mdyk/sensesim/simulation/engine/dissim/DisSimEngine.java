@@ -45,7 +45,7 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     private File scenarioXML;
 
-    private List<Device> sensorsList = new ArrayList<>();
+    private List<Device> deviceList = new ArrayList<>();
 
     private List<PhenomenonSimEntity> phenomenaList = new ArrayList<>();
 
@@ -98,7 +98,7 @@ public class DisSimEngine implements SimEngine, Runnable {
     @Override
     public void addNode(Device deviceNode) {
         networkManager.addNode(deviceNode.getDeviceLogic());
-        sensorsList.add(deviceNode);
+        deviceList.add(deviceNode);
     }
 
     private void addNodes(List<Device> nodesList) {
@@ -144,7 +144,7 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     @Override
     public void run() {
-        for(Device wrapper : sensorsList) {
+        for(Device wrapper : deviceList) {
             wrapper.getDeviceLogic().startNode();
         }
         try {
@@ -152,5 +152,9 @@ public class DisSimEngine implements SimEngine, Runnable {
         } catch (SimControlException e) {
             LOG.error(e.getMessage(), e);
         }
+    }
+
+    public List<Device> getDeviceList() {
+        return deviceList;
     }
 }

@@ -11,16 +11,16 @@ import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import java.util.List;
 
 
-public class SenseAction extends BasicSimAction<DisSimNodeEntity, Object> {
+public class SenseActivity extends BasicSimAction<DisSimNodeEntity, Object> {
 
-    private static final Logger LOG = Logger.getLogger(SenseAction.class);
+    private static final Logger LOG = Logger.getLogger(SenseActivity.class);
 
     private SensorModel sensorModel;
     private DisSimNodeEntity entity;
     private Environment environment;
 
 
-    public SenseAction(DisSimNodeEntity entity , SensorModel sensorModel , Environment environment, double period, double duration) throws SimControlException {
+    public SenseActivity(DisSimNodeEntity entity , SensorModel sensorModel , Environment environment, double period, double duration) throws SimControlException {
         super(entity,0 , period , duration);
         this.sensorModel = sensorModel;
         this.entity = entity;
@@ -30,12 +30,12 @@ public class SenseAction extends BasicSimAction<DisSimNodeEntity, Object> {
 
     @Override
     protected void transitionOnStart() throws SimControlException {
-        LOG.trace(">> start SenseAction; time=" + this.simTime());
+        LOG.trace(">> start SenseActivity; time=" + this.simTime());
     }
 
     @Override
     protected void transitionOnFinish() throws SimControlException {
-        LOG.trace(">> stop SenseAction; time=" + this.simTime());
+        LOG.trace(">> stop SenseActivity; time=" + this.simTime());
         List<PhenomenonModel> observedPhenomena = environment.getPhenomenaByType(sensorModel.getConfigurationSpaceClass());
 
         // TODO rozważenie wielu zjawisk, które w danym momencie sensor może obserwować

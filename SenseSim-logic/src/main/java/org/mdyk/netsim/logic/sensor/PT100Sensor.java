@@ -48,8 +48,13 @@ public class PT100Sensor implements SensorModel<PT100Observer , TemperatureConfi
         }
 
         TemperatureConfigurationSpace event = (TemperatureConfigurationSpace) phenomenonModel.getEventValue(TemperatureConfigurationSpace.class , time);
-
-        return observer.getConclusion(observer.getPremises(event));
+        // Event might be null if there is no value for given phenomenon at a given time
+        if(event != null) {
+            return observer.getConclusion(observer.getPremises(event));
+        }
+        else {
+            return null;
+        }
     }
 
     @Override

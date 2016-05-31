@@ -36,8 +36,6 @@ import java.util.List;
 
 public class GroovyProgrammingTest {
 
-    private Injector injector;
-
     @Before
     public void init() throws Exception{
         injector = Guice.createInjector(new AbstractModule() {
@@ -62,6 +60,8 @@ public class GroovyProgrammingTest {
         instance.setAccessible(true);
         instance.set(null, null);
     }
+
+    private Injector injector;
 
     @Test
     @SuppressWarnings("unchecked")

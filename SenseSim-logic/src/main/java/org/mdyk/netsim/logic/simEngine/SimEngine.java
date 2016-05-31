@@ -3,21 +3,25 @@ package org.mdyk.netsim.logic.simEngine;
 import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.scenario.Scenario;
 
+import java.util.List;
+
 /**
  * Interface to simulation engine
  */
 public interface SimEngine {
 
-    public void loadScenario(Scenario scenario);
+    void loadScenario(Scenario scenario);
 
-    public void runScenario();
+    void runScenario();
 
-    public void pauseScenario();
+    void pauseScenario();
 
-    public void resumeScenario();
+    void resumeScenario();
 
-    public void stopScenario();
+    void stopScenario();
 
-    public void addNode(Device deviceNode);
+    void addNode(Device deviceNode);
+
+    List<Device> getDeviceList();
 
 }
