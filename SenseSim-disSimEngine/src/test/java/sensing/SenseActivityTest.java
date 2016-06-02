@@ -105,6 +105,8 @@ public class SenseActivityTest {
             }
         }
 
+        simEngine.stopScenario();
+
     }
 
 }
