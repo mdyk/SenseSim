@@ -60,6 +60,10 @@ public class NetworkGraph  {
         return neighbors;
     }
 
+    public void clear() {
+        networkGraph= new ListenableUndirectedGraph<>( DefaultEdge.class );
+    }
+
     public void addVertex(IDeviceModel a) {
         networkGraph.addVertex(a);
     }

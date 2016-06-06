@@ -140,11 +140,31 @@ public class DisSimEngine implements SimEngine, Runnable {
                     Scenario scenario = scenarioFactory.createXMLScenario(scenarioXML);
                     loadScenario(scenario);
                     break;
+                case SCENARIO_FILE_RELOADED:
+                    LOG.debug("SCENARIO_FILE_RELOADED event");
+                    scenarioXML = (File) event.getPayload();
+                    clearScenario();
+                    loadScenario(scenarioFactory.createXMLScenario(scenarioXML));
+                    break;
             }
         } catch (Exception e) {
             LOG.error(e.getMessage() , e);
         }
         LOG.debug("<< processEvent");
+    }
+
+    private void clearScenario() {
+        try {
+            SimModel.getInstance().stopSimulation();
+            phenomenaList.clear();
+            deviceList.clear();
+            environment.clearPhenomena();
+            networkManager.stopNodes();
+            networkManager.clearNodes();
+
+        } catch (SimControlException e) {
+            throw new RuntimeException(e.getMessage() , e);
+        }
     }
 
     @Override

@@ -92,4 +92,7 @@ public class Environment {
         LOG.trace("<<< loadEvents");
     }
 
+    public void clearPhenomena() {
+        phenomena.clear();
+    }
 }

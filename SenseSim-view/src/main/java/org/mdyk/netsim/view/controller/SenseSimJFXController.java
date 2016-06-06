@@ -82,28 +82,7 @@ public class SenseSimJFXController implements Initializable {
         app = new MapApp();
         app.setPreferredSize(new Dimension(950,750));
         createSwingContent(swingMapNode);
-        nodeViews = new HashMap<>();
-        eventViews = new HashMap<>();
-        edgeViews = new HashMap<>();
-        nodesAbilities = new HashMap<>();
-
-        nodesTree.setRoot(new TreeItem<>("Nodes"));
-        nodesTree.getRoot().setExpanded(true);
-
-        nodesTree.getSelectionModel().selectedItemProperty().addListener((observableValue, stringTreeItem, stringTreeItem2) -> {
-            Platform.runLater(() -> {
-                details_nodeId.setText(observableValue.getValue().getValue());
-                selectedNode = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
-
-                if(selectedNode != null) {
-                    nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
-                    nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
-                }
-                observationsPane.getChildren().clear();
-                observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
-            });
-        });
-
+        clearGUI();
         EventBusHolder.getEventBus().register(this);
     }
 
@@ -171,6 +150,31 @@ public class SenseSimJFXController implements Initializable {
         LOG.debug("<< loadProgram");
     }
 
+    private void clearGUI() {
+        nodeViews = new HashMap<>();
+        eventViews = new HashMap<>();
+        edgeViews = new HashMap<>();
+        nodesAbilities = new HashMap<>();
+
+        nodesTree.setRoot(new TreeItem<>("Nodes"));
+        nodesTree.getRoot().setExpanded(true);
+
+        nodesTree.getSelectionModel().selectedItemProperty().addListener((observableValue, stringTreeItem, stringTreeItem2) -> {
+            Platform.runLater(() -> {
+                details_nodeId.setText(observableValue.getValue().getValue());
+                selectedNode = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
+
+                if(selectedNode != null) {
+                    nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
+                    nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
+                }
+                observationsPane.getChildren().clear();
+                observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
+            });
+        });
+
+    }
+
     public void loadScenarioAction() {
         LOG.debug(">>> loadScenarioAction");
         FileChooser fileChooser = new FileChooser();
@@ -179,6 +183,14 @@ public class SenseSimJFXController implements Initializable {
         EventBusHolder.post(EventType.SCENARIO_FILE_LOADED, scenarioFile);
         LOG.debug("<<< loadScenarioAction");
     }
+
+    public void reloadScenarioAction() {
+        LOG.debug(">>> reloadScenarioAction");
+        clearGUI();
+        File newScenarioFile = new File(scenarioFile.getAbsolutePath());
+        scenarioFile = newScenarioFile;
+        EventBusHolder.post(EventType.SCENARIO_FILE_RELOADED, scenarioFile);
+        LOG.debug("<<< reloadScenarioAction");   }
 
     public void startScenario() {
         LOG.debug(">>> startScenario");
@@ -301,8 +313,8 @@ public class SenseSimJFXController implements Initializable {
             case SCENARIO_LOADED:
                 LOG.debug("SCENARIO_LOADED event");
                 Scenario scenario = (Scenario) event.getPayload();
-                List<GeoPosition> scenarioBoudaries = scenario.getScenarioRegionPoints();
-                app.getMapContainer().setDisplayPositionByLatLon(scenarioBoudaries.get(0).getLatitude(),scenarioBoudaries.get(0).getLongitude() , 15);
+                app.getMapContainer().setDisplayPositionByLatLon(scenario.getScenarioRegionPoints().get(0).getLatitude(),
+                        scenario.getScenarioRegionPoints().get(0).getLongitude() , 15);
                 break;
             case NEW_NODE:
                 LOG.debug("NEW_NODE event");

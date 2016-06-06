@@ -75,7 +75,8 @@
     <TitledPane text="Scenario">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-<children><Button layoutX="18.8125" layoutY="13.5" mnemonicParsing="false" onAction="#loadScenarioAction" text="Load Scenario" />
+<children>
+                                                      <Button layoutX="131.0" layoutY="14.0" mnemonicParsing="false" onAction="#reloadScenarioAction" text="Reload Scenario" /><Button layoutX="18.8125" layoutY="13.5" mnemonicParsing="false" onAction="#loadScenarioAction" text="Load Scenario" />
 </children></AnchorPane>
       </content>
     </TitledPane>
@@ -88,15 +89,11 @@
                           <content>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                  <children>
-                                    <HBox spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                       <children>
-                                          <Button mnemonicParsing="false" onAction="#loadProgram" text="Load program">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </Button>
-                                       </children>
-                                    </HBox>
+                                    <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#loadProgram" text="Load program">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                    </Button>
                                  </children>
                               </AnchorPane>
                           </content>

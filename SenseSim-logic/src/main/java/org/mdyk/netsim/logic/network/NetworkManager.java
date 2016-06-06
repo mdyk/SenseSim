@@ -143,5 +143,12 @@ public class NetworkManager<P extends Position> {
     public List<IDeviceModel> getNeighborhood(DeviceNode<?> sensorNode) {
         return Optional.ofNullable(networkGraph.listNeighbors(sensorNode)).orElse(new ArrayList<>());
     }
+
+    public void clearNodes() {
+        sensorNodeList.clear();
+        neighborhood.clear();
+        networkGraph.clear();
+    }
+
 }
 
