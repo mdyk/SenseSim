@@ -1,7 +1,26 @@
-<scenario id="string">
+<scenario id="string" scenarioName="string">
+  <scenarioBoundaries>
+    <!--4 or more repetitions:-->
+    <checkpoint>
+      <latitude>string</latitude>
+      <longitude>string</longitude>
+    </checkpoint>
+    <checkpoint>
+      <latitude>string</latitude>
+      <longitude>string</longitude>
+    </checkpoint>
+    <checkpoint>
+      <latitude>string</latitude>
+      <longitude>string</longitude>
+    </checkpoint>
+    <checkpoint>
+      <latitude>string</latitude>
+      <longitude>string</longitude>
+    </checkpoint>
+  </scenarioBoundaries>
   <nodes>
     <!--Zero or more repetitions:-->
-    <node id="string">
+    <node id="string" name="string">
       <speed>string</speed>
       <radioRange>string</radioRange>
       <radioBandwidth>string</radioBandwidth>

@@ -1,6 +1,7 @@
 package org.mdyk.sensesim.simulation.engine.dissim;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import dissim.simspace.core.SimControlException;
@@ -8,6 +9,7 @@ import dissim.simspace.core.SimModel;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.node.Device;
@@ -67,6 +69,9 @@ public class DisSimEngine implements SimEngine, Runnable {
         }
 
         environment.loadPhenomena(phenomenaModels);
+
+        EventBusHolder.post(EventFactory.createScenarioLoadedEvent(scenario));
+
     }
 
     @Override
@@ -129,8 +134,8 @@ public class DisSimEngine implements SimEngine, Runnable {
                     LOG.debug("SIM_STOP_NODES event");
                     this.stopScenario();
                     break;
-                case SCENARIO_LOADED:
-                    LOG.debug("SCENARIO_LOADED event");
+                case SCENARIO_FILE_LOADED:
+                    LOG.debug("SCENARIO_FILE_LOADED event");
                     scenarioXML = (File) event.getPayload();
                     Scenario scenario = scenarioFactory.createXMLScenario(scenarioXML);
                     loadScenario(scenario);

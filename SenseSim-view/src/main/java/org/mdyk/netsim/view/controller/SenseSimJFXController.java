@@ -22,6 +22,7 @@ import org.apache.log4j.Logger;
 import org.controlsfx.dialog.Dialogs;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.node.geo.GeoDeviceNode;
+import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
@@ -35,6 +36,9 @@ import org.mdyk.netsim.view.edge.OSMEdge;
 import org.mdyk.netsim.view.event.OSMEventView;
 import org.mdyk.netsim.view.node.GraphEdgeViewWrapper;
 import org.mdyk.netsim.view.node.OSMNodeView;
+import org.openstreetmap.gui.jmapviewer.Coordinate;
+import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
+import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
 
 import javax.swing.*;
 import java.awt.Dimension;
@@ -172,7 +176,7 @@ public class SenseSimJFXController implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         scenarioFile = fileChooser.showOpenDialog(null);
-        EventBusHolder.post(EventType.SCENARIO_LOADED , scenarioFile);
+        EventBusHolder.post(EventType.SCENARIO_FILE_LOADED, scenarioFile);
         LOG.debug("<<< loadScenarioAction");
     }
 
@@ -294,6 +298,12 @@ public class SenseSimJFXController implements Initializable {
         LOG.debug(">> processEvent");
         GeoDeviceNode sensorModelNode;
         switch(event.getEventType()){
+            case SCENARIO_LOADED:
+                LOG.debug("SCENARIO_LOADED event");
+                Scenario scenario = (Scenario) event.getPayload();
+                List<GeoPosition> scenarioBoudaries = scenario.getScenarioRegionPoints();
+                app.getMapContainer().setDisplayPositionByLatLon(scenarioBoudaries.get(0).getLatitude(),scenarioBoudaries.get(0).getLongitude() , 15);
+                break;
             case NEW_NODE:
                 LOG.debug("NEW_NODE event");
                 sensorModelNode = (GeoDeviceNode) event.getPayload();

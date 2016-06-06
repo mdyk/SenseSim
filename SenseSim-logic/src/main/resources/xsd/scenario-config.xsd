@@ -73,6 +73,7 @@
             <xs:element type="routeType" name="route"/>
         </xs:sequence>
         <xs:attribute type="xs:string" name="id"/>
+        <xs:attribute type="xs:string" name="name"/>
     </xs:complexType>
 
     <xs:complexType name="phenomenonDiscreteValueType">
@@ -134,13 +135,21 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="scenarioRegionType">
+        <xs:sequence>
+            <xs:element type="checkpointType" name="checkpoint" minOccurs="4" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:element name="scenario">
         <xs:complexType>
             <xs:sequence>
+                <xs:element type="scenarioRegionType" name="scenarioBoundaries" />
                 <xs:element type="nodesType" name="nodes"/>
                 <xs:element type="phenomenaType" name="phenomena"/>
             </xs:sequence>
             <xs:attribute type="xs:string" name="id"/>
+            <xs:attribute type="xs:string" name="scenarioName"/>
         </xs:complexType>
     </xs:element>
 

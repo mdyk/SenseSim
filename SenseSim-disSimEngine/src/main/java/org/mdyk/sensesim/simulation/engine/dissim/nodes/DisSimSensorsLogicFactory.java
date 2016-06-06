@@ -29,12 +29,7 @@ public class DisSimSensorsLogicFactory implements DeviceLogicFactory {
     private CommunicationProcessFactory communicationProcessFactory;
 
     @Override
-    public DeviceLogic buildSensorLogic(int id, GeoPosition position, int radioRange, int bandwidth , double velocity, List<AbilityType> abilities) {
-        return new DisSimDeviceLogic(id, position, radioRange, bandwidth, velocity, abilities, environment, wirelessChannel, communicationProcessFactory);
-    }
-
-    @Override
-    public DeviceLogic buildSensorLogic(int id, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities, List<SensorModel<?, ?>> sensors) {
-        return new DisSimDeviceLogic(id, position, radioRange, bandwidth, velocity, abilities, sensors, environment, wirelessChannel, communicationProcessFactory);
+    public DeviceLogic buildSensorLogic(int id, String name, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities, List<SensorModel<?, ?>> sensors) {
+        return new DisSimDeviceLogic(id, name, position, radioRange, bandwidth, velocity, abilities, sensors, environment, wirelessChannel, communicationProcessFactory);
     }
 }

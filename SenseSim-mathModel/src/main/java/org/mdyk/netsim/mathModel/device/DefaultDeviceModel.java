@@ -20,6 +20,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     private static final Logger LOG = Logger.getLogger(DefaultDeviceModel.class);
 
     protected int           id;
+    protected String        name;
     protected P             position;
     protected double        radioRange;
     protected double        velocity;
@@ -53,8 +54,9 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     }
 
 
-    protected DefaultDeviceModel(int id, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities , List<SensorModel<?,?>> sensors) {
+    protected DefaultDeviceModel(int id, String name, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities , List<SensorModel<?,?>> sensors) {
         this.id = id;
+        this.name = name;
         this.position = position;
         this.radioRange = radioRange;
         this.bandwith = bandwidth;
@@ -71,6 +73,11 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     @Override
     public int getID() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
     }
 
     @Override
@@ -121,6 +128,8 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     public List<SensorModel<?, ?>> getSensors() {
         return sensors;
     }
+
+
 
     @Override
     public Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> getObservations() {

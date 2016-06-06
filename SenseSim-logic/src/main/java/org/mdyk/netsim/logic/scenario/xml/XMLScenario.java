@@ -92,7 +92,7 @@ public class XMLScenario implements Scenario {
                             }
                         }
 
-                        Device node = devicesFactory.buildSensor(Integer.parseInt(nodeType.getId()),
+                        Device node = devicesFactory.buildSensor(Integer.parseInt(nodeType.getId()), nodeType.getName(),
                                 position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
                                 Double.parseDouble(nodeType.getSpeed()), abilities, sensorModels);
                         node.getDeviceLogic().setRoute(route);
@@ -176,6 +176,15 @@ public class XMLScenario implements Scenario {
 
         LOG.debug("<< getPhenomena()");
         return phenomenaList;
+    }
+
+    @Override
+    public List<GeoPosition> getScenarioRegionPoints() {
+        List<GeoPosition> scenarioRegion = new ArrayList<>();
+        for (CheckpointType checkpointType : scenario.getScenarioBoundaries().getCheckpoint()) {
+            scenarioRegion.add(xmlTypeConverter.covertCheckpointToPosiotion(checkpointType));
+        }
+        return scenarioRegion;
     }
 
 }

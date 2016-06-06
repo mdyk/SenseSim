@@ -46,11 +46,11 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
 
 
     @Inject
-    public DisSimDeviceLogic(@Assisted("id") int id, @Assisted GeoPosition position,
+    public DisSimDeviceLogic(@Assisted("id") int id, @Assisted("name") String name, @Assisted GeoPosition position,
                              @Assisted("radioRange") int radioRange, int bandwidth,
                              @Assisted double velocity, @Assisted List<AbilityType> abilities, List<SensorModel<?,?>> sensors,
                              Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
-        super(id, position, radioRange, bandwidth, velocity, abilities, sensors);
+        super(id,name, position, radioRange, bandwidth, velocity, abilities, sensors);
 
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
         this.environment = environment;
@@ -72,16 +72,6 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
         this.wirelessChannel = wirelessChannel;
         this.communicationProcessFactory = communicationProcessFactory;
         this.isMoveing = true;
-    }
-
-    @Deprecated
-    // FIXME Do usunięcia
-    public void sense() {
-//        for(AbilityType ability : getAbilities()) {
-//            PhenomenonValue phenomenonValue = environment.getEventValue(getPosition(), deviceSimEntity.getSimTime(), ability);
-//            this.addObservation(ability, SimModel.getInstance().simTime(), phenomenonValue);
-//        }
-
     }
 
     @Override

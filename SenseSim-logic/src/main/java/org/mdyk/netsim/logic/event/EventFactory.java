@@ -1,6 +1,7 @@
 package org.mdyk.netsim.logic.event;
 
 import javafx.util.Pair;
+import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
@@ -9,6 +10,10 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 public class EventFactory {
 
     private EventFactory() {}
+
+    public static InternalEvent createScenarioLoadedEvent(Scenario scenario) {
+        return new InternalEvent(EventType.SCENARIO_LOADED , scenario);
+    }
 
     public static InternalEvent createNewNodeEvent(DeviceNode node)  {
         return new InternalEvent(EventType.NEW_NODE, node);

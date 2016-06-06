@@ -96,8 +96,8 @@ public class ThreadSimEngine /*implements SimEngine<DeviceNodeThread<?,?>>*/ {
 //                LOG.debug("SIM_STOP_NODES event");
 //                this.stopScenario();
 //                break;
-//            case SCENARIO_LOADED:
-//                LOG.debug("SCENARIO_LOADED event");
+//            case SCENARIO_FILE_LOADED:
+//                LOG.debug("SCENARIO_FILE_LOADED event");
 //                File scenarioXML = (File) event.getPayload();
 //                Scenario scenario = scenarioFactory.createXMLScenario(scenarioXML);
 //                loadScenario(scenario);

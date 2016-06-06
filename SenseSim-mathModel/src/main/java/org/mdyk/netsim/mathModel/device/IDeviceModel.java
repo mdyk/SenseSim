@@ -19,6 +19,8 @@ public interface IDeviceModel<P extends Position> {
 
     int getID();
 
+    String getName();
+
     P getPosition();
 
     void setPosition(P position);

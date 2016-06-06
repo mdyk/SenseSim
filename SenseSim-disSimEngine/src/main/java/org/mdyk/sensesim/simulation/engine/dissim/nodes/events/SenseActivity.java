@@ -4,6 +4,8 @@ import dissim.simspace.core.SimControlException;
 import dissim.simspace.process.BasicSimAction;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
+import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
@@ -50,6 +52,8 @@ public class SenseActivity extends BasicSimAction<DisSimNodeEntity, Object> {
                 entity.deviceLogic.addObservation(sensorModel.getConfigurationSpaceClass() , simTime() , observation);
             }
         }
+
+        EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(entity.getDeviceLogic()));
 
     }
 }

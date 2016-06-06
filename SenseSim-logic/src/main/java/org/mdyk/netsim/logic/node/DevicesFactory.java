@@ -34,10 +34,10 @@ public class DevicesFactory {
     @Inject
     private DeviceStatisticsFactory deviceStatisticsFactory;
 
-    public Device buildSensor(int id, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities , List<SensorModel<?,?>> sensors){
+    public Device buildSensor(int id, String name, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities , List<SensorModel<?,?>> sensors){
 
         DeviceStatistics deviceStatistics = deviceStatisticsFactory.buildSensorStatistics();
-        DeviceLogic deviceLogic = deviceLogicFactory.buildSensorLogic(id,position,radioRange, bandwidth, velocity, abilities, sensors);
+        DeviceLogic deviceLogic = deviceLogicFactory.buildSensorLogic(id,name,position,radioRange, bandwidth, velocity, abilities, sensors);
         DeviceSimEntity deviceSimEntity = simEntityFactory.buildSensorSimEntity(deviceLogic);
         DeviceAPI deviceAPI = APIFactory.buildSensorAPI(deviceSimEntity);
         Middleware middleware = middlewareFactory.buildMiddleware();
