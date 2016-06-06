@@ -54,8 +54,48 @@
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
             </sensors>
             <startPosition>
-                <latitude>54.346537</latitude>
-                <longitude>22.435788</longitude>
+                <latitude>54.346948</latitude>
+                <longitude>22.437193</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="3" name="mil-sens-3">
+            <speed>0</speed>
+            <radioRange>200</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.347298</latitude>
+                <longitude>22.439253</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="4" name="mil-sens-4">
+            <speed>0</speed>
+            <radioRange>200</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.347648</latitude>
+                <longitude>22.441957</longitude>
             </startPosition>
             <route>
             </route>

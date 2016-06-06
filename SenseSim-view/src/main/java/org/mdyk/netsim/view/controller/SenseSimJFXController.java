@@ -36,9 +36,8 @@ import org.mdyk.netsim.view.edge.OSMEdge;
 import org.mdyk.netsim.view.event.OSMEventView;
 import org.mdyk.netsim.view.node.GraphEdgeViewWrapper;
 import org.mdyk.netsim.view.node.OSMNodeView;
-import org.openstreetmap.gui.jmapviewer.Coordinate;
-import org.openstreetmap.gui.jmapviewer.MapPolygonImpl;
-import org.openstreetmap.gui.jmapviewer.interfaces.MapPolygon;
+import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
+import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
 
 import javax.swing.*;
 import java.awt.Dimension;
@@ -151,6 +150,11 @@ public class SenseSimJFXController implements Initializable {
     }
 
     private void clearGUI() {
+
+        app.getMapContainer().removeAllMapMarkers();
+        app.getMapContainer().removeAllMapPolygons();
+        app.getMapContainer().removeAllMapRectangles();
+
         nodeViews = new HashMap<>();
         eventViews = new HashMap<>();
         edgeViews = new HashMap<>();
