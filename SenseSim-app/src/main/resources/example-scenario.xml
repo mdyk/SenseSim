@@ -100,6 +100,86 @@
             <route>
             </route>
         </node>
+        <node id="5" name="mil-sens-5">
+            <speed>0</speed>
+            <radioRange>200</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348039</latitude>
+                <longitude>22.443298</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="6" name="mil-sens-6">
+            <speed>0</speed>
+            <radioRange>200</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348158</latitude>
+                <longitude>22.44465</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="7" name="mil-sens-7">
+            <speed>0</speed>
+            <radioRange>200</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348408</latitude>
+                <longitude>22.446356</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="8" name="mil-sens-8">
+            <speed>0</speed>
+            <radioRange>200</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348408</latitude>
+                <longitude>22.446356</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
     </nodes>
     <phenomena>
         <phenomenon name="string" phenomenonType="observer">
