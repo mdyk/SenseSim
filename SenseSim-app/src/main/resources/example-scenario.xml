@@ -20,7 +20,7 @@
         </checkpoint>
     </scenarioBoundaries>
     <nodes>
-        <node id="1" name="mil-sens-1">
+        <node id="1" name="ugs-sens-1">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -40,7 +40,7 @@
             <route>
             </route>
         </node>
-        <node id="2" name="mil-sens-2">
+        <node id="2" name="ugs-sens-2">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -60,7 +60,7 @@
             <route>
             </route>
         </node>
-        <node id="3" name="mil-sens-3">
+        <node id="3" name="ugs-sens-3">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -80,7 +80,7 @@
             <route>
             </route>
         </node>
-        <node id="4" name="mil-sens-4">
+        <node id="4" name="ugs-sens-4">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -100,7 +100,7 @@
             <route>
             </route>
         </node>
-        <node id="5" name="mil-sens-5">
+        <node id="5" name="ugs-sens-5">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -120,7 +120,7 @@
             <route>
             </route>
         </node>
-        <node id="6" name="mil-sens-6">
+        <node id="6" name="ugs-sens-6">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -140,7 +140,7 @@
             <route>
             </route>
         </node>
-        <node id="7" name="mil-sens-7">
+        <node id="7" name="ugs-sens-7">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -160,7 +160,7 @@
             <route>
             </route>
         </node>
-        <node id="8" name="mil-sens-8">
+        <node id="8" name="ugs-sens-8">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -180,7 +180,7 @@
             <route>
             </route>
         </node>
-        <node id="9" name="mil-sens-9">
+        <node id="9" name="ugs-sens-9">
             <speed>0</speed>
             <radioRange>200</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -200,9 +200,9 @@
             <route>
             </route>
         </node>
-        <node id="10" name="mil-sens-10">
+        <node id="10" name="ugs-sens-10">
             <speed>0</speed>
-            <radioRange>200</radioRange>
+            <radioRange>250</radioRange>
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
@@ -216,6 +216,786 @@
             <startPosition>
                 <latitude>54.348428</latitude>
                 <longitude>22.452600</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="11" name="ugs-sens-11">
+            <speed>0</speed>
+            <radioRange>250</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348615</latitude>
+                <longitude>22.456055</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="12" name="ugs-sens-12">
+            <speed>0</speed>
+            <radioRange>200</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348722</latitude>
+                <longitude>22.457444</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="13" name="ugs-sens-13">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348753</latitude>
+                <longitude>22.458769</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="14" name="ugs-sens-14">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348828</latitude>
+                <longitude>22.460121</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="15" name="ugs-sens-15">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348903</latitude>
+                <longitude>22.461087</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="16" name="ugs-sens-16">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348865</latitude>
+                <longitude>22.462202</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="17" name="ugs-sens-17">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348878</latitude>
+                <longitude>22.463168</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="18" name="ugs-sens-18">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348828</latitude>
+                <longitude>22.464069</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="19" name="ugs-sens-19">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348603</latitude>
+                <longitude>22.463640</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="20" name="ugs-sens-20">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348603</latitude>
+                <longitude>22.462717</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="21" name="ugs-sens-21">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348615</latitude>
+                <longitude>22.461666</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="22" name="ugs-sens-22">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348603</latitude>
+                <longitude>22.460679</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="23" name="ugs-sens-23">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348553</latitude>
+                <longitude>22.459606</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="24" name="ugs-sens-24">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348478</latitude>
+                <longitude>22.458190</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="25" name="ugs-sens-25">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348390</latitude>
+                <longitude>22.456731</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="26" name="ugs-sens-26">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348390</latitude>
+                <longitude>22.455229</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="27" name="ugs-sens-27">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348396</latitude>
+                <longitude>22.454236</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="28" name="ugs-sens-28">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348371</latitude>
+                <longitude>22.453592</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="29" name="ugs-sens-29">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348371</latitude>
+                <longitude>22.452884</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="30" name="ugs-sens-30">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348334</latitude>
+                <longitude>22.452262</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="31" name="ugs-sens-31">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348334</latitude>
+                <longitude>22.451597</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="32" name="ugs-sens-32">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348290</latitude>
+                <longitude>22.451060</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="33" name="ugs-sens-33">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348271</latitude>
+                <longitude>22.450438</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="34" name="ugs-sens-34">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348290</latitude>
+                <longitude>22.449612</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="35" name="ugs-sens-35">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348278</latitude>
+                <longitude>22.448807</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="36" name="ugs-sens-36">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348265</latitude>
+                <longitude>22.448035</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="37" name="ugs-sens-37">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348253</latitude>
+                <longitude>22.447316</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="38" name="ugs-sens-38">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348240</latitude>
+                <longitude>22.446383</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="39" name="ugs-sens-39">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348171</latitude>
+                <longitude>22.445546</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="40" name="ugs-sens-40">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348096</latitude>
+                <longitude>22.444612</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="41" name="ugs-sens-41">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.347996</latitude>
+                <longitude>22.443883</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="42" name="ugs-sens-42">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.347896</latitude>
+                <longitude>22.443110</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="43" name="ugs-sens-43">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.347740</latitude>
+                <longitude>22.442413</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="44" name="ugs-sens-44">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.347352</latitude>
+                <longitude>22.441775</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="45" name="ugs-sens-45">
+            <speed>0</speed>
+            <radioRange>100</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.346927</latitude>
+                <longitude>22.440444</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="46" name="ugs-sens-46">
+            <speed>0</speed>
+            <radioRange>150</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.346514</latitude>
+                <longitude>22.439071</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="47" name="ugs-sens-47">
+            <speed>0</speed>
+            <radioRange>150</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.346076</latitude>
+                <longitude>22.437676</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="48" name="ugs-sens-48">
+            <speed>0</speed>
+            <radioRange>150</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.345601</latitude>
+                <longitude>22.436550</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="49" name="ugs-sens-49">
+            <speed>0</speed>
+            <radioRange>150</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.345201</latitude>
+                <longitude>22.436550</longitude>
             </startPosition>
             <route>
             </route>
