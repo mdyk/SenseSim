@@ -1000,6 +1000,78 @@
             <route>
             </route>
         </node>
+
+        <node id="50" name="ugv-1">
+            <speed>1</speed>
+            <radioRange>300</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.348127</latitude>
+                <longitude>22.451074</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>54.348127</latitude>
+                    <longitude>22.451074</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>54.348413</latitude>
+                    <longitude>22.459005</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>54.347989</latitude>
+                    <longitude>22.444934</longitude>
+                </checkpoint>
+            </route>
+        </node>
+
+        <node id="51" name="uav-1">
+            <speed>20</speed>
+            <radioRange>500</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>54.347463</latitude>
+                <longitude>22.446409</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>54.347463</latitude>
+                    <longitude>22.446409</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>54.34775</latitude>
+                    <longitude>22.458404</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>54.351602</latitude>
+                    <longitude>22.45834</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>54.351552</latitude>
+                    <longitude>22.446066</longitude>
+                </checkpoint>
+            </route>
+        </node>
+
+
     </nodes>
     <phenomena>
         <phenomenon name="string" phenomenonType="observer">

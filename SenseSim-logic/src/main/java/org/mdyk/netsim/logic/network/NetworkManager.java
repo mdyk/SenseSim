@@ -98,7 +98,7 @@ public class NetworkManager<P extends Position> {
     }
 
     public void actualizeNaighbours(DeviceNode changedSensor) {
-        LOG.debug(">> actualizeNaighbours");
+        LOG.debug(">> actualizeNaighbours [device "+changedSensor.getID()+"]");
 
         for (DeviceNode sensor : sensorNodeList) {
 
