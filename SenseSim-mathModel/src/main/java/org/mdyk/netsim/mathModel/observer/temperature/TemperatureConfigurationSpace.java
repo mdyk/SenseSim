@@ -21,4 +21,8 @@ public class TemperatureConfigurationSpace extends ConfigurationSpace {
     }
 
 
+    @Override
+    public String getValue() {
+        return Double.toString(value);
+    }
 }
