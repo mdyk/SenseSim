@@ -3,6 +3,7 @@ package org.mdyk.netsim.view.node;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.device.IDeviceModel;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +38,19 @@ public abstract class NodeView<C, P extends Position> {
         return node.getID();
     }
 
+    @Deprecated
     public List<AbilityType> getAbilities() {
         return node.getAbilities();
     }
 
-    public List<String> getAbilitesNames() {
-        ArrayList<String> abilityNames = new ArrayList<>(getAbilities().size());
+    public List<String> getSensorsNames() {
+        List<String> sensorsNames = new ArrayList<>();
 
-        for(AbilityType ability : getAbilities()) {
-            abilityNames.add(ability.name());
+        for(SensorModel sensorModel : node.getSensors()) {
+            sensorsNames.add(sensorModel.getName());
         }
 
-        return abilityNames;
+        return sensorsNames;
     }
 
     public abstract void setEdge(IDeviceModel secondEndNode);

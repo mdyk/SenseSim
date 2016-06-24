@@ -17,6 +17,7 @@ import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.netsim.view.controlls.table.CommunicationStatistics;
 import org.mdyk.netsim.view.controlls.table.ProgramStatistics;
 import org.mdyk.netsim.view.node.OSMNodeView;
@@ -134,8 +135,8 @@ public class SensorConsoleController implements Initializable {
         velocity.setText(Double.toString(nodeView.getNode().getVelocity()));
         radioRange.setText(Double.toString(nodeView.getNode().getRadioRange()));
 
-        ObservableList<String> abilities = FXCollections.observableArrayList();
-        abilities.addAll(nodeView.getAbilitesNames());
+        ObservableList<SensorModel> abilities = FXCollections.observableArrayList();
+        abilities.addAll(nodeView.getNode().getSensors());
         abilityChooser.setItems(abilities);
 
         ObservableList<String> commTypes = FXCollections.observableArrayList();
@@ -248,6 +249,8 @@ public class SensorConsoleController implements Initializable {
         }
 
         final List<PhenomenonValue> observations = nodeView.getNode().old_getObservations().get(AbilityType.valueOf(abilityName));
+
+        nodeView.getNode().getObservations();
 
         Platform.runLater(() -> {
             if(observations != null) {

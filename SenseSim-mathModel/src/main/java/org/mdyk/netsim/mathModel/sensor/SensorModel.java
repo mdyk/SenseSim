@@ -46,4 +46,6 @@ public interface SensorModel<O extends ObserverModel<?,?> , R extends Configurat
 
     Class getConfigurationSpaceClass();
 
+    String toString();
+
 }
