@@ -34,8 +34,7 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-
-
+import java.util.TreeMap;
 
 
 public class SenseActivityTest {
@@ -93,7 +92,7 @@ public class SenseActivityTest {
             }
         }
 
-        Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observations = fourthDev.getDeviceLogic().getObservations();
+        Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observations = fourthDev.getDeviceLogic().getObservations();
 
         TestCase.assertTrue(observations.containsKey(TemperatureConfigurationSpace.class));
         Map<Double, List<ConfigurationSpace>> tempObservations = observations.get(TemperatureConfigurationSpace.class);

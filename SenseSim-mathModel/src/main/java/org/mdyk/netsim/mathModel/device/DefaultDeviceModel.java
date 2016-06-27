@@ -9,10 +9,7 @@ import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public abstract class DefaultDeviceModel<P extends Position> implements IDeviceModel<P> {
@@ -32,7 +29,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     /**
      * Holds device observations
      */
-    protected Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observationsFromObserver;
+    protected Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observationsFromObserver;
 
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
@@ -132,7 +129,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
 
 
     @Override
-    public Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> getObservations() {
+    public Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> getObservations() {
         return this.observationsFromObserver;
     }
 
@@ -174,7 +171,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         if(!observationsFromObserver.containsKey(configurationSpaceClass)) {
             observationsAtTime = new ArrayList<>();
             observationsAtTime.add(value);
-            HashMap<Double , List<ConfigurationSpace>> valueMap = new HashMap<>();
+            TreeMap<Double , List<ConfigurationSpace>> valueMap = new TreeMap<>();
             valueMap.put(time , observationsAtTime);
             observationsFromObserver.put(configurationSpaceClass, valueMap);
         }

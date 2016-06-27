@@ -36,12 +36,12 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/SensorConsoleUI.fxml"));
 
         try {
-            Parent root1 = fxmlLoader.load();
+            Parent parent = fxmlLoader.load();
             sensorConsole = new Stage();
             sensorConsole.initModality(Modality.NONE);
             sensorConsole.initStyle(StageStyle.DECORATED);
             sensorConsole.setTitle("Device " + this.getNode().getID());
-            sensorConsole.setScene(new Scene(root1));
+            sensorConsole.setScene(new Scene(parent));
             SensorConsoleController scc = fxmlLoader.getController();
             scc.setNodeView(this);
             scc.fillGui();

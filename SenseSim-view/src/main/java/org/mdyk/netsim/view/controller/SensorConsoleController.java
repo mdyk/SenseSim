@@ -257,23 +257,19 @@ public class SensorConsoleController implements Initializable {
         Platform.runLater(() -> {
             if(observations != null) {
 
-                List<PhenomenonValue> observationsSublist = new ArrayList<>();
+                List<PhenomenonValue> observationsList = new ArrayList<>();
 
-//                    int valuesCount = 0;
-                    for(Double time : observations.keySet()) {
-                        for(ConfigurationSpace configurationSpace : observations.get(time)) {
-                            observationsSublist.add(new PhenomenonValue(time , configurationSpace));
-
-                        }
-//                        if(valuesCount >= 50) {
-//
-//                            break;
-//                        }
+                for(Double time : observations.keySet()) {
+                    for(ConfigurationSpace configurationSpace : observations.get(time)) {
+                        observationsList.add(new PhenomenonValue(time , configurationSpace));
                     }
-
-                observationsSublist.sort(new PhenomenonValue.DescTimeComparator());
-                if(observationsSublist.size() > 50) {
-                    observationsSublist = observationsSublist.subList(observations.size() - 49, observations.size() - 1);
+                }
+                observationsList.sort(new PhenomenonValue.DescTimeComparator());
+                List<PhenomenonValue> observationsSublist;
+                if(observationsList.size() > 50) {
+                    observationsSublist = observationsList.subList(0, 49);
+                } else {
+                    observationsSublist = observationsList;
                 }
 
                 observationsData.clear();
