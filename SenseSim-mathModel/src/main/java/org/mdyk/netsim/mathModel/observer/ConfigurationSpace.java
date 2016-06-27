@@ -5,6 +5,11 @@ package org.mdyk.netsim.mathModel.observer;
  */
 public abstract class ConfigurationSpace {
 
-    public abstract String getValue();
+    public abstract String getStringValue();
+
+    @Override
+    final public String toString() {
+        return getStringValue();
+    }
 
 }

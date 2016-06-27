@@ -1077,20 +1077,20 @@
         <phenomenon name="string" phenomenonType="observer">
             <phenomenonArea>
                 <checkpoint>
-                    <latitude>52.230963</latitude>
-                    <longitude>21.004534</longitude>
+                    <latitude>54.346049</latitude>
+                    <longitude>22.434595</longitude>
                 </checkpoint>
                 <checkpoint>
-                    <latitude>52.231804</latitude>
-                    <longitude>21.004974</longitude>
+                    <latitude>54.347650</latitude>
+                    <longitude>22.459400</longitude>
                 </checkpoint>
                 <checkpoint>
-                    <latitude>52.231541</latitude>
-                    <longitude>21.005822</longitude>
+                    <latitude>54.336842</latitude>
+                    <longitude>22.460859</longitude>
                 </checkpoint>
                 <checkpoint>
-                    <latitude>52.230786</latitude>
-                    <longitude>21.005350</longitude>
+                    <latitude>54.335691</latitude>
+                    <longitude>22.426870</longitude>
                 </checkpoint>
             </phenomenonArea>
             <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE">

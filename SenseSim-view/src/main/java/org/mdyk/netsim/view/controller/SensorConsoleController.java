@@ -16,6 +16,7 @@ import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.netsim.view.controlls.table.CommunicationStatistics;
@@ -25,6 +26,7 @@ import org.mdyk.netsim.view.node.OSMNodeView;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -242,27 +244,37 @@ public class SensorConsoleController implements Initializable {
 
     public void showObservationsForAbility() {
 
-        String abilityName = (String) abilityChooser.getValue();
+        SensorModel abilityName = (SensorModel) abilityChooser.getValue();
 
         if(abilityName == null) {
             return;
         }
 
-        final List<PhenomenonValue> observations = nodeView.getNode().old_getObservations().get(AbilityType.valueOf(abilityName));
+//        final List<PhenomenonValue> observations = nodeView.getNode().old_getObservations().get(AbilityType.valueOf(abilityName));
 
-        nodeView.getNode().getObservations();
+        Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
 
         Platform.runLater(() -> {
             if(observations != null) {
 
-                List<PhenomenonValue> observationsSublist;
-                if(observations.size() > 50) {
-                    observationsSublist = observations.subList(observations.size()-49 , observations.size()-1);
-                } else {
-                    observationsSublist = observations;
-                }
+                List<PhenomenonValue> observationsSublist = new ArrayList<>();
+
+//                    int valuesCount = 0;
+                    for(Double time : observations.keySet()) {
+                        for(ConfigurationSpace configurationSpace : observations.get(time)) {
+                            observationsSublist.add(new PhenomenonValue(time , configurationSpace));
+
+                        }
+//                        if(valuesCount >= 50) {
+//
+//                            break;
+//                        }
+                    }
 
                 observationsSublist.sort(new PhenomenonValue.DescTimeComparator());
+                if(observationsSublist.size() > 50) {
+                    observationsSublist = observationsSublist.subList(observations.size() - 49, observations.size() - 1);
+                }
 
                 observationsData.clear();
                 observationsData.addAll(observationsSublist);

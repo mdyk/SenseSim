@@ -6,7 +6,7 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 
-public class PT100Sensor implements SensorModel<PT100Observer , TemperatureConfigurationSpace> {
+public class PT100Sensor extends SensorModel<PT100Observer , TemperatureConfigurationSpace> {
 
 
     private PT100Observer observer;

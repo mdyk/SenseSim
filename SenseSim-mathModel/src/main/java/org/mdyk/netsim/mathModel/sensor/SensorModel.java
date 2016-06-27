@@ -8,19 +8,19 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 /**
  * Represents sensor which can be attached to device
  */
-public interface SensorModel<O extends ObserverModel<?,?> , R extends ConfigurationSpace> {
+public abstract class SensorModel<O extends ObserverModel<?,?> , R extends ConfigurationSpace> {
 
     /**
      * Returns sensor name.
      * @return
      */
-    String getName();
+    public abstract String getName();
 
     /**
      * Returns observer associated with sensor.
      * @return
      */
-    O getObserver();
+    public abstract O getObserver();
 
     //TODO macierz obrotu
 
@@ -28,13 +28,13 @@ public interface SensorModel<O extends ObserverModel<?,?> , R extends Configurat
      * Describes sampling frequency of the sensor in milliseconds.
      * @return
      */
-    double samplingFrequency();
+    public abstract double samplingFrequency();
 
     /**
      * Defines how much time takes one sampling.
      * @return
      */
-    double sensingTime();
+    public abstract double sensingTime();
 
     /**
      * Calculates
@@ -42,10 +42,13 @@ public interface SensorModel<O extends ObserverModel<?,?> , R extends Configurat
      * @param distance
      * @return
      */
-    R getObservation(PhenomenonModel phenomenonModel , double time , double distance);
+    public abstract R getObservation(PhenomenonModel phenomenonModel , double time , double distance);
 
-    Class getConfigurationSpaceClass();
+    public abstract Class getConfigurationSpaceClass();
 
-    String toString();
+
+    final public String toString() {
+        return getName();
+    }
 
 }

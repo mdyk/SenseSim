@@ -18,7 +18,7 @@ public class VisualConfigurationSpace extends ConfigurationSpace {
     }
 
     @Override
-    public String getValue() {
+    public String getStringValue() {
         return null;
     }
 }

@@ -115,7 +115,7 @@ public class DisSimEngine implements SimEngine, Runnable {
     @Subscribe
     @AllowConcurrentEvents
     public void processEvent(InternalEvent event) {
-        LOG.debug(">> processEvent");
+//        LOG.debug(">> processEvent");
         try {
             switch(event.getEventType()){
                 case SIM_PAUSE_NODES:
@@ -150,7 +150,7 @@ public class DisSimEngine implements SimEngine, Runnable {
         } catch (Exception e) {
             LOG.error(e.getMessage() , e);
         }
-        LOG.debug("<< processEvent");
+//        LOG.debug("<< processEvent");
     }
 
     private void clearScenario() {
