@@ -89,12 +89,10 @@ public class XMLScenarioTest {
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
 
-        Map<Class, List<Device>> nodesMap = xmlScenario.scenarioSensors();
+        List<Device> nodes = xmlScenario.scenarioDevices();
 
-        TestCase.assertTrue(nodesMap.size() == 1);
-        TestCase.assertTrue(nodesMap.containsKey(Device.class));
+        TestCase.assertTrue(nodes.size() == 1);
 
-        List<Device> nodes = nodesMap.get(Device.class);
         TestCase.assertTrue(nodes.size() == 4);
 
         for (Device node : nodes) {

@@ -121,7 +121,8 @@
 
     <xs:complexType name="phenomenonType">
         <xs:sequence>
-            <xs:element type="routeType" name="phenomenonArea" />
+            <xs:element type="routeType" name="phenomenonArea" minOccurs="0" />
+            <xs:element type="phenomenonAttachedToNodeType" name="attachedTo" minOccurs="0" />
             <xs:element type="phenomenonValueConfigType" name="phenomenonValueSet" minOccurs="0" maxOccurs="unbounded"/>
             <!--<xs:element type="phenomenonCSVValueType" name="csvFile" minOccurs="0" />-->
         </xs:sequence>
@@ -133,6 +134,10 @@
         <xs:sequence>
             <xs:element type="phenomenonType" name="phenomenon" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="phenomenonAttachedToNodeType">
+        <xs:attribute type="xs:string" name="nodeId" />
     </xs:complexType>
 
     <xs:complexType name="scenarioRegionType">

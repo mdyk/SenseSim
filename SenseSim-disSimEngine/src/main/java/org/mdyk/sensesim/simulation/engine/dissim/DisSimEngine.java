@@ -1,7 +1,6 @@
 package org.mdyk.sensesim.simulation.engine.dissim;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 import dissim.simspace.core.SimControlException;
@@ -57,11 +56,9 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     @Override
     public void loadScenario(Scenario scenario) {
-        Collection<List<Device>> sensorLists = scenario.scenarioSensors().values();
+        List<Device> nodeList = scenario.scenarioDevices();
+        addNodes(nodeList);
 
-        for (List<Device> nodeList : sensorLists) {
-            addNodes(nodeList);
-        }
 
         List<PhenomenonModel<GeoPosition>> phenomenaModels = scenario.getPhenomena();
         for (PhenomenonModel<GeoPosition> model : phenomenaModels) {

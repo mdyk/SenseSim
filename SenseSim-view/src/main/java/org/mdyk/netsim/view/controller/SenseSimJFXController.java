@@ -311,7 +311,7 @@ public class SenseSimJFXController implements Initializable {
 
     @Subscribe
     public synchronized void processEvent(InternalEvent event) {
-//        LOG.debug(">> processEvent");
+
         GeoDeviceNode sensorModelNode;
         switch(event.getEventType()){
             case SCENARIO_LOADED:
@@ -356,7 +356,7 @@ public class SenseSimJFXController implements Initializable {
                 process_NODE_END_SENSE(sensorModelNode);
                 break;
         }
-//        LOG.debug("<< processEvent");
+
     }
 
     private void actualizePositionLabel() {

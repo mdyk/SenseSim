@@ -15,13 +15,7 @@ public interface Scenario {
 
     String scenarioName();
 
-    /**
-     * Returns map with sensors.
-     * @return
-     *      map where keys are class types of nodes and values are
-     *      lists of nodes with desired class.
-     */
-    Map<Class, List<Device>> scenarioSensors();
+    List<Device> scenarioDevices();
 
     List<PhenomenonModel<GeoPosition>> getPhenomena();
 

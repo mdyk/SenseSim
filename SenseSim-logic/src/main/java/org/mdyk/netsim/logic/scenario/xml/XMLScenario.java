@@ -64,20 +64,20 @@ public class XMLScenario implements Scenario {
     }
 
     @Override
-    public Map<Class, List<Device>> scenarioSensors() {
+    public List<Device> scenarioDevices() {
 
-        Map<Class, List<Device>> nodesMap = new HashMap<>();
+        List<Device> nodesList = new ArrayList<>();
 
         for (NodeType nodeType : scenario.getNodes().getNode()){
             try {
                 switch (nodeType.getSesnorImplType()) {
                     case "GeoSensorNode":
-                        List<Device> geoDeviceNodes;
-                        if (!nodesMap.containsKey(Device.class)) {
-                            geoDeviceNodes = new LinkedList<>();
-                            nodesMap.put(Device.class, geoDeviceNodes);
-                        }
-                        geoDeviceNodes = nodesMap.get(Device.class);
+//                        List<Device> geoDeviceNodes;
+//                        if (!nodesMap.containsKey(Device.class)) {
+//                            geoDeviceNodes = new LinkedList<>();
+//                            nodesMap.put(Device.class, geoDeviceNodes);
+//                        }
+//                        geoDeviceNodes = nodesMap.get(Device.class);
 
                         GeoPosition position = new GeoPosition(Double.parseDouble(nodeType.getStartPosition().getLatitude()),
                                 Double.parseDouble(nodeType.getStartPosition().getLongitude()));
@@ -96,7 +96,7 @@ public class XMLScenario implements Scenario {
                                 position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
                                 Double.parseDouble(nodeType.getSpeed()), abilities, sensorModels);
                         node.getDeviceLogic().setRoute(route);
-                        geoDeviceNodes.add(node);
+                        nodesList.add(node);
                         break;
 
                     default:
@@ -108,7 +108,7 @@ public class XMLScenario implements Scenario {
             }
         }
 
-        return nodesMap;
+        return nodesList;
     }
 
     @Override

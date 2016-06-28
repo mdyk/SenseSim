@@ -50,6 +50,7 @@
   <phenomena>
     <!--Zero or more repetitions:-->
     <phenomenon name="string" phenomenonType="string">
+      <!--Optional:-->
       <phenomenonArea>
         <!--Zero or more repetitions:-->
         <checkpoint>
@@ -57,6 +58,8 @@
           <longitude>string</longitude>
         </checkpoint>
       </phenomenonArea>
+      <!--Optional:-->
+      <attachedTo nodeId="string"/>
       <!--Zero or more repetitions:-->
       <phenomenonValueSet startTime="string" endTime="string" abilityName="string">
         <!--Zero or more repetitions:-->

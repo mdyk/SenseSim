@@ -35,7 +35,7 @@ public class ThreadSimEngine /*implements SimEngine<DeviceNodeThread<?,?>>*/ {
 //    @Override
     public void loadScenario(Scenario scenario) {
 
-     /*       Collection<List<IDeviceModel>> sensorLists = scenario.scenarioSensors().values();
+     /*       Collection<List<IDeviceModel>> sensorLists = scenario.scenarioDevices().values();
 
             for (List<IDeviceModel> nodeList : sensorLists) {
                 addNodes(nodeList);
