@@ -56,9 +56,9 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     @Override
     public void loadScenario(Scenario scenario) {
+        scenario.initialize();
         List<Device> nodeList = scenario.scenarioDevices();
         addNodes(nodeList);
-
 
         List<PhenomenonModel<GeoPosition>> phenomenaModels = scenario.getPhenomena();
         for (PhenomenonModel<GeoPosition> model : phenomenaModels) {
@@ -66,9 +66,7 @@ public class DisSimEngine implements SimEngine, Runnable {
         }
 
         environment.loadPhenomena(phenomenaModels);
-
         EventBusHolder.post(EventFactory.createScenarioLoadedEvent(scenario));
-
     }
 
     @Override

@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public interface Scenario {
 
+    void initialize();
+
     String scenarioName();
 
     List<Device> scenarioDevices();

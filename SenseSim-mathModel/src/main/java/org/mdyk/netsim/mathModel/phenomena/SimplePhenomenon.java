@@ -3,6 +3,7 @@ package org.mdyk.netsim.mathModel.phenomena;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
@@ -19,6 +20,7 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
     private String phenomenonName;
     private List<GeoPosition> region;
     private Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues = new HashMap<>();
+    private IDeviceModel device;
 
     @Deprecated
     private Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values;
@@ -33,14 +35,22 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
         this.phenomenonValues.putAll(phenomenonValues);
     }
 
-    @Deprecated
-    public SimplePhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points) {
+    public SimplePhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, IDeviceModel device) {
         region = new LinkedList<>();
-        for(GeoPosition position : points) {
-            region.add(position);
-        }
-        this.values = values;
+        region.add((GeoPosition) device.getPosition());
+        this.phenomenonName = phenomenonName;
+        this.phenomenonValues.putAll(phenomenonValues);
+        this.device = device;
     }
+
+//    @Deprecated
+//    public SimplePhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points) {
+//        region = new LinkedList<>();
+//        for(GeoPosition position : points) {
+//            region.add(position);
+//        }
+//        this.values = values;
+//    }
 
     @Override
     public String getName() {

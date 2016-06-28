@@ -41,7 +41,7 @@ public class ThreadSimEngine /*implements SimEngine<DeviceNodeThread<?,?>>*/ {
                 addNodes(nodeList);
             }
 
-        environment.loadPhenomena(scenario.getPhenomena());       */
+        environment.loadPhenomena(scenario.parsePhenomena());       */
 
     }
 

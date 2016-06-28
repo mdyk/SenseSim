@@ -1,5 +1,6 @@
 package org.mdyk.netsim.logic.environment.phenomena;
 
+import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
@@ -15,18 +16,22 @@ import java.util.Map;
  */
 public interface PhenomenaFactory {
 
-    /**
-     * Creates simple phenomenon with given observation capability, region and values.
-     * @param values
-     *      map which holds phenomenon observations. Key are types of abilities and value are maps which hold timerange
-     *      and values of the phenomenon for each ability
-     * @param points
-     *      list of points which defines spatial area of the phenomenon.
-     * @return
-     */
-    @Deprecated
-    PhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points);
+//    @Deprecated
+//    PhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points);
 
     PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points);
+
+    /**
+     * Creates phenomenon which is attached to a specific device.
+     * @param phenomenonName
+     *      name of the phenomenon
+     * @param phenomenonValues
+     *      values of the phenomenon
+     * @param attachedTo
+     *      reference to a device which is associated with phenomenon
+     * @return
+     *      phenomenon attached to a device.
+     */
+    PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, Device attachedTo);
 
 }

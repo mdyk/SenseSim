@@ -11,7 +11,6 @@ import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
-import org.mdyk.netsim.mathModel.observer.ConfigurationSpaceFactory;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
@@ -22,8 +21,6 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 /**
@@ -39,6 +36,9 @@ public class XMLScenario implements Scenario {
     private PhenomenaFactory phenomenaFactory;
     private SensorFactory sensorFactory;
     private XmlTypeConverter xmlTypeConverter;
+
+    List<Device> devices;
+    List<PhenomenonModel<GeoPosition>> phenomena;
 
     @Inject
     public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory, SensorFactory sensorFactory) throws XMLScenarioLoadException {
@@ -59,12 +59,36 @@ public class XMLScenario implements Scenario {
     }
 
     @Override
+    public void initialize() {
+        this.devices = parseDevices();
+        this.phenomena = parsePhenomena();
+    }
+
+    @Override
     public String scenarioName() {
         return scenario.getId();
     }
 
     @Override
     public List<Device> scenarioDevices() {
+        return devices;
+    }
+
+    @Override
+    public List<PhenomenonModel<GeoPosition>> getPhenomena() {
+        return this.phenomena;
+    }
+
+    @Override
+    public List<GeoPosition> getScenarioRegionPoints() {
+        List<GeoPosition> scenarioRegion = new ArrayList<>();
+        for (CheckpointType checkpointType : scenario.getScenarioBoundaries().getCheckpoint()) {
+            scenarioRegion.add(xmlTypeConverter.covertCheckpointToPosiotion(checkpointType));
+        }
+        return scenarioRegion;
+    }
+
+    private List<Device> parseDevices() {
 
         List<Device> nodesList = new ArrayList<>();
 
@@ -72,13 +96,6 @@ public class XMLScenario implements Scenario {
             try {
                 switch (nodeType.getSesnorImplType()) {
                     case "GeoSensorNode":
-//                        List<Device> geoDeviceNodes;
-//                        if (!nodesMap.containsKey(Device.class)) {
-//                            geoDeviceNodes = new LinkedList<>();
-//                            nodesMap.put(Device.class, geoDeviceNodes);
-//                        }
-//                        geoDeviceNodes = nodesMap.get(Device.class);
-
                         GeoPosition position = new GeoPosition(Double.parseDouble(nodeType.getStartPosition().getLatitude()),
                                 Double.parseDouble(nodeType.getStartPosition().getLongitude()));
                         List<GeoPosition> route = xmlTypeConverter.convertRoute(nodeType.getRoute());
@@ -111,16 +128,26 @@ public class XMLScenario implements Scenario {
         return nodesList;
     }
 
-    @Override
-    public List<PhenomenonModel<GeoPosition>> getPhenomena() {
-        LOG.debug(">> getPhenomena()");
+
+    private List<PhenomenonModel<GeoPosition>> parsePhenomena() {
+        LOG.debug(">> parsePhenomena()");
 
         PhenomenaType phenomenaType = scenario.getPhenomena();
         LOG.debug("Size of phenomena: " + phenomenaType.getPhenomenon().size());
         List<PhenomenonModel<GeoPosition>> phenomenaList = new ArrayList<>(phenomenaType.getPhenomenon().size());
 
         for(PhenomenonType phenomenonType : phenomenaType.getPhenomenon()) {
-            List<GeoPosition> phenomenonArea = xmlTypeConverter.convertRoute(phenomenonType.getPhenomenonArea());
+            List<GeoPosition> phenomenonArea = null;
+            Device attachedTo = null;
+            if(phenomenonType.getPhenomenonArea() != null) {
+                phenomenonArea = xmlTypeConverter.convertRoute(phenomenonType.getPhenomenonArea());
+            } else {
+                for(Device device : this.devices) {
+                    if(device.getDeviceLogic().getID() == Integer.parseInt(phenomenonType.getAttachedTo().getNodeId())) {
+                        attachedTo = device;
+                    }
+                }
+            }
 
             Map<AbilityType , Map<IPhenomenonTimeRange, Object>> phenomenonValuesMap = new HashMap<>();
 
@@ -160,31 +187,31 @@ public class XMLScenario implements Scenario {
 
             switch(phenomenonType.getPhenomenonType()) {
                 case "observer":
-                    PhenomenonModel phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, phenomenonArea);
+                    PhenomenonModel phenomenonObserver;
+                    if(phenomenonArea != null) {
+                        phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, phenomenonArea);
+                    }
+                    else if (attachedTo != null) {
+                        phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, attachedTo);
+                    }
+                    else {
+                        throw  new RuntimeException();
+                    }
                     phenomenaList.add(phenomenonObserver);
                     break;
 
-                case "discrete":
-                    PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
-                    phenomenaList.add(phenomenon);
-                    break;
+//                case "discrete":
+//                    PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
+//                    phenomenaList.add(phenomenon);
+//                    break;
 
                 default:
                     throw new RuntimeException("Phenomenon type should be 'observer' or 'discrete'");
             }
         }
 
-        LOG.debug("<< getPhenomena()");
+        LOG.debug("<< parsePhenomena()");
         return phenomenaList;
-    }
-
-    @Override
-    public List<GeoPosition> getScenarioRegionPoints() {
-        List<GeoPosition> scenarioRegion = new ArrayList<>();
-        for (CheckpointType checkpointType : scenario.getScenarioBoundaries().getCheckpoint()) {
-            scenarioRegion.add(xmlTypeConverter.covertCheckpointToPosiotion(checkpointType));
-        }
-        return scenarioRegion;
     }
 
 }
