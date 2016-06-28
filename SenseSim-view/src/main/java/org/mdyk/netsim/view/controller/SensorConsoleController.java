@@ -161,7 +161,6 @@ public class SensorConsoleController implements Initializable {
 
     @Subscribe
     public synchronized void processEvent(InternalEvent event) {
-//        LOG.debug(">> processEvent");
         try {
             switch (event.getEventType()) {
                 case NODE_POSITION_CHANGED:
@@ -174,12 +173,10 @@ public class SensorConsoleController implements Initializable {
         } catch (Exception e) {
             LOG.error(e.getMessage() , e);
         }
-//        LOG.debug("<< processEvent");
     }
 
     @Subscribe
     public void processStatisticsEvent(StatisticsEvent statisticsEvent) {
-//        LOG.trace(">> processStatisticsEvent");
         try{
             switch (statisticsEvent.getEventType()) {
                 case GUI_UPDATE_STATISTICS:
@@ -194,7 +191,6 @@ public class SensorConsoleController implements Initializable {
         } catch (Exception exc) {
             LOG.error(exc.getMessage() , exc);
         }
-//        LOG.trace("<< processStatisticsEvent");
     }
 
     private void showPrograms() {
@@ -243,14 +239,11 @@ public class SensorConsoleController implements Initializable {
     }
 
     public void showObservationsForAbility() {
-
         SensorModel abilityName = (SensorModel) abilityChooser.getValue();
 
         if(abilityName == null) {
             return;
         }
-
-//        final List<PhenomenonValue> observations = nodeView.getNode().old_getObservations().get(AbilityType.valueOf(abilityName));
 
         Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
 
@@ -276,7 +269,6 @@ public class SensorConsoleController implements Initializable {
                 observationsData.addAll(observationsSublist);
             }
         });
-
     }
 
     private void actualizePositionLabel() {

@@ -1,25 +1,24 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 
 <scenario id="1" >
-  <scenarioBoundaries>
-    <!--4 or more repetitions:-->
-                <checkpoint>
-                    <latitude>52.230963</latitude>
-                    <longitude>21.004534</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231804</latitude>
-                    <longitude>21.004974</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231541</latitude>
-                    <longitude>21.005822</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.230786</latitude>
-                    <longitude>21.005350</longitude>
-                </checkpoint>
-  </scenarioBoundaries>
+    <scenarioBoundaries>
+        <checkpoint>
+            <latitude>52.230963</latitude>
+            <longitude>21.004534</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>52.231804</latitude>
+            <longitude>21.004974</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>52.231541</latitude>
+            <longitude>21.005822</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>52.230786</latitude>
+            <longitude>21.005350</longitude>
+        </checkpoint>
+    </scenarioBoundaries>
 
     <nodes>
         <node id="1">
