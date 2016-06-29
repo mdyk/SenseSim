@@ -98,22 +98,28 @@ public class Functions {
     public static boolean isPointInRegion(GeoPosition pointPosition, List<GeoPosition> regionVertex) {
         int i, j;
         boolean isInside = false;
-        //create an array of coordinates from the region boundary list
-        GeoPosition[] verts = regionVertex.toArray(new GeoPosition[regionVertex.size()]);
-        int sides = verts.length;
-        for (i = 0, j = sides - 1; i < sides; j = i++) {
-            //verifying if your coordinate is inside your region
-            if (
-                    (
-                            (
-                                    (verts[i].getLongitude() <= pointPosition.getLongitude()) && (pointPosition.getLongitude() < verts[j].getLongitude())
-                            ) || (
-                                    (verts[j].getLongitude() <= pointPosition.getLongitude()) && (pointPosition.getLongitude() < verts[i].getLongitude())
-                            )
-                    ) &&
-                            (pointPosition.getLatitude() < (verts[j].getLatitude() - verts[i].getLatitude()) * (pointPosition.getLongitude() - verts[i].getLongitude()) / (verts[j].getLongitude() - verts[i].getLongitude()) + verts[i].getLatitude())
-                    ) {
-                isInside = !isInside;
+
+        if(regionVertex.size() == 1) {
+            isInside = (pointPosition.getLatitude() == regionVertex.get(0).getLatitude() && pointPosition.getLongitude() == regionVertex.get(0).getLongitude());
+        } else {
+
+            //create an array of coordinates from the region boundary list
+            GeoPosition[] verts = regionVertex.toArray(new GeoPosition[regionVertex.size()]);
+            int sides = verts.length;
+            for (i = 0, j = sides - 1; i < sides; j = i++) {
+                //verifying if your coordinate is inside your region
+                if (
+                        (
+                                (
+                                        (verts[i].getLongitude() <= pointPosition.getLongitude()) && (pointPosition.getLongitude() < verts[j].getLongitude())
+                                ) || (
+                                        (verts[j].getLongitude() <= pointPosition.getLongitude()) && (pointPosition.getLongitude() < verts[i].getLongitude())
+                                )
+                        ) &&
+                                (pointPosition.getLatitude() < (verts[j].getLatitude() - verts[i].getLatitude()) * (pointPosition.getLongitude() - verts[i].getLongitude()) / (verts[j].getLongitude() - verts[i].getLongitude()) + verts[i].getLatitude())
+                        ) {
+                    isInside = !isInside;
+                }
             }
         }
         return isInside;

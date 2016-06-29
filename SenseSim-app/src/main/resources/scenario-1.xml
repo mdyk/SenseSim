@@ -22,7 +22,7 @@
 
     <nodes>
         <node id="1">
-            <speed>6</speed>
+            <speed>0</speed>
             <radioRange>90</radioRange>
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
@@ -49,99 +49,99 @@
                 </checkpoint>
             </route>
         </node>
-        <node id="2">
-            <speed>1</speed>
-            <radioRange>90</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
-            <sesnorImplType>GeoSensorNode</sesnorImplType>
-            <routingAlgType>FloodingRouting</routingAlgType>
-            <sensorAbilities>
-                <ability>TEMPERATURE</ability>
-            </sensorAbilities>
-            <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
-            </sensors>
-            <startPosition>
-                <latitude>52.230963</latitude>
-                <longitude>21.004534</longitude>
-            </startPosition>
-            <route>
-                <checkpoint>
-                    <latitude>52.230963</latitude>
-                    <longitude>21.004534</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231804</latitude>
-                    <longitude>21.004974</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231541</latitude>
-                    <longitude>21.005822</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.230786</latitude>
-                    <longitude>21.005350</longitude>
-                </checkpoint>
-            </route>
-        </node>
-        <node id="3">
-            <speed>0</speed>
-            <radioRange>50</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
-            <sesnorImplType>GeoSensorNode</sesnorImplType>
-            <routingAlgType>FloodingRouting</routingAlgType>
-            <sensorAbilities>
-                <ability>TEMPERATURE</ability>
-            </sensorAbilities>
-            <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
-            </sensors>
-            <startPosition>
-                <latitude>52.230963</latitude>
-                <longitude>21.004674</longitude>
-            </startPosition>
-            <route>
-                <checkpoint>
-                    <latitude>52.230963</latitude>
-                    <longitude>21.004674</longitude>
-                </checkpoint>
-            </route>
-        </node>
-        <node id="4">
-            <speed>1</speed>
-            <radioRange>90</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
-            <sesnorImplType>GeoSensorNode</sesnorImplType>
-            <routingAlgType>FloodingRouting</routingAlgType>
-            <sensorAbilities>
-                <ability>TEMPERATURE</ability>
-            </sensorAbilities>
-            <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
-            </sensors>
-            <startPosition>
-                <latitude>52.230786</latitude>
-                <longitude>21.005350</longitude>
-            </startPosition>
-            <route>
-                <checkpoint>
-                    <latitude>52.230786</latitude>
-                    <longitude>21.005350</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.230963</latitude>
-                    <longitude>21.004534</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231804</latitude>
-                    <longitude>21.004974</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231541</latitude>
-                    <longitude>21.005822</longitude>
-                </checkpoint>
-            </route>
-        </node>
+        <!--<node id="2">-->
+            <!--<speed>1</speed>-->
+            <!--<radioRange>90</radioRange>-->
+            <!--<radioBandwidth>5000</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<sensors>-->
+                <!--<sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>-->
+            <!--</sensors>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230963</latitude>-->
+                <!--<longitude>21.004534</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.230963</latitude>-->
+                    <!--<longitude>21.004534</longitude>-->
+                <!--</checkpoint>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.231804</latitude>-->
+                    <!--<longitude>21.004974</longitude>-->
+                <!--</checkpoint>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.231541</latitude>-->
+                    <!--<longitude>21.005822</longitude>-->
+                <!--</checkpoint>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.230786</latitude>-->
+                    <!--<longitude>21.005350</longitude>-->
+                <!--</checkpoint>-->
+            <!--</route>-->
+        <!--</node>-->
+        <!--<node id="3">-->
+            <!--<speed>0</speed>-->
+            <!--<radioRange>50</radioRange>-->
+            <!--<radioBandwidth>5000</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<sensors>-->
+                <!--<sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>-->
+            <!--</sensors>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230963</latitude>-->
+                <!--<longitude>21.004674</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.230963</latitude>-->
+                    <!--<longitude>21.004674</longitude>-->
+                <!--</checkpoint>-->
+            <!--</route>-->
+        <!--</node>-->
+        <!--<node id="4">-->
+            <!--<speed>1</speed>-->
+            <!--<radioRange>90</radioRange>-->
+            <!--<radioBandwidth>5000</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<sensors>-->
+                <!--<sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>-->
+            <!--</sensors>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230786</latitude>-->
+                <!--<longitude>21.005350</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.230786</latitude>-->
+                    <!--<longitude>21.005350</longitude>-->
+                <!--</checkpoint>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.230963</latitude>-->
+                    <!--<longitude>21.004534</longitude>-->
+                <!--</checkpoint>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.231804</latitude>-->
+                    <!--<longitude>21.004974</longitude>-->
+                <!--</checkpoint>-->
+                <!--<checkpoint>-->
+                    <!--<latitude>52.231541</latitude>-->
+                    <!--<longitude>21.005822</longitude>-->
+                <!--</checkpoint>-->
+            <!--</route>-->
+        <!--</node>-->
     </nodes>
     <phenomena>
         <phenomenon name="string" phenomenonType="observer">
@@ -167,6 +167,16 @@
                 <phenomenonValue>
                     <observerValue fromTime="1" toTime="500" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
                         <value>10</value>
+                    </observerValue>
+                </phenomenonValue>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="1"/>
+            <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE">
+                <phenomenonValue>
+                    <observerValue fromTime="1" toTime="500" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                        <value>20</value>
                     </observerValue>
                 </phenomenonValue>
             </phenomenonValueSet>
