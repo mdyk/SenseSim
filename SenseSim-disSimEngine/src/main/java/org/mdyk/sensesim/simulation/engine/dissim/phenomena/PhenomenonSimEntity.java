@@ -4,8 +4,10 @@ import dissim.broker.observer.Observable;
 import dissim.broker.observer.Observer;
 import dissim.simspace.core.BasicSimEntity;
 import dissim.simspace.core.SimModel;
+import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
@@ -17,12 +19,19 @@ import java.util.List;
 public class PhenomenonSimEntity extends BasicSimEntity implements PhenomenonModel, Observer {
 
     protected SimplePhenomenon simplePhenomenon;
+    /**
+     * Device which is associated with this phenomenon
+     */
+    private Device attachedDevice;
 
     public PhenomenonSimEntity(PhenomenonModel<GeoPosition> simplePhenomenon) {
         super(SimModel.getInstance().getCommonSimContext());
 
         // TODO rzutowanie do poprwy, najlepiej używać tylko interfejsu
         this.simplePhenomenon = (SimplePhenomenon) simplePhenomenon;
+
+
+
     }
 
     public SimplePhenomenon getSimplePhenomenon() {
@@ -34,7 +43,9 @@ public class PhenomenonSimEntity extends BasicSimEntity implements PhenomenonMod
 
         switch (eventClass.getSimpleName()) {
             case "EndMoveActivity":
-
+                GeoPosition devicePosition = (GeoPosition) simplePhenomenon.getAttachedDevice().getPosition();
+                simplePhenomenon.getPhenomenonRegionPoints().clear();
+                simplePhenomenon.getPhenomenonRegionPoints().add(devicePosition);
                 break;
         }
     }
@@ -61,11 +72,16 @@ public class PhenomenonSimEntity extends BasicSimEntity implements PhenomenonMod
 
     @Override
     public ConfigurationSpace getEventValue(Class configurationSpaceClass, double time) {
-        return getEventValue(configurationSpaceClass , time);
+        return simplePhenomenon.getEventValue(configurationSpaceClass , time);
     }
 
     @Override
     public boolean hasConfigurationSpace(Class configurationSpaceClass) {
         return simplePhenomenon.hasConfigurationSpace(configurationSpaceClass);
+    }
+
+    @Override
+    public IDeviceModel getAttachedDevice() {
+        return simplePhenomenon.getAttachedDevice();
     }
 }

@@ -2,7 +2,6 @@ package org.mdyk.sensesim.simulation.engine.dissim;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
-
 import dissim.simspace.core.SimControlException;
 import dissim.simspace.core.SimModel;
 import org.apache.log4j.Logger;
@@ -17,6 +16,8 @@ import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.EndMoveActivity;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.PhenomenonSimEntity;
 
 import javax.inject.Inject;
@@ -64,6 +65,16 @@ public class DisSimEngine implements SimEngine, Runnable {
             PhenomenonSimEntity phenomenonSimEntity = new PhenomenonSimEntity(model);
             phenomenaList.add(phenomenonSimEntity);
             environment.addPhenomenon(phenomenonSimEntity);
+
+            //FIXME SHIT CODE !!!!!!
+            if(model.getAttachedDevice() != null) {
+                for(Device device : nodeList) {
+                    if(device.getDeviceLogic().getID() == model.getAttachedDevice().getID()) {
+                        DisSimNodeEntity simEntity = (DisSimNodeEntity) device.getDeviceSimEntity();
+                        simEntity.register(EndMoveActivity.class , phenomenonSimEntity);
+                    }
+                }
+            }
         }
 
         EventBusHolder.post(EventFactory.createScenarioLoadedEvent(scenario));

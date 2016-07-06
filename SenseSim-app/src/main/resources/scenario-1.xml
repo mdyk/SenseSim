@@ -22,7 +22,7 @@
 
     <nodes>
         <node id="1">
-            <speed>0</speed>
+            <speed>6</speed>
             <radioRange>90</radioRange>
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>

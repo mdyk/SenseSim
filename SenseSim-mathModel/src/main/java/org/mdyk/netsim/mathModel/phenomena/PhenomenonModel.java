@@ -2,6 +2,7 @@ package org.mdyk.netsim.mathModel.phenomena;
 
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.IDeviceModel;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 
 import java.util.List;
@@ -53,5 +54,12 @@ public interface PhenomenonModel<P extends Position> {
      * @return
      */
     boolean hasConfigurationSpace(Class configurationSpaceClass);
+
+    /**
+     * Returns device which is associated with this phenomenon.
+     * @return
+     *      device associated with this phenomenon.
+     */
+    IDeviceModel getAttachedDevice();
 
 }

@@ -5,7 +5,6 @@ import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.device.IDeviceModel;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
-import org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 
 import java.util.HashMap;
@@ -113,5 +112,10 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
     @Override
     public boolean hasConfigurationSpace(Class configurationSpaceClass) {
         return phenomenonValues.containsKey(configurationSpaceClass);
+    }
+
+    @Override
+    public IDeviceModel getAttachedDevice() {
+        return device;
     }
 }

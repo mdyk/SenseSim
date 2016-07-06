@@ -6,22 +6,22 @@ import org.mdyk.netsim.logic.node.program.Middleware;
 
 public interface DeviceSimEntity {
 
-    public void startProgramExecution(int PID);
+    void startProgramExecution(int PID);
 
-    public void endProgramExecution(int PID);
+    void endProgramExecution(int PID);
 
-    public void startEntity();
+    void startEntity();
 
-    public void stopEntity();
+    void stopEntity();
 
-    public double getSimTime();
+    double getSimTime();
 
-    public void setDeviceLogic(DeviceLogic deviceLogic);
+    void setDeviceLogic(DeviceLogic deviceLogic);
 
-    public DeviceLogic getDeviceLogic();
+    DeviceLogic getDeviceLogic();
 
-    public void setMiddleware(Middleware middleware);
+    void setMiddleware(Middleware middleware);
 
-    public Middleware getMiddleware();
+    Middleware getMiddleware();
 
 }
