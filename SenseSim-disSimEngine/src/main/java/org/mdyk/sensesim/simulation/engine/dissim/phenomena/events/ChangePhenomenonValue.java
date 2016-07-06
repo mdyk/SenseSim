@@ -2,6 +2,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.phenomena.events;
 
 import dissim.simspace.core.BasicSimStateChange;
 import dissim.simspace.core.SimControlException;
+import org.mdyk.sensesim.simulation.engine.dissim.phenomena.PhenomenonSimEntity;
 
 
 /**

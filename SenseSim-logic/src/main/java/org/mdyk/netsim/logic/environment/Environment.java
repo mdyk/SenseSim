@@ -22,7 +22,7 @@ public class Environment {
 
     private static final Logger LOG = Logger.getLogger(Environment.class);
 
-    private List<PhenomenonModel<GeoPosition>> phenomena = new LinkedList<>();
+    private List<PhenomenonModel> phenomena = new ArrayList();
 
     public Environment() {
         EventBusHolder.getEventBus().register(this);
@@ -79,7 +79,7 @@ public class Environment {
         return false;
     }
 
-    public void loadPhenomena(List<PhenomenonModel<GeoPosition>> phenomena) {
+    public void loadPhenomena(List<PhenomenonModel> phenomena) {
         LOG.trace(">>> loadEvents");
 
         LOG.info("Events size: " + phenomena.size());
@@ -90,6 +90,10 @@ public class Environment {
         }
 
         LOG.trace("<<< loadEvents");
+    }
+
+    public void addPhenomenon(PhenomenonModel phenomenon) {
+        this.phenomena.add(phenomenon);
     }
 
     public void clearPhenomena() {

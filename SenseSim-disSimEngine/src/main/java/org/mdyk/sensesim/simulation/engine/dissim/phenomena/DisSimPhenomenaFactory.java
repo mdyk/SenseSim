@@ -17,10 +17,10 @@ import java.util.Map;
 @Singleton
 public class DisSimPhenomenaFactory implements PhenomenaFactory {
 
-//    @Override
-//    public PhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points) {
-//        return new SimplePhenomenon(values, points);
-//    }
+    @Override
+    public PhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points) {
+        return new SimplePhenomenon(values, points);
+    }
 
     @Override
     public PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName, Map<Class, Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points) {

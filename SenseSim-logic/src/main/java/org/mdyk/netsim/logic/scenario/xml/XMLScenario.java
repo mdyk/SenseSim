@@ -200,10 +200,10 @@ public class XMLScenario implements Scenario {
                     phenomenaList.add(phenomenonObserver);
                     break;
 
-//                case "discrete":
-//                    PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
-//                    phenomenaList.add(phenomenon);
-//                    break;
+                case "discrete":
+                    PhenomenonModel phenomenon = phenomenaFactory.createPhenomenon(phenomenonValuesMap,phenomenonArea);
+                    phenomenaList.add(phenomenon);
+                    break;
 
                 default:
                     throw new RuntimeException("Phenomenon type should be 'observer' or 'discrete'");

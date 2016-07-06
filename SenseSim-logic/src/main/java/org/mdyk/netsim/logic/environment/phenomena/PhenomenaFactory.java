@@ -16,8 +16,8 @@ import java.util.Map;
  */
 public interface PhenomenaFactory {
 
-//    @Deprecated
-//    PhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points);
+    @Deprecated
+    PhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points);
 
     PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points);
 

@@ -6,7 +6,7 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.aop.statistics.SaveStatistics;
 
 
-public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, StartMoveActivity> {
+public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, StartMoveActivity>{
 
     private static final Logger LOG = Logger.getLogger(EndMoveActivity.class);
 
@@ -23,6 +23,7 @@ public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, Start
         LOG.debug(">> EndMoveActivity.transition");
         disSimNodeEntity.startMoveActivity = new StartMoveActivity(disSimNodeEntity);
         disSimNodeEntity.getProgrammableNode().move();
+        disSimNodeEntity.notifyObservers(EndMoveActivity.class);
         LOG.debug("<< EndMoveActivity.transition");
     }
 

@@ -87,10 +87,8 @@ public class XMLScenarioTest {
         File scenarioXML = FileUtils.toFile(getClass().getResource("/scenario-1.xml"));
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
-
+        xmlScenario.initialize();
         List<Device> nodes = xmlScenario.scenarioDevices();
-
-        TestCase.assertTrue(nodes.size() == 1);
 
         TestCase.assertTrue(nodes.size() == 4);
 
@@ -107,7 +105,7 @@ public class XMLScenarioTest {
         File scenarioXML = FileUtils.toFile(getClass().getResource("/scenario-1.xml"));
         ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
         XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
-
+        xmlScenario.initialize();
         List<PhenomenonModel<GeoPosition>> phenomenonModelList = xmlScenario.getPhenomena();
 
         TestCase.assertEquals(2 , phenomenonModelList.size());

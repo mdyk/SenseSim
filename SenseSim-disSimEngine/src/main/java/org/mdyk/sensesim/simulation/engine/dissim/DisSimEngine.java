@@ -17,13 +17,12 @@ import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
-import org.mdyk.sensesim.simulation.engine.dissim.phenomena.events.PhenomenonSimEntity;
+import org.mdyk.sensesim.simulation.engine.dissim.phenomena.PhenomenonSimEntity;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -62,10 +61,11 @@ public class DisSimEngine implements SimEngine, Runnable {
 
         List<PhenomenonModel<GeoPosition>> phenomenaModels = scenario.getPhenomena();
         for (PhenomenonModel<GeoPosition> model : phenomenaModels) {
-            phenomenaList.add(new PhenomenonSimEntity(model));
+            PhenomenonSimEntity phenomenonSimEntity = new PhenomenonSimEntity(model);
+            phenomenaList.add(phenomenonSimEntity);
+            environment.addPhenomenon(phenomenonSimEntity);
         }
 
-        environment.loadPhenomena(phenomenaModels);
         EventBusHolder.post(EventFactory.createScenarioLoadedEvent(scenario));
     }
 

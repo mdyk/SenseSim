@@ -43,14 +43,14 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
         this.device = device;
     }
 
-//    @Deprecated
-//    public SimplePhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points) {
-//        region = new LinkedList<>();
-//        for(GeoPosition position : points) {
-//            region.add(position);
-//        }
-//        this.values = values;
-//    }
+    @Deprecated
+    public SimplePhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points) {
+        region = new LinkedList<>();
+        for(GeoPosition position : points) {
+            region.add(position);
+        }
+        this.values = values;
+    }
 
     @Override
     public String getName() {
