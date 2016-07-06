@@ -16,7 +16,10 @@ import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 
@@ -93,7 +96,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     @Override
     public void execute() {
-        LOG.trace(">> execute");
+//        LOG.trace(">> execute");
         for (Map.Entry<Integer, SensorProgram> entry : programs.entrySet()) {
             GroovyProgram groovyProgram = (GroovyProgram) entry.getValue();
 
@@ -136,7 +139,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                 resendProgram(groovyProgram);
             }
 
-            LOG.trace("<< execute");
+//            LOG.trace("<< execute");
         }
 
         // TODO określenie co jeszcze miałby robić middleware
