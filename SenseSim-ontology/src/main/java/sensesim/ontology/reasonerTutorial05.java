@@ -6,8 +6,6 @@ import org.apache.jena.reasoner.ReasonerRegistry;
 import org.apache.jena.util.FileManager;
 import org.apache.jena.util.PrintUtil;
 
-import java.io.*;
-import java.util.Iterator;
 
 /**
  * Created by Michal on 2016-07-14.
@@ -26,8 +24,8 @@ public class reasonerTutorial05 {
         reasoner = reasoner.bindSchema(schema);
         InfModel infmodel = ModelFactory.createInfModel(reasoner, data);
         Resource nForce = infmodel.getResource(NS+"nForce");
-        RDFNode n = (RDFNode) null;
-        Property p = (Property) null;
+        RDFNode n = null;
+        Property p = null;
         System.out.println("nForce *:");
         printStatements(nForce, p, n, infmodel); 	}
 

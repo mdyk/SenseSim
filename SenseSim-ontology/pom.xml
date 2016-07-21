@@ -14,6 +14,22 @@
             <artifactId>apache-jena-libs</artifactId>
             <version>3.1.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/edu.stanford.protege/org.protege.common -->
+        <dependency>
+            <groupId>edu.stanford.protege</groupId>
+            <artifactId>protege-owlapi-extensions</artifactId>
+            <version>3.2.7</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/net.sourceforge.owlapi/owlapi-distribution -->
+        <dependency>
+            <groupId>net.sourceforge.owlapi</groupId>
+            <artifactId>owlapi-distribution</artifactId>
+            <version>4.0.2</version>
+        </dependency>
+
+
+
     </dependencies>
 
 
