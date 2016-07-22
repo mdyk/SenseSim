@@ -5,6 +5,8 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.node.DevicesFactory;
+import org.mdyk.netsim.logic.node.program.Middleware;
+import org.mdyk.netsim.logic.node.program.owl.OWLMiddleware;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
 import org.mdyk.netsim.logic.sensor.SensorFactory;
@@ -21,7 +23,10 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Scenario read from XML file
@@ -113,6 +118,15 @@ public class XMLScenario implements Scenario {
                                 position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
                                 Double.parseDouble(nodeType.getSpeed()), abilities, sensorModels);
                         node.getDeviceLogic().setRoute(route);
+
+                        Middleware middleware = node.getMiddleware();
+                        // FIXME refactor w taki sposób ze nie bedzie porzebny instanceof
+                        if(middleware instanceof OWLMiddleware) {
+                            OWLMiddleware owlMiddleware = (OWLMiddleware) middleware;
+                            File ontologyFile = new File(scenario.getScenarioOntology().getOntologyFile());
+                            owlMiddleware.loadOntology(ontologyFile, scenario.getScenarioOntology().getOntologyIRI());
+                        }
+
                         nodesList.add(node);
                         break;
 

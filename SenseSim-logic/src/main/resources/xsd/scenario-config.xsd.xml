@@ -1,4 +1,7 @@
 <scenario id="string" scenarioName="string">
+  <scenarioOntology>
+    <OntologyFile>string</OntologyFile>
+  </scenarioOntology>
   <scenarioBoundaries>
     <!--4 or more repetitions:-->
     <checkpoint>

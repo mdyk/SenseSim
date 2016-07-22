@@ -1,6 +1,12 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 
 <scenario id="1" >
+
+    <scenarioOntology>
+        <OntologyFile>/Users/michal/Documents/Konferencje/2016/IoT World Forum/Workspace/triage.owl</OntologyFile>
+        <OntologyIRI>http://www.semanticweb.org/michal/ontologies/2016/6/triage</OntologyIRI>
+    </scenarioOntology>
+
     <scenarioBoundaries>
         <checkpoint>
             <latitude>52.230963</latitude>
