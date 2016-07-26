@@ -5,7 +5,9 @@ import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 import java.util.List;
 import java.util.Map;
@@ -50,6 +52,7 @@ public interface DeviceAPI<P extends Position> {
      */
     void api_sendMessage(int messageId, int originSource, int originDest, Object content , Integer size );
 
+    @Deprecated
     /**
      * Returns list of device's observations.
      * @return
@@ -93,5 +96,9 @@ public interface DeviceAPI<P extends Position> {
 
 
     PhenomenonValue api_getCurrentObservation(AbilityType abilityType);
+
+    List<SensorModel<?,?>> api_getSensorsList();
+
+    ConfigurationSpace api_getSensorCurrentObservation(SensorModel sensor);
 
 }

@@ -10,7 +10,9 @@ import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity;
@@ -18,6 +20,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.function.Function;
 
 
@@ -134,5 +137,24 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
         }   else {
             return null; // FIXME powinno zwracać NullPhenomenonValue
         }
+    }
+
+    @Override
+    public List<SensorModel<?,?>> api_getSensorsList() {
+        return deviceSimEntity.getDeviceLogic().getSensors();
+    }
+
+    @Override
+    public ConfigurationSpace api_getSensorCurrentObservation(SensorModel sensor) {
+
+        TreeMap<Double, List<ConfigurationSpace>> observations = deviceSimEntity.getDeviceLogic().getObservations().get(sensor.getConfigurationSpaceClass());
+
+        ConfigurationSpace observation = null;
+        if(observations != null && !observations.isEmpty()) {
+            List<ConfigurationSpace> latestObservations = observations.get(observations.lastKey());
+            observation = latestObservations.get(latestObservations.size()-1);
+        }
+
+        return observation;
     }
 }

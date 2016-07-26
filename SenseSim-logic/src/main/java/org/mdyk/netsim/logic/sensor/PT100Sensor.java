@@ -21,7 +21,7 @@ public class PT100Sensor extends SensorModel<PT100Observer , TemperatureConfigur
 
     @Override
     public String getName() {
-        return "PT100Sensor";
+        return "PT100";
     }
 
     @Override

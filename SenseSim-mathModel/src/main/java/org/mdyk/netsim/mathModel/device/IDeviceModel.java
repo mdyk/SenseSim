@@ -1,9 +1,9 @@
 package org.mdyk.netsim.mathModel.device;
 
-import org.mdyk.netsim.logic.util.Position;
-import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
+import org.mdyk.netsim.logic.util.Position;
+import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
@@ -52,6 +52,7 @@ public interface IDeviceModel<P extends Position> {
     @Deprecated
     Map<AbilityType, List<PhenomenonValue>> old_getObservations();
 
+    @Deprecated
     List<PhenomenonValue> getObservationsAtTime(AbilityType ability, Double time);
 
     void addObservation(Class<? extends ConfigurationSpace> configurationSpaceClass, Double time, ConfigurationSpace value);
