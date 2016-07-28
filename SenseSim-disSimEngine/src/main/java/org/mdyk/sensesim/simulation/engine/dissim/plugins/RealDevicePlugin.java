@@ -1,0 +1,120 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package org.mdyk.sensesim.simulation.engine.dissim.plugins;
+
+import com.google.common.eventbus.Subscribe;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.inject.Inject;
+import javax.inject.Singleton;
+import net.xeoh.plugins.base.annotations.PluginImplementation;
+import net.xeoh.plugins.base.annotations.Timer;
+import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventType;
+import org.mdyk.netsim.logic.event.InternalEvent;
+import org.mdyk.netsim.logic.network.NetworkManager;
+import org.mdyk.netsim.logic.node.Device;
+import org.mdyk.netsim.logic.node.DevicesFactory;
+import org.mdyk.netsim.logic.util.GeoPosition;
+import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
+import pl.edu.wat.integrator.DeviceManager;
+import pl.edu.wat.integrator.Main;
+
+/**
+ *
+ * @author Marcin Antczak <marcin@antczak.xyz>
+ */
+@PluginImplementation
+public class RealDevicePlugin implements IRealDevicePlugin{
+
+    private DevicesFactory devicesFactory;
+    private List<Device> nodeList;
+    private HashMap<Integer, Device> realDevices = new HashMap<>();
+    
+    public RealDevicePlugin(){
+        EventBusHolder.getEventBus().register(this);
+    }  
+    
+    @Override
+    public void loadDevices(List<Device> nodeList) {
+        runServer();
+        this.nodeList = nodeList;
+        DeviceManager.addFakeDevices(nodeList);
+        
+    }
+
+    @Override
+    @Timer(period=1000)
+    public void updateDevices() {
+    }
+
+    private void runServer(){
+        new Thread(new Runnable(){
+            @Override
+            public void run(){
+                try {
+                    Main.main(new String[]{});
+                } catch (Exception ex) {
+                    Logger.getLogger(RealDevicePlugin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }).start();        
+    }
+    
+    @Override
+    public void setDeviceFactory(DevicesFactory devicesFactory) {
+        this.devicesFactory = devicesFactory;
+    }
+    
+    @Subscribe
+    public void processEvent(InternalEvent event) {
+        pl.edu.wat.integrator.Device device;
+        switch(event.getEventType()){
+            case NEW_REAL_DEVICE:
+                device = (pl.edu.wat.integrator.Device)event.getPayload();
+                addRealDevice(findDeviceById(device.getId()));
+                break;
+            case REAL_DEVICE_POSITION_CHANGED:
+                device = (pl.edu.wat.integrator.Device)event.getPayload();
+                updateDevice(device);
+                break;
+        }
+    }
+    
+    private void addRealDevice(Device d){
+        if (d != null){
+            //d.getMiddleware().setDeviceAPI(new RealDeviceAPI(d.getDeviceSimEntity()));
+            realDevices.put(d.getDeviceAPI().api_getMyID(), d);
+        }
+    }
+    
+    private Device findDeviceById(int id){
+        for(Device device: nodeList){
+            if (device.getDeviceAPI().api_getMyID() == id)
+                return device;
+        }
+        return null;
+    }
+    
+    private boolean isRealDevice(Device d){
+        if (realDevices.containsKey(d.getDeviceAPI().api_getMyID()))
+            return true;
+        return false;
+    }
+    private void updateDevice(pl.edu.wat.integrator.Device device){
+        Device updateDevice = findDeviceById(device.getId());
+        if (updateDevice != null && isRealDevice(updateDevice)){
+            updateDevice.getDeviceLogic().setPosition(new GeoPosition(device.getLocation().getX(), device.getLocation().getY()));
+            EventBusHolder.post(EventType.NODE_POSITION_CHANGED, updateDevice);
+        }
+    }
+    
+}

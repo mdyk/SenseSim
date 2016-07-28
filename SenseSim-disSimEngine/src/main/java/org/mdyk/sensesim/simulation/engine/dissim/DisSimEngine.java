@@ -24,7 +24,15 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import net.xeoh.plugins.base.PluginManager;
+import net.xeoh.plugins.base.impl.PluginManagerFactory;
+import net.xeoh.plugins.base.util.PluginManagerUtil;
+import net.xeoh.plugins.base.util.uri.ClassURI;
+import org.mdyk.netsim.logic.node.DevicesFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
+import org.mdyk.sensesim.simulation.engine.dissim.plugins.RealDevicePlugin;
 
 
 /**
@@ -35,6 +43,8 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     private static final Logger LOG = Logger.getLogger(DisSimEngine.class);
 
+    @Inject
+    private DevicesFactory devicesFactory;
     @Inject
     private NetworkManager networkManager;
 
@@ -58,8 +68,15 @@ public class DisSimEngine implements SimEngine, Runnable {
     public void loadScenario(Scenario scenario) {
         scenario.initialize();
         List<Device> nodeList = scenario.scenarioDevices();
+        PluginManager pluginManager = PluginManagerFactory.createPluginManager();
+        pluginManager.addPluginsFrom(ClassURI.PLUGIN(RealDevicePlugin.class));
+        Collection<IRealDevicePlugin> plugins = new PluginManagerUtil(pluginManager).getPlugins(IRealDevicePlugin.class);
+        for(IRealDevicePlugin plugin: plugins){
+            plugin.setDeviceFactory(devicesFactory);
+            plugin.loadDevices(nodeList);
+        }
         addNodes(nodeList);
-
+        
         List<PhenomenonModel<GeoPosition>> phenomenaModels = scenario.getPhenomena();
         for (PhenomenonModel<GeoPosition> model : phenomenaModels) {
             PhenomenonSimEntity phenomenonSimEntity = new PhenomenonSimEntity(model);
