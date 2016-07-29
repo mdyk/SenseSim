@@ -16,7 +16,7 @@ import org.mdyk.netsim.logic.node.DevicesFactory;
  * @author Marcin Antczak <marcin@antczak.xyz>
  */
 public interface IRealDevicePlugin extends Plugin {
-    public void loadDevices(List<Device> nodeList);
-    public void updateDevices();
-    public void setDeviceFactory(DevicesFactory devicesFactory);
+    void loadDevices(List<Device> nodeList);
+    void updateDevices();
+    void setDeviceFactory(DevicesFactory devicesFactory);
 }

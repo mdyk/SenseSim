@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.Timer;
+import org.mdyk.netsim.logic.communication.Message;
+import org.mdyk.netsim.logic.communication.message.SimpleMessage;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
@@ -91,8 +94,17 @@ public class RealDevicePlugin implements IRealDevicePlugin{
     
     private void addRealDevice(Device d){
         if (d != null){
-            //d.getMiddleware().setDeviceAPI(new RealDeviceAPI(d.getDeviceSimEntity()));
             realDevices.put(d.getDeviceAPI().api_getMyID(), d);
+            Function<Message , Object> handler = h ->{
+                SimpleMessage msg = new SimpleMessage(h.getID(), h.getMessageSource(), h.getMessageDest(), h.getMessageContent(), h.getSize());
+                try {
+                    sendMessageToRealDevice(msg);
+                } catch (Exception ex) {
+                    Logger.getLogger(RealDevicePlugin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                return null;
+            };
+            d.getDeviceAPI().api_setOnMessageHandler(handler);
         }
     }
     
@@ -105,15 +117,19 @@ public class RealDevicePlugin implements IRealDevicePlugin{
     }
     
     private boolean isRealDevice(Device d){
-        if (realDevices.containsKey(d.getDeviceAPI().api_getMyID()))
-            return true;
-        return false;
+        return realDevices.containsKey(d.getDeviceAPI().api_getMyID());
     }
     private void updateDevice(pl.edu.wat.integrator.Device device){
         Device updateDevice = findDeviceById(device.getId());
         if (updateDevice != null && isRealDevice(updateDevice)){
             updateDevice.getDeviceLogic().setPosition(new GeoPosition(device.getLocation().getX(), device.getLocation().getY()));
             EventBusHolder.post(EventType.NODE_POSITION_CHANGED, updateDevice);
+        }
+    }
+    
+    private void sendMessageToRealDevice(SimpleMessage msg) throws Exception{
+        if (isRealDevice(findDeviceById(msg.getMessageDest()))){
+            DeviceManager.sendMessageToDevice(msg.getMessageDest(), msg);
         }
     }
     
