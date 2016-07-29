@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import java.lang.*?>
-<?import javafx.embed.swing.*?>
-<?import javafx.geometry.*?>
+<?import javafx.embed.swing.SwingNode?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mdyk.netsim.view.controller.SenseSimJFXController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
@@ -94,6 +92,7 @@
                                           <Insets />
                                        </HBox.margin>
                                     </Button>
+                                    <Button layoutX="144.0" layoutY="14.0" mnemonicParsing="false" onAction="#processInformationNeed" prefHeight="27.0" prefWidth="134.0" text="Information need" />
                                  </children>
                               </AnchorPane>
                           </content>

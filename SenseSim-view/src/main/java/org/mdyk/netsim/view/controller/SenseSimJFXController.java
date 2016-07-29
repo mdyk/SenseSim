@@ -6,8 +6,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.embed.swing.SwingNode;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
@@ -17,34 +20,38 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.controlsfx.dialog.Dialogs;
-import org.mdyk.netsim.logic.event.EventFactory;
-import org.mdyk.netsim.logic.node.geo.GeoDeviceNode;
-import org.mdyk.netsim.logic.scenario.Scenario;
-import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
-import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
-import org.mdyk.netsim.view.map.MapApp;
 import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
+import org.mdyk.netsim.logic.node.geo.GeoDeviceNode;
+import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.util.GeoPosition;
+import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.network.GraphEdge;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
+import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.view.edge.OSMEdge;
 import org.mdyk.netsim.view.event.OSMEventView;
+import org.mdyk.netsim.view.map.MapApp;
 import org.mdyk.netsim.view.node.GraphEdgeViewWrapper;
 import org.mdyk.netsim.view.node.OSMNodeView;
-import org.openstreetmap.gui.jmapviewer.events.JMVCommandEvent;
-import org.openstreetmap.gui.jmapviewer.interfaces.JMapViewerEventListener;
 
 import javax.swing.*;
-import java.awt.Dimension;
+import java.awt.*;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 
 public class SenseSimJFXController implements Initializable {
@@ -72,8 +79,9 @@ public class SenseSimJFXController implements Initializable {
 
     private MapApp app;
 
-
     private OSMNodeView selectedNode;
+
+    private Stage informationNeedConsole;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -101,6 +109,21 @@ public class SenseSimJFXController implements Initializable {
         }
 
         selectedNode.showConsole();
+    }
+
+    public void processInformationNeed() {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/InformationNeedConsole.fxml"));
+
+        try {
+            Parent parent = fxmlLoader.load();
+            informationNeedConsole = new Stage();
+            informationNeedConsole.initModality(Modality.NONE);
+            informationNeedConsole.initStyle(StageStyle.DECORATED);
+            informationNeedConsole.setScene(new Scene(parent));
+            informationNeedConsole.show();
+        } catch (IOException e) {
+            LOG.error(e.getMessage() , e);
+        }
     }
 
     public void loadProgram() {
