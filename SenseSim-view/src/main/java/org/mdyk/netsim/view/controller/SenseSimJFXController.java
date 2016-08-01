@@ -120,6 +120,8 @@ public class SenseSimJFXController implements Initializable {
             informationNeedConsole.initModality(Modality.NONE);
             informationNeedConsole.initStyle(StageStyle.DECORATED);
             informationNeedConsole.setScene(new Scene(parent));
+            InformationNeedConsoleController controller = fxmlLoader.getController();
+            controller.populateDevices(nodeViews);
             informationNeedConsole.show();
         } catch (IOException e) {
             LOG.error(e.getMessage() , e);
