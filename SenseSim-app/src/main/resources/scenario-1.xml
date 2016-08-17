@@ -3,7 +3,7 @@
 <scenario id="1" >
 
     <scenarioOntology>
-        <OntologyFile>/Users/michal/Documents/Konferencje/2016/IoT World Forum/Workspace/triage2.owl</OntologyFile>
+        <OntologyFile>/Users/michal/Documents/Konferencje/2016/IoT World Forum/Workspace/CombatTriageOntology.owl</OntologyFile>
         <OntologyIRI>http://www.semanticweb.org/mariuszchmielewski/ontologies/2016/6/untitled-ontology-9</OntologyIRI>
     </scenarioOntology>
 

@@ -1,5 +1,8 @@
 package org.mdyk.netsim.logic.node.program.owl;
 
+
+import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
+import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
 import com.google.common.eventbus.Subscribe;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
@@ -17,6 +20,7 @@ import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.InferenceType;
 
 import java.io.File;
 import java.util.HashMap;
@@ -81,9 +85,9 @@ public class OWLMiddleware extends Thread implements Middleware {
             OWLClassAssertionAxiom sensorAssertion = df.getOWLClassAssertionAxiom(sensorClass , sensorIndividual);
             manager.addAxiom(ontology , sensorAssertion);
 
-            OWLObjectProperty monitoredBySensorProp = df.getOWLObjectProperty(IRI.create(ontologyIRI + "#Object_monitored-by_Sensor"));
-            OWLObjectPropertyAssertionAxiom monitoredBySensorAssertion = df.getOWLObjectPropertyAssertionAxiom(monitoredBySensorProp, soldier, sensorIndividual);
-            manager.addAxiom(ontology , monitoredBySensorAssertion);
+//            OWLObjectProperty monitoredBySensorProp = df.getOWLObjectProperty(IRI.create(ontologyIRI + "#Object_monitored-by_Sensor"));
+//            OWLObjectPropertyAssertionAxiom monitoredBySensorAssertion = df.getOWLObjectPropertyAssertionAxiom(monitoredBySensorProp, soldier, sensorIndividual);
+//            manager.addAxiom(ontology , monitoredBySensorAssertion);
 
             OWLObjectProperty deviceSensorProp = df.getOWLObjectProperty(IRI.create(ontologyIRI + "#Device_contains_Sensor"));
             OWLObjectPropertyAssertionAxiom deviceSensorAssertion = df.getOWLObjectPropertyAssertionAxiom(deviceSensorProp, device, sensorIndividual);
@@ -126,8 +130,11 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         Infon needInfon = this.informationNeeds.get(informationNeedId);
 
+//        PelletReasoner
+        PelletReasoner reasoner = PelletReasonerFactory.getInstance().createNonBufferingReasoner(ontology);
+        reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
 
-
+//        reasoner.
         LOG.trace("<< processInformationNeed");
     }
 
@@ -220,7 +227,7 @@ public class OWLMiddleware extends Thread implements Middleware {
             e.printStackTrace();
         }
 
-        updateOntologyDataProperties();
+//        updateOntologyDataProperties();
 
         try {
             manager.saveOntology(ontology, new SystemOutDocumentTarget());
