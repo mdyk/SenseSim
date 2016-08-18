@@ -1,8 +1,14 @@
 package org.mdyk.netsim.logic.node.program.owl;
 
 
+import aterm.ATermAppl;
 import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
+import com.clarkparsia.pellet.sparqldl.engine.QueryEngine;
+import com.clarkparsia.pellet.sparqldl.model.Query;
+import com.clarkparsia.pellet.sparqldl.model.QueryResult;
+import com.clarkparsia.pellet.sparqldl.model.ResultBinding;
+import com.clarkparsia.pellet.sparqldl.parser.QueryParser;
 import com.google.common.eventbus.Subscribe;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
@@ -35,28 +41,25 @@ import java.util.function.Function;
 public class OWLMiddleware extends Thread implements Middleware {
 
     private static final Logger LOG = Logger.getLogger(OWLMiddleware.class);
-
+    // TODO do przeniesienia do innej klasy odpowiedzialnej za wykonywanie zapytań
+    String	prefix;
+    QueryParser queryParser = QueryEngine.getParser();
     private DeviceAPI deviceAPI;
     private DeviceSimEntity deviceSimEntity;
     private int nodeId;
-
     private OWLOntology ontology;
     private String ontologyIRI;
     private OWLDataFactory df = OWLManager.getOWLDataFactory();
     private OWLOntologyManager manager;
-
     // keys are  ids of information need
     private Map<Integer , Infon> informationNeeds = new HashMap<>();
-
     private Map<Integer , String> informationNeedResponse = new HashMap<>();
-
-
     private String soldierName;
     private OWLNamedIndividual soldier;
-
     private String deviceName;
     private OWLNamedIndividual device;
 
+    // TODO lista znanych przez urządzenie obiektów
 
     private void populateIndyviduals() {
 
@@ -95,6 +98,24 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         }
 
+        double rand = Math.random();
+
+        String objectState;
+
+        if(rand <= 0.3) {
+            objectState = "immediate";
+        } else if (rand > 0.3 &&  rand <= 0.6 ) {
+            objectState = "delayed";
+        } else {
+            objectState = "ok";
+        }
+
+        OWLClass objectStateClass = df.getOWLClass(IRI.create(ontologyIRI,"#ObjectState"));
+        OWLNamedIndividual objectStateInd = df.getOWLNamedIndividual(IRI.create(ontologyIRI , "#"+objectState));
+        OWLClassAssertionAxiom objectStateClassAssertion = df.getOWLClassAssertionAxiom(objectStateClass , objectStateInd);
+        manager.addAxiom(ontology , objectStateClassAssertion);
+
+
     }
 
     @Override
@@ -129,6 +150,47 @@ public class OWLMiddleware extends Thread implements Middleware {
         LOG.trace(">> processInformationNeed");
 
         Infon needInfon = this.informationNeeds.get(informationNeedId);
+
+        // TODO obsluga pozostalych przypadkow
+        if (needInfon.isRelationParam() &&
+                !needInfon.isPolarityParam() &&
+                !needInfon.isAreObjectsParam() &&
+                !needInfon.isSpatialLocationParam() &&
+                !needInfon.isTemporalLocationParam()) {
+
+            // sprawdzenie czy relacja jest znana
+            if (ontology.containsClassInSignature(IRI.create(ontologyIRI , "#"+needInfon.getRelationParam().getRelationType()))) {
+                // sprawdzenie czy znane sa obiekty
+                // TODO sprawdzenie wszystkich obiektów z infonów
+                if (needInfon.getObjects().get(0).equals(soldierName)) {
+//                    QueryExecution qe = SparqlDLExecutionFactory.create( q, m );
+
+                    PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner( ontology );
+
+                    String queryString = queryString = "SELECT distinct ?ind \n"
+                                                        + "WHERE { ?ind rdf:type ont:"+needInfon.getRelationParam().getRelationType()+" }\n";;
+
+                    Query q = queryParser.parse(prefix + queryString , reasoner.getKB());
+                    QueryResult qr = QueryEngine.exec(q);
+
+                    if (qr.size() == 1 ) {
+                        ResultBinding resultBinding = qr.iterator().next();
+                        ATermAppl aTermAppl = qr.getResultVars().get(0);
+                        String result = resultBinding.getValue(aTermAppl).getName();
+                        this.informationNeedResponse.put(informationNeedId , result);
+                    }
+
+
+                }
+
+            } else {
+                // TODO
+            }
+
+            // wykoanie zapytania do ontologii
+
+        }
+
 
 //        PelletReasoner
         PelletReasoner reasoner = PelletReasonerFactory.getInstance().createNonBufferingReasoner(ontology);
@@ -181,6 +243,12 @@ public class OWLMiddleware extends Thread implements Middleware {
         this.ontologyIRI = ontologyIRI;
         this.ontology = manager.loadOntologyFromOntologyDocument(ontologyFile);
 
+        prefix ="PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+                "PREFIX owl: <http://www.w3.org/2002/07/owl#>\n" +
+                "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n" +
+                "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
+                "PREFIX ont: <"+this.ontologyIRI+"#>";
+
         populateIndyviduals();
 
         try {
@@ -221,18 +289,26 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     @Override
     public void run() {
+
+        // FIXME powinno to odbywać się jako poprawne zdarzenia symulacyjne
         try {
-            Thread.sleep(20000);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
-//        updateOntologyDataProperties();
-
-        try {
-            manager.saveOntology(ontology, new SystemOutDocumentTarget());
-        } catch (OWLOntologyStorageException e) {
-            e.printStackTrace();
+        for(Integer informationNeedId : informationNeeds.keySet()) {
+            this.processInformationNeed(informationNeedId);
         }
+
+
+
+//        updateOntologyDataProperties();
+//
+//        try {
+//            manager.saveOntology(ontology, new SystemOutDocumentTarget());
+//        } catch (OWLOntologyStorageException e) {
+//            e.printStackTrace();
+//        }
     }
 }
