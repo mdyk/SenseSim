@@ -22,24 +22,29 @@ public class Infon {
     private boolean isSpatialLocationParam = false;
     private boolean isPolarityParam = false;
 
+    public Infon(Infon infon) {
+        this(infon.toString());
+    }
+
     public Infon(String infonDesc) {
         infonDesc = infonDesc.replace("<<","").replace(">>","").replaceAll("\\s","");
 
         String[] split = infonDesc.split(",");
 
         this.relation = split[0];
+
         // TODO do poprawy sposob rozpoznawania parametrow
         if(relation.contains("?")) {
             isRelationParam = true;
-
-            relation = relation.replace("?","");
-            relation = relation.replace(" ","");
-
-            String[] splittedRelation = relation.split(":");
-
-            relationParam = new RelationParam(splittedRelation[0] , splittedRelation[1]);
-
         }
+
+        relation = relation.replace("?","");
+        relation = relation.replace(" ","");
+
+        String[] splittedRelation = relation.split(":");
+
+        relationParam = new RelationParam(splittedRelation[0] , splittedRelation[1]);
+
 
         this.polarity = split[split.length-1];
         if(polarity.contains("?")) {
@@ -60,6 +65,10 @@ public class Infon {
 
         for(int i = 1 ; i <= split.length-4 ; i++) {
             objects.add(split[i]);
+        }
+
+        if(objects.size() == 1 && objects.get(0).contains("?")) {
+            areObjectsParam = true;
         }
 
     }
@@ -113,7 +122,7 @@ public class Infon {
         return relationParam;
     }
 
-    public boolean isAreObjectsParam() {
+    public boolean areObjectsParam() {
         return areObjectsParam;
     }
 
@@ -129,6 +138,25 @@ public class Infon {
         return isPolarityParam;
     }
 
+    @Override
+    public String toString() {
+
+        StringBuilder builder = new StringBuilder();
+
+        builder.append("<<");
+        builder.append(relation).append(",");
+
+        for(String object : objects) {
+            builder.append(object).append(",");
+        }
+
+        builder.append(spatialLocation).append(",");
+        builder.append(temporalLocation).append(",");
+        builder.append(polarity).append(",");
+        builder.append(">>");
+
+        return builder.toString();
+    }
 
     public class RelationParam {
         private String relationValue;
@@ -155,5 +183,4 @@ public class Infon {
             this.relationType = relationType;
         }
     }
-
 }

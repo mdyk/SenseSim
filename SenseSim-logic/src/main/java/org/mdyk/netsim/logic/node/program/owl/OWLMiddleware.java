@@ -28,9 +28,9 @@ import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
 import org.semanticweb.owlapi.model.*;
-import org.semanticweb.owlapi.reasoner.InferenceType;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,6 +146,13 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                 if(messageContent instanceof ResponseForNeedContent) {
                     ResponseForNeedContent responseForNeedContent = (ResponseForNeedContent) messageContent;
+
+                    // if device has response for current need then append received need to it and resend
+                    if(informationNeedResponse.containsKey(responseForNeedContent.getNeedId())) {
+                        informationNeedResponse.put(responseForNeedContent.getNeedId(), informationNeedResponse.get(responseForNeedContent.getNeedId())+" & "+responseForNeedContent.getContent());
+                        resendResponse.put(responseForNeedContent.getNeedId(), true);
+                    }
+
                     if (responseForNeedContent.getAskingNodeId() == nodeId) {
                         EventBusHolder.post(EventType.INFORMATION_NEED_FULLLFILLED , responseForNeedContent);
                     }
@@ -157,6 +164,7 @@ public class OWLMiddleware extends Thread implements Middleware {
         this.start();
     }
 
+    // FIXME potrzebny poważny refactor
     private void processInformationNeed(int informationNeedId) {
         LOG.trace(">> processInformationNeed");
 
@@ -165,59 +173,150 @@ public class OWLMiddleware extends Thread implements Middleware {
         // TODO obsluga pozostalych przypadkow
         if (needInfon.isRelationParam() &&
                 !needInfon.isPolarityParam() &&
-                !needInfon.isAreObjectsParam() &&
+                !needInfon.areObjectsParam() &&
                 !needInfon.isSpatialLocationParam() &&
                 !needInfon.isTemporalLocationParam()) {
 
             // sprawdzenie czy relacja jest znana
-            if (ontology.containsClassInSignature(IRI.create(ontologyIRI , "#"+needInfon.getRelationParam().getRelationType()))) {
+            if (ontology.containsClassInSignature(IRI.create(ontologyIRI, "#" + needInfon.getRelationParam().getRelationType()))) {
                 // sprawdzenie czy znane sa obiekty
                 // TODO sprawdzenie wszystkich obiektów z infonów
                 if (needInfon.getObjects().get(0).equals(soldierName)) {
 //                    QueryExecution qe = SparqlDLExecutionFactory.create( q, m );
 
-                    PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner( ontology );
+                    PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner(ontology);
 
-                    String queryString = queryString = "SELECT distinct ?ind \n"
-                                                        + "WHERE { ?ind rdf:type ont:"+needInfon.getRelationParam().getRelationType()+" }\n";;
+                    String queryString = "SELECT distinct ?ind \n"
+                            + "WHERE { ?ind rdf:type ont:" + needInfon.getRelationParam().getRelationType() + " }\n";
+                    ;
 
-                    Query q = queryParser.parse(prefix + queryString , reasoner.getKB());
+                    Query q = queryParser.parse(prefix + queryString, reasoner.getKB());
                     QueryResult qr = QueryEngine.exec(q);
 
-                    if (qr.size() == 1 ) {
+                    if (qr.size() == 1) {
                         ResultBinding resultBinding = qr.iterator().next();
                         ATermAppl aTermAppl = qr.getResultVars().get(0);
                         String result = resultBinding.getValue(aTermAppl).getName();
 
-                        if(!this.informationNeedResponse.containsKey(informationNeedId)) {
-                            this.informationNeedResponse.put(informationNeedId , result);
-                            this.resendResponse.put(informationNeedId , true);
-                        } else if (result.hashCode() != informationNeedResponse.get(informationNeedId).hashCode()) {
-                            this.informationNeedResponse.put(informationNeedId , result);
-                            this.resendResponse.put(informationNeedId , true);
+                        result = result.split("#")[1];
+
+                        Infon infonResult = new Infon(needInfon);
+                        infonResult.setRelation(result);
+
+                        if (!this.informationNeedResponse.containsKey(informationNeedId)) {
+                            this.informationNeedResponse.put(informationNeedId, infonResult.toString());
+                            this.resendResponse.put(informationNeedId, true);
+                        } else if (infonResult.toString().hashCode() != informationNeedResponse.get(informationNeedId).hashCode()) {
+                            this.informationNeedResponse.put(informationNeedId, infonResult.toString());
+                            this.resendResponse.put(informationNeedId, true);
+                        }
+                    }
+                }
+            }
+            // wykoanie zapytania do ontologii
+        } else if (!needInfon.isRelationParam() &&
+                needInfon.isPolarityParam() &&
+                !needInfon.areObjectsParam() &&
+                !needInfon.isSpatialLocationParam() &&
+                !needInfon.isTemporalLocationParam()) {
+
+            if (ontology.containsClassInSignature(IRI.create(ontologyIRI, "#" + needInfon.getRelationParam().getRelationType()))) {
+                // sprawdzenie czy znane sa obiekty
+                // TODO sprawdzenie wszystkich obiektów z infonów
+                if (needInfon.getObjects().get(0).equals(soldierName)) {
+
+                    PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner(ontology);
+
+                    String queryString = "SELECT distinct ?ind \n"
+                            + "WHERE { ?ind rdf:type ont:" + needInfon.getRelationParam().getRelationType() + " }\n";
+                    ;
+
+                    Query q = queryParser.parse(prefix + queryString, reasoner.getKB());
+                    QueryResult qr = QueryEngine.exec(q);
+
+                    if (qr.size() == 1) {
+                        ResultBinding resultBinding = qr.iterator().next();
+                        ATermAppl aTermAppl = qr.getResultVars().get(0);
+                        String result = resultBinding.getValue(aTermAppl).getName();
+
+                        result = result.split("#")[1];
+
+                        Infon infonResult = new Infon(needInfon);
+
+                        if (result.equalsIgnoreCase(needInfon.getRelationParam().getRelationValue())) {
+                            infonResult.setPolarity("1");
+                        } else {
+                            infonResult.setPolarity("0");
                         }
 
-
+                        if (!this.informationNeedResponse.containsKey(informationNeedId)) {
+                            this.informationNeedResponse.put(informationNeedId, infonResult.toString());
+                            this.resendResponse.put(informationNeedId, true);
+                        } else if (infonResult.toString().hashCode() != informationNeedResponse.get(informationNeedId).hashCode()) {
+                            this.informationNeedResponse.put(informationNeedId, infonResult.toString());
+                            this.resendResponse.put(informationNeedId, true);
+                        }
                     }
 
+                }
+            }
+        } else if (!needInfon.isRelationParam() &&
+                    !needInfon.isPolarityParam() &&
+                    needInfon.areObjectsParam() &&
+                    !needInfon.isSpatialLocationParam() &&
+                    !needInfon.isTemporalLocationParam()) {
 
+                if (ontology.containsClassInSignature(IRI.create(ontologyIRI, "#" + needInfon.getRelationParam().getRelationType()))) {
+                    // sprawdzenie czy znane sa obiekty
+//                    // TODO sprawdzenie wszystkich obiektów z infonów
+                    // nie ma sprawdzania obiektow bo obiekty sa parametrami
+//                    if (needInfon.getObjects().get(0).equals(soldierName)) {
+
+                        boolean isObjectInRelation = false;
+
+                        PelletReasoner reasoner = PelletReasonerFactory.getInstance().createReasoner(ontology);
+
+                        String queryString = "SELECT distinct ?ind \n"
+                                + "WHERE { ?ind rdf:type ont:" + needInfon.getRelationParam().getRelationType() + " }\n";
+
+
+                        Query q = queryParser.parse(prefix + queryString, reasoner.getKB());
+                        QueryResult qr = QueryEngine.exec(q);
+
+                        if (qr.size() == 1) {
+                            ResultBinding resultBinding = qr.iterator().next();
+                            ATermAppl aTermAppl = qr.getResultVars().get(0);
+                            String result = resultBinding.getValue(aTermAppl).getName();
+
+                            result = result.split("#")[1];
+
+                            Infon infonResult = new Infon(needInfon);
+
+                            if (result.equalsIgnoreCase(needInfon.getRelationParam().getRelationValue())) {
+                                ArrayList<String> objects = new ArrayList<>();
+                                objects.add(soldierName);
+                                infonResult.setObjects(objects);
+                                isObjectInRelation = true;
+                            }
+
+                            if(isObjectInRelation) {
+                                if (!this.informationNeedResponse.containsKey(informationNeedId)) {
+                                    this.informationNeedResponse.put(informationNeedId, infonResult.toString());
+                                    this.resendResponse.put(informationNeedId, true);
+                                } else if (infonResult.toString().hashCode() != informationNeedResponse.get(informationNeedId).hashCode()) {
+                                    this.informationNeedResponse.put(informationNeedId, infonResult.toString());
+                                    this.resendResponse.put(informationNeedId, true);
+                                }
+                            }
+                        }
+
+//                    }
                 }
 
-            } else {
-                // TODO
             }
 
-            // wykoanie zapytania do ontologii
+            LOG.trace("<< processInformationNeed");
 
-        }
-
-
-//        PelletReasoner
-        PelletReasoner reasoner = PelletReasonerFactory.getInstance().createNonBufferingReasoner(ontology);
-        reasoner.precomputeInferences(InferenceType.CLASS_HIERARCHY);
-
-//        reasoner.
-        LOG.trace("<< processInformationNeed");
     }
 
 
@@ -307,11 +406,11 @@ public class OWLMiddleware extends Thread implements Middleware {
         LOG.trace("<< resendInformationNeed");
     }
 
-    private void resendInformationNeedResponse(Integer askingNode , String informationNeedResponse) {
+    private void resendInformationNeedResponse(int informationNeedId, Integer askingNode , String informationNeedResponse) {
         LOG.trace(">> resendInformationNeedResponse");
         List<Integer> neighbours = deviceAPI.api_scanForNeighbors();
 
-        ResponseForNeedContent responseContent = new ResponseForNeedContent(askingNode , informationNeedResponse);
+        ResponseForNeedContent responseContent = new ResponseForNeedContent(informationNeedId, askingNode , informationNeedResponse);
 
         for (Integer neighbour : neighbours) {
             deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, responseContent , responseContent.getContent().getBytes().length );
@@ -333,7 +432,7 @@ public class OWLMiddleware extends Thread implements Middleware {
             for (Integer informationNeedId : informationNeeds.keySet()) {
                 this.processInformationNeed(informationNeedId);
                 if( resendResponse.containsKey(informationNeedId) && resendResponse.get(informationNeedId)) {
-                    resendInformationNeedResponse(informationNeeds.get(informationNeedId).getAskingNodeId(), informationNeedResponse.get(informationNeedId));
+                    resendInformationNeedResponse(informationNeedId,informationNeeds.get(informationNeedId).getAskingNodeId(), informationNeedResponse.get(informationNeedId));
                     resendResponse.put(informationNeedId , false);
                 }
             }
