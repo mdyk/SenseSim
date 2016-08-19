@@ -14,9 +14,11 @@ import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.infon.Infon;
 import org.mdyk.netsim.logic.infon.message.InformationNeedContent;
+import org.mdyk.netsim.logic.infon.message.ResponseForNeedContent;
 import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
@@ -41,6 +43,7 @@ import java.util.function.Function;
 public class OWLMiddleware extends Thread implements Middleware {
 
     private static final Logger LOG = Logger.getLogger(OWLMiddleware.class);
+    private static int msgId = 0;
     // TODO do przeniesienia do innej klasy odpowiedzialnej za wykonywanie zapytań
     String	prefix;
     QueryParser queryParser = QueryEngine.getParser();
@@ -52,12 +55,14 @@ public class OWLMiddleware extends Thread implements Middleware {
     private OWLDataFactory df = OWLManager.getOWLDataFactory();
     private OWLOntologyManager manager;
     // keys are  ids of information need
-    private Map<Integer , Infon> informationNeeds = new HashMap<>();
+    private Map<Integer , InformationNeedContent> informationNeeds = new HashMap<>();
     private Map<Integer , String> informationNeedResponse = new HashMap<>();
     private String soldierName;
     private OWLNamedIndividual soldier;
     private String deviceName;
     private OWLNamedIndividual device;
+
+    private HashMap <Integer , Boolean> resendResponse = new HashMap<>();
 
     // TODO lista znanych przez urządzenie obiektów
 
@@ -133,10 +138,16 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                 if(messageContent instanceof InformationNeedContent){
                     InformationNeedContent informationNeedContent = (InformationNeedContent) messageContent;
-                    if (informationNeeds.containsKey(informationNeedContent.getInformationNeedString().hashCode())) {
-                        Infon infon = new Infon(informationNeedContent.getInformationNeedString());
-                        informationNeeds.put(informationNeedContent.getInformationNeedString().hashCode() , infon);
+                    if (!informationNeeds.containsKey(informationNeedContent.getInformationNeedString().hashCode())) {
+                        informationNeeds.put(informationNeedContent.getInformationNeedString().hashCode() , informationNeedContent);
                         processInformationNeed(informationNeedContent.getInformationNeedString().hashCode());
+                    }
+                }
+
+                if(messageContent instanceof ResponseForNeedContent) {
+                    ResponseForNeedContent responseForNeedContent = (ResponseForNeedContent) messageContent;
+                    if (responseForNeedContent.getAskingNodeId() == nodeId) {
+                        EventBusHolder.post(EventType.INFORMATION_NEED_FULLLFILLED , responseForNeedContent);
                     }
                 }
 
@@ -149,7 +160,7 @@ public class OWLMiddleware extends Thread implements Middleware {
     private void processInformationNeed(int informationNeedId) {
         LOG.trace(">> processInformationNeed");
 
-        Infon needInfon = this.informationNeeds.get(informationNeedId);
+        Infon needInfon = this.informationNeeds.get(informationNeedId).getInfon();
 
         // TODO obsluga pozostalych przypadkow
         if (needInfon.isRelationParam() &&
@@ -177,7 +188,16 @@ public class OWLMiddleware extends Thread implements Middleware {
                         ResultBinding resultBinding = qr.iterator().next();
                         ATermAppl aTermAppl = qr.getResultVars().get(0);
                         String result = resultBinding.getValue(aTermAppl).getName();
-                        this.informationNeedResponse.put(informationNeedId , result);
+
+                        if(!this.informationNeedResponse.containsKey(informationNeedId)) {
+                            this.informationNeedResponse.put(informationNeedId , result);
+                            this.resendResponse.put(informationNeedId , true);
+                        } else if (result.hashCode() != informationNeedResponse.get(informationNeedId).hashCode()) {
+                            this.informationNeedResponse.put(informationNeedId , result);
+                            this.resendResponse.put(informationNeedId , true);
+                        }
+
+
                     }
 
 
@@ -267,7 +287,7 @@ public class OWLMiddleware extends Thread implements Middleware {
                 // The program should be installed in current node.
                 if(informationNeed.getKey()!=null && informationNeed.getKey().equals(nodeId)){
                     LOG.debug(informationNeed.getValue());
-                    this.informationNeeds.put(informationNeed.getValue().hashCode() , new Infon(informationNeed.getValue()));
+                    this.informationNeeds.put(informationNeed.getValue().hashCode() , new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue()));
 
                 }
                 resendInformationNeed(informationNeed);
@@ -282,23 +302,41 @@ public class OWLMiddleware extends Thread implements Middleware {
         InformationNeedContent informationNeedContent = new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue());
 
         for (Integer neighbour : neighbours) {
-            deviceAPI.api_sendMessage(informationNeedContent.getAskingNodeId(), deviceAPI.api_getMyID(), neighbour, informationNeedContent , informationNeedContent.getInformationNeedString().getBytes().length );
+            deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, informationNeedContent , informationNeedContent.getInformationNeedString().getBytes().length );
         }
         LOG.trace("<< resendInformationNeed");
+    }
+
+    private void resendInformationNeedResponse(Integer askingNode , String informationNeedResponse) {
+        LOG.trace(">> resendInformationNeedResponse");
+        List<Integer> neighbours = deviceAPI.api_scanForNeighbors();
+
+        ResponseForNeedContent responseContent = new ResponseForNeedContent(askingNode , informationNeedResponse);
+
+        for (Integer neighbour : neighbours) {
+            deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, responseContent , responseContent.getContent().getBytes().length );
+        }
+        LOG.trace("<< resendInformationNeedResponse");
     }
 
     @Override
     public void run() {
 
         // FIXME powinno to odbywać się jako poprawne zdarzenia symulacyjne
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        while(true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
-        for(Integer informationNeedId : informationNeeds.keySet()) {
-            this.processInformationNeed(informationNeedId);
+            for (Integer informationNeedId : informationNeeds.keySet()) {
+                this.processInformationNeed(informationNeedId);
+                if( resendResponse.containsKey(informationNeedId) && resendResponse.get(informationNeedId)) {
+                    resendInformationNeedResponse(informationNeeds.get(informationNeedId).getAskingNodeId(), informationNeedResponse.get(informationNeedId));
+                    resendResponse.put(informationNeedId , false);
+                }
+            }
         }
 
 

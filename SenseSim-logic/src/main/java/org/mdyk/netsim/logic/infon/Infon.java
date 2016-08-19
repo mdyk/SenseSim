@@ -30,7 +30,7 @@ public class Infon {
         this.relation = split[0];
         // TODO do poprawy sposob rozpoznawania parametrow
         if(relation.contains("?")) {
-            isPolarityParam = true;
+            isRelationParam = true;
 
             relation = relation.replace("?","");
             relation = relation.replace(" ","");

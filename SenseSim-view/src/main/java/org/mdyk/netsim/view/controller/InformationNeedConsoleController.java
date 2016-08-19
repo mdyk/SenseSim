@@ -1,6 +1,8 @@
 package org.mdyk.netsim.view.controller;
 
 
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,6 +11,8 @@ import javafx.scene.control.TextArea;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
+import org.mdyk.netsim.logic.event.InternalEvent;
+import org.mdyk.netsim.logic.infon.message.ResponseForNeedContent;
 import org.mdyk.netsim.view.node.OSMNodeView;
 
 import java.net.URL;
@@ -50,7 +54,20 @@ public class InformationNeedConsoleController implements Initializable {
         LOG.trace("<< sendInformationNeed");
     }
 
-    public void updateResponse() {
+    public void updateResponse(String response) {
+        this.response.appendText(response + "\n");
+    }
+
+    @Subscribe
+    @AllowConcurrentEvents
+    public void handleEvents(InternalEvent event) {
+
+        switch (event.getEventType()) {
+            case INFORMATION_NEED_FULLLFILLED:
+                ResponseForNeedContent responseForNeedContent = (ResponseForNeedContent) event.getPayload();
+                updateResponse(responseForNeedContent.getContent());
+                break;
+        }
 
     }
 

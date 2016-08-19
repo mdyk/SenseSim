@@ -5,10 +5,16 @@ package org.mdyk.netsim.logic.infon.message;
  */
 public class ResponseForNeedContent {
 
+    private int askingNodeId;
     private String content;
 
-    public ResponseForNeedContent(String content) {
+    public ResponseForNeedContent(int askingNodeId , String content) {
+        this.askingNodeId = askingNodeId;
         this.content = content;
+    }
+
+    public int getAskingNodeId() {
+        return askingNodeId;
     }
 
     public String getContent() {
