@@ -115,6 +115,8 @@ public class OWLMiddleware extends Thread implements Middleware {
             objectState = "ok";
         }
 
+        objectState = "ok";
+
         OWLClass objectStateClass = df.getOWLClass(IRI.create(ontologyIRI,"#ObjectState"));
         OWLNamedIndividual objectStateInd = df.getOWLNamedIndividual(IRI.create(ontologyIRI , "#"+objectState));
         OWLClassAssertionAxiom objectStateClassAssertion = df.getOWLClassAssertionAxiom(objectStateClass , objectStateInd);
@@ -149,8 +151,11 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                     // if device has response for current need then append received need to it and resend
                     if(informationNeedResponse.containsKey(responseForNeedContent.getNeedId())) {
-                        informationNeedResponse.put(responseForNeedContent.getNeedId(), informationNeedResponse.get(responseForNeedContent.getNeedId())+" & "+responseForNeedContent.getContent());
-                        resendResponse.put(responseForNeedContent.getNeedId(), true);
+
+                        if(!responseForNeedContent.getContent().contains(informationNeedResponse.get(responseForNeedContent.getNeedId()))) {
+                            informationNeedResponse.put(responseForNeedContent.getNeedId(), informationNeedResponse.get(responseForNeedContent.getNeedId())+" & "+responseForNeedContent.getContent());
+                            resendResponse.put(responseForNeedContent.getNeedId(), true);
+                        }
                     }
 
                     if (responseForNeedContent.getAskingNodeId() == nodeId) {
@@ -303,10 +308,13 @@ public class OWLMiddleware extends Thread implements Middleware {
                                 if (!this.informationNeedResponse.containsKey(informationNeedId)) {
                                     this.informationNeedResponse.put(informationNeedId, infonResult.toString());
                                     this.resendResponse.put(informationNeedId, true);
-                                } else if (infonResult.toString().hashCode() != informationNeedResponse.get(informationNeedId).hashCode()) {
-                                    this.informationNeedResponse.put(informationNeedId, infonResult.toString());
-                                    this.resendResponse.put(informationNeedId, true);
                                 }
+                                // TODO aktualizacja
+
+//                                else if (infonResult.toString().hashCode() != informationNeedResponse.get(informationNeedId).hashCode()) {
+//                                    this.informationNeedResponse.put(informationNeedId, infonResult.toString());
+//                                    this.resendResponse.put(informationNeedId, true);
+//                                }
                             }
                         }
 
