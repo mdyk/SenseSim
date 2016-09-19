@@ -22,7 +22,10 @@
             <artifactId>SenseSim-mathModel</artifactId>
             <version>${project.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>dissim</groupId>
+            <artifactId>DisSimEBusPlug</artifactId>
+        </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>

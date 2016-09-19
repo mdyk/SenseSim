@@ -3,6 +3,7 @@ package org.mdyk.netsim.view.controller;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
+import dissim.simspace.core.SimModel;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -50,12 +51,15 @@ public class InformationNeedConsoleController implements Initializable {
         Integer selectedNode = (Integer) sendingDevice.getValue();
 
         EventBusHolder.post(EventFactory.sendInformationNeed(selectedNode , informationNeed.getText()));
+        double simTime = SimModel.getInstance().simTime();
+
+        this.response.appendText("Question time: " + simTime + "\n");
 
         LOG.trace("<< sendInformationNeed");
     }
 
     public void updateResponse(String response) {
-        this.response.appendText(response + "\n");
+        this.response.appendText(response + "[time = "+SimModel.getInstance().simTime()+"] \n");
     }
 
     @Subscribe

@@ -112,10 +112,10 @@ public class OWLMiddleware extends Thread implements Middleware {
         } else if (rand > 0.3 &&  rand <= 0.6 ) {
             objectState = "delayed";
         } else {
-            objectState = "ok";
+            objectState = "minimal";
         }
 
-        objectState = "ok";
+//        objectState = "ok";
 
         OWLClass objectStateClass = df.getOWLClass(IRI.create(ontologyIRI,"#ObjectState"));
         OWLNamedIndividual objectStateInd = df.getOWLNamedIndividual(IRI.create(ontologyIRI , "#"+objectState));
@@ -444,7 +444,36 @@ public class OWLMiddleware extends Thread implements Middleware {
                     resendResponse.put(informationNeedId , false);
                 }
             }
+
+
+//            if (Math.random() < 0.2) {
+//                double rand = Math.random();
+//                String objectState;
+//                if (rand <= 0.3) {
+//                    objectState = "immediate";
+//                } else if (rand > 0.3 && rand <= 0.6) {
+//                    objectState = "delayed";
+//                } else {
+//                    objectState = "minimal";
+//                }
+//
+////        objectState = "ok";
+//
+////                OWLNamedIndividual ind = fac.getOWLNamedIndividual(IRI.create("http://www.semanticweb.org/diana/ontologies/2013/0/picture4.owl#Water1"));
+////                OWLEntityRemover remover = new OWLEntityRemover(Collections.singleton(localPicture));
+////                remover.visit(ind);
+////// or ind.accept(remover);
+////                manager.applyChanges(remover.getChanges());
+//
+//                OWLClass objectStateClass = df.getOWLClass(IRI.create(ontologyIRI, "#ObjectState"));
+//                OWLNamedIndividual objectStateInd = df.getOWLNamedIndividual(IRI.create(ontologyIRI, "#" + objectState));
+//                OWLClassAssertionAxiom objectStateClassAssertion = df.getOWLClassAssertionAxiom(objectStateClass, objectStateInd);
+//                manager.addAxiom(ontology, objectStateClassAssertion);
+//            }
+
         }
+
+
 
 
 
