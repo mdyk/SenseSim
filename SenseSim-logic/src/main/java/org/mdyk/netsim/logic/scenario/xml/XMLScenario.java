@@ -34,16 +34,14 @@ import java.util.Map;
 public class XMLScenario implements Scenario {
 
     private static final Logger LOG = Logger.getLogger(XMLScenario.class);
+    List<Device> devices;
+    List<PhenomenonModel<GeoPosition>> phenomena;
     private org.mdyk.sensesim.schema.Scenario scenario;
     private File scenarioFile;
-
     private DevicesFactory devicesFactory;
     private PhenomenaFactory phenomenaFactory;
     private SensorFactory sensorFactory;
     private XmlTypeConverter xmlTypeConverter;
-
-    List<Device> devices;
-    List<PhenomenonModel<GeoPosition>> phenomena;
 
     @Inject
     public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory, SensorFactory sensorFactory) throws XMLScenarioLoadException {
@@ -123,7 +121,8 @@ public class XMLScenario implements Scenario {
                         // FIXME refactor w taki sposób ze nie bedzie porzebny instanceof
                         if(middleware instanceof OWLMiddleware) {
                             OWLMiddleware owlMiddleware = (OWLMiddleware) middleware;
-                            File ontologyFile = new File(scenario.getScenarioOntology().getOntologyFile());
+                            String filePath = scenarioFile.getParent() + "/" + scenario.getScenarioOntology().getOntologyFile();
+                            File ontologyFile = new File(filePath);
                             owlMiddleware.loadOntology(ontologyFile, scenario.getScenarioOntology().getOntologyIRI());
                         }
 
