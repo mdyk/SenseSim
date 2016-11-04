@@ -32,6 +32,7 @@ import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.geo.GeoDeviceNode;
 import org.mdyk.netsim.logic.scenario.Scenario;
+import org.mdyk.netsim.logic.scenario.xml.XMLScenario;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.network.GraphEdge;
@@ -344,6 +345,12 @@ public class SenseSimJFXController implements Initializable {
                 Scenario scenario = (Scenario) event.getPayload();
                 app.getMapContainer().setDisplayPositionByLatLon(scenario.getScenarioRegionPoints().get(0).getLatitude(),
                         scenario.getScenarioRegionPoints().get(0).getLongitude() , 15);
+
+                if(scenario instanceof XMLScenario) {
+                    XMLScenario xmlScenario = (XMLScenario) scenario;
+                    this.scenarioFile = xmlScenario.getScenarioFile();
+                }
+
                 break;
             case NEW_NODE:
                 LOG.debug("NEW_NODE event");

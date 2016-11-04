@@ -227,4 +227,7 @@ public class XMLScenario implements Scenario {
         return phenomenaList;
     }
 
+    public File getScenarioFile() {
+        return scenarioFile;
+    }
 }
