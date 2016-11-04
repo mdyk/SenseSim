@@ -1,7 +1,7 @@
 package org.mdyk.netsim.logic.node.statistics.event;
 
 
-public class StatisticsEvent {
+public class DeviceStatisticsEvent {
 
     public enum EventType {
         COMM_PROC_UPDATE,
@@ -13,7 +13,7 @@ public class StatisticsEvent {
     private Object payload;
     private EventType eventType;
 
-    public StatisticsEvent(EventType eventType, Object payload) {
+    public DeviceStatisticsEvent(EventType eventType, Object payload) {
         this.payload = payload;
         this.eventType = eventType;
     }

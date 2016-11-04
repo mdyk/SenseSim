@@ -8,7 +8,7 @@ import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
-import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
+import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -91,23 +91,23 @@ public class DefaultStatistics implements DeviceStatistics {
 
     @Subscribe
     @AllowConcurrentEvents
-    public void handleEvents(StatisticsEvent event){
+    public void handleEvents(DeviceStatisticsEvent event){
         try {
             switch (event.getEventType()) {
                 case COMM_PROC_UPDATE:
                     CommunicationProcess communicationProcess = (CommunicationProcess) event.getPayload();
                     addCommunication(communicationProcess);
-                    EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
+                    EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
                     break;
 
                 case PROGRAM_LOADED:
                     HashMap<Integer , SensorProgram>  sensorProgramMap = (HashMap<Integer, SensorProgram>) event.getPayload();
                     addProgram(sensorProgramMap);
-                    EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
+                    EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
                     break;
 
                 case PROGRAM_UPDATED:
-                    EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
+                    EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.GUI_UPDATE_STATISTICS, this));
                     break;
             }
 

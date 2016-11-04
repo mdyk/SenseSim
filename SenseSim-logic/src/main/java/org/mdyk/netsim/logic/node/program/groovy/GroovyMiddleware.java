@@ -14,7 +14,7 @@ import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
-import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
+import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +86,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
         ((GroovyProgram)program).setProgramStatus(SensorProgram.ProgramStatus.LOADED);
         HashMap<Integer , SensorProgram> sensorIdProgramMap = new HashMap<>();
         sensorIdProgramMap.put(this.nodeId , program);
-        EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.PROGRAM_LOADED, sensorIdProgramMap));
+        EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.PROGRAM_LOADED, sensorIdProgramMap));
     }
 
     @Override
@@ -128,7 +128,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
                         LOG.debug("PID="+PID+" FINISHED_ERROR");
                     } finally {
-                        EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.PROGRAM_UPDATED, groovyProgram));
+                        EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.PROGRAM_UPDATED, groovyProgram));
                     }
                     me.deviceSimEntity.endProgramExecution(PID);
 

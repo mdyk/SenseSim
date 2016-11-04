@@ -14,8 +14,7 @@ import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.statistics.DeviceStatistics;
-import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
-import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
@@ -176,11 +175,11 @@ public class SensorConsoleController implements Initializable {
     }
 
     @Subscribe
-    public void processStatisticsEvent(StatisticsEvent statisticsEvent) {
+    public void processStatisticsEvent(DeviceStatisticsEvent deviceStatisticsEvent) {
         try{
-            switch (statisticsEvent.getEventType()) {
+            switch (deviceStatisticsEvent.getEventType()) {
                 case GUI_UPDATE_STATISTICS:
-                    DeviceStatistics statistics = (DeviceStatistics) statisticsEvent.getPayload();
+                    DeviceStatistics statistics = (DeviceStatistics) deviceStatisticsEvent.getPayload();
                     if(statistics.getSensorId() == this.nodeView.getID()) {
                         this.statistics = statistics;
                         showCommunication(this.statistics, CommType.Incoming);

@@ -5,7 +5,7 @@ import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.logic.node.statistics.event.StatisticsEvent;
+import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
             LOG.trace("Receiver is not neighbour of a sender");
             getSimEntity().processInterrupted();
         }
-        EventBusHolder.getEventBus().post(new StatisticsEvent(StatisticsEvent.EventType.COMM_PROC_UPDATE , getSimEntity().commProcess));
+        EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.COMM_PROC_UPDATE , getSimEntity().commProcess));
         LOG.trace("<< EndCommunicationActivity.transition()");
     }
 
