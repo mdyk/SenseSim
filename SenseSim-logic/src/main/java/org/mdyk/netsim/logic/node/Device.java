@@ -41,6 +41,10 @@ public class Device {
         middleware.initialize();
     }
 
+    public Device() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public DeviceLogic getDeviceLogic() {
         return deviceLogic;
     }

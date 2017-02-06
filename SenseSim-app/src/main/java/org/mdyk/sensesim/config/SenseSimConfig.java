@@ -22,6 +22,9 @@ import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimAPIFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
+import org.mdyk.sensesim.simulation.engine.dissim.plugins.RealDevicePlugin;
+import pl.edu.wat.integrator.MyResource;
 
 
 public class SenseSimConfig extends AbstractModule {
@@ -43,6 +46,8 @@ public class SenseSimConfig extends AbstractModule {
         bind(MiddlewareFactory.class).to(OWLMiddlewareFactory.class);
         bind(DeviceStatisticsFactory.class).to(DefaultStatisticsFactory.class);
         bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
+        bind(IRealDevicePlugin.class).to(RealDevicePlugin.class);
+        bind(MyResource.class);
     }
 
 }
