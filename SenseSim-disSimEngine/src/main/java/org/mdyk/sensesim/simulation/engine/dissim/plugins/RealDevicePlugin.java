@@ -6,15 +6,11 @@
 package org.mdyk.sensesim.simulation.engine.dissim.plugins;
 
 import com.google.common.eventbus.Subscribe;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.TreeSet;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.inject.Inject;
-import javax.inject.Singleton;
 import net.xeoh.plugins.base.annotations.PluginImplementation;
 import net.xeoh.plugins.base.annotations.Timer;
 import org.mdyk.netsim.logic.communication.Message;
@@ -22,12 +18,9 @@ import org.mdyk.netsim.logic.communication.message.SimpleMessage;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
-import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.node.DevicesFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.mathModel.ability.AbilityType;
-import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import pl.edu.wat.integrator.DeviceManager;
 import pl.edu.wat.integrator.Main;
 
