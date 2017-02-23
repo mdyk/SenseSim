@@ -25,6 +25,7 @@ import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
@@ -99,6 +100,30 @@ public class XMLScenarioTest {
         }
 
     }
+
+    @Test
+    public void testCommunicationInterfaces() throws Exception {
+        File scenarioXML = FileUtils.toFile(getClass().getResource("/scenario-1.xml"));
+        ScenarioFactory scenarioFactory = injector.getInstance(ScenarioFactory.class);
+        XMLScenario xmlScenario = scenarioFactory.createXMLScenario(scenarioXML);
+        xmlScenario.initialize();
+        List<Device> nodes = xmlScenario.scenarioDevices();
+
+        TestCase.assertTrue(nodes.size() == 4);
+
+        for (Device node : nodes) {
+            if(node.getDeviceLogic().getID() == 1){
+                TestCase.assertEquals(1, node.getDeviceLogic().getCommunicationInterfaces().size());
+                TestCase.assertEquals(1, node.getDeviceLogic().getCommunicationInterfaces().get(0).getId());
+                TestCase.assertEquals("WiFi-Direct", node.getDeviceLogic().getCommunicationInterfaces().get(0).getName());
+                TestCase.assertEquals(5000d, node.getDeviceLogic().getCommunicationInterfaces().get(0).getInputBandwidth());
+                TestCase.assertEquals(5000d, node.getDeviceLogic().getCommunicationInterfaces().get(0).getOutputBandwidth());
+                TestCase.assertEquals(CommunicationInterface.TopologyType.ADHOC, node.getDeviceLogic().getCommunicationInterfaces().get(0).getTopologyType());
+            }
+        }
+
+    }
+
 
     @Test
     public void testScenarioPhenomena() throws Exception {

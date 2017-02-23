@@ -8,7 +8,7 @@
         <!ELEMENT xs:complexType (xs:sequence|xs:attribute)*>
         <!ATTLIST xs:complexType
                 name CDATA #IMPLIED>
-        <!ELEMENT xs:sequence (xs:element)*>
+        <!ELEMENT xs:sequence (xs:element|xs:sequence)*>
         <!ELEMENT xs:element (xs:simpleType|xs:complexType)*>
         <!ATTLIST xs:element
                 maxOccurs CDATA #IMPLIED
@@ -69,6 +69,43 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="fixedTopologyType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="deviceId" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="networkTopologyType">
+        <xs:sequence>
+            <xs:element name="adhocM2M" minOccurs="0" maxOccurs="1" />
+            <xs:element type="fixedTopologyType" name="fixedTopology"  minOccurs="0" maxOccurs="1" />
+        </xs:sequence>
+    </xs:complexType>
+    
+    <xs:complexType name="communicationInterfaceType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="radioRange"/>
+            <xs:element type="xs:string" name="radioInputBandwidth"/>
+            <xs:element type="xs:string" name="radioOutputBandwidth"/>
+            <xs:element name="routingAlgType">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="FloodingRouting"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element type="networkTopologyType" name="topologyType" />
+        </xs:sequence>
+        <xs:attribute type="xs:string" name="id"/>
+        <xs:attribute type="xs:string" name="name"/>
+    </xs:complexType>
+
+    <xs:complexType name="communicationInterfacesType">
+        <xs:sequence>
+            <xs:element type="communicationInterfaceType" name="communicationInterface" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="startPositionType">
         <xs:sequence>
             <xs:element type="xs:string" name="latitude"/>
@@ -95,10 +132,12 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element type="abilitiesType" name="sensorAbilities" />
+            <xs:element type="communicationInterfacesType" name="communicationInterfaces" />
             <xs:element type="sensorsType" name="sensors" />
             <xs:element type="startPositionType" name="startPosition"/>
             <xs:element type="routeType" name="route"/>
+
+            <xs:element type="abilitiesType" name="sensorAbilities" />
         </xs:sequence>
         <xs:attribute type="xs:string" name="id"/>
         <xs:attribute type="xs:string" name="name"/>

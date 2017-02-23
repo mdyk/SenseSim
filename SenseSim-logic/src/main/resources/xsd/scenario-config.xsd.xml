@@ -1,6 +1,7 @@
 <scenario id="string" scenarioName="string">
   <scenarioOntology>
     <OntologyFile>string</OntologyFile>
+    <OntologyIRI>string</OntologyIRI>
   </scenarioOntology>
   <scenarioBoundaries>
     <!--4 or more repetitions:-->
@@ -29,10 +30,24 @@
       <radioBandwidth>string</radioBandwidth>
       <sesnorImplType>GeoSensorNode</sesnorImplType>
       <routingAlgType>FloodingRouting</routingAlgType>
-      <sensorAbilities>
-        <!--Zero or more repetitions:-->
-        <ability>string</ability>
-      </sensorAbilities>
+      <communicationInterfaces>
+        <!--1 or more repetitions:-->
+        <communicationInterface id="string" name="string">
+          <radioRange>string</radioRange>
+          <radioInputBandwidth>string</radioInputBandwidth>
+          <radioOutputBandwidth>string</radioOutputBandwidth>
+          <routingAlgType>FloodingRouting</routingAlgType>
+          <topologyType>
+            <!--Optional:-->
+            <adhocM2M>anyType</adhocM2M>
+            <!--Optional:-->
+            <fixedTopology>
+              <!--Zero or more repetitions:-->
+              <deviceId>string</deviceId>
+            </fixedTopology>
+          </topologyType>
+        </communicationInterface>
+      </communicationInterfaces>
       <sensors>
         <!--Zero or more repetitions:-->
         <sensorClass>string</sensorClass>
@@ -48,6 +63,10 @@
           <longitude>string</longitude>
         </checkpoint>
       </route>
+      <sensorAbilities>
+        <!--Zero or more repetitions:-->
+        <ability>string</ability>
+      </sensorAbilities>
     </node>
   </nodes>
   <phenomena>

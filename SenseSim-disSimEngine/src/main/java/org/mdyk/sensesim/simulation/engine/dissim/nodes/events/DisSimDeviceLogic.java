@@ -18,6 +18,7 @@ import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
@@ -45,6 +46,21 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     private boolean isMoveing;
 
 
+    @Inject
+    public DisSimDeviceLogic(@Assisted("id") int id, @Assisted("name") String name, @Assisted GeoPosition position,
+                             @Assisted("radioRange") int radioRange, int bandwidth,
+                             @Assisted double velocity, @Assisted List<AbilityType> abilities, List<SensorModel<?,?>> sensors, List<CommunicationInterface> communicationInterfaces,
+                             Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
+        super(id,name, position, radioRange, bandwidth, velocity, abilities, sensors, communicationInterfaces);
+
+        this.currentMovementAlg = new GeoRouteMovementAlgorithm();
+        this.environment = environment;
+        this.wirelessChannel = wirelessChannel;
+        this.communicationProcessFactory = communicationProcessFactory;
+        this.isMoveing = true;
+    }
+
+    @Deprecated
     @Inject
     public DisSimDeviceLogic(@Assisted("id") int id, @Assisted("name") String name, @Assisted GeoPosition position,
                              @Assisted("radioRange") int radioRange, int bandwidth,

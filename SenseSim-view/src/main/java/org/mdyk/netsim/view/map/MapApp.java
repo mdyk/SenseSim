@@ -35,7 +35,7 @@ public class MapApp extends JPanel implements JMapViewerEventListener {
         } catch (IOException e) {
             map().setTileLoader(new OsmTileLoader(map()));
         }
-
+        
         add(treeMap, BorderLayout.CENTER);
     }
 

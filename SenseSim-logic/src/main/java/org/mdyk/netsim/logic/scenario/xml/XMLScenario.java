@@ -12,6 +12,7 @@ import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
 import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
@@ -112,9 +113,11 @@ public class XMLScenario implements Scenario {
                             }
                         }
 
+                        List<CommunicationInterface> communicationInterfaces = XmlTypeConverter.convertCommunicationInterfaces(nodeType.getCommunicationInterfaces());
+
                         Device node = devicesFactory.buildSensor(Integer.parseInt(nodeType.getId()), nodeType.getName(),
                                 position, Integer.parseInt(nodeType.getRadioRange()), Integer.parseInt(nodeType.getRadioBandwidth()),
-                                Double.parseDouble(nodeType.getSpeed()), abilities, sensorModels);
+                                Double.parseDouble(nodeType.getSpeed()), abilities, sensorModels, communicationInterfaces);
                         node.getDeviceLogic().setRoute(route);
 
                         Middleware middleware = node.getMiddleware();

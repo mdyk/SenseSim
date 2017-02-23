@@ -1,10 +1,35 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 
 <scenario id="1" >
+
+    <scenarioOntology>
+        <OntologyFile>CombatTriageOntology.owl</OntologyFile>
+        <OntologyIRI>http://www.semanticweb.org/mariuszchmielewski/ontologies/2016/6/untitled-ontology-9</OntologyIRI>
+    </scenarioOntology>
+
+    <scenarioBoundaries>
+        <checkpoint>
+            <latitude>65.012089</latitude>
+            <longitude>25.465077</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>65.012089</latitude>
+            <longitude>25.465077</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>65.012089</latitude>
+            <longitude>25.465077</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>65.012089</latitude>
+            <longitude>25.465077</longitude>
+        </checkpoint>
+    </scenarioBoundaries>
+
     <nodes>
-        <node id="1">
-            <speed>6</speed>
-            <radioRange>90</radioRange>
+        <node id="1" name="ugs-sens-1">
+            <speed>0</speed>
+            <radioRange>80</radioRange>
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
@@ -12,126 +37,74 @@
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
             </sensorAbilities>
-            <communicationInterfaces>
-                <communicationInterface id="1" name="WiFi-Direct">
-                    <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
-                    <routingAlgType>FloodingRouting</routingAlgType>
-                    <topologyType>
-                        <adhocM2M/>
-                    </topologyType>
-                </communicationInterface>
-            </communicationInterfaces>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
             </sensors>
             <startPosition>
-                <latitude>52.231594</latitude>
-                <longitude>21.003547</longitude>
+                <latitude>65.011796</latitude>
+                <longitude>25.464882</longitude>
             </startPosition>
             <route>
-                <checkpoint>
-                    <latitude>52.231594</latitude>
-                    <longitude>21.003547</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.229853</latitude>
-                    <longitude>21.004695</longitude>
-                </checkpoint>
             </route>
         </node>
-        <node id="2">
-            <speed>1</speed>
-            <radioRange>90</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
-            <sesnorImplType>GeoSensorNode</sesnorImplType>
-            <routingAlgType>FloodingRouting</routingAlgType>
-            <sensorAbilities>
-                <ability>TEMPERATURE</ability>
-            </sensorAbilities>
-            <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
-            </sensors>
-            <startPosition>
-                <latitude>52.230963</latitude>
-                <longitude>21.004534</longitude>
-            </startPosition>
-            <route>
-                <checkpoint>
-                    <latitude>52.230963</latitude>
-                    <longitude>21.004534</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231804</latitude>
-                    <longitude>21.004974</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231541</latitude>
-                    <longitude>21.005822</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.230786</latitude>
-                    <longitude>21.005350</longitude>
-                </checkpoint>
-            </route>
-        </node>
-        <node id="3">
+        <node id="2" name="ugs-sens-2">
             <speed>0</speed>
-            <radioRange>50</radioRange>
+            <radioRange>80</radioRange>
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
             </sensorAbilities>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
             </sensors>
             <startPosition>
-                <latitude>52.230963</latitude>
-                <longitude>21.004674</longitude>
+                <latitude>65.011940</latitude>
+                <longitude>25.465045</longitude>
             </startPosition>
             <route>
-                <checkpoint>
-                    <latitude>52.230963</latitude>
-                    <longitude>21.004674</longitude>
-                </checkpoint>
             </route>
         </node>
-        <node id="4">
-            <speed>1</speed>
-            <radioRange>90</radioRange>
+        <node id="3" name="ugs-sens-3">
+            <speed>0</speed>
+            <radioRange>80</radioRange>
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
             </sensorAbilities>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
             </sensors>
             <startPosition>
-                <latitude>52.230786</latitude>
-                <longitude>21.005350</longitude>
+                <latitude>65.011760</latitude>
+                <longitude>25.464710</longitude>
             </startPosition>
             <route>
-                <checkpoint>
-                    <latitude>52.230786</latitude>
-                    <longitude>21.005350</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.230963</latitude>
-                    <longitude>21.004534</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231804</latitude>
-                    <longitude>21.004974</longitude>
-                </checkpoint>
-                <checkpoint>
-                    <latitude>52.231541</latitude>
-                    <longitude>21.005822</longitude>
-                </checkpoint>
+            </route>
+        </node>
+        <node id="4" name="platoon-commander">
+            <speed>0</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.012626</latitude>
+                <longitude>25.470911</longitude>
+            </startPosition>
+            <route>
             </route>
         </node>
     </nodes>
@@ -157,13 +130,23 @@
             </phenomenonArea>
             <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE">
                 <phenomenonValue>
-                    <observerValue fromTime="1" toTime="50" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                    <observerValue fromTime="1" toTime="500" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
                         <value>10</value>
                     </observerValue>
                 </phenomenonValue>
             </phenomenonValueSet>
         </phenomenon>
-        <phenomenon name="fire"  phenomenonType="discrete">
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="1"/>
+            <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE">
+                <phenomenonValue>
+                    <observerValue fromTime="1" toTime="500" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                        <value>20</value>
+                    </observerValue>
+                </phenomenonValue>
+            </phenomenonValueSet>
+        </phenomenon>
+        <!-- <phenomenon name="fire"  phenomenonType="discrete">
             <phenomenonArea>
                 <checkpoint>
                     <latitude>52.230963</latitude>
@@ -199,6 +182,6 @@
                     </discreteValue>
                 </phenomenonValue>
             </phenomenonValueSet>
-        </phenomenon>
+        </phenomenon> -->
     </phenomena>
 </scenario>

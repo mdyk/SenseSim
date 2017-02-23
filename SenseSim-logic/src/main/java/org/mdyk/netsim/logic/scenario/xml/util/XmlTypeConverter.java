@@ -5,6 +5,7 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpaceFactory;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
@@ -15,10 +16,7 @@ import org.mdyk.sensesim.schema.*;
 import javax.imageio.ImageIO;
 import java.io.*;
 import java.lang.reflect.Constructor;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Converts XML types into application specific types
@@ -151,6 +149,37 @@ public class XmlTypeConverter {
                     throw new RuntimeException("Unknown phenomenon value type " + value);
             }
         return convertedValue;
+    }
+
+    public static List<CommunicationInterface> convertCommunicationInterfaces(CommunicationInterfacesType communicationInterfacesType) {
+        List<CommunicationInterface> communicationInterfaces = new ArrayList<>();
+
+        if(communicationInterfacesType != null) {
+            if (communicationInterfacesType.getCommunicationInterface() == null || communicationInterfacesType.getCommunicationInterface().size() == 0) {
+                throw new RuntimeException("No communication interface defined");
+            }
+
+            for (CommunicationInterfaceType interfaceType : communicationInterfacesType.getCommunicationInterface()) {
+                CommunicationInterface.TopologyType topologyType;
+
+                if (interfaceType.getTopologyType().getAdhocM2M() != null) {
+                    topologyType = CommunicationInterface.TopologyType.ADHOC;
+                } else if (interfaceType.getTopologyType().getFixedTopology() != null) {
+                    topologyType = CommunicationInterface.TopologyType.FIXED;
+                } else {
+                    throw new RuntimeException("Topology type not set");
+                }
+
+                CommunicationInterface communicationInterface = new CommunicationInterface(Integer.parseInt(interfaceType.getId()),
+                        interfaceType.getName(), Double.parseDouble(interfaceType.getRadioInputBandwidth()),
+                        Double.parseDouble(interfaceType.getRadioOutputBandwidth()), topologyType);
+
+                communicationInterfaces.add(communicationInterface);
+
+            }
+        }
+
+        return communicationInterfaces;
     }
 
     public static List<AbilityType> convertAbilities(AbilitiesType abilitiesType) {

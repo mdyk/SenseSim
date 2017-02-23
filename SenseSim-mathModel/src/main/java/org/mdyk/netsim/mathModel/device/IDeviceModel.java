@@ -4,6 +4,7 @@ import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
@@ -34,8 +35,10 @@ public interface IDeviceModel<P extends Position> {
 
     void setVelocity(double velocity);
 
+    @Deprecated
     double getRadioRange();
 
+    @Deprecated
     void setRadioRange(double radioRange);
 
     @Deprecated
@@ -63,6 +66,7 @@ public interface IDeviceModel<P extends Position> {
      * @return
      *      bandwith of the device's wireless module.
      */
+    @Deprecated
     double getWirelessBandwith();
 
     /**
@@ -73,6 +77,9 @@ public interface IDeviceModel<P extends Position> {
      *      message which was received by device.
      */
     void receiveMessage(double time, Message message);
+
+    List<CommunicationInterface> getCommunicationInterfaces();
+
 
     // TODO zasoby, programy, SNT
 

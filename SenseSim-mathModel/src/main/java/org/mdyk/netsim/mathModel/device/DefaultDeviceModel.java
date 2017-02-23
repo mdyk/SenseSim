@@ -5,6 +5,7 @@ import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.RoutingAlgorithm;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
@@ -19,13 +20,18 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     protected int           id;
     protected String        name;
     protected P             position;
-    protected double        radioRange;
     protected double        velocity;
-    protected double        bandwith = 5000; // bity
+
+    @Deprecated
+    protected double        radioRange;
+    @Deprecated
+    private double          bandwith = 5000; // bity
+
+
+    protected List<CommunicationInterface> communicationInterfaces;
 
     @Deprecated
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
-
     /**
      * Holds device observations
      */
@@ -50,7 +56,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         observationsFromObserver = new HashMap<>();
     }
 
-
+    @Deprecated
     protected DefaultDeviceModel(int id, String name, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities , List<SensorModel<?,?>> sensors) {
         this.id = id;
         this.name = name;
@@ -65,7 +71,22 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         observationsFromObserver = new HashMap<>();
     }
 
-
+    protected DefaultDeviceModel(int id, String name, P position, int radioRange , int bandwidth ,
+                                 double velocity, List<AbilityType> abilities , List<SensorModel<?,?>> sensors,
+                                 List<CommunicationInterface> communicationInterfaces) {
+        this.id = id;
+        this.name = name;
+        this.position = position;
+        this.radioRange = radioRange;
+        this.bandwith = bandwidth;
+        this.velocity = velocity;
+        this.abilities = abilities;
+        this.observations = new HashMap<>();
+        this.messagesMap = new HashMap<>();
+        this.sensors = sensors;
+        this.observationsFromObserver = new HashMap<>();
+        this.communicationInterfaces = communicationInterfaces;
+    }
 
     @Override
     public int getID() {
@@ -212,5 +233,10 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     @Override
     public void setRoutingAlgorithm(RoutingAlgorithm routingAlgorithm) {
         this.routingAlgorithm = routingAlgorithm;
+    }
+
+    @Override
+    public List<CommunicationInterface> getCommunicationInterfaces() {
+        return this.communicationInterfaces;
     }
 }

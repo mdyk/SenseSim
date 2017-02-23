@@ -8,6 +8,7 @@ import org.mdyk.netsim.logic.node.DeviceLogicFactory;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 
@@ -31,5 +32,12 @@ public class DisSimSensorsLogicFactory implements DeviceLogicFactory {
     @Override
     public DeviceLogic buildSensorLogic(int id, String name, GeoPosition position, int radioRange, int bandwidth, double velocity, List<AbilityType> abilities, List<SensorModel<?, ?>> sensors) {
         return new DisSimDeviceLogic(id, name, position, radioRange, bandwidth, velocity, abilities, sensors, environment, wirelessChannel, communicationProcessFactory);
+    }
+
+    @Override
+    public DeviceLogic buildSensorLogic(int id, String name, GeoPosition position, int radioRange, int bandwidth, double velocity,
+                                        List<AbilityType> abilities, List<SensorModel<?, ?>> sensors,
+                                        List<CommunicationInterface> communicationInterfaces) {
+        return new DisSimDeviceLogic(id, name, position, radioRange, bandwidth, velocity, abilities, sensors, communicationInterfaces, environment, wirelessChannel, communicationProcessFactory);
     }
 }
