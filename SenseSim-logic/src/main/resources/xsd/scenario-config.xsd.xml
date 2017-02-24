@@ -43,7 +43,7 @@
             <!--Optional:-->
             <fixedTopology>
               <!--Zero or more repetitions:-->
-              <deviceId>string</deviceId>
+              <connectedDeviceId>string</connectedDeviceId>
             </fixedTopology>
           </topologyType>
         </communicationInterface>

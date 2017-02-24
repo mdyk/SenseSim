@@ -71,7 +71,7 @@
 
     <xs:complexType name="fixedTopologyType">
         <xs:sequence>
-            <xs:element type="xs:string" name="deviceId" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="xs:string" name="connectedDeviceId" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 

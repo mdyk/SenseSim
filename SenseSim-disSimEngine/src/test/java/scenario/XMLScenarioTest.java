@@ -113,12 +113,22 @@ public class XMLScenarioTest {
 
         for (Device node : nodes) {
             if(node.getDeviceLogic().getID() == 1){
-                TestCase.assertEquals(1, node.getDeviceLogic().getCommunicationInterfaces().size());
+                TestCase.assertEquals(2, node.getDeviceLogic().getCommunicationInterfaces().size());
                 TestCase.assertEquals(1, node.getDeviceLogic().getCommunicationInterfaces().get(0).getId());
                 TestCase.assertEquals("WiFi-Direct", node.getDeviceLogic().getCommunicationInterfaces().get(0).getName());
                 TestCase.assertEquals(5000d, node.getDeviceLogic().getCommunicationInterfaces().get(0).getInputBandwidth());
                 TestCase.assertEquals(5000d, node.getDeviceLogic().getCommunicationInterfaces().get(0).getOutputBandwidth());
                 TestCase.assertEquals(CommunicationInterface.TopologyType.ADHOC, node.getDeviceLogic().getCommunicationInterfaces().get(0).getTopologyType());
+
+                TestCase.assertEquals(2, node.getDeviceLogic().getCommunicationInterfaces().get(1).getId());
+                TestCase.assertEquals("LTE", node.getDeviceLogic().getCommunicationInterfaces().get(1).getName());
+                TestCase.assertEquals(5000d, node.getDeviceLogic().getCommunicationInterfaces().get(1).getInputBandwidth());
+                TestCase.assertEquals(5000d, node.getDeviceLogic().getCommunicationInterfaces().get(1).getOutputBandwidth());
+                TestCase.assertEquals(CommunicationInterface.TopologyType.FIXED, node.getDeviceLogic().getCommunicationInterfaces().get(1).getTopologyType());
+                TestCase.assertEquals(2, node.getDeviceLogic().getCommunicationInterfaces().get(1).getConnectedDevices().size());
+                TestCase.assertTrue(node.getDeviceLogic().getCommunicationInterfaces().get(1).getConnectedDevices().contains(3));
+                TestCase.assertTrue(node.getDeviceLogic().getCommunicationInterfaces().get(1).getConnectedDevices().contains(4));
+                TestCase.assertTrue(!node.getDeviceLogic().getCommunicationInterfaces().get(1).getConnectedDevices().contains(2));
             }
         }
 

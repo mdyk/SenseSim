@@ -169,10 +169,22 @@ public class XmlTypeConverter {
                 } else {
                     throw new RuntimeException("Topology type not set");
                 }
+                CommunicationInterface communicationInterface = null;
+                if(topologyType == CommunicationInterface.TopologyType.ADHOC) {
+                    communicationInterface = new CommunicationInterface(Integer.parseInt(interfaceType.getId()),
+                            interfaceType.getName(), Double.parseDouble(interfaceType.getRadioInputBandwidth()),
+                            Double.parseDouble(interfaceType.getRadioOutputBandwidth()), topologyType);
+                }
 
-                CommunicationInterface communicationInterface = new CommunicationInterface(Integer.parseInt(interfaceType.getId()),
-                        interfaceType.getName(), Double.parseDouble(interfaceType.getRadioInputBandwidth()),
-                        Double.parseDouble(interfaceType.getRadioOutputBandwidth()), topologyType);
+                if(topologyType == CommunicationInterface.TopologyType.FIXED) {
+                    List<Integer> connectedDevices = new ArrayList<>();
+                    for (String devId : interfaceType.getTopologyType().getFixedTopology().getConnectedDeviceId()) {
+                        connectedDevices.add(Integer.parseInt(devId));
+                    }
+                    communicationInterface = new CommunicationInterface(Integer.parseInt(interfaceType.getId()),
+                            interfaceType.getName(), Double.parseDouble(interfaceType.getRadioInputBandwidth()),
+                            Double.parseDouble(interfaceType.getRadioOutputBandwidth()), topologyType, connectedDevices);
+                }
 
                 communicationInterfaces.add(communicationInterface);
 
