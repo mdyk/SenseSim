@@ -50,14 +50,22 @@ public class NetworkManagerTest {
         networkManager.addNode(node1);
 
         CommunicationInterface communicationInterface21 = new CommunicationInterface(1, "Int1", 5000, 5000, 90, CommunicationInterface.TopologyType.ADHOC);
+        List<Integer> fixedNodes2 = new ArrayList<>();
+        fixedNodes2.add(3);
+        CommunicationInterface communicationInterface22 = new CommunicationInterface(2, "Int2", 5000, 5000, 90, CommunicationInterface.TopologyType.FIXED,fixedNodes2);
         List<CommunicationInterface> communicationInterfaces2 = new ArrayList<>();
         communicationInterfaces2.add(communicationInterface21);
+        communicationInterfaces2.add(communicationInterface22);
         TestDeviceNode node2 = new TestDeviceNode(2, new GeoPosition(52.231594, 21.003547), communicationInterfaces2);
         networkManager.addNode(node2);
 
         CommunicationInterface communicationInterface31 = new CommunicationInterface(1, "Int1", 5000, 5000, 90, CommunicationInterface.TopologyType.ADHOC);
+        List<Integer> fixedNodes3 = new ArrayList<>();
+        fixedNodes3.add(2);
+        CommunicationInterface communicationInterface32 = new CommunicationInterface(2, "Int2", 5000, 5000, 90, CommunicationInterface.TopologyType.FIXED,fixedNodes3);
         List<CommunicationInterface> communicationInterfaces3 = new ArrayList<>();
         communicationInterfaces3.add(communicationInterface31);
+        communicationInterfaces3.add(communicationInterface32);
         TestDeviceNode node3 = new TestDeviceNode(3, new GeoPosition(30.230786, 21.005350), communicationInterfaces3);
         networkManager.addNode(node3);
 
@@ -75,7 +83,8 @@ public class NetworkManagerTest {
 
         List<DeviceNode<?>> sensorNodes3 =  networkManager.getNeighborhood(node3,1);
         TestCase.assertEquals(0 , sensorNodes3.size());
-
+        sensorNodes3 =  networkManager.getNeighborhood(node3,2);
+        TestCase.assertEquals(1 , sensorNodes3.size());
     }
 
     public class TestDeviceNode extends DefaultDeviceModel implements DeviceNode {
