@@ -275,12 +275,38 @@ public class SenseSimJFXController implements Initializable {
         LOG.debug("<< addEvent");
     }
 
-    public void createEdge(GraphEdge<GeoPosition> graphEdge) {
+    public void createEdge(int commIntId, GraphEdge<GeoPosition> graphEdge) {
         // Api JMapViewer wymaga podania trzech punktów, stąd dla linii
         // druga współrzędna jest powtórzona.
         OSMEdge polygon = new OSMEdge("", nodeViews.get(graphEdge.idA.getID()).getMapMaker(),
                                           nodeViews.get(graphEdge.idB.getID()).getMapMaker(),
                                           nodeViews.get(graphEdge.idB.getID()).getMapMaker());
+
+        switch (commIntId) {
+            case 1:
+                polygon.setColor(Color.RED);
+                break;
+
+            case 2:
+                polygon.setColor(Color.BLUE);
+                break;
+
+            case 3:
+                polygon.setColor(Color.GREEN);
+                break;
+
+            case 4:
+                polygon.setColor(Color.YELLOW);
+                break;
+
+            case 5:
+                polygon.setColor(Color.GRAY);
+                break;
+
+            default:
+                polygon.setColor(Color.BLACK);
+                break;
+        }
 
         GraphEdgeViewWrapper<OSMEdge> edgeViewWrapper = new GraphEdgeViewWrapper<>(graphEdge.idA.getID(),graphEdge.idB.getID(),polygon);
         edgeViews.put(graphEdge,edgeViewWrapper);
@@ -337,56 +363,62 @@ public class SenseSimJFXController implements Initializable {
 
     @Subscribe
     public synchronized void processEvent(InternalEvent event) {
+        try {
+            GeoDeviceNode sensorModelNode;
+            switch (event.getEventType()) {
+                case SCENARIO_LOADED:
+                    LOG.debug("SCENARIO_LOADED event");
+                    Scenario scenario = (Scenario) event.getPayload();
+                    app.getMapContainer().setDisplayPositionByLatLon(scenario.getScenarioRegionPoints().get(0).getLatitude(),
+                            scenario.getScenarioRegionPoints().get(0).getLongitude(), 15);
 
-        GeoDeviceNode sensorModelNode;
-        switch(event.getEventType()){
-            case SCENARIO_LOADED:
-                LOG.debug("SCENARIO_LOADED event");
-                Scenario scenario = (Scenario) event.getPayload();
-                app.getMapContainer().setDisplayPositionByLatLon(scenario.getScenarioRegionPoints().get(0).getLatitude(),
-                        scenario.getScenarioRegionPoints().get(0).getLongitude() , 15);
+                    if (scenario instanceof XMLScenario) {
+                        XMLScenario xmlScenario = (XMLScenario) scenario;
+                        this.scenarioFile = xmlScenario.getScenarioFile();
+                    }
 
-                if(scenario instanceof XMLScenario) {
-                    XMLScenario xmlScenario = (XMLScenario) scenario;
-                    this.scenarioFile = xmlScenario.getScenarioFile();
-                }
-
-                break;
-            case NEW_NODE:
-                LOG.debug("NEW_NODE event");
-                sensorModelNode = (GeoDeviceNode) event.getPayload();
-                OSMNodeView nodeView = new OSMNodeView(sensorModelNode, app.getMapContainer());
-                addNode(sensorModelNode.getID(), nodeView);
-                break;
-            case NODE_POSITION_CHANGED:
-                sensorModelNode = (GeoDeviceNode) event.getPayload();
-                OSMNodeView node = nodeViews.get(sensorModelNode.getID());
-                node.relocate(sensorModelNode.getPosition());
-                actualizePositionLabel();
-                break;
-            case EDGE_ADDED:
-                LOG.debug("EDGE_ADDED event");
-                GraphEdge newEdge = (GraphEdge) event.getPayload();
-                createEdge(newEdge);
-                break;
-            case EDGE_REMOVED:
-                LOG.debug("EDGE_REMOVED event");
-                GraphEdge edge = (GraphEdge) event.getPayload();
-                removeEdge(edge);
-                break;
-            case PHENOMENON_CREATED:
-                LOG.debug("PHENOMENON_CREATED event");
-                OSMEventView envEvent = new OSMEventView((PhenomenonModel<GeoPosition>)event.getPayload(), app.getMapContainer(), "");
-                addEvent(1,envEvent);
-                break;
-            case NODE_START_SENSE:
-                sensorModelNode = (GeoDeviceNode) event.getPayload();
-                nodeViews.get(sensorModelNode.getID()).startSense();
-                break;
-            case NODE_END_SENSE:
-                sensorModelNode = (GeoDeviceNode) event.getPayload();
-                process_NODE_END_SENSE(sensorModelNode);
-                break;
+                    break;
+                case NEW_NODE:
+                    LOG.debug("NEW_NODE event");
+                    sensorModelNode = (GeoDeviceNode) event.getPayload();
+                    OSMNodeView nodeView = new OSMNodeView(sensorModelNode, app.getMapContainer());
+                    addNode(sensorModelNode.getID(), nodeView);
+                    break;
+                case NODE_POSITION_CHANGED:
+                    sensorModelNode = (GeoDeviceNode) event.getPayload();
+                    OSMNodeView node = nodeViews.get(sensorModelNode.getID());
+                    node.relocate(sensorModelNode.getPosition());
+                    actualizePositionLabel();
+                    break;
+                case EDGE_ADDED:
+                    LOG.debug("EDGE_ADDED event");
+                    HashMap<Integer, GraphEdge> payload = (HashMap<Integer, GraphEdge>) event.getPayload();
+                    int commIntId = payload.keySet().iterator().next();
+//                GraphEdge newEdge = (GraphEdge) event.getPayload();
+                    createEdge(commIntId,payload.get(commIntId));
+                    break;
+                case EDGE_REMOVED:
+                    LOG.debug("EDGE_REMOVED event");
+                    payload = (HashMap<Integer, GraphEdge>) event.getPayload();
+                    commIntId = payload.keySet().iterator().next();
+                    removeEdge(payload.get(commIntId));
+                    break;
+                case PHENOMENON_CREATED:
+                    LOG.debug("PHENOMENON_CREATED event");
+                    OSMEventView envEvent = new OSMEventView((PhenomenonModel<GeoPosition>) event.getPayload(), app.getMapContainer(), "");
+                    addEvent(1, envEvent);
+                    break;
+                case NODE_START_SENSE:
+                    sensorModelNode = (GeoDeviceNode) event.getPayload();
+                    nodeViews.get(sensorModelNode.getID()).startSense();
+                    break;
+                case NODE_END_SENSE:
+                    sensorModelNode = (GeoDeviceNode) event.getPayload();
+                    process_NODE_END_SENSE(sensorModelNode);
+                    break;
+            }
+        } catch(Throwable tr){
+            LOG.error(tr.getMessage() , tr);
         }
 
     }

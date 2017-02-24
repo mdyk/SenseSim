@@ -37,6 +37,29 @@
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
             </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="LTE">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>3</connectedDeviceId>
+                            <connectedDeviceId>4</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
             </sensors>
@@ -57,6 +80,29 @@
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
             </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="LTE">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>3</connectedDeviceId>
+                            <connectedDeviceId>4</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
             </sensors>
@@ -77,6 +123,29 @@
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
             </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="LTE">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>3</connectedDeviceId>
+                            <connectedDeviceId>4</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
             </sensors>
@@ -97,6 +166,29 @@
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
             </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="LTE">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>3</connectedDeviceId>
+                            <connectedDeviceId>4</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
             </sensors>
