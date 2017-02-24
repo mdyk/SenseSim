@@ -80,6 +80,8 @@ public interface IDeviceModel<P extends Position> {
 
     List<CommunicationInterface> getCommunicationInterfaces();
 
+    CommunicationInterface getCommunicationInterface(int commIntId);
+
 
     // TODO zasoby, programy, SNT
 

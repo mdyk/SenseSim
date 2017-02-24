@@ -15,24 +15,28 @@ public class CommunicationInterface {
     private String name;
     private double inputBandwidth;
     private double outputBandwidth;
+    private double radioRange;
     private TopologyType topologyType;
+
 
     private List<Integer> connectedDevices;
 
-    public CommunicationInterface(int id, String name, double inputBandwidth, double outputBandwidth, TopologyType topologyType) {
+    public CommunicationInterface(int id, String name, double inputBandwidth, double outputBandwidth, double radioRange, TopologyType topologyType) {
         this.id = id;
         this.name = name;
         this.inputBandwidth = inputBandwidth;
         this.outputBandwidth = outputBandwidth;
+        this.radioRange = radioRange;
         this.topologyType = topologyType;
         this.connectedDevices = new ArrayList<>();
     }
 
-    public CommunicationInterface(int id, String name, double inputBandwidth, double outputBandwidth, TopologyType topologyType, List<Integer> connectedDevices) {
+    public CommunicationInterface(int id, String name, double inputBandwidth, double outputBandwidth, double radioRange, TopologyType topologyType, List<Integer> connectedDevices) {
         this.id = id;
         this.name = name;
         this.inputBandwidth = inputBandwidth;
         this.outputBandwidth = outputBandwidth;
+        this.radioRange = radioRange;
         this.topologyType = topologyType;
         this.connectedDevices = connectedDevices;
     }
@@ -51,6 +55,10 @@ public class CommunicationInterface {
 
     public double getOutputBandwidth() {
         return outputBandwidth;
+    }
+
+    public double getRadioRange() {
+        return radioRange;
     }
 
     public TopologyType getTopologyType() {

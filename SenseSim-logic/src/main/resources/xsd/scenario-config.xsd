@@ -1,32 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE xs:schema [
-        <!ELEMENT xs:schema (xs:complexType|xs:element)*>
-        <!ATTLIST xs:schema
-                attributeFormDefault CDATA #REQUIRED
-                elementFormDefault CDATA #REQUIRED
-                xmlns:xs CDATA #REQUIRED>
-        <!ELEMENT xs:complexType (xs:sequence|xs:attribute)*>
-        <!ATTLIST xs:complexType
-                name CDATA #IMPLIED>
-        <!ELEMENT xs:sequence (xs:element|xs:sequence)*>
-        <!ELEMENT xs:element (xs:simpleType|xs:complexType)*>
-        <!ATTLIST xs:element
-                maxOccurs CDATA #IMPLIED
-                minOccurs CDATA #IMPLIED
-                name CDATA #REQUIRED
-                type CDATA #IMPLIED>
-        <!ELEMENT xs:simpleType (xs:restriction)*>
-        <!ELEMENT xs:restriction (xs:enumeration)*>
-        <!ATTLIST xs:restriction
-                base CDATA #REQUIRED>
-        <!ELEMENT xs:enumeration (#PCDATA)>
-        <!ATTLIST xs:enumeration
-                value CDATA #REQUIRED>
-        <!ELEMENT xs:attribute (#PCDATA)>
-        <!ATTLIST xs:attribute
-                name CDATA #REQUIRED
-                type CDATA #REQUIRED>
-        ]>
 <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified"
            xmlns:xs="http://www.w3.org/2001/XMLSchema">
 

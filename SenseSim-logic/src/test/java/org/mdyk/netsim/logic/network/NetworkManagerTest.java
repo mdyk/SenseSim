@@ -8,11 +8,15 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mdyk.netsim.logic.communication.Message;
+import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -39,28 +43,37 @@ public class NetworkManagerTest {
     public void testGetNeighborhood() throws Exception {
         NetworkManager networkManager = injector.getInstance(NetworkManager.class);
 
-        TestDeviceNode node1 = new TestDeviceNode(1, new GeoPosition(52.231594, 21.003547));
+        CommunicationInterface communicationInterface11 = new CommunicationInterface(1, "Int1", 5000, 5000, 90, CommunicationInterface.TopologyType.ADHOC);
+        List<CommunicationInterface> communicationInterfaces1 = new ArrayList<>();
+        communicationInterfaces1.add(communicationInterface11);
+        TestDeviceNode node1 = new TestDeviceNode(1, new GeoPosition(52.231594, 21.003547) , communicationInterfaces1);
         networkManager.addNode(node1);
 
-        TestDeviceNode node2 = new TestDeviceNode(2, new GeoPosition(52.231594, 21.003547));
+        CommunicationInterface communicationInterface21 = new CommunicationInterface(1, "Int1", 5000, 5000, 90, CommunicationInterface.TopologyType.ADHOC);
+        List<CommunicationInterface> communicationInterfaces2 = new ArrayList<>();
+        communicationInterfaces2.add(communicationInterface21);
+        TestDeviceNode node2 = new TestDeviceNode(2, new GeoPosition(52.231594, 21.003547), communicationInterfaces2);
         networkManager.addNode(node2);
 
-        TestDeviceNode node3 = new TestDeviceNode(3, new GeoPosition(30.230786, 21.005350));
+        CommunicationInterface communicationInterface31 = new CommunicationInterface(1, "Int1", 5000, 5000, 90, CommunicationInterface.TopologyType.ADHOC);
+        List<CommunicationInterface> communicationInterfaces3 = new ArrayList<>();
+        communicationInterfaces3.add(communicationInterface31);
+        TestDeviceNode node3 = new TestDeviceNode(3, new GeoPosition(30.230786, 21.005350), communicationInterfaces3);
         networkManager.addNode(node3);
 
         networkManager.actualizeNaighbours(node1);
         networkManager.actualizeNaighbours(node2);
         networkManager.actualizeNaighbours(node3);
 
-        List<DeviceNode<?>> sensorNodes =  networkManager.getNeighborhood(node2);
+        List<DeviceNode<?>> sensorNodes =  networkManager.getNeighborhood(node2,1);
         TestCase.assertEquals(1 , sensorNodes.size());
         TestCase.assertEquals(1 , sensorNodes.get(0).getID());
 
-        List<DeviceNode<?>> sensorNodes2 =  networkManager.getNeighborhood(node1);
+        List<DeviceNode<?>> sensorNodes2 =  networkManager.getNeighborhood(node1,1);
         TestCase.assertEquals(1 , sensorNodes2.size());
         TestCase.assertEquals(2 , sensorNodes2.get(0).getID());
 
-        List<DeviceNode<?>> sensorNodes3 =  networkManager.getNeighborhood(node3);
+        List<DeviceNode<?>> sensorNodes3 =  networkManager.getNeighborhood(node3,1);
         TestCase.assertEquals(0 , sensorNodes3.size());
 
     }
@@ -68,8 +81,8 @@ public class NetworkManagerTest {
     public class TestDeviceNode extends DefaultDeviceModel implements DeviceNode {
 
 
-        protected TestDeviceNode(int id, Position position) {
-            super(id, position, 90, 5000,  1, new LinkedList<>());
+        protected TestDeviceNode(int id, Position position , List<CommunicationInterface> communicationInterfaces) {
+            super(id, "test", position, 90, 5000,  1, new LinkedList<>(), new LinkedList<>(), communicationInterfaces);
         }
 
         @Override

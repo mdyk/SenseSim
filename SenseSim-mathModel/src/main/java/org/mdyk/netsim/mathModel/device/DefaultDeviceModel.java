@@ -37,6 +37,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
      */
     protected Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observationsFromObserver;
 
+    @Deprecated
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
     protected RoutingAlgorithm routingAlgorithm;
@@ -239,4 +240,19 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     public List<CommunicationInterface> getCommunicationInterfaces() {
         return this.communicationInterfaces;
     }
+
+    @Override
+    public CommunicationInterface getCommunicationInterface(int commIntId){
+
+        CommunicationInterface communicationInterface = null;
+
+        for(CommunicationInterface commInt : this.communicationInterfaces) {
+            if(commInt.getId() == commIntId) {
+                communicationInterface = commInt;
+            }
+        }
+
+        return communicationInterface;
+    }
+
 }

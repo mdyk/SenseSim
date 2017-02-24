@@ -173,7 +173,7 @@ public class XmlTypeConverter {
                 if(topologyType == CommunicationInterface.TopologyType.ADHOC) {
                     communicationInterface = new CommunicationInterface(Integer.parseInt(interfaceType.getId()),
                             interfaceType.getName(), Double.parseDouble(interfaceType.getRadioInputBandwidth()),
-                            Double.parseDouble(interfaceType.getRadioOutputBandwidth()), topologyType);
+                            Double.parseDouble(interfaceType.getRadioOutputBandwidth()), Double.parseDouble(interfaceType.getRadioRange()), topologyType);
                 }
 
                 if(topologyType == CommunicationInterface.TopologyType.FIXED) {
@@ -183,7 +183,7 @@ public class XmlTypeConverter {
                     }
                     communicationInterface = new CommunicationInterface(Integer.parseInt(interfaceType.getId()),
                             interfaceType.getName(), Double.parseDouble(interfaceType.getRadioInputBandwidth()),
-                            Double.parseDouble(interfaceType.getRadioOutputBandwidth()), topologyType, connectedDevices);
+                            Double.parseDouble(interfaceType.getRadioOutputBandwidth()), Double.parseDouble(interfaceType.getRadioRange()), topologyType, connectedDevices);
                 }
 
                 communicationInterfaces.add(communicationInterface);

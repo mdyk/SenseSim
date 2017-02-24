@@ -43,18 +43,19 @@ public class NetworkGraph  {
     public List<IDeviceModel> listNeighbors(IDeviceModel a) {
         List<IDeviceModel> neighbors = new LinkedList<>();
 
-        networkGraph.containsVertex(a);
+        if(networkGraph.containsVertex(a)) {
 
-        for(DefaultEdge edge : networkGraph.edgesOf(a)){
-            IDeviceModel neighbor = networkGraph.getEdgeTarget(edge);
+            for (DefaultEdge edge : networkGraph.edgesOf(a)) {
+                IDeviceModel neighbor = networkGraph.getEdgeTarget(edge);
 
-            // If edge target equals given device a, than we take edge source
-            // as neighbor
-            if (neighbor.equals(a)) {
-                neighbor = networkGraph.getEdgeSource(edge);
+                // If edge target equals given device a, than we take edge source
+                // as neighbor
+                if (neighbor.equals(a)) {
+                    neighbor = networkGraph.getEdgeSource(edge);
+                }
+
+                neighbors.add(neighbor);
             }
-
-            neighbors.add(neighbor);
         }
 
         return neighbors;
