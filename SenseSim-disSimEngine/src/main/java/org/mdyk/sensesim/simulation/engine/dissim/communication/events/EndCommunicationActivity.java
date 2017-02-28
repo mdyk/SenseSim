@@ -29,14 +29,16 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
     protected void transition() throws SimControlException {
         LOG.trace(">> EndCommunicationActivity.transition() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
         // Checking if receiver is still a neighbour for sender
-        List<DeviceNode> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(sender);
+        int communicationInterfaceId = getSimEntity().getCommunicationIntterfaceId();
+        List<DeviceNode> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(communicationInterfaceId,sender);
 
         if(getSimEntity().getCommunicationStatus(simTime()).equals(CommunicationStatus.SUCCESS)) {
             LOG.trace("Communication is successful");
             receiver.receiveMessage(simTime(),getSimEntity().getMessage());
         } else if(neighbours.contains(receiver)) {
             LOG.trace("Receiver is neighbour of a sender");
-            double bandwidth = Math.min(sender.getWirelessBandwith() , receiver.getWirelessBandwith());
+            // Both sender and receiver have the same communication interface type, which is assured by the scan for neighbors process
+            double bandwidth = Math.min(sender.getCommunicationInterface(communicationInterfaceId).getOutputBandwidth() , receiver.getCommunicationInterface(communicationInterfaceId).getInputBandwidth());
 
             int sentBits = (int) Math.floor(bandwidth * delay);
             getSimEntity().addBitsSent(sentBits);

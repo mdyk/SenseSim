@@ -23,7 +23,7 @@ public interface CommunicationProcessFactory {
      * @return
      *      instance of the communication process
      */
-    public CommunicationProcess createCommunicationProcess(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message);
+    CommunicationProcess createCommunicationProcess(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, int communicationInterfaceId, double startTime, Message message);
 
     /**
      * Creates communication process in hop style (one hop - one process)
@@ -38,6 +38,6 @@ public interface CommunicationProcessFactory {
      * @return
      *      instance of the communication process
      */
-    public CommunicationProcess createCommunicationProcess(IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message);
+    CommunicationProcess createCommunicationProcess(IDeviceModel<?> sender, IDeviceModel<?> receiver, int communicationInterfaceId, double startTime, Message message);
 
 }

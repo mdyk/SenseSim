@@ -5,6 +5,7 @@ import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.ability.IAbilityModel;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class TestDeviceModel extends DefaultDeviceModel {
     }
 
     protected TestDeviceModel(int id) {
-        super(id, null, 0, 0, 0, new ArrayList<AbilityType>());
+        super(id, null, null, 0 , 0,0 , new ArrayList<>() , new ArrayList<>(), new ArrayList<>());
     }
 
 
@@ -29,5 +30,10 @@ public class TestDeviceModel extends DefaultDeviceModel {
     @Override
     protected void onMessage(double time, Message message) {
         // unused
+    }
+
+    @Override
+    protected void onMessage(double time, int communicationInterfaceId, Message message) {
+        
     }
 }

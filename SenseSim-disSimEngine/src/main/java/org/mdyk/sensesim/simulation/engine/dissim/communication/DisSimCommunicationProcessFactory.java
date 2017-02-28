@@ -18,12 +18,12 @@ public class DisSimCommunicationProcessFactory implements CommunicationProcessFa
     private int idCounter = 0;
 
     @Override
-    public CommunicationProcess createCommunicationProcess(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message) {
-        return new CommunicationProcessSimEntity(id , sender, receiver, startTime, message, wirelessChannel);
+    public CommunicationProcess createCommunicationProcess(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, int communicationInterfaceId, double startTime, Message message) {
+        return new CommunicationProcessSimEntity(id , sender, receiver, communicationInterfaceId, startTime, message, wirelessChannel);
     }
 
     @Override
-    public CommunicationProcess createCommunicationProcess(IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message) {
-        return createCommunicationProcess(idCounter++, sender, receiver, startTime, message);
+    public CommunicationProcess createCommunicationProcess(IDeviceModel<?> sender, IDeviceModel<?> receiver, int communicationInterfaceId, double startTime, Message message) {
+        return createCommunicationProcess(idCounter++, sender, receiver, communicationInterfaceId, startTime, message);
     }
 }

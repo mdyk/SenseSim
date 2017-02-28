@@ -20,9 +20,18 @@ public class DefaultWirelessChannel implements WirelessChannel<GeoPosition> {
     private NetworkManager networkManager;
 
     @Override
+    @Deprecated
     public List<DeviceNode<GeoPosition>> scanForNeighbors(DeviceNode<GeoPosition> requestedSensorNode) {
         LOG.trace(">>> scanForNeighbors [request device: " + requestedSensorNode.getID() + "]");
         List<DeviceNode<GeoPosition>> nodesList = networkManager.getNeighborhood(requestedSensorNode);
+        LOG.trace("<<< scanForNeighbors");
+        return nodesList;
+    }
+
+    @Override
+    public List<DeviceNode<GeoPosition>> scanForNeighbors(int commIntId, DeviceNode<GeoPosition> requestedSensorNode) {
+        LOG.trace(">>> scanForNeighbors [request device: " + requestedSensorNode.getID() + " , communication interface id: "+ commIntId +" ");
+        List<DeviceNode<GeoPosition>> nodesList = networkManager.getNeighborhood(requestedSensorNode,commIntId);
         LOG.trace("<<< scanForNeighbors");
         return nodesList;
     }

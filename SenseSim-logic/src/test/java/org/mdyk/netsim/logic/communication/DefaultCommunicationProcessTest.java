@@ -7,8 +7,10 @@ import org.mdyk.netsim.logic.communication.process.DefaultCommunicationProcess;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.device.DefaultDeviceModel;
 import org.mdyk.netsim.mathModel.device.IDeviceModel;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class DefaultCommunicationProcessTest {
@@ -16,21 +18,36 @@ public class DefaultCommunicationProcessTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testGetETA() throws Exception {
-        IDeviceModel sender = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
+        List<CommunicationInterface> communicationInterfaces = new ArrayList<>();
+        CommunicationInterface commInt1 = new CommunicationInterface(1, "int1",5000,5000,10, CommunicationInterface.TopologyType.ADHOC);
+        communicationInterfaces.add(commInt1);
+        
+        IDeviceModel sender = new DefaultDeviceModel(1, "", new Position(0,0,0), 0 , 0 , 1, new ArrayList<>() , new ArrayList<>(),  communicationInterfaces) {
+
             @Override
             protected void onMessage(double time, Message message) {
                 // unused
             }
+
+            @Override
+            protected void onMessage(double time, int communicationInterfaceId, Message message) {
+                
+            }
         } ;
 
-        IDeviceModel receiver = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
+        IDeviceModel receiver = new DefaultDeviceModel(2, "", new Position(0,0,0), 0 , 0 , 1, new ArrayList<>() , new ArrayList<>(),  communicationInterfaces) {
             @Override
             protected void onMessage(double time, Message message) {
                 // unused
             }
+
+            @Override
+            protected void onMessage(double time, int communicationInterfaceId, Message message) {
+                
+            }
         } ;
 
-        DefaultCommunicationProcess process = new DefaultCommunicationProcess(1 , sender, receiver , 0 ,new TestMessage() {
+        DefaultCommunicationProcess process = new DefaultCommunicationProcess(1 , sender, receiver , 1, 0 ,new TestMessage() {
             @Override
             public int getSize() {
                 return 625;
@@ -39,7 +56,7 @@ public class DefaultCommunicationProcessTest {
 
         TestCase.assertEquals(1.0 , process.getETA());
 
-        DefaultCommunicationProcess process2 = new DefaultCommunicationProcess(1 , sender, receiver , 0 ,new TestMessage() {
+        DefaultCommunicationProcess process2 = new DefaultCommunicationProcess(1 , sender, receiver , 1, 0 ,new TestMessage() {
             @Override
             public int getSize() {
                 return 1250;
@@ -48,7 +65,7 @@ public class DefaultCommunicationProcessTest {
 
         TestCase.assertEquals(2.0 , process2.getETA());
 
-        DefaultCommunicationProcess process3 = new DefaultCommunicationProcess(1 , sender, receiver , 0 ,new TestMessage() {
+        DefaultCommunicationProcess process3 = new DefaultCommunicationProcess(1 , sender, receiver , 1, 0 ,new TestMessage() {
             @Override
             public int getSize() {
                 return 312;
@@ -61,21 +78,36 @@ public class DefaultCommunicationProcessTest {
     @Test
     @SuppressWarnings("unchecked")
     public void getCommunicationStatusTest() {
-        IDeviceModel sender = new DefaultDeviceModel(1 , new Position(0,0,0), 10 , 5000 , 1 , new LinkedList<>()) {
+
+        List<CommunicationInterface> communicationInterfaces = new ArrayList<>();
+        CommunicationInterface commInt1 = new CommunicationInterface(1, "int1",5000,5000,10, CommunicationInterface.TopologyType.ADHOC);
+        communicationInterfaces.add(commInt1);
+
+        IDeviceModel sender = new DefaultDeviceModel(1, "", new Position(0,0,0), 0 , 0 , 1, new ArrayList<>() , new ArrayList<>(),  communicationInterfaces) {
             @Override
             protected void onMessage(double time, Message message) {
                 // unused
             }
+
+            @Override
+            protected void onMessage(double time, int communicationInterfaceId, Message message) {
+                
+            }
         } ;
 
-        IDeviceModel receiver = new DefaultDeviceModel(1 , new Position(0,0,0), 10, 5000 , 1 , new LinkedList<>()) {
+        IDeviceModel receiver = new DefaultDeviceModel(1, "", new Position(0,0,0), 0 , 0 , 1, new ArrayList<>() , new ArrayList<>(),  communicationInterfaces) {
             @Override
             protected void onMessage(double time, Message message) {
                 // unused
             }
+
+            @Override
+            protected void onMessage(double time, int communicationInterfaceId, Message message) {
+                
+            }
         } ;
 
-        DefaultCommunicationProcess process = new DefaultCommunicationProcess(1 , sender, receiver , 0 ,new TestMessage() {
+        DefaultCommunicationProcess process = new DefaultCommunicationProcess(1 , sender, receiver , 1, 0 ,new TestMessage() {
             @Override
             public int getSize() {
                 return 6250;
@@ -100,7 +132,7 @@ public class DefaultCommunicationProcessTest {
         // 1024 bits sent, 10 time, eta 10
 //        TestCase.assertEquals(CommunicationStatus.FAILURE, process.getCommunicationStatus(11));
 
-        DefaultCommunicationProcess process2 = new DefaultCommunicationProcess(1 , sender, receiver , 0 ,new TestMessage() {
+        DefaultCommunicationProcess process2 = new DefaultCommunicationProcess(1 , sender, receiver , 1, 0 ,new TestMessage() {
             @Override
             public int getSize() {
                 return 6250;

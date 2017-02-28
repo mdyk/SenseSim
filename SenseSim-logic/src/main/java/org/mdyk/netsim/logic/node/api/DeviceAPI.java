@@ -50,7 +50,25 @@ public interface DeviceAPI<P extends Position> {
      * @param size
      *      size of the message. If null, the size will be calculated based on content (if that's possible).
      */
+    @Deprecated
     void api_sendMessage(int messageId, int originSource, int originDest, Object content , Integer size );
+
+    /**
+     * Sends message to device with given id. Method does not ensure delivery.
+     * @param messageId
+     *      id of the message. Should be unique
+     * @param originSource
+     *      sender of the message (will not change during hop by hop communication)
+     * @param originDest
+     *      receiver of the message (will not change during hop by hop communication)
+     * @param communicationInterfaceId
+     *      id of the communication interface used for sending a message.
+     * @param content
+     *      content of the message.
+     * @param size
+     *      size of the message. If null, the size will be calculated based on content (if that's possible).
+     */
+    void api_sendMessage(int messageId, int originSource, int originDest, int communicationInterfaceId, Object content , Integer size);
 
     @Deprecated
     /**
@@ -73,7 +91,17 @@ public interface DeviceAPI<P extends Position> {
      *      list of found neighbours.
      */
     // public List<DeviceNode<P>> api_scanForNeighbors();
+    @Deprecated
     List<Integer> api_scanForNeighbors();
+
+    /**
+     * Orders a device to scan for its neighbours.
+     * @param communicationInterfaceId
+     *      id of communication interface used for scanning
+     * @return
+     *      list of found neighbours.
+     */
+    List<Integer> api_scanForNeighbors(int communicationInterfaceId);
 
     /**
      * Returns node's current position.

@@ -76,7 +76,19 @@ public interface IDeviceModel<P extends Position> {
      * @param message
      *      message which was received by device.
      */
+    @Deprecated
     void receiveMessage(double time, Message message);
+
+    /**
+     * Method executed when device receives message from neighbour.
+     * @param time
+     *      time at which the message was received.
+     * @param communicationInterfaceId
+     *      id of communication interface via which the message is sent
+     * @param message
+     *      message which was received by device.
+     */
+    void receiveMessage(double time, int communicationInterfaceId, Message message);
 
     List<CommunicationInterface> getCommunicationInterfaces();
 

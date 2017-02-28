@@ -24,10 +24,10 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
     protected EndCommunicationActivity endCommunicationActivity;
 
 
-    public CommunicationProcessSimEntity(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message, WirelessChannel wirelessChannel) {
+    public CommunicationProcessSimEntity(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, int communicationInterfaceId, double startTime, Message message, WirelessChannel wirelessChannel) {
         super(SimModel.getInstance().getCommonSimContext());
         this.wirelessChannel = wirelessChannel;
-        commProcess = new DefaultCommunicationProcess(id,sender,receiver,startTime,message);
+        commProcess = new DefaultCommunicationProcess(id,sender,receiver, communicationInterfaceId,startTime,message);
         try {
             startCommunicationActivity = new StartCommunicationActivity(this);
         } catch (SimControlException e) {
@@ -94,5 +94,12 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
     @Override
     public IDeviceModel<?> getReceiver() {
         return commProcess.getReceiver();
+    }
+
+
+
+    @Override
+    public int getCommunicationIntterfaceId() {
+        return commProcess.getCommunicationIntterfaceId();
     }
 }

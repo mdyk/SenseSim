@@ -214,6 +214,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     }
 
     @Override
+    @Deprecated
     public void receiveMessage(double time, Message message) {
         LOG.debug(">> receiveMessage[time="+time+"]");
         if(!this.messagesMap.containsKey(time)) {
@@ -224,7 +225,21 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         LOG.debug("<< receiveMessage");
     }
 
+    @Override
+    public void receiveMessage(double time, int communicationInterfaceId, Message message) {
+        LOG.debug(">> receiveMessage[time="+time+"]");
+        if(!this.messagesMap.containsKey(time)) {
+            this.messagesMap.put(time, new ArrayList<>());
+        }
+        this.messagesMap.get(time).add(message);
+        onMessage(time, communicationInterfaceId, message);
+        LOG.debug("<< receiveMessage");
+    }
+
+    @Deprecated
     protected abstract void onMessage(double time, Message message);
+
+    protected abstract void onMessage(double time, int communicationInterfaceId, Message message);
 
     @Override
     public RoutingAlgorithm getRoutingAlgorithm() {

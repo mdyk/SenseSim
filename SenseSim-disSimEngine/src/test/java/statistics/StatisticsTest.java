@@ -23,6 +23,7 @@ import org.mdyk.netsim.logic.sensor.DefaultSensorFactory;
 import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.events.CommunicationProcessSimEntity;
@@ -33,6 +34,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFacto
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class StatisticsTest {
@@ -72,8 +74,12 @@ public class StatisticsTest {
         DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
         CommunicationProcessFactory processFactory = injector.getInstance(CommunicationProcessFactory.class);
 
-        Device sender = devicesFactory.buildSensor(1, "device-1", new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>(), new ArrayList<>());
-        Device receiver = devicesFactory.buildSensor(2, "device-2", new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>(), new ArrayList<>());
+        List<CommunicationInterface> communicationInterfaces = new ArrayList<>();
+        CommunicationInterface commInt1 = new CommunicationInterface(1, "int1",5000,5000,10, CommunicationInterface.TopologyType.ADHOC);
+        communicationInterfaces.add(commInt1);
+
+        Device sender = devicesFactory.buildSensor(1, "device-1", new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>(), new ArrayList<>(), communicationInterfaces);
+        Device receiver = devicesFactory.buildSensor(2, "device-2", new GeoPosition(52.230963, 21.004534), 10, 5000, 0, new ArrayList<>(), new ArrayList<>(), communicationInterfaces);
 
         Message message = new TestMessage() {
             @Override
@@ -86,7 +92,7 @@ public class StatisticsTest {
         simEngine.addNode(receiver);
         simEngine.runScenario();
 
-        CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(sender.getDeviceLogic(), receiver.getDeviceLogic(), 2, message);
+        CommunicationProcessSimEntity communicationSimEntity = (CommunicationProcessSimEntity) processFactory.createCommunicationProcess(sender.getDeviceLogic(), receiver.getDeviceLogic() , 1, 2, message);
 
         Thread.sleep(10000);
 

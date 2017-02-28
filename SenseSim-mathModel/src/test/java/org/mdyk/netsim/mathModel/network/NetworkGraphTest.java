@@ -109,5 +109,10 @@ public class NetworkGraphTest {
         protected void onMessage(double time, Message message) {
             // unused
         }
+
+        @Override
+        protected void onMessage(double time, int communicationInterfaceId, Message message) {
+            
+        }
     }
 }

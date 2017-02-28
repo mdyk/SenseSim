@@ -17,6 +17,7 @@ import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -100,6 +101,11 @@ public class NetworkManagerTest {
         }
 
         @Override
+        protected void onMessage(double time, int communicationInterfaceId, Message message) {
+            
+        }
+
+        @Override
         public void startNode() {}
 
         @Override
@@ -120,6 +126,11 @@ public class NetworkManagerTest {
         @Override
         public void startCommunication(Message message, DeviceNode... receivers) {
             //To change body of implemented methods use File | Settings | File Templates.
+        }
+
+        @Override
+        public void startCommunication(Message message, HashMap receivers) {
+            
         }
 
     }

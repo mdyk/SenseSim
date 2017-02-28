@@ -73,9 +73,19 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
 
     @Override
     @SuppressWarnings("unchecked")
+    @Deprecated
     public void api_sendMessage(int messageId, int originSource, int originDest, Object content, Integer size) {
         Message message = new SimpleMessage(messageId, originSource, originDest , content, size);
         List<DeviceNode> neighbours =  ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(deviceSimEntity.getDeviceLogic());
+        List<DeviceNode<GeoPosition>> nodesToHop = deviceSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(deviceSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
+        deviceSimEntity.getDeviceLogic().startCommunication(message, nodesToHop.toArray(new DeviceNode[nodesToHop.size()]));
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void api_sendMessage(int messageId, int originSource, int originDest, int communicationInterfaceId, Object content, Integer size) {
+        Message message = new SimpleMessage(messageId, originSource, originDest , content, size);
+        List<DeviceNode> neighbours =  ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(communicationInterfaceId, deviceSimEntity.getDeviceLogic());
         List<DeviceNode<GeoPosition>> nodesToHop = deviceSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(deviceSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
         deviceSimEntity.getDeviceLogic().startCommunication(message, nodesToHop.toArray(new DeviceNode[nodesToHop.size()]));
     }
@@ -94,6 +104,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     }
 
     @Override
+    @Deprecated
     @SuppressWarnings("unchecked")
     public List<Integer> api_scanForNeighbors() {
         LOG.trace(">< api_scanForNeighbors()");
@@ -106,6 +117,21 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
             neighboursIds.add(sensorNode.getID());
         }
 
+        return neighboursIds;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Integer> api_scanForNeighbors(int communicationInterfaceId) {
+        LOG.trace(">< api_scanForNeighbors(), communicationInterfaceId: "+communicationInterfaceId);
+
+        List<DeviceNode> neighbours =  ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(communicationInterfaceId, deviceSimEntity.getDeviceLogic());
+
+        List<Integer> neighboursIds = new ArrayList<>();
+
+        for (DeviceNode sensorNode : neighbours)  {
+            neighboursIds.add(sensorNode.getID());
+        }
         return neighboursIds;
     }
 

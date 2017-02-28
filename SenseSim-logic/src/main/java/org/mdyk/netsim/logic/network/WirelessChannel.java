@@ -14,6 +14,9 @@ public interface WirelessChannel<P extends Position> {
      * @return
      *      list of neighbors.
      */
-    public List<DeviceNode<P>> scanForNeighbors(DeviceNode<P> requestedSensorNode);
+    @Deprecated
+    List<DeviceNode<P>> scanForNeighbors(DeviceNode<P> requestedSensorNode);
+
+    List<DeviceNode<P>> scanForNeighbors(int commIntId, DeviceNode<P> requestedSensorNode);
 
 }

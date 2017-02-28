@@ -25,9 +25,6 @@ public class NetworkManager<P extends Position> {
     private static final Logger LOG = Logger.getLogger(NetworkManager.class);
     private List<DeviceNode<P>> sensorNodeList;
 
-    // Map is actualized only when neighborhood changes
-    private Map<Integer , List<DeviceNode<?>>> neighborhood;
-
     @Inject
     @Deprecated
     private NetworkGraph networkGraph;
@@ -40,15 +37,12 @@ public class NetworkManager<P extends Position> {
 
     public NetworkManager() {
         sensorNodeList = new ArrayList<>();
-        neighborhood = new HashMap<>();
         communicationGraphs = new HashMap<>();
         EventBusHolder.getEventBus().register(this);
     }
 
     public void addNode(DeviceNode<P> deviceNode) {
         sensorNodeList.add(deviceNode);
-        networkGraph.addVertex(deviceNode);
-        neighborhood.put(deviceNode.getID(), new LinkedList<>());
 
         for(CommunicationInterface communicationInterface : deviceNode.getCommunicationInterfaces()) {
             if(!communicationGraphs.containsKey(communicationInterface.getId())) {
@@ -135,26 +129,15 @@ public class NetworkManager<P extends Position> {
                         // Adding edge basing on fixed topology
                         if(communicationInterface.getConnectedDevices().contains(device.getID())
                             && device.getCommunicationInterface(communicationInterface.getId()).getConnectedDevices().contains(changedDevice.getID()) ) {
-                            // FIXME poprawa zduplikowanego kodu
                             if (!networkGraph.hasEdge(device, changedDevice)) {
-                                networkGraph.addEdge(changedDevice, device);
-                                LOG.debug("adding edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
-                                // TODO typowanie nie powinno odbywać się tutaj
-                                HashMap<Integer, GraphEdge<?>> payload = new HashMap<>();
-                                payload.put(communicationInterface.getId(), new GraphEdge<>(changedDevice, device));
-                                EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_ADDED,payload));
+                                addEdge(networkGraph,device, changedDevice, communicationInterface);
                             }
                         }
                         // Removing edge if at least one device disconnects
                         else if(!communicationInterface.getConnectedDevices().contains(device.getID())
                                 || !device.getCommunicationInterface(communicationInterface.getId()).getConnectedDevices().contains(changedDevice.getID()) ) {
                             if (networkGraph.hasEdge(device, changedDevice)) {
-                                networkGraph.removeEdge(changedDevice, device);
-                                LOG.debug("adding edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
-                                // TODO typowanie nie powinno odbywać się tutaj
-                                HashMap<Integer, GraphEdge<?>> payload = new HashMap<>();
-                                payload.put(communicationInterface.getId(), new GraphEdge<>(changedDevice, device));
-                                EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_REMOVED,payload));
+                                removeEdge(networkGraph , device , changedDevice , communicationInterface);
                             }
                         }
                     }
@@ -164,62 +147,39 @@ public class NetworkManager<P extends Position> {
 
                         if(distance <= Math.min(communicationInterface.getRadioRange(), device.getCommunicationInterface(communicationInterface.getId()).getRadioRange())) {
                             if(!networkGraph.hasEdge(device,changedDevice)) {
-                                networkGraph.addEdge(changedDevice,device);
-                                LOG.debug("adding edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
-                                // TODO typowanie nie powinno odbywać się tutaj
-                                HashMap<Integer, GraphEdge<?>> payload = new HashMap<>();
-                                payload.put(communicationInterface.getId(), new GraphEdge<>(changedDevice, device));
-                                EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_ADDED,payload));
+                                addEdge(networkGraph,device, changedDevice, communicationInterface);
                             }
                         }
                         else {
                             if(networkGraph.hasEdge(device,changedDevice)) {
-                                networkGraph.removeEdge(device,changedDevice);
-                                LOG.debug("removing edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
-                                // TODO typowanie nie powinno odbywać się tutaj
-                                HashMap<Integer, GraphEdge<?>> payload = new HashMap<>();
-                                payload.put(communicationInterface.getId(), new GraphEdge<>(changedDevice, device));
-                                EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_REMOVED,payload));
+                                removeEdge(networkGraph , device , changedDevice , communicationInterface);
                             }
                         }
                     }
-
                 }
             }
-
-            //FIXME do usunięcia
-//            double distance = Functions.calculateDistance(changedDevice.getPosition(), device.getPosition());
-//            LOG.debug("distance = " + distance + " radio range: " + changedDevice.getRadioRange());
-//            if(distance <= Math.min(changedDevice.getRadioRange(), device.getRadioRange())) {
-//                if(!networkGraph.hasEdge(device,changedDevice)) {
-//                    networkGraph.addEdge(changedDevice,device);
-//                    LOG.debug("adding edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
-//                    // TODO typowanie nie powinno odbywać się tutaj
-//                    EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_ADDED, new GraphEdge<>(changedDevice,device)));
-//                }
-//            }
-//            else {
-//                if(networkGraph.hasEdge(device,changedDevice)) {
-//                    networkGraph.removeEdge(device,changedDevice);
-//                    LOG.debug("removing edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
-//                    // TODO typowanie nie powinno odbywać się tutaj
-//                    EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_REMOVED, new GraphEdge<GeoPosition>(changedDevice,device)));
-//                }
-//            }
         }
-
-//        neighborhood.get(changedDevice.getID()).clear();
-//
-//        // TODO: ta konwersja powinna się odbywać w inny sposób (najlepiej bez iterowania za każdym razem po liście)
-//        for(IDeviceModel sensorModel : networkGraph.listNeighbors(changedDevice)) {
-//            neighborhood.get(changedDevice.getID()).add((DeviceNode) sensorModel);
-//            // To samo trzeba zrobić w drugą stronę
-//            if(!neighborhood.get(sensorModel.getID()).contains(changedDevice)) {
-//                neighborhood.get(sensorModel.getID()).add(changedDevice);
-//            }
-//        }
-
+        
         LOG.debug("<< actualizeNaighbours");
+    }
+
+
+    private void addEdge(NetworkGraph networkGraph, DeviceNode device, DeviceNode changedDevice, CommunicationInterface communicationInterface) {
+        LOG.debug("adding edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
+        networkGraph.addEdge(changedDevice,device);
+        // TODO typowanie nie powinno odbywać się tutaj
+        HashMap<Integer, GraphEdge<?>> payload = new HashMap<>();
+        payload.put(communicationInterface.getId(), new GraphEdge<>(changedDevice, device));
+        EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_ADDED,payload));
+    }
+
+    private void removeEdge(NetworkGraph networkGraph, DeviceNode device, DeviceNode changedDevice, CommunicationInterface communicationInterface) {
+        LOG.debug("removing edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
+        networkGraph.removeEdge(device,changedDevice);
+        // TODO typowanie nie powinno odbywać się tutaj
+        HashMap<Integer, GraphEdge<?>> payload = new HashMap<>();
+        payload.put(communicationInterface.getId(), new GraphEdge<>(changedDevice, device));
+        EventBusHolder.getEventBus().post(new InternalEvent(EventType.EDGE_REMOVED,payload));
     }
 
     @Deprecated
@@ -233,8 +193,7 @@ public class NetworkManager<P extends Position> {
 
     public void clearNodes() {
         sensorNodeList.clear();
-        neighborhood.clear();
-        networkGraph.clear();
+        this.communicationGraphs.clear();
     }
 
 }

@@ -11,6 +11,7 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
     private CommunicationStatus communicationStatus;
     private IDeviceModel<?> sender;
     private IDeviceModel<?> receiver;
+    private int communicationInterfaceId;
     private double startTime;
     private double endTime;
     private int id;
@@ -20,13 +21,14 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
 
     private Message message;
 
-    public DefaultCommunicationProcess(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, double startTime, Message message) {
+    public DefaultCommunicationProcess(int id, IDeviceModel<?> sender, IDeviceModel<?> receiver, int communicationInterfaceId, double startTime, Message message) {
         this.id = id;
         this.sender = sender;
         this.receiver = receiver;
         this.message = message;
         this.startTime = startTime;
         this.endTime = Double.NaN;
+        this.communicationInterfaceId = communicationInterfaceId;
         this.communicationStatus = CommunicationStatus.DURING_COMM;
         eta = startTime + calculateExpectedDuration();
         alreadySent = 0;
@@ -105,8 +107,13 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
         return receiver;
     }
 
+    @Override
+    public int getCommunicationIntterfaceId() {
+        return this.communicationInterfaceId;
+    }
+
     private double calculateExpectedDuration() {
-        double communicationBandwith = Math.min(sender.getWirelessBandwith() , receiver.getWirelessBandwith());
+        double communicationBandwith = Math.min(sender.getCommunicationInterface(communicationInterfaceId).getOutputBandwidth() , receiver.getCommunicationInterface(communicationInterfaceId).getInputBandwidth());
         messageBits = message.getSize() * 8;
         return messageBits / communicationBandwith;
     }

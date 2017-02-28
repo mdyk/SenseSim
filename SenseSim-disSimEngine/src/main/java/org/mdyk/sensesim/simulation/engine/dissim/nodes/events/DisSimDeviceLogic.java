@@ -23,7 +23,10 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 import javax.inject.Inject;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 
 
@@ -92,6 +95,7 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
 
     @Override
     @SuppressWarnings("unchecked")
+    @Deprecated
     protected void onMessage(double time, Message message) {
         // TODO execute program
 
@@ -107,6 +111,25 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
 
         }
 
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    protected void onMessage(double time, int communicationInterfaceId, Message message) {
+        if(onMessageHandler != null) {
+            onMessageHandler.apply(message);
+        }
+
+        if(message.getMessageDest() != id) {
+            List<DeviceNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(communicationInterfaceId, this);
+            List<DeviceNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
+
+            HashMap<Integer , List<DeviceNode<GeoPosition>>> receivers = new HashMap<>();
+            receivers.put(communicationInterfaceId , hopTargets);
+
+            startCommunication(message,receivers);
+
+        }
     }
 
     @Override
@@ -183,11 +206,25 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
 
     @SafeVarargs
     @Override
+    @Deprecated
     public final void startCommunication(Message message, DeviceNode<GeoPosition>... receivers) {
-        for(DeviceNode<GeoPosition> receiver : receivers) {
-            communicationProcessFactory.createCommunicationProcess(this, receiver, deviceSimEntity.getSimTime(), message);
-        }
+//        for(DeviceNode<GeoPosition> receiver : receivers) {
+//            communicationProcessFactory.createCommunicationProcess(this, receiver, deviceSimEntity.getSimTime(), message);
+//        }
 
+    }
+
+    @Override
+    public void startCommunication(Message message, HashMap<Integer, List<DeviceNode<GeoPosition>>> receivers){
+
+        for (Integer commInterface : receivers.keySet()) {
+            List<DeviceNode<GeoPosition>> devicesToSend = receivers.get(commInterface);
+
+            for(DeviceNode<GeoPosition> device : devicesToSend) {
+                communicationProcessFactory.createCommunicationProcess(this, device, commInterface, deviceSimEntity.getSimTime(), message);
+            }
+
+        }
     }
 
     // TODO metody do usunięcia w sytuacji kiedy interrupt będzie działać poprawnie

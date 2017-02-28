@@ -20,6 +20,7 @@ import javax.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -66,6 +67,11 @@ public class GeoDeviceNodeThread extends DeviceNodeThread<GeoPosition, GeoMoveme
     @Override
     protected void onMessage(double time, org.mdyk.netsim.logic.communication.Message message) {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    protected void onMessage(double time, int communicationInterfaceId, Message message) {
+        
     }
 
     @Override
@@ -124,6 +130,11 @@ public class GeoDeviceNodeThread extends DeviceNodeThread<GeoPosition, GeoMoveme
     @Override
     public void startCommunication(Message message, DeviceNode<GeoPosition>... receivers) {
         // empty
+    }
+
+    @Override
+    public void startCommunication(Message message, HashMap<Integer, List<DeviceNode<GeoPosition>>> receivers) {
+        
     }
 
 

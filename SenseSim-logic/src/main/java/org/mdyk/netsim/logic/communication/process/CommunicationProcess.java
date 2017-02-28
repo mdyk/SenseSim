@@ -15,71 +15,78 @@ public interface CommunicationProcess {
      * @return
      *      id of the process.
      */
-    public int getID();
+    int getID();
 
     /**
      * Returns communication status described by CommunicationStatus enum
      * @return
      *      communication status.
      */
-    public CommunicationStatus getCommunicationStatus(double time);
+    CommunicationStatus getCommunicationStatus(double time);
 
     /**
      * Returns current communication status described by CommunicationStatus enum
      * @return
      *      communication status.
      */
-    public CommunicationStatus getCommunicationStatus();
+    CommunicationStatus getCommunicationStatus();
 
     /**
      * Returns value of simulation time when process has started
      * @return
      *      time when process has started.
      */
-    public double getStartTime();
+    double getStartTime();
 
     /**
      * Returns value of simulation time when process has finished
      * @return
      *      time when process has finished.
      */
-    public double getEndTime();
+    double getEndTime();
 
     /**
      * Returns expected simulation time when process should finish.
      * @return
      *      simulation time when process should finish successfully.
      */
-    public double getETA();
+    double getETA();
 
     /**
      * Returns message which is sent by communication process.
      * @return
      *      message
      */
-    public Message getMessage();
+    Message getMessage();
 
     /**
      * Defines how many bits have been already sent.
      * @param bits
      *      sent bits since the beginning of the process.
      */
-    public void bitsSent(int bits);
+    void bitsSent(int bits);
 
     /**
      * Defines how many bits have been sent in current step.
      * @param bits
      *      bits sent since last update.
      */
-    public void addBitsSent(int bits);
+    void addBitsSent(int bits);
 
     /**
      * Marks whole process as failed. Can be caused due to loss of connectivity.
      */
-    public void processInterrupted();
+    void processInterrupted();
 
-    public IDeviceModel<?> getSender();
+    IDeviceModel<?> getSender();
 
-    public IDeviceModel<?> getReceiver();
+    IDeviceModel<?> getReceiver();
+
+    /**
+     * Returns communication interface id used during communication (should be the same for sender and receiver).
+     * @return
+     *      numerical id of the communication interface
+     */
+    int getCommunicationIntterfaceId();
 
 }
