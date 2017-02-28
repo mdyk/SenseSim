@@ -13,19 +13,19 @@ public interface Middleware {
     /**
      * Initializes middleware when device is created.
      */
-    public void initialize();
+    void initialize();
 
-    public void setDeviceAPI(DeviceAPI api);
+    void setDeviceAPI(DeviceAPI api);
 
-    public void setDeviceSimEntity(DeviceSimEntity simEntity);
+    void setDeviceSimEntity(DeviceSimEntity simEntity);
 
-    public void loadProgram(SensorProgram program);
+    void loadProgram(SensorProgram program);
 
-    public List<SensorProgram> getPrograms();
+    List<SensorProgram> getPrograms();
 
     /**
      * Method executed during sensors work
      */
-    public void execute();
+    void execute();
 
 }

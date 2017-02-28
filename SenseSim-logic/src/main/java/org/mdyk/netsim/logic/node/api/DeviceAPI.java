@@ -104,6 +104,13 @@ public interface DeviceAPI<P extends Position> {
     List<Integer> api_scanForNeighbors(int communicationInterfaceId);
 
     /**
+     * Lists communication interfaces installed on device.
+     * @return
+     *      map in which keys are id's and values names of the comm interface
+     */
+    Map<Integer , String> api_listCommunicationInterfaces();
+
+    /**
      * Returns node's current position.
      * @return
      *      node's position.

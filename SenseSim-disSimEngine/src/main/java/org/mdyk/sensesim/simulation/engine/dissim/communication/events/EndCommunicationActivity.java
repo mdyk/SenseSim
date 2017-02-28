@@ -34,10 +34,10 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
 
         if(getSimEntity().getCommunicationStatus(simTime()).equals(CommunicationStatus.SUCCESS)) {
             LOG.trace("Communication is successful");
-            receiver.receiveMessage(simTime(),getSimEntity().getMessage());
+            receiver.receiveMessage(simTime(),communicationInterfaceId,getSimEntity().getMessage());
         } else if(neighbours.contains(receiver)) {
             LOG.trace("Receiver is neighbour of a sender");
-            // Both sender and receiver have the same communication interface type, which is assured by the scan for neighbors process
+            // Both sender and receiver have the same communication interface type, which is assured by the scna
             double bandwidth = Math.min(sender.getCommunicationInterface(communicationInterfaceId).getOutputBandwidth() , receiver.getCommunicationInterface(communicationInterfaceId).getInputBandwidth());
 
             int sentBits = (int) Math.floor(bandwidth * delay);

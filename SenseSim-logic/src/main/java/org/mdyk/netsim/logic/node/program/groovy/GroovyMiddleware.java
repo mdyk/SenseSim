@@ -15,6 +15,7 @@ import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -186,9 +187,14 @@ public class GroovyMiddleware extends Thread implements Middleware {
     @SuppressWarnings("unchecked")
     private void resendProgram(GroovyProgram program) {
         LOG.trace(">> resendProgram");
-        List<Integer> neighbours = deviceAPI.api_scanForNeighbors();
-        for (Integer neighbour : neighbours) {
-            deviceAPI.api_sendMessage(program.getGroovyScript().hashCode(), deviceAPI.api_getMyID(), neighbour, program.getGroovyScript() , null );
+        
+        Map<Integer , String> commInterfaces =  deviceAPI.api_listCommunicationInterfaces();
+
+        for(Integer commIntId : commInterfaces.keySet()) {
+            List<Integer> neighbours = deviceAPI.api_scanForNeighbors(commIntId);
+            for (Integer neighbour : neighbours) {
+                deviceAPI.api_sendMessage(program.getGroovyScript().hashCode(), deviceAPI.api_getMyID(), neighbour, commIntId, program.getGroovyScript() , null );
+            }
         }
         LOG.trace("<< resendProgram");
     }

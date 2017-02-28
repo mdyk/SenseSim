@@ -213,17 +213,17 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         return this.bandwith;
     }
 
-    @Override
-    @Deprecated
-    public void receiveMessage(double time, Message message) {
-        LOG.debug(">> receiveMessage[time="+time+"]");
-        if(!this.messagesMap.containsKey(time)) {
-            this.messagesMap.put(time, new ArrayList<>());
-        }
-        this.messagesMap.get(time).add(message);
-        onMessage(time, message);
-        LOG.debug("<< receiveMessage");
-    }
+//    @Override
+//    @Deprecated
+//    public void receiveMessage(double time, Message message) {
+//        LOG.debug(">> receiveMessage[time="+time+"]");
+//        if(!this.messagesMap.containsKey(time)) {
+//            this.messagesMap.put(time, new ArrayList<>());
+//        }
+//        this.messagesMap.get(time).add(message);
+//        onMessage(time, message);
+//        LOG.debug("<< receiveMessage");
+//    }
 
     @Override
     public void receiveMessage(double time, int communicationInterfaceId, Message message) {

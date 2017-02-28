@@ -10,6 +10,7 @@ import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
 import org.mdyk.netsim.mathModel.device.DeviceNode;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
@@ -17,10 +18,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.function.Function;
 
 
@@ -87,7 +85,11 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
         Message message = new SimpleMessage(messageId, originSource, originDest , content, size);
         List<DeviceNode> neighbours =  ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(communicationInterfaceId, deviceSimEntity.getDeviceLogic());
         List<DeviceNode<GeoPosition>> nodesToHop = deviceSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(deviceSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
-        deviceSimEntity.getDeviceLogic().startCommunication(message, nodesToHop.toArray(new DeviceNode[nodesToHop.size()]));
+
+        HashMap<Integer , List<DeviceNode<GeoPosition>>> receivers = new HashMap<>();
+        receivers.put(communicationInterfaceId , nodesToHop);
+
+        deviceSimEntity.getDeviceLogic().startCommunication(message, receivers);
     }
 
     @Override
@@ -133,6 +135,15 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
             neighboursIds.add(sensorNode.getID());
         }
         return neighboursIds;
+    }
+
+    @Override
+    public Map<Integer, String> api_listCommunicationInterfaces() {
+        HashMap<Integer , String> commInts = new HashMap<>();
+        for(CommunicationInterface communicationInterface : deviceSimEntity.getDeviceLogic().getCommunicationInterfaces()) {
+            commInts.put(communicationInterface.getId() , communicationInterface.getName());
+        }
+        return commInts;
     }
 
     @Override

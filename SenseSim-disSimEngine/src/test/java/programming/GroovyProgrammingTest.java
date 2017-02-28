@@ -23,6 +23,7 @@ import org.mdyk.netsim.logic.sensor.DefaultSensorFactory;
 import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
+import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
@@ -69,7 +70,11 @@ public class GroovyProgrammingTest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
 
-        Device node1 = devicesFactory.buildSensor(1, "device-1", new GeoPosition(52.230532, 21.005521), 25, 5000 , 10, new ArrayList<>() , new ArrayList<>());
+        List<CommunicationInterface> communicationInterfaces = new ArrayList<>();
+        CommunicationInterface commInt1 = new CommunicationInterface(1, "int1",5000,5000,90, CommunicationInterface.TopologyType.ADHOC);
+        communicationInterfaces.add(commInt1);
+
+        Device node1 = devicesFactory.buildSensor(1, "device-1", new GeoPosition(52.230532, 21.005521), 25, 5000 , 10, new ArrayList<>() , new ArrayList<>(), communicationInterfaces);
 
         List<GeoPosition> route = new ArrayList<>();
         route.add(new GeoPosition(52.230532, 21.005521));
@@ -125,10 +130,14 @@ public class GroovyProgrammingTest {
         SimEngine simEngine = injector.getInstance(SimEngine.class);
         DevicesFactory devicesFactory = injector.getInstance(DevicesFactory.class);
 
-        Device node1 = devicesFactory.buildSensor(1, "device-1", new GeoPosition(52.230532, 21.005521), 25, 5000, 10, new ArrayList<>(), new ArrayList<>());
-        Device node2 = devicesFactory.buildSensor(2, "device-2", new GeoPosition(52.230553, 21.005862), 25, 5000, 10, new ArrayList<>(), new ArrayList<>());
-        Device node3 = devicesFactory.buildSensor(3, "device-3",  new GeoPosition(52.230562, 21.006125), 25, 5000, 10, new ArrayList<>(), new ArrayList<>());
-        Device node4 = devicesFactory.buildSensor(4, "device-4", new GeoPosition(52.230572, 21.006419), 25, 5000, 10, new ArrayList<>(), new ArrayList<>());
+        List<CommunicationInterface> communicationInterfaces = new ArrayList<>();
+        CommunicationInterface commInt1 = new CommunicationInterface(1, "int1",5000,5000,90, CommunicationInterface.TopologyType.ADHOC);
+        communicationInterfaces.add(commInt1);
+
+        Device node1 = devicesFactory.buildSensor(1, "device-1", new GeoPosition(52.230532, 21.005521), 25, 5000, 10, new ArrayList<>(), new ArrayList<>(), communicationInterfaces);
+        Device node2 = devicesFactory.buildSensor(2, "device-2", new GeoPosition(52.230553, 21.005862), 25, 5000, 10, new ArrayList<>(), new ArrayList<>(), communicationInterfaces);
+        Device node3 = devicesFactory.buildSensor(3, "device-3",  new GeoPosition(52.230562, 21.006125), 25, 5000, 10, new ArrayList<>(), new ArrayList<>(), communicationInterfaces);
+        Device node4 = devicesFactory.buildSensor(4, "device-4", new GeoPosition(52.230572, 21.006419), 25, 5000, 10, new ArrayList<>(), new ArrayList<>(), communicationInterfaces);
 
         simEngine.addNode(node1);
         simEngine.addNode(node2);
