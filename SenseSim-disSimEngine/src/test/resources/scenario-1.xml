@@ -167,9 +167,9 @@
                     <longitude>21.005350</longitude>
                 </checkpoint>
             </phenomenonArea>
-            <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE">
+            <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
                 <phenomenonValue>
-                    <observerValue fromTime="1" toTime="50" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                    <observerValue fromTime="1" toTime="50">
                         <value>10</value>
                     </observerValue>
                 </phenomenonValue>
@@ -194,9 +194,9 @@
                     <longitude>21.005350</longitude>
                 </checkpoint>
             </phenomenonArea>
-            <phenomenonValueSet startTime="1" endTime="1000" abilityName="TEMPERATURE">
+            <phenomenonValueSet startTime="1" endTime="1000" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
                 <csvFile>
-                    <csvFile>phenomenaValueTest.csv</csvFile>
+                    <csvFile>ecg-sample.csv</csvFile>
                 </csvFile>
             </phenomenonValueSet>
             <phenomenonValueSet startTime="1" endTime="1000" abilityName="PHOTO">

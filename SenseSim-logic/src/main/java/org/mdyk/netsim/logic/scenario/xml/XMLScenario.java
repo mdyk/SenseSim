@@ -173,6 +173,26 @@ public class XMLScenario implements Scenario {
                 AbilityType abilityName =  AbilityType.valueOf(phenomenonValueType.getAbilityName());
                 Map<IPhenomenonTimeRange, Object> phenomenonValues = new HashMap<>();
 
+                String configurationClassName = phenomenonValueType.getConfigurationClass();
+                String configFactoryClassName = phenomenonValueType.getConfigurationSpaceFactory();
+
+
+                Class<?> configurationClass = null;
+                try {
+                    if (configFactoryClassName != null && !configFactoryClassName.isEmpty()) {
+
+                    }
+
+                    if (configurationClassName != null && !configurationClassName.isEmpty()) {
+                        configurationClass = Class.forName(configurationClassName);
+                    }
+
+                } catch (ClassNotFoundException e) {
+                    LOG.error(e.getMessage() , e);
+                    throw new RuntimeException("Error while determinig configuration class for phenomenon: " + phenomenonType.getName(),e);
+                }
+
+
                 if(phenomenonValueType.getCsvFile() != null) {
                     String filePath = scenarioFile.getParent() + "/" + phenomenonValueType.getCsvFile().getCsvFile();
                     phenomenonValues.putAll(xmlTypeConverter.readPhenomenonValuesFromFile(filePath));
@@ -185,14 +205,9 @@ public class XMLScenario implements Scenario {
                         }
 
                         for(PhenomenonObserverValueType observerValueType : valueType.getObserverValue()) {
-                            Map<IPhenomenonTimeRange, ConfigurationSpace> values = xmlTypeConverter.observerValueConverter(observerValueType);
-                            try {
-                                Class<?> configurationClass = Class.forName(observerValueType.getConfigurationClass());
-                                phenomenonObserverValues.put(configurationClass , values);
-                            } catch (ClassNotFoundException e) {
-                                LOG.error(e.getMessage() , e);
-                                throw new RuntimeException("Error while determinig configuration class for phenomenon: " + phenomenonType.getName(),e);
-                            }
+                            Map<IPhenomenonTimeRange, ConfigurationSpace> values = xmlTypeConverter.observerValueConverter(observerValueType, configFactoryClassName);
+//                                Class<?> configurationClass = Class.forName(observerValueType.getConfigurationClass());
+                            phenomenonObserverValues.put(configurationClass , values);
                         }
                     }
                 }

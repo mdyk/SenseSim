@@ -31,8 +31,8 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.sensesim.simulation.engine.dissim.DisSimEngine;
 import org.mdyk.sensesim.simulation.engine.dissim.communication.DisSimCommunicationProcessFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimAPIFactory;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 
@@ -145,15 +145,15 @@ public class XMLScenarioTest {
 
         TestCase.assertEquals(2 , phenomenonModelList.size());
 
-        PhenomenonValue val1 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,1);
-        TestCase.assertEquals(110 , val1.getValue());
+        PhenomenonValue val1 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,0.075d);
+        TestCase.assertEquals(36.1 , val1.getValue());
 
-        PhenomenonValue val2 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,500);
-        TestCase.assertEquals(110 , val2.getValue());
-
-        PhenomenonValue val3 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,1000);
-        TestCase.assertEquals(110 , val3.getValue());
-
+//        PhenomenonValue val2 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,500);
+//        TestCase.assertEquals(110 , val2.getValue());
+//
+//        PhenomenonValue val3 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.TEMPERATURE,1000);
+//        TestCase.assertEquals(110 , val3.getValue());
+//
         PhenomenonValue valPhoto1 = phenomenonModelList.get(1).getPhenomenonValue(AbilityType.PHOTO, 500);
         TestCase.assertTrue(valPhoto1.getValue() != null);
 

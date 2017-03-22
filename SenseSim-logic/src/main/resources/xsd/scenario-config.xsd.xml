@@ -83,7 +83,7 @@
       <!--Optional:-->
       <attachedTo nodeId="string"/>
       <!--Zero or more repetitions:-->
-      <phenomenonValueSet startTime="string" endTime="string" abilityName="string">
+      <phenomenonValueSet startTime="string" endTime="string" abilityName="string" configurationClass="string" configurationSpaceFactory="string">
         <!--Zero or more repetitions:-->
         <phenomenonValue>
           <!--Zero or more repetitions:-->
@@ -91,7 +91,7 @@
             <value>string</value>
           </discreteValue>
           <!--Zero or more repetitions:-->
-          <observerValue fromTime="string" toTime="string" configurationClass="string" configurationSpaceFactory="string">
+          <observerValue fromTime="string" toTime="string">
             <value>string</value>
           </observerValue>
         </phenomenonValue>
