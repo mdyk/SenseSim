@@ -196,7 +196,7 @@
         <DataProperty IRI="#SensorDataPackage_has-measurement-time"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="#SensorDataPackage_has-value"/>
+        <DataProperty IRI="#SensorDataPackage_has-milivolts"/>
     </Declaration>
     <Declaration>
         <NamedIndividual IRI="#DelayedTreatment_T2_AJP-4.10A-TriageHumanStateDomain"/>
@@ -586,7 +586,7 @@
         <Class IRI="#SensorDataPackage"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="#SensorDataPackage_has-value"/>
+        <DataProperty IRI="#SensorDataPackage_has-milivolts"/>
         <Class IRI="#SensorDataPackage"/>
     </DataPropertyDomain>
     <DataPropertyRange>

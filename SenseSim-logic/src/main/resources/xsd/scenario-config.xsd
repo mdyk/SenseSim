@@ -62,7 +62,7 @@
             <xs:element name="routingAlgType">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration value="FloodingRouting"/>
+                        <xs:enumeration milivolts="FloodingRouting"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -93,14 +93,14 @@
             <xs:element name="sesnorImplType">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration value="GeoSensorNode"/>
+                        <xs:enumeration milivolts="GeoSensorNode"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="routingAlgType">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration value="FloodingRouting"/>
+                        <xs:enumeration milivolts="FloodingRouting"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -117,7 +117,7 @@
 
     <xs:complexType name="phenomenonDiscreteValueType">
         <xs:sequence>
-            <xs:element type="xs:string" name="value" />
+            <xs:element type="xs:string" name="milivolts" />
         </xs:sequence>
         <xs:attribute type="xs:string" name="fromTime"/>
         <xs:attribute type="xs:string" name="toTime"/>
@@ -126,7 +126,7 @@
 
     <xs:complexType name="phenomenonObserverValueType">
         <xs:sequence>
-            <xs:element type="xs:string" name="value" />
+            <xs:element type="xs:string" name="milivolts" />
         </xs:sequence>
         <xs:attribute type="xs:string" name="fromTime"/>
         <xs:attribute type="xs:string" name="toTime"/>

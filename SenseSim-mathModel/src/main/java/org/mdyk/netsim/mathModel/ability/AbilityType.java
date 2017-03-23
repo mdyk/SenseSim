@@ -10,6 +10,7 @@ public enum AbilityType {
     PULSE,
     BLOOD_SATURATION,
     THERMOVISION,
+    ECG,
     PHOTO;
 
 }

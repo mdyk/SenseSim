@@ -88,11 +88,11 @@
         <phenomenonValue>
           <!--Zero or more repetitions:-->
           <discreteValue fromTime="string" toTime="string" format="string">
-            <value>string</value>
+            <milivolts>string</milivolts>
           </discreteValue>
           <!--Zero or more repetitions:-->
           <observerValue fromTime="string" toTime="string">
-            <value>string</value>
+            <milivolts>string</milivolts>
           </observerValue>
         </phenomenonValue>
         <!--Optional:-->

@@ -163,7 +163,7 @@
         <Class IRI="#SensorWhichActuates"/>
     </Declaration>
     <Declaration>
-        <DataProperty IRI="#SensorDataPackage_has-value"/>
+        <DataProperty IRI="#SensorDataPackage_has-milivolts"/>
     </Declaration>
     <Declaration>
         <Class IRI="#MonitoredObject"/>
@@ -615,7 +615,7 @@
         <Class IRI="#SensorDataPackage"/>
     </DataPropertyDomain>
     <DataPropertyDomain>
-        <DataProperty IRI="#SensorDataPackage_has-value"/>
+        <DataProperty IRI="#SensorDataPackage_has-milivolts"/>
         <Class IRI="#SensorDataPackage"/>
     </DataPropertyDomain>
     <DataPropertyRange>

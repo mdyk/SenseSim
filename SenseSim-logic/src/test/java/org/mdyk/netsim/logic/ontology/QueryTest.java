@@ -61,7 +61,7 @@ public class QueryTest {
 //            ResultBinding mapping = i.next();
 //            for( Iterator<?> j = q.getVars().iterator(); j.hasNext(); ) {
 //                ATermAppl var = (ATermAppl) j.next();
-//                System.out.println( var.getArgument( 0 ) + " -> " + mapping.getValue( var ).getName()); //I get var(x) as opposed to x
+//                System.out.println( var.getArgument( 0 ) + " -> " + mapping.getMilivolts( var ).getName()); //I get var(x) as opposed to x
 //                if( j.hasNext() )
 //                    System.out.print( ", " );
 //            }
@@ -73,7 +73,7 @@ public class QueryTest {
 //
 //            System.out.println(aTermAppl.getArgument( 0 ));
 //
-////            System.out.print( var.getArgument( 0 ) + " -> " + mapping.getValue( var )); //I get var(x) as opposed to x
+////            System.out.print( var.getArgument( 0 ) + " -> " + mapping.getMilivolts( var )); //I get var(x) as opposed to x
 ////            if( j.hasNext() )
 ////                System.out.print( ", " );
 //        }

@@ -176,11 +176,11 @@ public class XMLScenario implements Scenario {
                 String configurationClassName = phenomenonValueType.getConfigurationClass();
                 String configFactoryClassName = phenomenonValueType.getConfigurationSpaceFactory();
 
-
                 Class<?> configurationClass = null;
+                Class<?> factoryClass = null;
                 try {
                     if (configFactoryClassName != null && !configFactoryClassName.isEmpty()) {
-
+                        factoryClass = Class.forName(configFactoryClassName);
                     }
 
                     if (configurationClassName != null && !configurationClassName.isEmpty()) {
@@ -192,18 +192,17 @@ public class XMLScenario implements Scenario {
                     throw new RuntimeException("Error while determinig configuration class for phenomenon: " + phenomenonType.getName(),e);
                 }
 
-
                 if(phenomenonValueType.getCsvFile() != null) {
                     String filePath = scenarioFile.getParent() + "/" + phenomenonValueType.getCsvFile().getCsvFile();
-                    phenomenonValues.putAll(xmlTypeConverter.readPhenomenonValuesFromFile(filePath));
+                    phenomenonObserverValues.put(configurationClass, xmlTypeConverter.readPhenomenonValuesFromFile(filePath, configurationClass , factoryClass));
                 }
                 else {
+                    // FIXME rezygnacja z wartości wpisywanych wprost, z pominięciem mechaniki obserwatora
                     for(PhenomenonValueType valueType : phenomenonValueType.getPhenomenonValue()) {
                         for(PhenomenonDiscreteValueType discreteValueType : valueType.getDiscreteValue()) {
                             Map<IPhenomenonTimeRange, Object> values = xmlTypeConverter.discreteValueConverter(discreteValueType);
                             phenomenonValues.putAll(values);
                         }
-
                         for(PhenomenonObserverValueType observerValueType : valueType.getObserverValue()) {
                             Map<IPhenomenonTimeRange, ConfigurationSpace> values = xmlTypeConverter.observerValueConverter(observerValueType, configFactoryClassName);
 //                                Class<?> configurationClass = Class.forName(observerValueType.getConfigurationClass());

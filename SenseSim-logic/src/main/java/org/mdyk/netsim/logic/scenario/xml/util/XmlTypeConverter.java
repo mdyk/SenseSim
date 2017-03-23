@@ -140,10 +140,10 @@ public class XmlTypeConverter {
         return phenomenonValue;
     }
 
-    public Map<IPhenomenonTimeRange, Object> readPhenomenonValuesFromFile(String valuefilePath) {
+    public Map<IPhenomenonTimeRange, ConfigurationSpace> readPhenomenonValuesFromFile(String valuefilePath, Class<?> configurationClass, Class<?> factoryClass) {
         LOG.debug(">>> readPhenomenonValuesFromFile [filePath = " + valuefilePath + "]");
 
-        Map<IPhenomenonTimeRange, Object> phenomenonValue = new HashMap<>();
+        Map<IPhenomenonTimeRange, ConfigurationSpace> phenomenonValue = new HashMap<>();
 
         CSVReader reader = null;
         try {
@@ -151,8 +151,13 @@ public class XmlTypeConverter {
             String [] nextLine;
             while ((nextLine = reader.readNext()) != null) {
                 IPhenomenonTimeRange phenomenonTime = new SimplePhenomenonTimeRange(Double.parseDouble(nextLine[0]),Double.parseDouble(nextLine[1]));
-                Object value = valueConverter(nextLine[2] , nextLine[3]);
-                phenomenonValue.put(phenomenonTime, value);
+//                Object value = valueConverter(nextLine[2] , nextLine[3]);
+
+                Constructor factoryConstructor = factoryClass.getConstructor();
+                ConfigurationSpaceFactory factory = (ConfigurationSpaceFactory) factoryConstructor.newInstance();
+
+                ConfigurationSpace confSpace = factory.buildConfigurationSpace(nextLine[2]);
+                phenomenonValue.put(phenomenonTime , confSpace);
             }
         } catch (Exception e) {
             LOG.error(e.getMessage(), e);
