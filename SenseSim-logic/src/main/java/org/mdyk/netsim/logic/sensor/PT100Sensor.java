@@ -62,4 +62,9 @@ public class PT100Sensor extends SensorModel<PT100Observer , TemperatureConfigur
         return TemperatureConfigurationSpace.class;
     }
 
+    @Override
+    public String unitName() {
+        return "Celsius degree (C)";
+    }
+
 }

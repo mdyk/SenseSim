@@ -57,4 +57,9 @@ public class EcgSensor extends SensorModel<EcgObserver, EcgConfigurationSpace> {
     public Class getConfigurationSpaceClass() {
         return EcgConfigurationSpace.class;
     }
+
+    @Override
+    public String unitName() {
+        return "Milivolts (mV)";
+    }
 }

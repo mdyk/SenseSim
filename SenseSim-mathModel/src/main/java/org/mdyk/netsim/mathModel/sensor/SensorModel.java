@@ -51,4 +51,6 @@ public abstract class SensorModel<O extends ObserverModel<?,?> , R extends Confi
         return getName();
     }
 
+    public abstract String unitName();
+
 }

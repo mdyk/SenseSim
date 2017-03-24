@@ -24,25 +24,20 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
 
     @Deprecated
     protected double        radioRange;
-    @Deprecated
-    private double          bandwith = 5000; // bity
-
-
     protected List<CommunicationInterface> communicationInterfaces;
-
     @Deprecated
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     /**
      * Holds device observations
      */
     protected Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observationsFromObserver;
-
     @Deprecated
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
     protected RoutingAlgorithm routingAlgorithm;
-
     protected List<SensorModel<?,?>> sensors;
+    @Deprecated
+    private double          bandwith = 5000; // bity
 
     @Deprecated
     protected DefaultDeviceModel(int id, P position, int radioRange , int bandwidth , double velocity, List<AbilityType> abilities) {
@@ -130,13 +125,13 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     }
 
     @Override
-    public void setPosition(P position) {
-        this.position = position;
+    public P getPosition() {
+        return position;
     }
 
     @Override
-    public P getPosition() {
-        return position;
+    public void setPosition(P position) {
+        this.position = position;
     }
 
     @Override
@@ -152,7 +147,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
 
     @Override
     public Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> getObservations() {
-        return this.observationsFromObserver;
+        return observationsFromObserver;
     }
 
     @Override

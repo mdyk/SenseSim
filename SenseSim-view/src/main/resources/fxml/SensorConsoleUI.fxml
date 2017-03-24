@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.*?>
 <?import javafx.scene.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mdyk.netsim.view.controller.SensorConsoleController">
+<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" fx:controller="org.mdyk.netsim.view.controller.SensorConsoleController">
    <children>
       <HBox>
          <children>
@@ -146,7 +147,16 @@
                      <children>
                         <VBox spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <ComboBox fx:id="abilityChooser" onAction="#showObservationsForAbility" prefWidth="200.0" VBox.vgrow="NEVER" />
+                              <HBox>
+                                 <children>
+                                    <ComboBox fx:id="abilityChooser" onAction="#showObservationsForAbility" prefWidth="200.0" />
+                                    <Button mnemonicParsing="false" onAction="#showPlot" prefHeight="27.0" prefWidth="101.0" text="Show plot">
+                                       <HBox.margin>
+                                          <Insets left="15.0" />
+                                       </HBox.margin>
+                                    </Button>
+                                 </children>
+                              </HBox>
                               <TableView fx:id="abilityTable" prefHeight="274.0" prefWidth="600.0" VBox.vgrow="ALWAYS">
                                 <columns>
                                   <TableColumn fx:id="simTimeColumn" prefWidth="75.0" text="SimTime" />
