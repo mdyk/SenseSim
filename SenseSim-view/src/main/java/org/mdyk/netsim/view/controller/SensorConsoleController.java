@@ -367,7 +367,7 @@ public class SensorConsoleController implements Initializable {
         lineChart.resize(800, 600);
         Scene scene = new Scene(chartPane, 800, 600);
         lineChart.getData().add(series);
-
+        lineChart.setCreateSymbols(false);
 
         refreshPlotData(series);
         stage.setScene(scene);

@@ -25,6 +25,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFacto
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.RealDevicePlugin;
 import pl.edu.wat.integrator.MyResource;
+import sensesim.integration.mcop.MCopPlugin;
 
 
 public class SenseSimConfig extends AbstractModule {
@@ -47,7 +48,7 @@ public class SenseSimConfig extends AbstractModule {
         bind(DeviceStatisticsFactory.class).to(DefaultStatisticsFactory.class);
         bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
         bind(IRealDevicePlugin.class).to(RealDevicePlugin.class);
-        bind(MyResource.class);
+        bind(MCopPlugin.class).to(org.mdyk.sensesim.integrator.mcop.plugin.MCopPluginImpl.class);
     }
 
 }

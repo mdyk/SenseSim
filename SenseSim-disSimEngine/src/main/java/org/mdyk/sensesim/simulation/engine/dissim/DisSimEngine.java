@@ -47,10 +47,8 @@ public class DisSimEngine implements SimEngine, Runnable {
     private DevicesFactory devicesFactory;
     @Inject
     private NetworkManager networkManager;
-
     @Inject
     private ScenarioFactory scenarioFactory;
-
     @Inject
     private Environment environment;
 
