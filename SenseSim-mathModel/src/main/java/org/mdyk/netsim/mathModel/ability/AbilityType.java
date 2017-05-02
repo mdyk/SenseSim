@@ -11,6 +11,7 @@ public enum AbilityType {
     BLOOD_SATURATION,
     THERMOVISION,
     ECG,
+    RFID,
     PHOTO;
 
 }

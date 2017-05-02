@@ -1,0 +1,10 @@
+0;10;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:0714141.912345.7045,urn:epc:id:sgtin:0714141.912345.7301;STRING
+10;20;urn:epc:id:sgtin:0714141.912345.7045,urn:epc:id:sgtin:0714141.912345.7301;STRING
+20;30;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:0714141.912345.7045;STRING
+30;40;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:0714141.912345.7045,urn:epc:id:sgtin:0714141.912345.7301;STRING
+40;50;urn:epc:id:sgtin:0714141.912345.7045,urn:epc:id:sgtin:0714141.912345.7301;STRING
+50;60;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:0714141.912345.7045,urn:epc:id:sgtin:0714141.912345.7301;STRING
+60;80;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:0714141.912345.7045;STRING
+80;100;urn:epc:id:sgtin:0714141.912345.7045,urn:epc:id:sgtin:0714141.912345.7301;STRING
+100;150;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:0714141.912345.7045,urn:epc:id:sgtin:0714141.912345.7301;STRING
+150;1000;urn:epc:id:sgtin:0714141.912345.7045,urn:epc:id:sgtin:0714141.912345.7301;STRING

@@ -1,5 +1,6 @@
 package org.mdyk.netsim.logic.node;
 
+import org.mdyk.netsim.logic.communication.routing.DirectReceiverRouting;
 import org.mdyk.netsim.logic.communication.routing.FloodingRouting;
 import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
@@ -32,7 +33,8 @@ public class Device {
         deviceLogic.setSimEntity(deviceSimEntity);
         deviceLogic.setDeviceStatistics(deviceStatistics);
         // FIXME to powinno znajdować się w konfiguracji !!!!
-        deviceLogic.setRoutingAlgorithm(new FloodingRouting(deviceStatistics));
+//        deviceLogic.setRoutingAlgorithm(new FloodingRouting(deviceStatistics));
+        deviceLogic.setRoutingAlgorithm(new DirectReceiverRouting());
         deviceSimEntity.setDeviceLogic(deviceLogic);
         deviceSimEntity.setMiddleware(middleware);
         deviceAPI.setSimEntity(deviceSimEntity);

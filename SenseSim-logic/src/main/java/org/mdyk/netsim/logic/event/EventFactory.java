@@ -50,6 +50,11 @@ public class EventFactory {
         return new InternalEvent(EventType.LOAD_PROGRAM, programCode);
     }
 
+    public static InternalEvent testProgram(Integer nodeId , String Code) {
+        Pair<Integer, String> programCode = new Pair<>(nodeId,Code);
+        return new InternalEvent(EventType.START_TEST_PROGRAM_EXECUTION, programCode);
+    }
+
     public static InternalEvent sendInformationNeed(Integer nodeId , String informationNeed) {
         Pair<Integer, String> informationNeedPair = new Pair<>(nodeId,informationNeed);
         return new InternalEvent(EventType.ANSWER_INFORMATION_NEED, informationNeedPair);

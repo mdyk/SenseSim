@@ -84,6 +84,8 @@ public class SenseSimJFXController implements Initializable {
 
     private Stage informationNeedConsole;
 
+    private Stage programConsole;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         LOG.debug("JFXML initialization");
@@ -131,47 +133,22 @@ public class SenseSimJFXController implements Initializable {
 
     public void loadProgram() {
         LOG.debug(">> loadProgram");
-        Dialog<Pair<Integer, String>> dialog = new Dialog<>();
-        dialog.setTitle("Write program for the network");
-        dialog.setHeaderText("Here you can macroprogram you network.");
-        ButtonType loginButtonType = new ButtonType("Send program", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ProgramConsole.fxml"));
 
-        ChoiceBox<Integer> nodeId = new ChoiceBox<>(FXCollections.observableArrayList(nodeViews.keySet()));
-        CheckBox sendToAll = new CheckBox();
-        TextArea codeArea = new TextArea();
-        codeArea.setMinHeight(600);
-        codeArea.setMinWidth(800);
-        codeArea.setPromptText("Program");
+        try {
+            Parent parent = fxmlLoader.load();
+            programConsole = new Stage();
+            programConsole.initModality(Modality.NONE);
+            programConsole.initStyle(StageStyle.DECORATED);
+            programConsole.setScene(new Scene(parent));
+            ProgramConsoleController controller = fxmlLoader.getController();
+            controller.populateDevices(nodeViews);
+            programConsole.show();
+        } catch (IOException e) {
+            LOG.error(e.getMessage() , e);
+        }
 
-        grid.add(new Label("Node's id:"), 0, 0);
-        grid.add(nodeId, 1, 0);
-        grid.add(new Label("Send program to all nodes"),0,1);
-        grid.add(sendToAll,1,1);
-        grid.add(new Label("Code:"), 0, 2);
-        grid.add(codeArea, 1, 2);
-
-        dialog.getDialogPane().setContent(grid);
-
-        Platform.runLater(nodeId::requestFocus);
-
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == loginButtonType) {
-                return new Pair<>(nodeId.getValue(), codeArea.getText());
-            }
-            return null;
-        });
-
-        Optional<Pair<Integer, String>> result = dialog.showAndWait();
-
-        result.ifPresent(program -> {
-            EventBusHolder.getEventBus().post(EventFactory.loadProgram(program.getKey(),program.getValue()));
-        });
         LOG.debug("<< loadProgram");
     }
 

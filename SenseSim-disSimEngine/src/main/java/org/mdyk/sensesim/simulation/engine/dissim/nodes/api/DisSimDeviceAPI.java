@@ -163,6 +163,11 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     }
 
     @Override
+    public String api_getName() {
+        return deviceSimEntity.getDeviceLogic().getName();
+    }
+
+    @Override
     public PhenomenonValue api_getCurrentObservation(AbilityType abilityType) {
 
         Map<AbilityType, List<PhenomenonValue>> obserations = deviceSimEntity.getDeviceLogic().old_getObservations();

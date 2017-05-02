@@ -9,14 +9,17 @@ import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
-import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -94,7 +97,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
     public List<SensorProgram> getPrograms() {
          return new ArrayList<>(programs.values());
     }
-
+                                                                                                    
     @Override
     public void execute() {
 //        LOG.trace(">> execute");
@@ -107,6 +110,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
             final Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
 
+
             final GroovyMiddleware me = this;
 
             new Thread() {
@@ -114,11 +118,14 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     LOG.info("Running program with PID="+PID);
                     me.deviceSimEntity.startProgramExecution(PID);
                     Map<String, Object> params = new HashMap<>();
+                    OutputStream os = new ByteArrayOutputStream();
+                    PrintStream ps = new PrintStream(os);
                     params.put("api", deviceAPI);
+                    params.put("out", ps);
                     scriptToRun.setBinding(new Binding(params));
                     try {
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_ECECUTION);
-                        LOG.debug("PID="+PID+" DURING_ECECUTION");
+                        LOG.debug("PID="+PID+" DURING_EXECUTION");
                         Object result = scriptToRun.run();
                         LOG.debug("PID="+PID+" result="+result);
                         groovyProgram.setResult(result);
@@ -144,6 +151,50 @@ public class GroovyMiddleware extends Thread implements Middleware {
         }
 
         // TODO określenie co jeszcze miałby robić middleware
+    }
+
+    private void testProgram (GroovyProgram groovyProgram) {
+
+        final OutputStream os = new ByteArrayOutputStream();
+        final PrintStream ps = new PrintStream(os);
+
+        try {
+            final Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
+
+            new Thread() {
+                public void run() {
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("api", deviceAPI);
+                    params.put("out", ps);
+                    params.put("err", ps);
+                    scriptToRun.setBinding(new Binding(params));
+                    try {
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_ECECUTION);
+                        Object result = scriptToRun.run();
+                        groovyProgram.setResult(result);
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_OK);
+                    } catch (Exception exc) {
+                        LOG.error(exc.getMessage(), exc);
+                        // ps.print(exc.getMessage());
+                        ps.print(exc);
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
+                    } finally {
+//                    EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.PROGRAM_UPDATED, groovyProgram));
+                        EventBusHolder.getEventBus().post(new InternalEvent(EventType.END_TEST_PROGRAM_EXECUTION, os));
+                    }
+
+                }
+            }.start();
+        } catch (Exception exc) {
+            LOG.error(exc.getMessage(), exc);
+            // ps.print(exc.getMessage());
+            ps.print(exc);
+            groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
+        } finally {
+            EventBusHolder.getEventBus().post(new InternalEvent(EventType.END_TEST_PROGRAM_EXECUTION, os));
+        }
+        
+
     }
 
     @Override
@@ -173,8 +224,20 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     // The program should be installed in current node.
                     if(programToInstall.getKey()!=null && programToInstall.getKey().equals(nodeId)){
                         LOG.debug("Installing program on node: " + nodeId);
-                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue(), true);
+                        // FIXME rozsyłanie programu powinno być określane w konsoli
+                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue(), false);
                         loadProgram(groovyProgram);
+                    }
+                    break;
+
+                case START_TEST_PROGRAM_EXECUTION:
+                    LOG.debug(">> START_TEST_PROGRAM_EXECUTION event");
+                    programToInstall = (Pair<Integer, String>) event.getPayload();
+                    // The program should be installed in current node.
+                    if(programToInstall.getKey()!=null && programToInstall.getKey().equals(nodeId)){
+                        LOG.debug("Installing program on node: " + nodeId);
+                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue(), true);
+                        testProgram(groovyProgram);
                     }
                     break;
             }

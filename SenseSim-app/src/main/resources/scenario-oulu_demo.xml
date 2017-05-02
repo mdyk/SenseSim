@@ -61,8 +61,9 @@
                 </communicationInterface>
             </communicationInterfaces>
             <sensors>
-                <!--<sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>-->
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
                 <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
             </sensors>
             <startPosition>
                 <latitude>65.011796</latitude>
@@ -71,135 +72,135 @@
             <route>
             </route>
         </node>
-        <!--<node id="2" name="ugs-sens-2">-->
-            <!--<speed>0</speed>-->
-            <!--<radioRange>80</radioRange>-->
-            <!--<radioBandwidth>5000</radioBandwidth>-->
-            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
-            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-            <!--<sensorAbilities>-->
-                <!--<ability>TEMPERATURE</ability>-->
-                <!--<ability>PHOTO</ability>-->
-            <!--</sensorAbilities>-->
-            <!--<communicationInterfaces>-->
-                <!--<communicationInterface id="1" name="WiFi-Direct">-->
-                    <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
-                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-                    <!--<topologyType>-->
-                        <!--<adhocM2M/>-->
-                    <!--</topologyType>-->
-                <!--</communicationInterface>-->
-                <!--<communicationInterface id="2" name="LTE">-->
-                    <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
-                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-                    <!--<topologyType>-->
-                        <!--<fixedTopology>-->
-                            <!--<connectedDeviceId>3</connectedDeviceId>-->
-                            <!--<connectedDeviceId>4</connectedDeviceId>-->
-                        <!--</fixedTopology>-->
-                    <!--</topologyType>-->
-                <!--</communicationInterface>-->
-            <!--</communicationInterfaces>-->
-            <!--<sensors>-->
-                <!--<sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>-->
-            <!--</sensors>-->
-            <!--<startPosition>-->
-                <!--<latitude>65.011940</latitude>-->
-                <!--<longitude>25.465045</longitude>-->
-            <!--</startPosition>-->
-            <!--<route>-->
-            <!--</route>-->
-        <!--</node>-->
-        <!--<node id="3" name="ugs-sens-3">-->
-            <!--<speed>0</speed>-->
-            <!--<radioRange>80</radioRange>-->
-            <!--<radioBandwidth>5000</radioBandwidth>-->
-            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
-            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-            <!--<sensorAbilities>-->
-                <!--<ability>TEMPERATURE</ability>-->
-                <!--<ability>PHOTO</ability>-->
-            <!--</sensorAbilities>-->
-            <!--<communicationInterfaces>-->
-                <!--<communicationInterface id="1" name="WiFi-Direct">-->
-                    <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
-                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-                    <!--<topologyType>-->
-                        <!--<adhocM2M/>-->
-                    <!--</topologyType>-->
-                <!--</communicationInterface>-->
-                <!--<communicationInterface id="2" name="LTE">-->
-                    <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
-                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-                    <!--<topologyType>-->
-                        <!--<fixedTopology>-->
-                            <!--<connectedDeviceId>3</connectedDeviceId>-->
-                            <!--<connectedDeviceId>4</connectedDeviceId>-->
-                        <!--</fixedTopology>-->
-                    <!--</topologyType>-->
-                <!--</communicationInterface>-->
-            <!--</communicationInterfaces>-->
-            <!--<sensors>-->
-                <!--<sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>-->
-            <!--</sensors>-->
-            <!--<startPosition>-->
-                <!--<latitude>65.011760</latitude>-->
-                <!--<longitude>25.464710</longitude>-->
-            <!--</startPosition>-->
-            <!--<route>-->
-            <!--</route>-->
-        <!--</node>-->
-        <!--<node id="4" name="platoon-commander">-->
-            <!--<speed>0</speed>-->
-            <!--<radioRange>80</radioRange>-->
-            <!--<radioBandwidth>5000</radioBandwidth>-->
-            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
-            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-            <!--<sensorAbilities>-->
-                <!--<ability>TEMPERATURE</ability>-->
-                <!--<ability>PHOTO</ability>-->
-            <!--</sensorAbilities>-->
-            <!--<communicationInterfaces>-->
-                <!--<communicationInterface id="1" name="WiFi-Direct">-->
-                    <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
-                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-                    <!--<topologyType>-->
-                        <!--<adhocM2M/>-->
-                    <!--</topologyType>-->
-                <!--</communicationInterface>-->
-                <!--<communicationInterface id="2" name="LTE">-->
-                    <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
-                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-                    <!--<topologyType>-->
-                        <!--<fixedTopology>-->
-                            <!--<connectedDeviceId>3</connectedDeviceId>-->
-                            <!--<connectedDeviceId>4</connectedDeviceId>-->
-                        <!--</fixedTopology>-->
-                    <!--</topologyType>-->
-                <!--</communicationInterface>-->
-            <!--</communicationInterfaces>-->
-            <!--<sensors>-->
-                <!--<sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>-->
-            <!--</sensors>-->
-            <!--<startPosition>-->
-                <!--<latitude>65.012626</latitude>-->
-                <!--<longitude>25.470911</longitude>-->
-            <!--</startPosition>-->
-            <!--<route>-->
-            <!--</route>-->
-        <!--</node>-->
+        <node id="2" name="ugs-sens-2">
+            <speed>0</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="LTE">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>3</connectedDeviceId>
+                            <connectedDeviceId>4</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.011940</latitude>
+                <longitude>25.465045</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="3" name="ugs-sens-3">
+            <speed>0</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="LTE">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>3</connectedDeviceId>
+                            <connectedDeviceId>4</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.011760</latitude>
+                <longitude>25.464710</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="4" name="platoon-commander">
+            <speed>0</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="LTE">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>3</connectedDeviceId>
+                            <connectedDeviceId>4</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.012626</latitude>
+                <longitude>25.470911</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
     </nodes>
     <phenomena>
         <!--<phenomenon name="string" phenomenonType="observer">-->
@@ -241,6 +242,14 @@
             <phenomenonValueSet startTime="1" endTime="1000" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
                 <csvFile>
                     <csvFile>ecg.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="1"/>
+            <phenomenonValueSet startTime="1" endTime="1000" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-sample.csv</csvFile>
                 </csvFile>
             </phenomenonValueSet>
         </phenomenon>

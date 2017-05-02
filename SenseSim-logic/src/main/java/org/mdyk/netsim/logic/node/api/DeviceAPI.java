@@ -129,6 +129,12 @@ public interface DeviceAPI<P extends Position> {
      */
     Integer api_getMyID();
 
+    /**
+     * Returns name of the device
+     * @return
+     *      String object containing name of the device.
+     */
+    String api_getName();
 
     PhenomenonValue api_getCurrentObservation(AbilityType abilityType);
 

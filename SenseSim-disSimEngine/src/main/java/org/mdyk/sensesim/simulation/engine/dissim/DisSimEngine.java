@@ -33,6 +33,7 @@ import net.xeoh.plugins.base.util.uri.ClassURI;
 import org.mdyk.netsim.logic.node.DevicesFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.RealDevicePlugin;
+import sensesim.integration.mcop.MCopPluginFactory;
 
 
 /**
@@ -51,6 +52,8 @@ public class DisSimEngine implements SimEngine, Runnable {
     private ScenarioFactory scenarioFactory;
     @Inject
     private Environment environment;
+    @Inject
+    MCopPluginFactory mCopPluginFactory;
 
     private File scenarioXML;
 
@@ -130,6 +133,10 @@ public class DisSimEngine implements SimEngine, Runnable {
     private void addNodes(List<Device> nodesList) {
         for (Device deviceModel : nodesList) {
             addNode(deviceModel);
+            mCopPluginFactory.getMCopPlugin().addUnit((long) deviceModel.getDeviceLogic().getID(),
+                    deviceModel.getDeviceLogic().getName() ,
+                    deviceModel.getDeviceLogic().getPosition().getLatitude() ,
+                    deviceModel.getDeviceLogic().getPosition().getLongitude());
         }
     }
 
@@ -190,6 +197,11 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     @Override
     public void run() {
+
+        new Thread(() -> {
+            mCopPluginFactory.getMCopPlugin().start();
+        }).start();
+
         for(Device wrapper : deviceList) {
             wrapper.getDeviceLogic().startNode();
         }
@@ -198,6 +210,7 @@ public class DisSimEngine implements SimEngine, Runnable {
         } catch (SimControlException e) {
             LOG.error(e.getMessage(), e);
         }
+
     }
 
     public List<Device> getDeviceList() {

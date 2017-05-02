@@ -4,14 +4,14 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
-import org.mdyk.netsim.logic.scenario.xml.XMLScenario;
 import org.mdyk.netsim.view.SenseSimView;
 import org.mdyk.netsim.logic.LogicModule;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.scenario.xml.XMLScenarioLoadException;
 import org.mdyk.netsim.mathModel.MathModule;
 import org.mdyk.sensesim.config.SenseSimConfig;
-import sensesim.integration.mcop.MCopPlugin;
+import sensesim.integration.mcop.MCopPluginFactory;
+import webservices.Platform;
 
 import java.io.File;
 
@@ -25,8 +25,7 @@ public class SenseSim {
         Injector injector = Guice.createInjector(new SenseSimConfig(), new LogicModule() , new MathModule());
         SimEngine simEngine =  injector.getInstance(SimEngine.class);
 
-        MCopPlugin mCopPlugin = injector.getInstance(MCopPlugin.class);
-        mCopPlugin.start();
+
 
         SenseSimView senseSimView = injector.getInstance(SenseSimView.class);
         senseSimView.show();
@@ -38,6 +37,6 @@ public class SenseSim {
             Scenario scenario = scenarioFactory.createXMLScenario(new File(scenarioFilePath));
             simEngine.loadScenario(scenario);
         }
-
+        
     }
 }
