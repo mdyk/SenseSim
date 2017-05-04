@@ -35,18 +35,22 @@ def updateSoldier(Soldier soldier, DeviceAPI device) {
     String[] rfidTags;
     for(SensorModel sensorModel: device.api_getSensorsList()) {
         if (sensorModel.getName().contains("RFID")) {
-            rfidTags = device.api_getSensorCurrentObservation(sensorModel).getStringValue().split("\n")
 
-            for (String tag : rfidTags) {
-                def equipment = new SoldierEquipment();
-                equipment.equipmentId = equipmentIdCount
-                equipmentIdCount++
-                equipment.equipmentName = tag
-                equipment.rfidTag = tag
-                equipment.quantity = 1
+            if(device.api_getSensorCurrentObservation(sensorModel) != null) {
 
-                soldier.equipment.add(equipment)
+                rfidTags = device.api_getSensorCurrentObservation(sensorModel).getStringValue().split("\n")
 
+                for (String tag : rfidTags) {
+                    def equipment = new SoldierEquipment();
+                    equipment.equipmentId = equipmentIdCount
+                    equipmentIdCount++
+                    equipment.equipmentName = tag
+                    equipment.rfidTag = tag
+                    equipment.quantity = 1
+
+                    soldier.equipment.add(equipment)
+
+                }
             }
 
         }

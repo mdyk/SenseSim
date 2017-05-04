@@ -33,6 +33,11 @@
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
@@ -47,18 +52,18 @@
                         <adhocM2M/>
                     </topologyType>
                 </communicationInterface>
-                <communicationInterface id="2" name="LTE">
-                    <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
-                    <routingAlgType>FloodingRouting</routingAlgType>
-                    <topologyType>
-                        <fixedTopology>
-                            <connectedDeviceId>3</connectedDeviceId>
-                            <connectedDeviceId>4</connectedDeviceId>
-                        </fixedTopology>
-                    </topologyType>
-                </communicationInterface>
+                <!--<communicationInterface id="2" name="LTE">-->
+                    <!--<radioRange>80</radioRange>-->
+                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                    <!--<topologyType>-->
+                        <!--<fixedTopology>-->
+                            <!--<connectedDeviceId>3</connectedDeviceId>-->
+                            <!--<connectedDeviceId>4</connectedDeviceId>-->
+                        <!--</fixedTopology>-->
+                    <!--</topologyType>-->
+                <!--</communicationInterface>-->
             </communicationInterfaces>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
@@ -78,6 +83,11 @@
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
@@ -92,18 +102,18 @@
                         <adhocM2M/>
                     </topologyType>
                 </communicationInterface>
-                <communicationInterface id="2" name="LTE">
-                    <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
-                    <routingAlgType>FloodingRouting</routingAlgType>
-                    <topologyType>
-                        <fixedTopology>
-                            <connectedDeviceId>3</connectedDeviceId>
-                            <connectedDeviceId>4</connectedDeviceId>
-                        </fixedTopology>
-                    </topologyType>
-                </communicationInterface>
+                <!--<communicationInterface id="2" name="LTE">-->
+                    <!--<radioRange>80</radioRange>-->
+                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                    <!--<topologyType>-->
+                        <!--<fixedTopology>-->
+                            <!--<connectedDeviceId>3</connectedDeviceId>-->
+                            <!--<connectedDeviceId>4</connectedDeviceId>-->
+                        <!--</fixedTopology>-->
+                    <!--</topologyType>-->
+                <!--</communicationInterface>-->
             </communicationInterfaces>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
@@ -121,6 +131,11 @@
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilitiesClusterHead.groovy</programFile>
+            </middleware>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>
@@ -164,6 +179,11 @@
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilitiesCommander.groovy</programFile>
+            </middleware>
             <sensorAbilities>
                 <ability>TEMPERATURE</ability>
                 <ability>PHOTO</ability>

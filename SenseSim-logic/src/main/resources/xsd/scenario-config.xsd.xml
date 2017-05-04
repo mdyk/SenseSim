@@ -30,6 +30,11 @@
       <radioBandwidth>string</radioBandwidth>
       <sesnorImplType>GeoSensorNode</sesnorImplType>
       <routingAlgType>FloodingRouting</routingAlgType>
+      <middleware>
+        <middlewareClass>string</middlewareClass>
+        <!--Zero or more repetitions:-->
+        <programFile>string</programFile>
+      </middleware>
       <communicationInterfaces>
         <!--1 or more repetitions:-->
         <communicationInterface id="string" name="string">
@@ -88,11 +93,11 @@
         <phenomenonValue>
           <!--Zero or more repetitions:-->
           <discreteValue fromTime="string" toTime="string" format="string">
-            <milivolts>string</milivolts>
+            <value>string</value>
           </discreteValue>
           <!--Zero or more repetitions:-->
           <observerValue fromTime="string" toTime="string">
-            <milivolts>string</milivolts>
+            <value>string</value>
           </observerValue>
         </phenomenonValue>
         <!--Optional:-->

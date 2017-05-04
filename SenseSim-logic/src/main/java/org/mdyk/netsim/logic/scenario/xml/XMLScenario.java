@@ -1,6 +1,7 @@
 package org.mdyk.netsim.logic.scenario.xml;
 
 import com.google.inject.assistedinject.Assisted;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
 import org.mdyk.netsim.logic.node.Device;
@@ -127,6 +128,12 @@ public class XMLScenario implements Scenario {
                             String filePath = scenarioFile.getParent() + "/" + scenario.getScenarioOntology().getOntologyFile();
                             File ontologyFile = new File(filePath);
                             owlMiddleware.loadOntology(ontologyFile, scenario.getScenarioOntology().getOntologyIRI());
+                        }
+
+                        for(String programFilePath : nodeType.getMiddleware().getProgramFile()) {
+                            String fullPath = scenarioFile.getParent() + "/" + programFilePath;
+                            String code = FileUtils.readFileToString(new File(fullPath));
+                            middleware.loadProgram(code);
                         }
 
                         nodesList.add(node);

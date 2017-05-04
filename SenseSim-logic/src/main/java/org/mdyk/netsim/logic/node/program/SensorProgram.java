@@ -40,5 +40,6 @@ public interface SensorProgram {
      * @return
      */
     ProgramStatus getStatus();
+    
 
 }

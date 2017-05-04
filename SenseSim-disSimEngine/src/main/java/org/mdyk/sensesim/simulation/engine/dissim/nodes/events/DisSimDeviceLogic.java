@@ -116,8 +116,12 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     @Override
     @SuppressWarnings("unchecked")
     protected void onMessage(double time, int communicationInterfaceId, Message message) {
-        if(onMessageHandler != null) {
-            onMessageHandler.apply(message);
+        try {
+            if (onMessageHandler != null) {
+                onMessageHandler.apply(message);
+            }
+        } catch (Exception exc) {
+            LOG.error(exc.getMessage() , exc);
         }
 
         if(message.getMessageDest() != id) {

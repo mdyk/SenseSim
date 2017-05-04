@@ -16,6 +16,7 @@ import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
+import sensesim.integration.mcop.MCopPlugin;
 
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
@@ -37,12 +38,15 @@ public class GroovyMiddleware extends Thread implements Middleware {
     private Map<Integer, SensorProgram> programs;
     private GroovyShell groovyShell;
 
+    private MCopPlugin mCopPlugin;
+
     private int PID = 0;
     private int nodeId;
 
-    public GroovyMiddleware() {
+    public GroovyMiddleware(MCopPlugin mCopPlugin) {
         programs = new ConcurrentHashMap<>();
         groovyShell = new GroovyShell();
+        this.mCopPlugin = mCopPlugin;
         EventBusHolder.getEventBus().register(this);
     }
 
@@ -94,6 +98,12 @@ public class GroovyMiddleware extends Thread implements Middleware {
     }
 
     @Override
+    public void loadProgram(String code) {
+        GroovyProgram groovyProgram = new GroovyProgram(code , false);
+        loadProgram(groovyProgram);
+    }
+
+    @Override
     public List<SensorProgram> getPrograms() {
          return new ArrayList<>(programs.values());
     }
@@ -121,6 +131,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     OutputStream os = new ByteArrayOutputStream();
                     PrintStream ps = new PrintStream(os);
                     params.put("api", deviceAPI);
+                    params.put("mCopPlugin" , mCopPlugin);
                     params.put("out", ps);
                     scriptToRun.setBinding(new Binding(params));
                     try {
@@ -165,6 +176,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                 public void run() {
                     Map<String, Object> params = new HashMap<>();
                     params.put("api", deviceAPI);
+                    params.put("mCopPlugin" , mCopPlugin);
                     params.put("out", ps);
                     params.put("err", ps);
                     scriptToRun.setBinding(new Binding(params));
@@ -175,11 +187,9 @@ public class GroovyMiddleware extends Thread implements Middleware {
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_OK);
                     } catch (Exception exc) {
                         LOG.error(exc.getMessage(), exc);
-                        // ps.print(exc.getMessage());
                         ps.print(exc);
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
                     } finally {
-//                    EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.PROGRAM_UPDATED, groovyProgram));
                         EventBusHolder.getEventBus().post(new InternalEvent(EventType.END_TEST_PROGRAM_EXECUTION, os));
                     }
 
@@ -187,7 +197,6 @@ public class GroovyMiddleware extends Thread implements Middleware {
             }.start();
         } catch (Exception exc) {
             LOG.error(exc.getMessage(), exc);
-            // ps.print(exc.getMessage());
             ps.print(exc);
             groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
         } finally {

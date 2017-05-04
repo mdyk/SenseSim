@@ -13,6 +13,8 @@ public interface MCopPlugin {
 
     void addEquipment(Long unitId, Long equipmentId, String equipmentName, int quantity);
 
+    boolean hasEquipment(Long unitId, Long equipmentId);
+
     void updateUnitEquipment(Long unitId, Long equipmentId, int quantity);
 
     void removeEquipment(Long unitId, Long equipmentId);

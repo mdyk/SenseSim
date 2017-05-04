@@ -16,10 +16,7 @@ public class GroovyMiddlewareFactory implements MiddlewareFactory {
 
     @Override
     public Middleware buildMiddleware() {
-
-        mCopPluginFactory.getMCopPlugin();
-
-        return new GroovyMiddleware();
+        return new GroovyMiddleware(mCopPluginFactory.getMCopPlugin());
     }
 
 }

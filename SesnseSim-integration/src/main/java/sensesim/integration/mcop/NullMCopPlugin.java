@@ -28,6 +28,11 @@ public class NullMCopPlugin implements MCopPlugin {
     }
 
     @Override
+    public boolean hasEquipment(Long unitId, Long equipmentId) {
+        return false;
+    }
+
+    @Override
     public void updateUnitEquipment(Long unitId, Long equipmentId, int quantity) {
 
     }
