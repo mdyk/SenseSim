@@ -19,6 +19,7 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.sensesim.schema.*;
+import sensesim.integration.mcop.MCopPluginFactory;
 
 import javax.inject.Inject;
 import javax.xml.bind.JAXBContext;
@@ -44,9 +45,10 @@ public class XMLScenario implements Scenario {
     private PhenomenaFactory phenomenaFactory;
     private SensorFactory sensorFactory;
     private XmlTypeConverter xmlTypeConverter;
+    private MCopPluginFactory mCopPluginFactory;
 
     @Inject
-    public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory, SensorFactory sensorFactory) throws XMLScenarioLoadException {
+    public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory, SensorFactory sensorFactory, MCopPluginFactory mCopPluginFactory) throws XMLScenarioLoadException {
         JAXBContext jaxbContext;
         try {
             scenarioFile = file;
@@ -56,6 +58,7 @@ public class XMLScenario implements Scenario {
             this.devicesFactory = devicesFactory;
             this.phenomenaFactory = phenomenaFactory;
             this.sensorFactory = sensorFactory;
+            this.mCopPluginFactory = mCopPluginFactory;
             this.xmlTypeConverter = new XmlTypeConverter(scenarioFile.getParent());
         } catch (JAXBException e) {
             LOG.error(e.getMessage(), e);
@@ -88,8 +91,15 @@ public class XMLScenario implements Scenario {
     public List<GeoPosition> getScenarioRegionPoints() {
         List<GeoPosition> scenarioRegion = new ArrayList<>();
         for (CheckpointType checkpointType : scenario.getScenarioBoundaries().getCheckpoint()) {
-            scenarioRegion.add(xmlTypeConverter.covertCheckpointToPosiotion(checkpointType));
+            GeoPosition position = xmlTypeConverter.covertCheckpointToPosiotion(checkpointType);
+            scenarioRegion.add(position);
         }
+
+        if(scenarioRegion.size() > 0) {
+            mCopPluginFactory.getMCopPlugin().setCenter(scenarioRegion.get(0).getLatitude(), scenarioRegion.get(0).getLongitude());
+        }
+
+
         return scenarioRegion;
     }
 

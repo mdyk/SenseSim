@@ -13,6 +13,11 @@ public class NullMCopPlugin implements MCopPlugin {
     }
 
     @Override
+    public void setCenter(double latitude, double longitude) {
+        
+    }
+
+    @Override
     public void addUnit(Long unitId, String name, double latitude, double longitude) {
 
     }

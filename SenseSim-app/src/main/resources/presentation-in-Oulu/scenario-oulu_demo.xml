@@ -28,7 +28,7 @@
 
     <nodes>
         <node id="1" name="soldier-1">
-            <speed>0</speed>
+            <speed>10</speed>
             <radioRange>80</radioRange>
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
@@ -75,6 +75,26 @@
                 <longitude>25.464882</longitude>
             </startPosition>
             <route>
+                <checkpoint>
+                    <latitude>65.011796</latitude>
+                    <longitude>25.464882</longitude>
+                </checkpoint>
+                <checkpoint>
+                <latitude>52.230963</latitude>
+                <longitude>21.004534</longitude>
+                </checkpoint>
+                <checkpoint>
+                <latitude>52.231804</latitude>
+                <longitude>21.004974</longitude>
+                </checkpoint>
+                <checkpoint>
+                <latitude>52.231541</latitude>
+                <longitude>21.005822</longitude>
+                </checkpoint>
+                <checkpoint>
+                <latitude>52.230786</latitude>
+                <longitude>21.005350</longitude>
+                </checkpoint>
             </route>
         </node>
         <node id="2" name="ugs-sens-2">

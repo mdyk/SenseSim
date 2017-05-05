@@ -135,7 +135,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     params.put("out", ps);
                     scriptToRun.setBinding(new Binding(params));
                     try {
-                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_ECECUTION);
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_EXECUTION);
                         LOG.debug("PID="+PID+" DURING_EXECUTION");
                         Object result = scriptToRun.run();
                         LOG.debug("PID="+PID+" result="+result);
@@ -181,7 +181,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     params.put("err", ps);
                     scriptToRun.setBinding(new Binding(params));
                     try {
-                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_ECECUTION);
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_EXECUTION);
                         Object result = scriptToRun.run();
                         groovyProgram.setResult(result);
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_OK);

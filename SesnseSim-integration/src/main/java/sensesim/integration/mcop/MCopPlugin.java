@@ -7,6 +7,8 @@ public interface MCopPlugin {
 
     void stop();
 
+    void setCenter(double latitude, double longitude);
+
     void addUnit(Long unitId, String name, double latitude, double longitude);
 
     void updateUnitPosition(Long unitId, double latitude, double longitude);
