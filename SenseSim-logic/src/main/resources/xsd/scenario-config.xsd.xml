@@ -55,7 +55,7 @@
       </communicationInterfaces>
       <sensors>
         <!--Zero or more repetitions:-->
-        <sensorClass>string</sensorClass>
+        <sensorClass sensorId="string">string</sensorClass>
       </sensors>
       <startPosition>
         <latitude>string</latitude>

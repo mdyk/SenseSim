@@ -43,12 +43,17 @@ public class NullMCopPlugin implements MCopPlugin {
     }
 
     @Override
-    public void removeEquipment(Long unitId, Long equipmentId) {
+    public void addSupply(Long unitId, Long supplyId, String supplyName, double amount) {
+        
+    }
+
+    @Override
+    public void updateSupply(Long unitId, Long supplyId, double amount) {
 
     }
 
     @Override
-    public void updateUnitSupplies() {
+    public void removeEquipment(Long unitId, Long equipmentId) {
 
     }
 }

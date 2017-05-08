@@ -28,7 +28,7 @@
 
     <nodes>
         <node id="1" name="soldier-1">
-            <speed>10</speed>
+            <speed>0</speed>
             <radioRange>80</radioRange>
             <radioBandwidth>5000</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
@@ -66,6 +66,7 @@
                 <!--</communicationInterface>-->
             </communicationInterfaces>
             <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
                 <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
                 <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
                 <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>

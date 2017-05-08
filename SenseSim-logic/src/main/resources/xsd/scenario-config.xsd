@@ -29,9 +29,17 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="sensorClassType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="sensorId" type="xs:string" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
     <xs:complexType name="sensorsType">
         <xs:sequence>
-            <xs:element type="xs:string" name="sensorClass" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="sensorClassType" name="sensorClass" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 

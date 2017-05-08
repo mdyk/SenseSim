@@ -20,6 +20,11 @@ public class PT100Sensor extends SensorModel<PT100Observer , TemperatureConfigur
 
 
     @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
     public String getName() {
         return "PT100";
     }

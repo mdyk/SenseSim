@@ -13,4 +13,15 @@ public interface SensorFactory {
      */
     SensorModel<?,?> buildSensor(String className);
 
+
+
+    /**
+     * Builds sensor basing on the name of its class.
+     * @param className
+     *      sensor class name.
+     * @param sensorId
+     *      id of a sensor to create
+     * @return
+     */
+    SensorModel<?,?> buildSensor(String className, int sensorId);
 }

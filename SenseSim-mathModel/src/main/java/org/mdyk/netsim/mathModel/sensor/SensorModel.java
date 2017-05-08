@@ -10,6 +10,14 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
  */
 public abstract class SensorModel<O extends ObserverModel<?,?> , R extends ConfigurationSpace> {
 
+    protected int id;
+
+    public abstract int getId();
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     /**
      * Returns sensor name.
      * @return

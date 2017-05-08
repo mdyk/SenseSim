@@ -119,8 +119,8 @@ public class XMLScenario implements Scenario {
 
                         List<SensorModel<?, ?>> sensorModels = new ArrayList<>();
                         if(nodeType.getSensors() != null) {
-                            for (String sensorClassName : nodeType.getSensors().getSensorClass()) {
-                                sensorModels.add(sensorFactory.buildSensor(sensorClassName));
+                            for (SensorClassType sensorsType : nodeType.getSensors().getSensorClass()) {
+                                sensorModels.add(sensorFactory.buildSensor(sensorsType.getValue()));
                             }
                         }
 

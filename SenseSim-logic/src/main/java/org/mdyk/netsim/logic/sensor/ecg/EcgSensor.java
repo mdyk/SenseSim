@@ -17,6 +17,11 @@ public class EcgSensor extends SensorModel<EcgObserver, EcgConfigurationSpace> {
     }
 
     @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
     public String getName() {
         return "EcgSensor";
     }

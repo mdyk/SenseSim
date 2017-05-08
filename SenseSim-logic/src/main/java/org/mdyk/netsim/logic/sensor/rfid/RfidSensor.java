@@ -15,6 +15,11 @@ public class RfidSensor extends SensorModel<RfidObserver , RfidConfigurationSpac
     }
 
     @Override
+    public int getId() {
+        return 0;
+    }
+
+    @Override
     public String getName() {
         return "RFID reader";
     }
