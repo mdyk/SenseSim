@@ -30,7 +30,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     /**
      * Holds device observations
      */
-    protected Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observationsFromObserver;
+    protected final Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observationsFromObserver;
     @Deprecated
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
@@ -49,7 +49,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.abilities = abilities;
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
-        observationsFromObserver = new HashMap<>();
+        observationsFromObserver = Collections.synchronizedMap(new HashMap<>()) ;
     }
 
     @Deprecated
@@ -64,7 +64,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
         this.sensors = sensors;
-        observationsFromObserver = new HashMap<>();
+        observationsFromObserver = Collections.synchronizedMap(new HashMap<>()) ;
     }
 
     protected DefaultDeviceModel(int id, String name, P position, int radioRange , int bandwidth ,
@@ -80,7 +80,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
         this.sensors = sensors;
-        this.observationsFromObserver = new HashMap<>();
+        this.observationsFromObserver = Collections.synchronizedMap(new HashMap<>()) ;
         this.communicationInterfaces = communicationInterfaces;
     }
 
@@ -146,8 +146,13 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
 
 
     @Override
-    public Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> getObservations() {
-        return observationsFromObserver;
+    public Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> getObservations() {
+        Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observations;
+        synchronized (observationsFromObserver) {
+           observations = new HashMap<>(observationsFromObserver);
+        }
+        
+        return observations;
     }
 
     @Override
@@ -177,28 +182,27 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     @Override
     public void addObservation(Class<? extends ConfigurationSpace> configurationSpaceClass, Double time, ConfigurationSpace value) {
         LOG.debug("Adding observation [confClass=" + configurationSpaceClass.getName() + " time=" + time + " , value=" + value + "]");
+        synchronized (observationsFromObserver) {
+            List<ConfigurationSpace> observationsAtTime;
 
-        List<ConfigurationSpace> observationsAtTime;
+            if (value == null) {
+                LOG.trace("[device " + this.getID() + "] No value at time + " + time);
+                return;
+            }
 
-        if(value == null ) {
-            LOG.trace("[device "+ this.getID() +"] No value at time + " + time);
-            return;
-        }
-
-        if(!observationsFromObserver.containsKey(configurationSpaceClass)) {
-            observationsAtTime = new ArrayList<>();
-            observationsAtTime.add(value);
-            TreeMap<Double , List<ConfigurationSpace>> valueMap = new TreeMap<>();
-            valueMap.put(time , observationsAtTime);
-            observationsFromObserver.put(configurationSpaceClass, valueMap);
-        }
-        else if(!observationsFromObserver.get(configurationSpaceClass).containsKey(time)) {
-            observationsAtTime = new ArrayList<>();
-            observationsAtTime.add(value);
-            observationsFromObserver.get(configurationSpaceClass).put(time , observationsAtTime);
-        }
-        else {
-            observationsFromObserver.get(configurationSpaceClass).get(time).add(value);
+            if (!observationsFromObserver.containsKey(configurationSpaceClass)) {
+                observationsAtTime = Collections.synchronizedList(new ArrayList<>());
+                observationsAtTime.add(value);
+                Map<Double, List<ConfigurationSpace>> valueMap = new TreeMap<>();
+                valueMap.put(time, observationsAtTime);
+                observationsFromObserver.put(configurationSpaceClass, valueMap);
+            } else if (!observationsFromObserver.get(configurationSpaceClass).containsKey(time)) {
+                observationsAtTime = new ArrayList<>();
+                observationsAtTime.add(value);
+                observationsFromObserver.get(configurationSpaceClass).put(time, observationsAtTime);
+            } else {
+                observationsFromObserver.get(configurationSpaceClass).get(time).add(value);
+            }
         }
 
     }

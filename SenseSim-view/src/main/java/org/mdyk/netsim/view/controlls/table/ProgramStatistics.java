@@ -7,6 +7,7 @@ public class ProgramStatistics {
 
     private String PID;
     private String status;
+    private String output;
 
     public ProgramStatistics(String PID, String status) {
         this.PID = PID;
@@ -16,6 +17,7 @@ public class ProgramStatistics {
     public ProgramStatistics(SensorProgram sensorProgram) {
         this.PID = String.valueOf(sensorProgram.getPID());
         this.status = sensorProgram.getStatus().name();
+        this.output = sensorProgram.getOutput().toString();
     }
 
     public String getPID() {
@@ -32,5 +34,13 @@ public class ProgramStatistics {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getOutput() {
+        return output;
+    }
+
+    public void setOutput(String output) {
+        this.output = output;
     }
 }

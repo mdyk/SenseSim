@@ -7,4 +7,4 @@
 60;80;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:1214752.907970.2143,urn:epc:id:sgtin:1214752.907970.2143,urn:epc:id:sgtin:1214752.907970.2143;STRING
 80;100;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:1214752.907970.2143,urn:epc:id:sgtin:1214752.907970.2143;STRING
 100;150;urn:epc:id:sgtin:0714141.912345.6789,urn:epc:id:sgtin:1214752.907970.2143;STRING
-150;1000;urn:epc:id:sgtin:0714141.912345.6789;STRING
+150;160;urn:epc:id:sgtin:0714141.912345.6789;STRING

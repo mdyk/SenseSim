@@ -20,7 +20,7 @@ import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.scenario.xml.XMLScenario;
 import org.mdyk.netsim.logic.sensor.DefaultSensorFactory;
-import org.mdyk.netsim.logic.sensor.PT100Sensor;
+import org.mdyk.netsim.logic.sensor.temp.PT100Sensor;
 import org.mdyk.netsim.logic.sensor.SensorFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;

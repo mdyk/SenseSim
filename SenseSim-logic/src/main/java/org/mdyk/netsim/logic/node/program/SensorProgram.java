@@ -1,5 +1,7 @@
 package org.mdyk.netsim.logic.node.program;
 
+import java.io.OutputStream;
+
 /**
  * Interface for program executed by device
  */
@@ -40,6 +42,8 @@ public interface SensorProgram {
      * @return
      */
     ProgramStatus getStatus();
+
+    OutputStream getOutput();
     
 
 }

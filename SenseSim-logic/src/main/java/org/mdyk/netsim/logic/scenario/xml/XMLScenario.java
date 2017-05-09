@@ -182,6 +182,8 @@ public class XMLScenario implements Scenario {
                 }
             }
 
+            boolean infinite = false;
+
             Map<AbilityType , Map<IPhenomenonTimeRange, Object>> phenomenonValuesMap = new HashMap<>();
 
             Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonObserverValues = new HashMap<>();
@@ -189,6 +191,10 @@ public class XMLScenario implements Scenario {
             for(PhenomenonValueConfigType phenomenonValueType : phenomenonType.getPhenomenonValueSet()) {
                 AbilityType abilityName =  AbilityType.valueOf(phenomenonValueType.getAbilityName());
                 Map<IPhenomenonTimeRange, Object> phenomenonValues = new HashMap<>();
+
+                if ( phenomenonValueType.getEndTime().equalsIgnoreCase("INFINITE") ) {
+                    infinite = true;
+                }
 
                 String configurationClassName = phenomenonValueType.getConfigurationClass();
                 String configFactoryClassName = phenomenonValueType.getConfigurationSpaceFactory();
@@ -236,10 +242,10 @@ public class XMLScenario implements Scenario {
                 case "observer":
                     PhenomenonModel phenomenonObserver;
                     if(phenomenonArea != null) {
-                        phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, phenomenonArea);
+                        phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, phenomenonArea, infinite);
                     }
                     else if (attachedTo != null) {
-                        phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, attachedTo);
+                        phenomenonObserver = phenomenaFactory.createPhenomenon(phenomenonType.getName(), phenomenonObserverValues, attachedTo, infinite);
                     }
                     else {
                         throw  new RuntimeException();

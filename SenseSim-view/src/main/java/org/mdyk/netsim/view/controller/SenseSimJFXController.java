@@ -69,8 +69,8 @@ public class SenseSimJFXController implements Initializable {
     private TreeView<String> nodesTree;
     @FXML
     private SwingNode swingMapNode;
-    @FXML
-    private Pane observationsPane;
+//    @FXML
+//    private Pane observationsPane;
     @FXML
     private TextField details_nodeId;
     @FXML
@@ -169,14 +169,17 @@ public class SenseSimJFXController implements Initializable {
         nodesTree.getSelectionModel().selectedItemProperty().addListener((observableValue, stringTreeItem, stringTreeItem2) -> {
             Platform.runLater(() -> {
                 details_nodeId.setText(observableValue.getValue().getValue());
-                selectedNode = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
+
+                String[] nameSplit = observableValue.getValue().getValue().split("-");
+
+                selectedNode = nodeViews.get(Integer.parseInt(nameSplit[0]));
 
                 if(selectedNode != null) {
                     nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
                     nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
                 }
-                observationsPane.getChildren().clear();
-                observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
+//                observationsPane.getChildren().clear();
+//                observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
             });
         });
 
@@ -218,7 +221,7 @@ public class SenseSimJFXController implements Initializable {
         LOG.debug(">> addNode");
         node.renderNode();
         nodeViews.put(id, node);
-        TreeItem<String> treeItem = new TreeItem<>(""+id);
+        TreeItem<String> treeItem = new TreeItem<>(""+id + "-"+node.getNode().getName() );
         this.nodesTree.getRoot().getChildren().add(treeItem);
 
         TabPane abilityPane = new TabPane();

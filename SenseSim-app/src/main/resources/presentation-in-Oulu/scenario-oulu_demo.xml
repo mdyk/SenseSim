@@ -66,10 +66,10 @@
                 <!--</communicationInterface>-->
             </communicationInterfaces>
             <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
                 <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
                 <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
             </sensors>
             <startPosition>
                 <latitude>65.011796</latitude>
@@ -137,7 +137,10 @@
                 <!--</communicationInterface>-->
             </communicationInterfaces>
             <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
             </sensors>
             <startPosition>
                 <latitude>65.011940</latitude>
@@ -185,7 +188,7 @@
                 </communicationInterface>
             </communicationInterfaces>
             <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
             </sensors>
             <startPosition>
                 <latitude>65.011760</latitude>
@@ -233,7 +236,7 @@
                 </communicationInterface>
             </communicationInterfaces>
             <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
             </sensors>
             <startPosition>
                 <latitude>65.012626</latitude>
@@ -280,7 +283,7 @@
                     </observerValue>
                 </phenomenonValue>
             </phenomenonValueSet>
-            <phenomenonValueSet startTime="1" endTime="1000" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
                 <csvFile>
                     <csvFile>ecg.csv</csvFile>
                 </csvFile>
@@ -288,6 +291,39 @@
         </phenomenon>
         <phenomenon name="rfid" phenomenonType="observer">
             <attachedTo nodeId="1"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="1"/>
+            <phenomenonValueSet startTime="1" endTime="1000" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="2"/>
+            <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <phenomenonValue>
+                    <observerValue fromTime="1" toTime="500" >
+                        <value>20</value>
+                    </observerValue>
+                </phenomenonValue>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="1000" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="2"/>
             <phenomenonValueSet startTime="1" endTime="1000" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
                 <csvFile>
                     <csvFile>rfid-sample.csv</csvFile>

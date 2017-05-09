@@ -140,7 +140,7 @@ thisSoldier.longitude = device.api_getPosition().getPositionY()
 
 def count = 1
 
-while(count < 100) {
+while(true) {
 
     updateSoldier(thisSoldier , device)
     sendMessageWithUpdate(thisSoldier, device)

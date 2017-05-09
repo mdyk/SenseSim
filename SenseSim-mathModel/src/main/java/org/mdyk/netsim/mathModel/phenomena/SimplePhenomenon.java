@@ -7,10 +7,7 @@ import org.mdyk.netsim.mathModel.device.IDeviceModel;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.time.IPhenomenonTimeRange;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
 
@@ -20,10 +17,20 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
     private List<GeoPosition> region;
     private Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues = new HashMap<>();
     private IDeviceModel device;
+    private boolean infinite;
 
     @Deprecated
     private Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values;
 
+    public SimplePhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points , boolean infinite) {
+        region = new LinkedList<>();
+        for(GeoPosition position : points) {
+            region.add(position);
+        }
+        this.phenomenonName = phenomenonName;
+        this.phenomenonValues.putAll(phenomenonValues);
+        this.infinite = infinite;
+    }
 
     public SimplePhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points) {
         region = new LinkedList<>();
@@ -32,14 +39,16 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
         }
         this.phenomenonName = phenomenonName;
         this.phenomenonValues.putAll(phenomenonValues);
+        this.infinite = false;
     }
 
-    public SimplePhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, IDeviceModel device) {
+    public SimplePhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, IDeviceModel device, boolean infinite) {
         region = new LinkedList<>();
         region.add((GeoPosition) device.getPosition());
         this.phenomenonName = phenomenonName;
         this.phenomenonValues.putAll(phenomenonValues);
         this.device = device;
+        this.infinite = infinite;
     }
 
     @Deprecated
@@ -96,8 +105,13 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
             return null;
         }
 
+                 
         ConfigurationSpace phenomenonValue = null;
         Map<IPhenomenonTimeRange, ConfigurationSpace> values = phenomenonValues.get(configurationSpaceClass);
+
+        if(infinite) {
+            time = time % getLastTime(values);
+        }
 
         for(IPhenomenonTimeRange timeRange : values.keySet()) {
             if(timeRange.isInTime(time)) {
@@ -107,6 +121,21 @@ public class SimplePhenomenon implements PhenomenonModel<GeoPosition> {
 
         LOG.trace("<< getEventValue");
         return phenomenonValue;
+    }
+
+    private double getLastTime(Map<IPhenomenonTimeRange, ConfigurationSpace> phenomenon) {
+        final Iterator<IPhenomenonTimeRange> itr = phenomenon.keySet().iterator();
+        IPhenomenonTimeRange lastElement = itr.next();
+
+        double time = lastElement.toTime();
+
+        while(itr.hasNext()) {
+            lastElement=itr.next();
+            if(lastElement.toTime() > time) {
+                time = lastElement.toTime();
+            }
+        }
+        return time;
     }
 
     @Override

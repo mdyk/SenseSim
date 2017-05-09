@@ -189,11 +189,11 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     @Override
     public ConfigurationSpace api_getSensorCurrentObservation(SensorModel sensor) {
 
-        TreeMap<Double, List<ConfigurationSpace>> observations = deviceSimEntity.getDeviceLogic().getObservations().get(sensor.getConfigurationSpaceClass());
+        Map<Double, List<ConfigurationSpace>> observations = deviceSimEntity.getDeviceLogic().getObservations().get(sensor.getConfigurationSpaceClass());
 
         ConfigurationSpace observation = null;
         if(observations != null && !observations.isEmpty()) {
-            List<ConfigurationSpace> latestObservations = observations.get(observations.lastKey());
+            List<ConfigurationSpace> latestObservations = observations.get(((TreeMap)observations).lastKey());
             observation = latestObservations.get(latestObservations.size()-1);
         }
 

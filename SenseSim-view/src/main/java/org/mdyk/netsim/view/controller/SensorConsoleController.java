@@ -82,7 +82,11 @@ public class SensorConsoleController implements Initializable {
     @FXML
     private TableColumn<ProgramStatistics , String> pidColumn;
     @FXML
+    private TableColumn<ProgramStatistics , String> programLog;
+
+    @FXML
     private TableColumn<ProgramStatistics , String> programStatus;
+
     private ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
     private Map<String , ObservableList<PhenomenonValue>> observationsChartData;
     private ObservableList<CommunicationStatistics> commStatistics = FXCollections.observableArrayList();
@@ -108,6 +112,7 @@ public class SensorConsoleController implements Initializable {
 
         pidColumn.setCellValueFactory(new PropertyValueFactory<>("PID"));
         programStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        programLog.setCellValueFactory(new PropertyValueFactory<>("output"));
         programsTable.setItems(programStatistics);
 
 
@@ -289,19 +294,25 @@ public class SensorConsoleController implements Initializable {
             return;
         }
 
-        Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
 
-        Platform.runLater(() -> {
+
+//        Platform.runLater(() -> {
+            Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
             if(observations != null) {
 
                 List<PhenomenonValue> observationsList = new ArrayList<>();
 
-                for(Double time : observations.keySet()) {
+//                Map<Double, List<ConfigurationSpace>> observationsCopy = new HashMap<>(observations);
+                Iterator<Double> it = observations.keySet().iterator();
+
+                while (it.hasNext()) {
+                    Double time = it.next();
                     for(ConfigurationSpace configurationSpace : observations.get(time)) {
                         observationsList.add(new PhenomenonValue(time , configurationSpace));
 //                        chartData.add(new XYChart.Data(time,Double.parseDouble(configurationSpace.getStringValue())));
                     }
                 }
+
                 observationsList.sort(new PhenomenonValue.DescTimeComparator());
                 List<PhenomenonValue> observationsSublist;
                 if(observationsList.size() > 50) {
@@ -309,11 +320,12 @@ public class SensorConsoleController implements Initializable {
                 } else {
                     observationsSublist = observationsList;
                 }
-
-                observationsData.clear();
-                observationsData.addAll(observationsSublist);
+                Platform.runLater(() -> {
+                    observationsData.clear();
+                    observationsData.addAll(observationsSublist);
+                });
             }
-        });
+//        });
     }
 
     private void actualizePositionLabel() {

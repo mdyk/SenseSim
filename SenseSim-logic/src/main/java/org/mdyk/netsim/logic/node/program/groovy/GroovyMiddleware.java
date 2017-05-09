@@ -52,29 +52,29 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
     @Override
     public void initialize() {
-        deviceAPI.api_setOnMessageHandler(new Function<Message, Object>() {
-            @Override
-            public Object apply(Message message) {
+//        deviceAPI.api_setOnMessageHandler(new Function<Message, Object>() {
+//            @Override
+//            public Object apply(Message message) {
+//
+//                Object messageContent = message.getMessageContent();
+//
+//                if(messageContent instanceof String){
+//                    LOG.trace("messageContent is String");
+//                    String groovyScript = (String) messageContent;
+//                    Script scriptToRun = groovyShell.parse(groovyScript);
+//
+//                    if(scriptToRun != null) {
+//                        LOG.debug("scriptToRun != null");
+//                        GroovyProgram groovyProgram = new GroovyProgram(groovyScript, true);
+//                        loadProgram(groovyProgram);
+//                    }
+//
+//                }
+//
+//                return null;
+//            }
+//        });
 
-                Object messageContent = message.getMessageContent();
-
-                if(messageContent instanceof String){
-                    LOG.trace("messageContent is String");
-                    String groovyScript = (String) messageContent;
-                    Script scriptToRun = groovyShell.parse(groovyScript);
-
-                    if(scriptToRun != null) {
-                        LOG.debug("scriptToRun != null");
-                        GroovyProgram groovyProgram = new GroovyProgram(groovyScript, true);
-                        loadProgram(groovyProgram);
-                    }
-
-                }
-
-                return null;
-            }
-        });
-        this.start();
     }
 
     public void setDeviceAPI(DeviceAPI api) {
@@ -133,6 +133,8 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     params.put("api", deviceAPI);
                     params.put("mCopPlugin" , mCopPlugin);
                     params.put("out", ps);
+                    params.put("err", ps);
+                    groovyProgram.setOutputStream(os);
                     scriptToRun.setBinding(new Binding(params));
                     try {
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_EXECUTION);
@@ -144,9 +146,11 @@ public class GroovyMiddleware extends Thread implements Middleware {
                         LOG.debug("PID="+PID+" FINISHED_OK");
                     } catch (Exception exc) {
                         LOG.error(exc.getMessage(), exc);
+                        ps.print(exc);
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
                         LOG.debug("PID="+PID+" FINISHED_ERROR");
                     } finally {
+
                         EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.PROGRAM_UPDATED, groovyProgram));
                     }
                     me.deviceSimEntity.endProgramExecution(PID);
@@ -248,6 +252,10 @@ public class GroovyMiddleware extends Thread implements Middleware {
                         GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue(), true);
                         testProgram(groovyProgram);
                     }
+                    break;
+
+                case SIM_START_NODES:
+                    this.start();
                     break;
             }
         } catch (Exception exc){
