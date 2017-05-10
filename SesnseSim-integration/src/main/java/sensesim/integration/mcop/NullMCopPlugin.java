@@ -43,6 +43,11 @@ public class NullMCopPlugin implements MCopPlugin {
     }
 
     @Override
+    public void updateUnitHealthStatus(Long unitId, String status) {
+        
+    }
+
+    @Override
     public void addSupply(Long unitId, Long supplyId, String supplyName, double amount) {
         
     }

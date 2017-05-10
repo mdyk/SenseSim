@@ -19,6 +19,8 @@ public interface MCopPlugin {
 
     void updateUnitEquipment(Long unitId, Long equipmentId, int quantity);
 
+    void updateUnitHealthStatus(Long unitId, String status);
+
     void addSupply(Long unitId, Long supplyId, String supplyName, double amount);
 
     void updateSupply(Long unitId, Long supplyId, double amount);

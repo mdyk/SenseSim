@@ -30,8 +30,11 @@ static def updateSoldierState(String json, MCopPlugin plugin) {
     Long unitId = soldierUpdate.unitId
     Double latitude = soldierUpdate.latitude
     Double longitude = soldierUpdate.longitude
+    String healthState = soldierUpdate.healthStatus
 
     plugin.updateUnitPosition(unitId, latitude , longitude)
+
+    plugin.updateUnitHealthStatus(unitId , healthState)
 
     ArrayList equipmentList = (ArrayList) soldierUpdate.equipment
 

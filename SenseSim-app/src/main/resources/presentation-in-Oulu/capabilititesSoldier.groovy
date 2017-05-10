@@ -38,6 +38,7 @@ class Soldier {
     double latitude
     double longitude
     List<SoldierEquipment> equipment = new ArrayList<>()
+    String healthStatus
 
     def getEquipmentByTag(String tag) {
 
@@ -62,7 +63,7 @@ class SoldierEquipment {
 }
 
 
-def updateSoldier(Soldier soldier, DeviceAPI device) {
+def updateSoldierEquipment(Soldier soldier, DeviceAPI device) {
     soldier.latitude = device.api_getPosition().getPositionX()
     soldier.longitude = device.api_getPosition().getPositionY()
 
@@ -107,6 +108,10 @@ def updateSoldier(Soldier soldier, DeviceAPI device) {
 }
 
 
+def updateSoldierHealth(Soldier soldier, DeviceAPI device) {
+    soldier.healthStatus = "HEALTHY"
+}
+
 
 def sendMessageWithUpdate(Soldier soldier, DeviceAPI device) {
     Map<Integer , String> commInterfaces =  device.api_listCommunicationInterfaces();
@@ -142,7 +147,8 @@ def count = 1
 
 while(true) {
 
-    updateSoldier(thisSoldier , device)
+    updateSoldierEquipment(thisSoldier , device)
+    updateSoldierHealth(thisSoldier,device)
     sendMessageWithUpdate(thisSoldier, device)
 
     sleep(10000)
