@@ -22,6 +22,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
@@ -360,58 +361,20 @@ public class SensorConsoleController implements Initializable {
             controller.setData(abilityName, nodeView);
             controller.start();
             stage.show();
+
+            stage.setTitle(nodeView.getNode().getName() + " " + abilityName.getName());
+
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.stop();
+                }
+            });
+
+
         } catch (IOException e) {
             LOG.error(e.getMessage() , e);
         }
 
-//        SensorModel abilityName = (SensorModel) abilityChooser.getValue();
-//
-//        if(abilityName == null) {
-//            return;
-//        }
-//
-//        Stage stage = new Stage();
-//        stage.setTitle(abilityName.getName() + " observations");
-//
-//        Pane chartPane = new Pane();
-//        chartPane.resize(800, 600);
-//        HBox hBox = new HBox();
-//        chartPane.getChildren().add(hBox);
-//
-//        //defining the axes
-//        final NumberAxis xAxis = new NumberAxis();
-//        final NumberAxis yAxis = new NumberAxis();
-//        xAxis.setLabel("Time (s)");
-//        //creating the chart
-//        final LineChart<Number, Number> lineChart =
-//                    new LineChart<Number, Number>(xAxis, yAxis);
-//
-//        lineChart.setAnimated(false);
-//        lineChart.setTitle(((SensorModel) this.abilityChooser.getValue()).getName());
-//        //defining a series
-//        XYChart.Series<Number , Number> series = new XYChart.Series<>();
-//        series.setName(((SensorModel) this.abilityChooser.getValue()).unitName());
-//
-//
-//        Button refreshButton = new Button("Refresh chart");
-//
-//        refreshButton.setOnAction(new EventHandler<ActionEvent>() {
-//            @Override
-//            public void handle(ActionEvent event) {
-//                refreshPlotData(series,xAxis);
-//            }
-//        });
-//
-//        hBox.getChildren().add(refreshButton);
-//        hBox.getChildren().add(lineChart);
-//        lineChart.resize(800, 600);
-//        Scene scene = new Scene(chartPane, 800, 600);
-//        lineChart.getData().add(series);
-//        lineChart.setCreateSymbols(false);
-//
-//        refreshPlotData(series,xAxis);
-//        stage.setScene(scene);
-//        stage.show();
     }
 
     private enum CommType {Incoming, Outgoing}

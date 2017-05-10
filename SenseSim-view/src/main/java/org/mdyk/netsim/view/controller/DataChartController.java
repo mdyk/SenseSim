@@ -5,38 +5,41 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.ToggleButton;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.netsim.view.node.OSMNodeView;
+import org.reactfx.util.FxTimer;
+import org.reactfx.util.Timer;
 
 import java.net.URL;
+import java.time.Duration;
 import java.util.*;
 
-/**
- * Created by Michal on 2017-05-10.
- */
 public class DataChartController implements Initializable {
 
     @FXML
     private NumberAxis xAxis;
 
-
     @FXML
     private LineChart<Number, Number> chart;
+
+    @FXML
+    private ToggleButton refreshButton;
 
     private SensorModel abilityName;
     private OSMNodeView nodeView;
     private ObservableList<XYChart.Series<Number,Number>> lineChartData;
-    XYChart.Series<Number , Number> series;
+    private  XYChart.Series<Number , Number> series;
+    private Timer timer;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        refreshButton.setSelected(true);
     }
 
     public void setData(SensorModel abilityName, OSMNodeView nodeView) {
@@ -53,7 +56,7 @@ public class DataChartController implements Initializable {
         chart.setCreateSymbols(false);
 
         update();
-
+        
     }
 
     public void update() {
@@ -61,13 +64,14 @@ public class DataChartController implements Initializable {
             return;
         }
 
+        if(!this.refreshButton.isSelected()) {
+            return;
+        }
+
         Platform.runLater(() -> {
 
             TreeMap<Double, List<ConfigurationSpace>> sourceObservations = (TreeMap<Double, List<ConfigurationSpace>>) nodeView.getNode().getObservations(abilityName.getConfigurationSpaceClass() , 2000);
-
-
-
-
+            
             xAxis.setLowerBound(sourceObservations.firstKey());
             xAxis.setUpperBound(sourceObservations.lastKey());
 
@@ -96,24 +100,16 @@ public class DataChartController implements Initializable {
 
     }
 
-    public void start() {
-
-        new Thread(){
-            @Override
-            public void run() {
-                while (true) {
-                    update();
-
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-        }.start();
-
+    public void stop() {
+        timer.stop();
     }
 
+    public void start() {
+
+           timer = FxTimer.runPeriodically(
+                    Duration.ofMillis(1000),
+                    this::update);
+    }
+    
+    
 }

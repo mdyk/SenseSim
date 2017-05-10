@@ -22,7 +22,7 @@ device.api_setOnMessageHandler(new Function<Message, Object>() {
 
         Object messageContent = message.getMessageContent();
 
-        println("Received message " + message.getID() + ". Adding to queue.")
+        //println("Received message " + message.getID() + ". Adding to queue.")
 //        messagesToSend.add(message)
         sendMessageToHQ(message , device)
         
