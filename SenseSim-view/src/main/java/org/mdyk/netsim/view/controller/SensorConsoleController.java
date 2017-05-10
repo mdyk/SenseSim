@@ -8,7 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -17,7 +19,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
@@ -32,6 +36,7 @@ import org.mdyk.netsim.view.controlls.table.CommunicationStatistics;
 import org.mdyk.netsim.view.controlls.table.ProgramStatistics;
 import org.mdyk.netsim.view.node.OSMNodeView;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
@@ -297,7 +302,7 @@ public class SensorConsoleController implements Initializable {
 
 
 //        Platform.runLater(() -> {
-            Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
+            Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations(abilityName.getConfigurationSpaceClass() , 50);
             if(observations != null) {
 
                 List<PhenomenonValue> observationsList = new ArrayList<>();
@@ -343,82 +348,71 @@ public class SensorConsoleController implements Initializable {
             return;
         }
 
-        Stage stage = new Stage();
-        stage.setTitle(abilityName.getName() + " observations");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/DataChart.fxml"));
 
-        Pane chartPane = new Pane();
-        chartPane.resize(800, 600);
-        HBox hBox = new HBox();
-        chartPane.getChildren().add(hBox);
-
-        //defining the axes
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time (s)");
-        //creating the chart
-        final LineChart<Number, Number> lineChart =
-                    new LineChart<Number, Number>(xAxis, yAxis);
-
-        lineChart.setTitle(((SensorModel) this.abilityChooser.getValue()).getName());
-        //defining a series
-        XYChart.Series<Number , Number> series = new XYChart.Series<>();
-        series.setName(((SensorModel) this.abilityChooser.getValue()).unitName());
-
-
-        Button refreshButton = new Button("Refresh chart");
-
-        refreshButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                refreshPlotData(series);
-            }
-        });
-
-        hBox.getChildren().add(refreshButton);
-        hBox.getChildren().add(lineChart);
-        lineChart.resize(800, 600);
-        Scene scene = new Scene(chartPane, 800, 600);
-        lineChart.getData().add(series);
-        lineChart.setCreateSymbols(false);
-
-        refreshPlotData(series);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void refreshPlotData(XYChart.Series<Number, Number> series) {
-        SensorModel abilityName = (SensorModel) abilityChooser.getValue();
-
-        if(abilityName == null) {
-            return;
+        try {
+            Parent parent = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.NONE);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setScene(new Scene(parent));
+            DataChartController controller = fxmlLoader.getController();
+            controller.setData(abilityName, nodeView);
+            controller.start();
+            stage.show();
+        } catch (IOException e) {
+            LOG.error(e.getMessage() , e);
         }
 
-        Platform.runLater(() -> {
-
-            Map<Double, List<ConfigurationSpace>> sourceObservations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
-
-            Map<Double, List<ConfigurationSpace>> observations = new HashMap<>(sourceObservations);
-
-            if(observations != null) {
-
-                for (Double time : observations.keySet()) {
-                    for (ConfigurationSpace configurationSpace : observations.get(time)) {
-
-                            if (series.getData().size() == 0) {
-                                series.getData().add(new XYChart.Data(time ,Double.parseDouble(configurationSpace.getStringValue())));
-                            } else if (!(series.getData().get(series.getData().size()-1)).getXValue().equals(time)) {
-                                series.getData().add(new XYChart.Data(time ,Double.parseDouble(configurationSpace.getStringValue())));
-                            }
-
-                    }
-                }
-
-            }
-        });
-
-
+//        SensorModel abilityName = (SensorModel) abilityChooser.getValue();
+//
+//        if(abilityName == null) {
+//            return;
+//        }
+//
+//        Stage stage = new Stage();
+//        stage.setTitle(abilityName.getName() + " observations");
+//
+//        Pane chartPane = new Pane();
+//        chartPane.resize(800, 600);
+//        HBox hBox = new HBox();
+//        chartPane.getChildren().add(hBox);
+//
+//        //defining the axes
+//        final NumberAxis xAxis = new NumberAxis();
+//        final NumberAxis yAxis = new NumberAxis();
+//        xAxis.setLabel("Time (s)");
+//        //creating the chart
+//        final LineChart<Number, Number> lineChart =
+//                    new LineChart<Number, Number>(xAxis, yAxis);
+//
+//        lineChart.setAnimated(false);
+//        lineChart.setTitle(((SensorModel) this.abilityChooser.getValue()).getName());
+//        //defining a series
+//        XYChart.Series<Number , Number> series = new XYChart.Series<>();
+//        series.setName(((SensorModel) this.abilityChooser.getValue()).unitName());
+//
+//
+//        Button refreshButton = new Button("Refresh chart");
+//
+//        refreshButton.setOnAction(new EventHandler<ActionEvent>() {
+//            @Override
+//            public void handle(ActionEvent event) {
+//                refreshPlotData(series,xAxis);
+//            }
+//        });
+//
+//        hBox.getChildren().add(refreshButton);
+//        hBox.getChildren().add(lineChart);
+//        lineChart.resize(800, 600);
+//        Scene scene = new Scene(chartPane, 800, 600);
+//        lineChart.getData().add(series);
+//        lineChart.setCreateSymbols(false);
+//
+//        refreshPlotData(series,xAxis);
+//        stage.setScene(scene);
+//        stage.show();
     }
-
 
     private enum CommType {Incoming, Outgoing}
 

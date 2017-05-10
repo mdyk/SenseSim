@@ -52,7 +52,7 @@ public abstract class SensorModel<O extends ObserverModel<?,?> , R extends Confi
      */
     public abstract R getObservation(PhenomenonModel phenomenonModel , double time , double distance);
 
-    public abstract Class getConfigurationSpaceClass();
+    public abstract Class<? extends ConfigurationSpace> getConfigurationSpaceClass();
 
 
     final public String toString() {
