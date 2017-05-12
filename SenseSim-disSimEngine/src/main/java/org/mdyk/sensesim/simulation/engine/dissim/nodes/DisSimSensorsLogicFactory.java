@@ -3,6 +3,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.nodes;
 
 import org.mdyk.netsim.logic.communication.CommunicationProcessFactory;
 import org.mdyk.netsim.logic.environment.Environment;
+import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.DeviceLogicFactory;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
@@ -27,6 +28,9 @@ public class DisSimSensorsLogicFactory implements DeviceLogicFactory {
     private WirelessChannel wirelessChannel;
 
     @Inject
+    private NetworkManager networkManager;
+
+    @Inject
     private CommunicationProcessFactory communicationProcessFactory;
 
     @Override
@@ -38,6 +42,6 @@ public class DisSimSensorsLogicFactory implements DeviceLogicFactory {
     public DeviceLogic buildSensorLogic(int id, String name, GeoPosition position, int radioRange, int bandwidth, double velocity,
                                         List<AbilityType> abilities, List<SensorModel<?, ?>> sensors,
                                         List<CommunicationInterface> communicationInterfaces) {
-        return new DisSimDeviceLogic(id, name, position, radioRange, bandwidth, velocity, abilities, sensors, communicationInterfaces, environment, wirelessChannel, communicationProcessFactory);
+        return new DisSimDeviceLogic(id, name, position, radioRange, bandwidth, velocity, abilities, sensors, communicationInterfaces, environment, wirelessChannel, networkManager, communicationProcessFactory);
     }
 }

@@ -118,7 +118,6 @@ def sendMessageWithUpdate(Soldier soldier, DeviceAPI device) {
 
     def interfaceId = 0
     for (Integer commId : commInterfaces.keySet()) {
-        println(commId + " " + commInterfaces.get(commId) )
         if(commInterfaces.get(commId).contains("WiFi")) {
             interfaceId = commId
         }
@@ -126,11 +125,10 @@ def sendMessageWithUpdate(Soldier soldier, DeviceAPI device) {
 
     if (interfaceId != 0) {
         List<Integer> neighbours = device.api_scanForNeighbors(interfaceId)
-        println(neighbours)
 
-        for (Integer nodeId : neighbours) {
+        if(neighbours.contains(11)) {
             def message = new JsonBuilder( soldier )
-            device.api_sendMessage((int)System.currentTimeMillis(), device.api_getMyID() , nodeId, interfaceId , message.toPrettyString() , message.toPrettyString().getBytes().length);
+            device.api_sendMessage(System.currentTimeMillis() + (device.api_getMyID() * 100000), device.api_getMyID() , 11, interfaceId , message.toPrettyString() , message.toPrettyString().getBytes().length);
         }
 
     }
@@ -152,7 +150,6 @@ while(true) {
     sendMessageWithUpdate(thisSoldier, device)
 
     sleep(10000)
-    count ++
 
 }
 

@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>dissim</groupId>
-            <artifactId>DisSimEBusPlug</artifactId>
+            <artifactId>dissim</artifactId>
         </dependency>
         <dependency>
             <groupId>jspf</groupId>

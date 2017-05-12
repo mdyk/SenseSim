@@ -9,7 +9,7 @@ public class SimpleMessage implements Message {
     private int originDest;
     private Object content;
     private Integer size;
-    private int id;
+    private long id;
 
     /**
      *
@@ -24,7 +24,7 @@ public class SimpleMessage implements Message {
      * @param size
      *      size of the message in bytes.
      */
-    public SimpleMessage(int id, int originSource, int originDest, Object content, Integer size) {
+    public SimpleMessage(long id, int originSource, int originDest, Object content, Integer size) {
         this.id = id;
         this.originSource = originSource;
         this.originDest = originDest;
@@ -33,7 +33,7 @@ public class SimpleMessage implements Message {
     }
 
     @Override
-    public int getID() {
+    public long getID() {
         return this.id;
     }
 

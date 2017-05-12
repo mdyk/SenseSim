@@ -11,9 +11,7 @@ public class EcgConfigurationSpaceFactory implements ConfigurationSpaceFactory  
 
     @Override
     public ConfigurationSpace buildConfigurationSpace(String value) {
-        LOG.trace(">> buildConfigurationSpace[value="+value+"]");
         double milivolts = Double.parseDouble(value);
-        LOG.trace("<< buildConfigurationSpace");
         return new EcgConfigurationSpace(milivolts);
     }
 

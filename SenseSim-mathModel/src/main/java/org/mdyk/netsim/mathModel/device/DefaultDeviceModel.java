@@ -150,9 +150,8 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     @Override
     public Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> getObservations() {
         Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observations;
-        synchronized (observationsFromObserver) {
+
            observations = new HashMap<>(observationsFromObserver);
-        }
         
         return observations;
     }
@@ -208,7 +207,6 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     @Override
     public void addObservation(Class<? extends ConfigurationSpace> configurationSpaceClass, Double time, ConfigurationSpace value) {
         LOG.debug("Adding observation [confClass=" + configurationSpaceClass.getName() + " time=" + time + " , value=" + value + "]");
-        synchronized (observationsFromObserver) {
             List<ConfigurationSpace> observationsAtTime;
 
             if (value == null) {
@@ -229,8 +227,6 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
             } else {
                 observationsFromObserver.get(configurationSpaceClass).get(time).add(value);
             }
-        }
-
     }
 
     @Override

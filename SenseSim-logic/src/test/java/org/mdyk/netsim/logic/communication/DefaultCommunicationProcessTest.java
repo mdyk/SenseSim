@@ -148,7 +148,7 @@ public class DefaultCommunicationProcessTest {
     private static abstract class TestMessage implements Message {
 
         @Override
-        public int getID(){
+        public long getID(){
             return 1;
         }
 

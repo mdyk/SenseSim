@@ -5,7 +5,7 @@ import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.aop.statistics.SaveStatistics;
 
-
+@Deprecated
 public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, StartMoveActivity>{
 
     private static final Logger LOG = Logger.getLogger(EndMoveActivity.class);
@@ -21,9 +21,10 @@ public class EndMoveActivity extends BasicSimStateChange<DisSimNodeEntity, Start
     @SaveStatistics
     protected void transition() throws SimControlException {
         LOG.debug(">> EndMoveActivity.transition");
-        disSimNodeEntity.startMoveActivity = new StartMoveActivity(disSimNodeEntity);
+//        disSimNodeEntity.startMoveActivity = new StartMoveActivity(disSimNodeEntity);
         disSimNodeEntity.getProgrammableNode().move();
         disSimNodeEntity.notifyObservers(EndMoveActivity.class);
+        this.terminate();
         LOG.debug("<< EndMoveActivity.transition");
     }
 

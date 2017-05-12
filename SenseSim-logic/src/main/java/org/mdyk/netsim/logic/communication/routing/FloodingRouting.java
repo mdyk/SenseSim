@@ -16,7 +16,7 @@ import java.util.*;
  */
 public class FloodingRouting implements RoutingAlgorithm<GeoPosition> {
 
-    private Map<Integer , List<DeviceNode<GeoPosition>>> sentMessage;
+    private Map<Long , List<DeviceNode<GeoPosition>>> sentMessage;
 
     private DeviceStatistics statistics;
 

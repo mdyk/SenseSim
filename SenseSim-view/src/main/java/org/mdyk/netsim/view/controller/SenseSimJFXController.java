@@ -342,7 +342,7 @@ public class SenseSimJFXController implements Initializable {
     }
 
     @Subscribe
-    public synchronized void processEvent(InternalEvent event) {
+    public void processEvent(InternalEvent event) {
         try {
             GeoDeviceNode sensorModelNode;
             switch (event.getEventType()) {
@@ -388,14 +388,14 @@ public class SenseSimJFXController implements Initializable {
                     OSMEventView envEvent = new OSMEventView((PhenomenonModel<GeoPosition>) event.getPayload(), app.getMapContainer(), "");
                     addEvent(1, envEvent);
                     break;
-                case NODE_START_SENSE:
-                    sensorModelNode = (GeoDeviceNode) event.getPayload();
-                    nodeViews.get(sensorModelNode.getID()).startSense();
-                    break;
-                case NODE_END_SENSE:
-                    sensorModelNode = (GeoDeviceNode) event.getPayload();
-                    process_NODE_END_SENSE(sensorModelNode);
-                    break;
+//                case NODE_START_SENSE:
+//                    sensorModelNode = (GeoDeviceNode) event.getPayload();
+//                    nodeViews.get(sensorModelNode.getID()).startSense();
+//                    break;
+//                case NODE_END_SENSE:
+//                    sensorModelNode = (GeoDeviceNode) event.getPayload();
+//                    process_NODE_END_SENSE(sensorModelNode);
+//                    break;
             }
         } catch(Throwable tr){
             LOG.error(tr.getMessage() , tr);

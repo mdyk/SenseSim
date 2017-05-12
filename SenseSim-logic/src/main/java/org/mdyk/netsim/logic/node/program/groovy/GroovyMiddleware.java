@@ -255,7 +255,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     break;
 
                 case SIM_START_NODES:
-                    this.start();
+                    new Thread(this).start();
                     break;
             }
         } catch (Exception exc){

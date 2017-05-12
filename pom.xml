@@ -24,6 +24,11 @@
             <name>SenseSim</name>
             <url>http://ci.ms4ds.wat.edu.pl:8081/nexus/content/groups/SenseSim/</url>
         </repository>
+        <repository>
+            <id>SymSG</id>
+            <name>SymSG</name>
+            <url>http://uranus.wat.edu.pl:8081/nexus/content/repositories/SymSG/</url>
+        </repository>
     </repositories>
 
     <properties>
@@ -185,6 +190,11 @@
                 <groupId>dissim</groupId>
                 <artifactId>DisSimEBusPlug</artifactId>
                 <version>1.0.0-SNAPSHOT</version>
+            </dependency>
+            <dependency>
+                <groupId>dissim</groupId>
+                <artifactId>dissim</artifactId>
+                <version>18</version>
             </dependency>
             <dependency>
                 <groupId>net.sf.opencsv</groupId>

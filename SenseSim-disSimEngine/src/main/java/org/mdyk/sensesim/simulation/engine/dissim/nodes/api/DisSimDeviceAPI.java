@@ -16,6 +16,7 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.MoveActivity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity;
 
 import java.util.*;
@@ -46,7 +47,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     public void api_startMove() {
         LOG.trace(">> api_startMove()");
         try {
-            ((DisSimNodeEntity) deviceSimEntity).startMoveActivity = new StartMoveActivity((DisSimNodeEntity) deviceSimEntity);
+            ((DisSimNodeEntity) deviceSimEntity).startMoveActivity = new MoveActivity((DisSimNodeEntity) deviceSimEntity);
             // FIXME przeprojektowanie interfejsów tak, żeby nie było konieczne rzutowanie
             ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).startMoveing();
         } catch (SimControlException e) {
@@ -81,7 +82,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void api_sendMessage(int messageId, int originSource, int originDest, int communicationInterfaceId, Object content, Integer size) {
+    public void api_sendMessage(long messageId, int originSource, int originDest, int communicationInterfaceId, Object content, Integer size) {
         Message message = new SimpleMessage(messageId, originSource, originDest , content, size);
         List<DeviceNode> neighbours =  ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(communicationInterfaceId, deviceSimEntity.getDeviceLogic());
         List<DeviceNode<GeoPosition>> nodesToHop = deviceSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(deviceSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);

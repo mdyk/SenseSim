@@ -12,21 +12,21 @@ public interface Message {
      * @return
      *      ID of the message.
      */
-    public int getID();
+    long getID();
 
     /**
      * Return content of the message.
      * @return
      *      message content.
      */
-    public Object getMessageContent();
+    Object getMessageContent();
 
     /**
      * Returns size of the message in bytes
      * @return
      *      number of bytes
      */
-    public int getSize();
+    int getSize();
 
     /**
      * Returns source device of the message. It is the origin device, which should not change during communication
@@ -34,7 +34,7 @@ public interface Message {
      * @return
      *      source device
      */
-    public int getMessageSource();
+    int getMessageSource();
 
     /**
      * Returns destination device of the message. It is the origin device, which should not change during communication
@@ -42,6 +42,6 @@ public interface Message {
      * @return
      *      destination (sink) device
      */
-    public int getMessageDest();
+    int getMessageDest();
 
 }

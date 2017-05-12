@@ -68,7 +68,7 @@ public interface DeviceAPI<P extends Position> {
      * @param size
      *      size of the message. If null, the size will be calculated based on content (if that's possible).
      */
-    void api_sendMessage(int messageId, int originSource, int originDest, int communicationInterfaceId, Object content , Integer size);
+    void api_sendMessage(long messageId, int originSource, int originDest, int communicationInterfaceId, Object content , Integer size);
 
     @Deprecated
     /**

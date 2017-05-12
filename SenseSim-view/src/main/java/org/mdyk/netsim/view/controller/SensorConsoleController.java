@@ -168,61 +168,6 @@ public class SensorConsoleController implements Initializable {
                     break;
                 case NODE_END_SENSE:
                     showObservationsForAbility();
-
-//                    SensorModel sensorModel = (SensorModel) abilityChooser.getValue();
-//
-//                    if(sensorModel != null) {
-//                    Platform.runLater(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if(nodeView != null) {
-//                                for (SensorModel sm : nodeView.getNode().getSensors()) {
-//                                    Map<Double, List<ConfigurationSpace>> observations2 = nodeView.getNode().getObservations().get(sm.getConfigurationSpaceClass());
-//
-//                                    Map<Double, List<ConfigurationSpace>> observations = new HashMap<>(observations2);
-//
-//                                    for (Double time : observations.keySet()) {
-//                                        for (ConfigurationSpace configurationSpace : observations.get(time)) {
-//                                            ObservableList<PhenomenonValue> chartData = observationsChartData.get(sm.getName());
-//
-//                                            if (chartData.size() == 0) {
-//                                                chartData.add(new PhenomenonValue(time, configurationSpace));
-//                                            } else if (chartData.get(chartData.size() - 1).getTime() != time) {
-//                                                chartData.add(new PhenomenonValue(time, configurationSpace));
-//                                            }
-//
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    });
-
-
-
-
-
-
-//                    }
-
-//                    SensorModel abilityName = (SensorModel) abilityChooser.getValue();
-//
-//                    if(abilityName == null) {
-//                        return;
-//                    }
-//
-//                    Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
-//
-//                    if(observations != null) {
-//
-//                        List<PhenomenonValue> observationsList = new ArrayList<>();
-//
-//                        for(Double time : observations.keySet()) {
-//                            for(ConfigurationSpace configurationSpace : observations.get(time)) {
-//                                chartData.add(new XYChart.Data(time,Double.parseDouble(configurationSpace.getStringValue())));
-//                            }
-//                        }
-//                    }
                     break;
             }
         } catch (Exception e) {

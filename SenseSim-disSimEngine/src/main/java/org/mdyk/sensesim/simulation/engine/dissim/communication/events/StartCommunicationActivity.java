@@ -15,7 +15,7 @@ public class StartCommunicationActivity extends BasicSimStateChange<Communicatio
     @Override
     protected void transition() throws SimControlException {
         LOG.trace(">> StartCommunicationActivity.transition()");
-        getSimEntity().endCommunicationActivity = new EndCommunicationActivity(getSimEntity() , 0.1);
+//        getSimEntity().endCommunicationActivity = new EndCommunicationActivity(getSimEntity() , 0.1);
         LOG.trace("<< StartCommunicationActivity.transition()");
     }
 

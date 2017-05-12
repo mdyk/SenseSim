@@ -27,29 +27,29 @@ public class EndCommunicationActivity extends BasicSimStateChange<CommunicationP
 
     @Override
     protected void transition() throws SimControlException {
-        LOG.trace(">> EndCommunicationActivity.transition() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
-        // Checking if receiver is still a neighbour for sender
-        int communicationInterfaceId = getSimEntity().getCommunicationIntterfaceId();
-        List<DeviceNode> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(communicationInterfaceId,sender);
-
-        if(getSimEntity().getCommunicationStatus(simTime()).equals(CommunicationStatus.SUCCESS)) {
-            LOG.trace("Communication is successful");
-            receiver.receiveMessage(simTime(),communicationInterfaceId,getSimEntity().getMessage());
-        } else if(neighbours.contains(receiver)) {
-            LOG.trace("Receiver is neighbour of a sender");
-            // Both sender and receiver have the same communication interface type, which is assured by the scna
-            double bandwidth = Math.min(sender.getCommunicationInterface(communicationInterfaceId).getOutputBandwidth() , receiver.getCommunicationInterface(communicationInterfaceId).getInputBandwidth());
-
-            int sentBits = (int) Math.floor(bandwidth * delay);
-            getSimEntity().addBitsSent(sentBits);
-
-            getSimEntity().startCommunicationActivity = new StartCommunicationActivity(getSimEntity());
-        } else {
-            LOG.trace("Receiver is not neighbour of a sender");
-            getSimEntity().processInterrupted();
-        }
-        EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.COMM_PROC_UPDATE , getSimEntity().commProcess));
-        LOG.trace("<< EndCommunicationActivity.transition()");
+//        LOG.trace(">> EndCommunicationActivity.transition() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
+//        // Checking if receiver is still a neighbour for sender
+//        int communicationInterfaceId = getSimEntity().getCommunicationIntterfaceId();
+//        List<DeviceNode> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(communicationInterfaceId,sender);
+//
+//        if(getSimEntity().getCommunicationStatus(simTime()).equals(CommunicationStatus.SUCCESS)) {
+//            LOG.trace("Communication is successful");
+//            receiver.receiveMessage(simTime(),communicationInterfaceId,getSimEntity().getMessage());
+//        } else if(neighbours.contains(receiver)) {
+//            LOG.trace("Receiver is neighbour of a sender");
+//            // Both sender and receiver have the same communication interface type, which is assured by the scna
+//            double bandwidth = Math.min(sender.getCommunicationInterface(communicationInterfaceId).getOutputBandwidth() , receiver.getCommunicationInterface(communicationInterfaceId).getInputBandwidth());
+//
+//            int sentBits = (int) Math.floor(bandwidth * delay);
+//            getSimEntity().addBitsSent(sentBits);
+//
+//            getSimEntity().startCommunicationActivity = new StartCommunicationActivity(getSimEntity());
+//        } else {
+//            LOG.trace("Receiver is not neighbour of a sender");
+//            getSimEntity().processInterrupted();
+//        }
+//        EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.COMM_PROC_UPDATE , getSimEntity().commProcess));
+//        LOG.trace("<< EndCommunicationActivity.transition()");
     }
 
 }

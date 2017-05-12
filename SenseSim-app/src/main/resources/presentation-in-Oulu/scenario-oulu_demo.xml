@@ -9,195 +9,26 @@
 
     <scenarioBoundaries>
         <checkpoint>
-            <latitude>65.012089</latitude>
-            <longitude>25.465077</longitude>
+            <latitude>65.020432</latitude>
+            <longitude>25.484443</longitude>
         </checkpoint>
         <checkpoint>
-            <latitude>65.012089</latitude>
-            <longitude>25.465077</longitude>
+            <latitude>65.020432</latitude>
+            <longitude>25.484443</longitude>
         </checkpoint>
         <checkpoint>
-            <latitude>65.012089</latitude>
-            <longitude>25.465077</longitude>
+            <latitude>65.020432</latitude>
+            <longitude>25.484443</longitude>
         </checkpoint>
         <checkpoint>
-            <latitude>65.012089</latitude>
-            <longitude>25.465077</longitude>
+            <latitude>65.020432</latitude>
+            <longitude>25.484443</longitude>
         </checkpoint>
     </scenarioBoundaries>
 
     <nodes>
-        <node id="1" name="soldier-1">
-            <speed>0</speed>
-            <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
-            <sesnorImplType>GeoSensorNode</sesnorImplType>
-            <routingAlgType>FloodingRouting</routingAlgType>
-            <middleware>
-                <middlewareClass>string</middlewareClass>
-                <!--Zero or more repetitions:-->
-                <programFile>capabilititesSoldier.groovy</programFile>
-            </middleware>
-            <sensorAbilities>
-                <ability>TEMPERATURE</ability>
-                <ability>PHOTO</ability>
-            </sensorAbilities>
-            <communicationInterfaces>
-                <communicationInterface id="1" name="WiFi-Direct">
-                    <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
-                    <routingAlgType>FloodingRouting</routingAlgType>
-                    <topologyType>
-                        <adhocM2M/>
-                    </topologyType>
-                </communicationInterface>
-                <!--<communicationInterface id="2" name="LTE">-->
-                    <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
-                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-                    <!--<topologyType>-->
-                        <!--<fixedTopology>-->
-                            <!--<connectedDeviceId>3</connectedDeviceId>-->
-                            <!--<connectedDeviceId>4</connectedDeviceId>-->
-                        <!--</fixedTopology>-->
-                    <!--</topologyType>-->
-                <!--</communicationInterface>-->
-            </communicationInterfaces>
-            <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
-                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
-                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
-                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
-            </sensors>
-            <startPosition>
-                <latitude>65.011796</latitude>
-                <longitude>25.464882</longitude>
-            </startPosition>
-            <route>
-                <checkpoint>
-                    <latitude>65.011796</latitude>
-                    <longitude>25.464882</longitude>
-                </checkpoint>
-                <checkpoint>
-                <latitude>52.230963</latitude>
-                <longitude>21.004534</longitude>
-                </checkpoint>
-                <checkpoint>
-                <latitude>52.231804</latitude>
-                <longitude>21.004974</longitude>
-                </checkpoint>
-                <checkpoint>
-                <latitude>52.231541</latitude>
-                <longitude>21.005822</longitude>
-                </checkpoint>
-                <checkpoint>
-                <latitude>52.230786</latitude>
-                <longitude>21.005350</longitude>
-                </checkpoint>
-            </route>
-        </node>
-        <node id="2" name="ugs-sens-2">
-            <speed>0</speed>
-            <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
-            <sesnorImplType>GeoSensorNode</sesnorImplType>
-            <routingAlgType>FloodingRouting</routingAlgType>
-            <middleware>
-                <middlewareClass>string</middlewareClass>
-                <!--Zero or more repetitions:-->
-                <programFile>capabilititesSoldier.groovy</programFile>
-            </middleware>
-            <sensorAbilities>
-                <ability>TEMPERATURE</ability>
-                <ability>PHOTO</ability>
-            </sensorAbilities>
-            <communicationInterfaces>
-                <communicationInterface id="1" name="WiFi-Direct">
-                    <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
-                    <routingAlgType>FloodingRouting</routingAlgType>
-                    <topologyType>
-                        <adhocM2M/>
-                    </topologyType>
-                </communicationInterface>
-                <!--<communicationInterface id="2" name="LTE">-->
-                    <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
-                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
-                    <!--<topologyType>-->
-                        <!--<fixedTopology>-->
-                            <!--<connectedDeviceId>3</connectedDeviceId>-->
-                            <!--<connectedDeviceId>4</connectedDeviceId>-->
-                        <!--</fixedTopology>-->
-                    <!--</topologyType>-->
-                <!--</communicationInterface>-->
-            </communicationInterfaces>
-            <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
-                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
-                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
-                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
-            </sensors>
-            <startPosition>
-                <latitude>65.011940</latitude>
-                <longitude>25.465045</longitude>
-            </startPosition>
-            <route>
-            </route>
-        </node>
-        <node id="3" name="ugs-sens-3">
-            <speed>0</speed>
-            <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
-            <sesnorImplType>GeoSensorNode</sesnorImplType>
-            <routingAlgType>FloodingRouting</routingAlgType>
-            <middleware>
-                <middlewareClass>string</middlewareClass>
-                <!--Zero or more repetitions:-->
-                <programFile>capabilitiesClusterHead.groovy</programFile>
-            </middleware>
-            <sensorAbilities>
-                <ability>TEMPERATURE</ability>
-                <ability>PHOTO</ability>
-            </sensorAbilities>
-            <communicationInterfaces>
-                <communicationInterface id="1" name="WiFi-Direct">
-                    <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
-                    <routingAlgType>FloodingRouting</routingAlgType>
-                    <topologyType>
-                        <adhocM2M/>
-                    </topologyType>
-                </communicationInterface>
-                <communicationInterface id="2" name="LTE">
-                    <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
-                    <routingAlgType>FloodingRouting</routingAlgType>
-                    <topologyType>
-                        <fixedTopology>
-                            <connectedDeviceId>3</connectedDeviceId>
-                            <connectedDeviceId>4</connectedDeviceId>
-                        </fixedTopology>
-                    </topologyType>
-                </communicationInterface>
-            </communicationInterfaces>
-            <sensors>
-                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
-            </sensors>
-            <startPosition>
-                <latitude>65.011760</latitude>
-                <longitude>25.464710</longitude>
-            </startPosition>
-            <route>
-            </route>
-        </node>
-        <node id="4" name="platoon-commander">
+
+        <node id="1" name="platoon-commander">
             <speed>0</speed>
             <radioRange>80</radioRange>
             <radioBandwidth>5000</radioBandwidth>
@@ -222,29 +53,446 @@
                         <adhocM2M/>
                     </topologyType>
                 </communicationInterface>
-                <communicationInterface id="2" name="LTE">
+                <communicationInterface id="2" name="Tactical">
                     <radioRange>80</radioRange>
                     <radioInputBandwidth>5000</radioInputBandwidth>
                     <radioOutputBandwidth>5000</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
-                            <connectedDeviceId>3</connectedDeviceId>
-                            <connectedDeviceId>4</connectedDeviceId>
+                            <connectedDeviceId>1</connectedDeviceId>
+                            <connectedDeviceId>11</connectedDeviceId>
+                            <connectedDeviceId>21</connectedDeviceId>
+                            <connectedDeviceId>31</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors/>
+            <startPosition>
+                <latitude>65.020432</latitude>
+                <longitude>25.484443</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+
+        <node id="11" name="Squad 1 Leader">
+            <speed>0.8</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilitiesClusterHead.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="Tactical">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>1</connectedDeviceId>
+                            <connectedDeviceId>11</connectedDeviceId>
                         </fixedTopology>
                     </topologyType>
                 </communicationInterface>
             </communicationInterfaces>
             <sensors>
                 <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
             </sensors>
             <startPosition>
-                <latitude>65.012626</latitude>
-                <longitude>25.470911</longitude>
+                <latitude>65.019735</latitude>
+                <longitude>25.486164</longitude>
             </startPosition>
             <route>
+                <checkpoint>
+                    <latitude>65.019735</latitude>
+                    <longitude>25.486164</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019075</latitude>
+                    <longitude>25.483373</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017956</latitude>
+                    <longitude>25.481785</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017175</latitude>
+                    <longitude>25.484580</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.015880</latitude>
+                    <longitude>25.489874</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020565</latitude>
+                    <longitude>25.495813</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020004</latitude>
+                    <longitude>25.487836</longitude>
+                </checkpoint>
             </route>
         </node>
+        <node id="12" name="Squad 1 Rifleman #1">
+        <speed>0.8</speed>
+        <radioRange>80</radioRange>
+        <radioBandwidth>5000</radioBandwidth>
+        <sesnorImplType>GeoSensorNode</sesnorImplType>
+        <routingAlgType>FloodingRouting</routingAlgType>
+        <middleware>
+            <middlewareClass>string</middlewareClass>
+            <!--Zero or more repetitions:-->
+             <programFile>capabilititesSoldier.groovy</programFile>
+        </middleware>
+        <sensorAbilities>
+            <ability>TEMPERATURE</ability>
+            <ability>PHOTO</ability>
+        </sensorAbilities>
+        <communicationInterfaces>
+            <communicationInterface id="1" name="WiFi-Direct">
+                <radioRange>80</radioRange>
+                <radioInputBandwidth>5000</radioInputBandwidth>
+                <radioOutputBandwidth>5000</radioOutputBandwidth>
+                <routingAlgType>FloodingRouting</routingAlgType>
+                <topologyType>
+                    <adhocM2M/>
+                </topologyType>
+            </communicationInterface>
+        </communicationInterfaces>
+        <sensors>
+            <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+            <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+            <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+            <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+        </sensors>
+        <startPosition>
+            <latitude>65.019632</latitude>
+            <longitude>25.485605</longitude>
+        </startPosition>
+        <route>
+            <checkpoint>
+                <latitude>65.019632</latitude>
+                <longitude>25.485605</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.019075</latitude>
+                <longitude>25.483373</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.017956</latitude>
+                <longitude>25.481785</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.017175</latitude>
+                <longitude>25.484580</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.015880</latitude>
+                <longitude>25.489874</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.020565</latitude>
+                <longitude>25.495813</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.020004</latitude>
+                <longitude>25.487836</longitude>
+            </checkpoint>
+        </route>
+    </node>
+        <node id="13" name="Squad 1 Machine Gunner">
+            <speed>0.8</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                 <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019932</latitude>
+                <longitude>25.487030</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019932</latitude>
+                    <longitude>25.487030</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019075</latitude>
+                    <longitude>25.483373</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017956</latitude>
+                    <longitude>25.481785</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017175</latitude>
+                    <longitude>25.484580</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.015880</latitude>
+                    <longitude>25.489874</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020565</latitude>
+                    <longitude>25.495813</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020004</latitude>
+                    <longitude>25.487836</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="14" name="Squad 1 Grenadier">
+            <speed>0.8</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                 <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019496</latitude>
+                <longitude>25.485379</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019496</latitude>
+                    <longitude>25.485379</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019038</latitude>
+                    <longitude>25.483469</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017931</latitude>
+                    <longitude>25.481908</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017248</latitude>
+                    <longitude>25.484655</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.016080</latitude>
+                    <longitude>25.489917</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020592</latitude>
+                    <longitude>25.496113</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019922</latitude>
+                    <longitude>25.487879</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="15" name="Squad 1 Grenadier Support">
+            <speed>0.8</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                 <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019613</latitude>
+                <longitude>25.485969</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019613</latitude>
+                    <longitude>25.485969</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019038</latitude>
+                    <longitude>25.483469</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017931</latitude>
+                    <longitude>25.481908</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017248</latitude>
+                    <longitude>25.484655</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.016080</latitude>
+                    <longitude>25.489917</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020592</latitude>
+                    <longitude>25.496113</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019922</latitude>
+                    <longitude>25.487879</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="16" name="Squad 1 Rifleman #2">
+            <speed>0.8</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                 <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019777</latitude>
+                <longitude>25.486726</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019777</latitude>
+                    <longitude>25.486726</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019038</latitude>
+                    <longitude>25.483469</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017931</latitude>
+                    <longitude>25.481908</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017248</latitude>
+                    <longitude>25.484655</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.016080</latitude>
+                    <longitude>25.489917</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020592</latitude>
+                    <longitude>25.496113</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019922</latitude>
+                    <longitude>25.487879</longitude>
+                </checkpoint>
+            </route>
+        </node>
+
+
     </nodes>
     <phenomena>
         <!--<phenomenon name="string" phenomenonType="observer">-->
@@ -275,7 +523,7 @@
             <!--</phenomenonValueSet>-->
         <!--</phenomenon>-->
         <phenomenon name="string" phenomenonType="observer">
-            <attachedTo nodeId="1"/>
+            <attachedTo nodeId="11"/>
             <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
                 <phenomenonValue>
                     <observerValue fromTime="1" toTime="500" >
@@ -290,7 +538,7 @@
             </phenomenonValueSet>
         </phenomenon>
         <phenomenon name="rfid" phenomenonType="observer">
-            <attachedTo nodeId="1"/>
+            <attachedTo nodeId="11"/>
             <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
                 <csvFile>
                     <csvFile>rfid-sample.csv</csvFile>
@@ -299,7 +547,7 @@
         </phenomenon>
 
         <phenomenon name="SaO2" phenomenonType="observer">
-            <attachedTo nodeId="1"/>
+            <attachedTo nodeId="11"/>
             <phenomenonValueSet startTime="1" endTime="1000" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
                 <csvFile>
                     <csvFile>so2-sample.csv</csvFile>
@@ -308,7 +556,7 @@
         </phenomenon>
 
         <phenomenon name="string" phenomenonType="observer">
-            <attachedTo nodeId="2"/>
+            <attachedTo nodeId="12"/>
             <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
                 <phenomenonValue>
                     <observerValue fromTime="1" toTime="500" >
@@ -323,7 +571,7 @@
             </phenomenonValueSet>
         </phenomenon>
         <phenomenon name="rfid" phenomenonType="observer">
-            <attachedTo nodeId="2"/>
+            <attachedTo nodeId="12"/>
             <phenomenonValueSet startTime="1" endTime="1000" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
                 <csvFile>
                     <csvFile>rfid-sample.csv</csvFile>
