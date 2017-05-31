@@ -100,6 +100,19 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     }
 
     @Override
+    public List<ConfigurationSpace> api_getObservations(Class<? extends ConfigurationSpace> configurationSpace, int samplesCount) {
+
+        Map<Double, List<ConfigurationSpace>> observationsMap = deviceSimEntity.getDeviceLogic().getObservations(configurationSpace , samplesCount);
+        List<ConfigurationSpace> observationsList = new ArrayList<>();
+
+        for(Double time : observationsMap.keySet()) {
+            observationsList.addAll(observationsMap.get(time));
+        }
+
+        return observationsList;
+    }
+
+    @Override
     public void api_setRoutingAlgorithm(RoutingAlgorithm<?> routingAlgorithm) {
         LOG.trace(">> api_setRoutingAlgorithm()");
         this.deviceSimEntity.getDeviceLogic().setRoutingAlgorithm(routingAlgorithm);

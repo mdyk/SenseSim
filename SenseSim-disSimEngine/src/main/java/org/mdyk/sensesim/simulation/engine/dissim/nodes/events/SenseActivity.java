@@ -61,7 +61,7 @@ public class SenseActivity extends BasicSimAction<DisSimNodeEntity, Object> {
             }
         }
 
-        EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(entity.getDeviceLogic()));
+       // EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(entity.getDeviceLogic()));
 
     }
 }

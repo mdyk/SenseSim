@@ -33,12 +33,12 @@ public class EcgSensor extends SensorModel<EcgObserver, EcgConfigurationSpace> {
 
     @Override
     public double samplingFrequency() {
-        return 0.02;
+        return 0.01;
     }
 
     @Override
     public double sensingTime() {
-        return 0.01;
+        return 0.05;
     }
 
     @Override

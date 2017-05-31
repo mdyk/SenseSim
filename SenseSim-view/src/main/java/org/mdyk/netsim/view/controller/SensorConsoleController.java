@@ -36,9 +36,11 @@ import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.netsim.view.controlls.table.CommunicationStatistics;
 import org.mdyk.netsim.view.controlls.table.ProgramStatistics;
 import org.mdyk.netsim.view.node.OSMNodeView;
+import org.reactfx.util.FxTimer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.*;
 
 
@@ -153,6 +155,11 @@ public class SensorConsoleController implements Initializable {
         for(SensorModel sm : nodeView.getNode().getSensors()) {
             observationsChartData.put(sm.getName() , FXCollections.observableArrayList());
         }
+
+        FxTimer.runPeriodically(
+                Duration.ofMillis(1000),
+                this::showObservationsForAbility);
+
     }
 
     public void setNodeView(OSMNodeView nodeView) {

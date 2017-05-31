@@ -79,6 +79,16 @@ public interface DeviceAPI<P extends Position> {
     Map<AbilityType, List<PhenomenonValue>> api_getObservations();
 
     /**
+     * Returns given number of samples
+     * @param configurationSpace
+     *      type of sensor response
+     * @param samplesCount
+     *      number of samples to return
+     * @return
+     */
+    List<ConfigurationSpace> api_getObservations(Class<? extends ConfigurationSpace> configurationSpace, int samplesCount);
+
+    /**
      * Sets routing algorithm for device
      * @param routingAlgorithm
      *      implementation of routing algorithm

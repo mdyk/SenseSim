@@ -56,7 +56,7 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
 //            this.startSenseActivity = new StartSenseActivity(this);
 
             for(SensorModel sensorModel : this.deviceLogic.getSensors()) {
-                delay = Math.random();
+                delay = Math.random() + 1;
                 SenseActivity senseActivity = new SenseActivity(this, sensorModel, environment , sensorModel.samplingFrequency() , sensorModel.sensingTime(), delay);
                 senseActions.put(sensorModel , senseActivity);
             }
