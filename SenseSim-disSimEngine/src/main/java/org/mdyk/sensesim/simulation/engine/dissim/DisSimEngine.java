@@ -18,6 +18,7 @@ import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.EndMoveActivity;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.MoveActivity;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.PhenomenonSimEntity;
 
 import javax.inject.Inject;
@@ -26,6 +27,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
+
 import net.xeoh.plugins.base.PluginManager;
 import net.xeoh.plugins.base.impl.PluginManagerFactory;
 import net.xeoh.plugins.base.util.PluginManagerUtil;
@@ -33,6 +36,7 @@ import net.xeoh.plugins.base.util.uri.ClassURI;
 import org.mdyk.netsim.logic.node.DevicesFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.RealDevicePlugin;
+import sensesim.integration.mcop.MCopPluginFactory;
 
 
 /**
@@ -47,12 +51,12 @@ public class DisSimEngine implements SimEngine, Runnable {
     private DevicesFactory devicesFactory;
     @Inject
     private NetworkManager networkManager;
-
     @Inject
     private ScenarioFactory scenarioFactory;
-
     @Inject
     private Environment environment;
+    @Inject
+    MCopPluginFactory mCopPluginFactory;
 
     private File scenarioXML;
 
@@ -88,11 +92,15 @@ public class DisSimEngine implements SimEngine, Runnable {
                 for(Device device : nodeList) {
                     if(device.getDeviceLogic().getID() == model.getAttachedDevice().getID()) {
                         DisSimNodeEntity simEntity = (DisSimNodeEntity) device.getDeviceSimEntity();
-                        simEntity.register(EndMoveActivity.class , phenomenonSimEntity);
+                        simEntity.register(MoveActivity.class , phenomenonSimEntity);
                     }
                 }
             }
         }
+
+        new Thread(() -> {
+            mCopPluginFactory.getMCopPlugin().start();
+        }).start();
 
         EventBusHolder.post(EventFactory.createScenarioLoadedEvent(scenario));
     }
@@ -132,6 +140,10 @@ public class DisSimEngine implements SimEngine, Runnable {
     private void addNodes(List<Device> nodesList) {
         for (Device deviceModel : nodesList) {
             addNode(deviceModel);
+            mCopPluginFactory.getMCopPlugin().addUnit((long) deviceModel.getDeviceLogic().getID(),
+                    deviceModel.getDeviceLogic().getName() ,
+                    deviceModel.getDeviceLogic().getPosition().getLatitude() ,
+                    deviceModel.getDeviceLogic().getPosition().getLongitude());
         }
     }
 
@@ -192,14 +204,17 @@ public class DisSimEngine implements SimEngine, Runnable {
 
     @Override
     public void run() {
+
         for(Device wrapper : deviceList) {
             wrapper.getDeviceLogic().startNode();
         }
+        
         try {
             SimModel.getInstance().startSimulation();
         } catch (SimControlException e) {
             LOG.error(e.getMessage(), e);
         }
+
     }
 
     public List<Device> getDeviceList() {

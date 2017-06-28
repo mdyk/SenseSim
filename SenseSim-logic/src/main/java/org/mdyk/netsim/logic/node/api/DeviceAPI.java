@@ -68,7 +68,7 @@ public interface DeviceAPI<P extends Position> {
      * @param size
      *      size of the message. If null, the size will be calculated based on content (if that's possible).
      */
-    void api_sendMessage(int messageId, int originSource, int originDest, int communicationInterfaceId, Object content , Integer size);
+    void api_sendMessage(long messageId, int originSource, int originDest, int communicationInterfaceId, Object content , Integer size);
 
     @Deprecated
     /**
@@ -77,6 +77,16 @@ public interface DeviceAPI<P extends Position> {
      *      list of observations.
      */
     Map<AbilityType, List<PhenomenonValue>> api_getObservations();
+
+    /**
+     * Returns given number of samples
+     * @param configurationSpace
+     *      type of sensor response
+     * @param samplesCount
+     *      number of samples to return
+     * @return
+     */
+    List<ConfigurationSpace> api_getObservations(Class<? extends ConfigurationSpace> configurationSpace, int samplesCount);
 
     /**
      * Sets routing algorithm for device
@@ -129,6 +139,12 @@ public interface DeviceAPI<P extends Position> {
      */
     Integer api_getMyID();
 
+    /**
+     * Returns name of the device
+     * @return
+     *      String object containing name of the device.
+     */
+    String api_getName();
 
     PhenomenonValue api_getCurrentObservation(AbilityType abilityType);
 

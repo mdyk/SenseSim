@@ -30,7 +30,7 @@ public class StartSenseActivity extends BasicSimStateChange<DisSimNodeEntity, Ob
     protected void transition() throws SimControlException {
         LOG.trace(">> StartSenseActivity time=" + simTime());
         EventBusHolder.getEventBus().post(EventFactory.startSenseEvent(disSimNodeEntity.getDeviceLogic()));
-        disSimNodeEntity.endSenseActivity = new EndSenseActivity(0.5, disSimNodeEntity);
+//        disSimNodeEntity.endSenseActivity = new EndSenseActivity(0.5, disSimNodeEntity);
 
         LOG.trace("<< StartSenseActivity");
     }

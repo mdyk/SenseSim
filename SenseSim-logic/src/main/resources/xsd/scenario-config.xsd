@@ -29,9 +29,17 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="sensorClassType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="sensorId" type="xs:string" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
     <xs:complexType name="sensorsType">
         <xs:sequence>
-            <xs:element type="xs:string" name="sensorClass" maxOccurs="unbounded" minOccurs="0"/>
+            <xs:element type="sensorClassType" name="sensorClass" maxOccurs="unbounded" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 
@@ -62,7 +70,7 @@
             <xs:element name="routingAlgType">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration milivolts="FloodingRouting"/>
+                        <xs:enumeration value="FloodingRouting"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
@@ -75,6 +83,15 @@
     <xs:complexType name="communicationInterfacesType">
         <xs:sequence>
             <xs:element type="communicationInterfaceType" name="communicationInterface" minOccurs="1" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="middlewareType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="middlewareClass" />
+            <xs:sequence>
+                <xs:element type="xs:string" name="programFile" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
         </xs:sequence>
     </xs:complexType>
 
@@ -93,17 +110,18 @@
             <xs:element name="sesnorImplType">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration milivolts="GeoSensorNode"/>
+                        <xs:enumeration value="GeoSensorNode"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="routingAlgType">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
-                        <xs:enumeration milivolts="FloodingRouting"/>
+                        <xs:enumeration value="FloodingRouting"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
+            <xs:element type="middlewareType" name="middleware" />
             <xs:element type="communicationInterfacesType" name="communicationInterfaces" />
             <xs:element type="sensorsType" name="sensors" />
             <xs:element type="startPositionType" name="startPosition"/>
@@ -117,7 +135,7 @@
 
     <xs:complexType name="phenomenonDiscreteValueType">
         <xs:sequence>
-            <xs:element type="xs:string" name="milivolts" />
+            <xs:element type="xs:string" name="value" />
         </xs:sequence>
         <xs:attribute type="xs:string" name="fromTime"/>
         <xs:attribute type="xs:string" name="toTime"/>
@@ -126,7 +144,7 @@
 
     <xs:complexType name="phenomenonObserverValueType">
         <xs:sequence>
-            <xs:element type="xs:string" name="milivolts" />
+            <xs:element type="xs:string" name="value" />
         </xs:sequence>
         <xs:attribute type="xs:string" name="fromTime"/>
         <xs:attribute type="xs:string" name="toTime"/>

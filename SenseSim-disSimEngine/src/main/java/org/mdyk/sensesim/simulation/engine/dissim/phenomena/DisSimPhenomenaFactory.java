@@ -23,12 +23,12 @@ public class DisSimPhenomenaFactory implements PhenomenaFactory {
     }
 
     @Override
-    public PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName, Map<Class, Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points) {
-        return new SimplePhenomenon(phenomenonName,phenomenonValues,points);
+    public PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName, Map<Class, Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points , boolean infinite) {
+        return new SimplePhenomenon(phenomenonName,phenomenonValues,points, infinite);
     }
 
     @Override
-    public PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName, Map<Class, Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, Device attachedTo) {
-        return new SimplePhenomenon(phenomenonName , phenomenonValues , attachedTo.getDeviceLogic());
+    public PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName, Map<Class, Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, Device attachedTo, boolean infinite) {
+        return new SimplePhenomenon(phenomenonName , phenomenonValues , attachedTo.getDeviceLogic(), infinite);
     }
 }

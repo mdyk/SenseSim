@@ -19,13 +19,15 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
     private static final Logger LOG = Logger.getLogger(DisSimNodeEntity.class);
 
     //FIXME
-    public StartMoveActivity startMoveActivity;
+    // public StartMoveActivity startMoveActivity;
+    public MoveActivity startMoveActivity;
+
     //FIXME
     public EndMoveActivity endMoveActivity;
     //FIXME
-    public StartSenseActivity startSenseActivity;
-    //FIXME
-    public EndSenseActivity endSenseActivity;
+//    public StartSenseActivity startSenseActivity;
+//    //FIXME
+//    public EndSenseActivity endSenseActivity;
 
     private Map<SensorModel , SenseActivity> senseActions;
 
@@ -47,11 +49,15 @@ public class DisSimNodeEntity extends BasicSimEntity implements DeviceSimEntity 
     protected void startNode() {
         LOG.debug(">> Starting node " + this.deviceLogic.getID());
         try {
-            this.startMoveActivity = new StartMoveActivity(this);
-            this.startSenseActivity = new StartSenseActivity(this);
+
+            double delay = Math.random();
+
+            this.startMoveActivity = new MoveActivity(this);
+//            this.startSenseActivity = new StartSenseActivity(this);
 
             for(SensorModel sensorModel : this.deviceLogic.getSensors()) {
-                SenseActivity senseActivity = new SenseActivity(this, sensorModel, environment , sensorModel.samplingFrequency() , sensorModel.sensingTime());
+                delay = Math.random() + 1;
+                SenseActivity senseActivity = new SenseActivity(this, sensorModel, environment , sensorModel.samplingFrequency() , sensorModel.sensingTime(), delay);
                 senseActions.put(sensorModel , senseActivity);
             }
 

@@ -92,7 +92,7 @@ public class SenseActivityTest {
             }
         }
 
-        Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observations = fourthDev.getDeviceLogic().getObservations();
+        Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observations = fourthDev.getDeviceLogic().getObservations();
 
         TestCase.assertTrue(observations.containsKey(TemperatureConfigurationSpace.class));
         Map<Double, List<ConfigurationSpace>> tempObservations = observations.get(TemperatureConfigurationSpace.class);

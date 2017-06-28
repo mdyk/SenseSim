@@ -30,6 +30,7 @@ import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimEntityFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimAPIFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
+import sensesim.integration.mcop.MCopPluginFactory;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -55,6 +56,7 @@ public class CommunicationProcessSimEntityTest {
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
                 bind(DeviceStatisticsFactory.class).to(DefaultStatisticsFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
+                bind(MCopPluginFactory.class).to(org.mdyk.sensesim.integrator.mcop.plugin.MCopPluginFactoryImpl.class);
             }
         });
 
@@ -104,7 +106,7 @@ public class CommunicationProcessSimEntityTest {
     private static abstract class TestMessage implements Message {
 
         @Override
-        public int getID() {
+        public long getID() {
             return 1;
         }
 

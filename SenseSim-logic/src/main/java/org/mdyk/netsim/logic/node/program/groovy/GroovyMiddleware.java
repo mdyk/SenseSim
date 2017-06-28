@@ -9,14 +9,18 @@ import javafx.util.Pair;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
-import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
+import sensesim.integration.mcop.MCopPlugin;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,40 +38,43 @@ public class GroovyMiddleware extends Thread implements Middleware {
     private Map<Integer, SensorProgram> programs;
     private GroovyShell groovyShell;
 
+    private MCopPlugin mCopPlugin;
+
     private int PID = 0;
     private int nodeId;
 
-    public GroovyMiddleware() {
+    public GroovyMiddleware(MCopPlugin mCopPlugin) {
         programs = new ConcurrentHashMap<>();
         groovyShell = new GroovyShell();
+        this.mCopPlugin = mCopPlugin;
         EventBusHolder.getEventBus().register(this);
     }
 
     @Override
     public void initialize() {
-        deviceAPI.api_setOnMessageHandler(new Function<Message, Object>() {
-            @Override
-            public Object apply(Message message) {
+//        deviceAPI.api_setOnMessageHandler(new Function<Message, Object>() {
+//            @Override
+//            public Object apply(Message message) {
+//
+//                Object messageContent = message.getMessageContent();
+//
+//                if(messageContent instanceof String){
+//                    LOG.trace("messageContent is String");
+//                    String groovyScript = (String) messageContent;
+//                    Script scriptToRun = groovyShell.parse(groovyScript);
+//
+//                    if(scriptToRun != null) {
+//                        LOG.debug("scriptToRun != null");
+//                        GroovyProgram groovyProgram = new GroovyProgram(groovyScript, true);
+//                        loadProgram(groovyProgram);
+//                    }
+//
+//                }
+//
+//                return null;
+//            }
+//        });
 
-                Object messageContent = message.getMessageContent();
-
-                if(messageContent instanceof String){
-                    LOG.trace("messageContent is String");
-                    String groovyScript = (String) messageContent;
-                    Script scriptToRun = groovyShell.parse(groovyScript);
-
-                    if(scriptToRun != null) {
-                        LOG.debug("scriptToRun != null");
-                        GroovyProgram groovyProgram = new GroovyProgram(groovyScript, true);
-                        loadProgram(groovyProgram);
-                    }
-
-                }
-
-                return null;
-            }
-        });
-        this.start();
     }
 
     public void setDeviceAPI(DeviceAPI api) {
@@ -91,10 +98,16 @@ public class GroovyMiddleware extends Thread implements Middleware {
     }
 
     @Override
+    public void loadProgram(String code) {
+        GroovyProgram groovyProgram = new GroovyProgram(code , false);
+        loadProgram(groovyProgram);
+    }
+
+    @Override
     public List<SensorProgram> getPrograms() {
          return new ArrayList<>(programs.values());
     }
-
+                                                                                                    
     @Override
     public void execute() {
 //        LOG.trace(">> execute");
@@ -107,6 +120,7 @@ public class GroovyMiddleware extends Thread implements Middleware {
 
             final Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
 
+
             final GroovyMiddleware me = this;
 
             new Thread() {
@@ -114,11 +128,17 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     LOG.info("Running program with PID="+PID);
                     me.deviceSimEntity.startProgramExecution(PID);
                     Map<String, Object> params = new HashMap<>();
+                    OutputStream os = new ByteArrayOutputStream();
+                    PrintStream ps = new PrintStream(os);
                     params.put("api", deviceAPI);
+                    params.put("mCopPlugin" , mCopPlugin);
+                    params.put("out", ps);
+                    params.put("err", ps);
+                    groovyProgram.setOutputStream(os);
                     scriptToRun.setBinding(new Binding(params));
                     try {
-                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_ECECUTION);
-                        LOG.debug("PID="+PID+" DURING_ECECUTION");
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_EXECUTION);
+                        LOG.debug("PID="+PID+" DURING_EXECUTION");
                         Object result = scriptToRun.run();
                         LOG.debug("PID="+PID+" result="+result);
                         groovyProgram.setResult(result);
@@ -126,9 +146,11 @@ public class GroovyMiddleware extends Thread implements Middleware {
                         LOG.debug("PID="+PID+" FINISHED_OK");
                     } catch (Exception exc) {
                         LOG.error(exc.getMessage(), exc);
+                        ps.print(exc);
                         groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
                         LOG.debug("PID="+PID+" FINISHED_ERROR");
                     } finally {
+
                         EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.PROGRAM_UPDATED, groovyProgram));
                     }
                     me.deviceSimEntity.endProgramExecution(PID);
@@ -144,6 +166,48 @@ public class GroovyMiddleware extends Thread implements Middleware {
         }
 
         // TODO określenie co jeszcze miałby robić middleware
+    }
+
+    private void testProgram (GroovyProgram groovyProgram) {
+
+        final OutputStream os = new ByteArrayOutputStream();
+        final PrintStream ps = new PrintStream(os);
+
+        try {
+            final Script scriptToRun = groovyShell.parse(groovyProgram.getGroovyScript());
+
+            new Thread() {
+                public void run() {
+                    Map<String, Object> params = new HashMap<>();
+                    params.put("api", deviceAPI);
+                    params.put("mCopPlugin" , mCopPlugin);
+                    params.put("out", ps);
+                    params.put("err", ps);
+                    scriptToRun.setBinding(new Binding(params));
+                    try {
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.DURING_EXECUTION);
+                        Object result = scriptToRun.run();
+                        groovyProgram.setResult(result);
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_OK);
+                    } catch (Exception exc) {
+                        LOG.error(exc.getMessage(), exc);
+                        ps.print(exc);
+                        groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
+                    } finally {
+                        EventBusHolder.getEventBus().post(new InternalEvent(EventType.END_TEST_PROGRAM_EXECUTION, os));
+                    }
+
+                }
+            }.start();
+        } catch (Exception exc) {
+            LOG.error(exc.getMessage(), exc);
+            ps.print(exc);
+            groovyProgram.setProgramStatus(SensorProgram.ProgramStatus.FINISHED_ERROR);
+        } finally {
+            EventBusHolder.getEventBus().post(new InternalEvent(EventType.END_TEST_PROGRAM_EXECUTION, os));
+        }
+        
+
     }
 
     @Override
@@ -173,9 +237,25 @@ public class GroovyMiddleware extends Thread implements Middleware {
                     // The program should be installed in current node.
                     if(programToInstall.getKey()!=null && programToInstall.getKey().equals(nodeId)){
                         LOG.debug("Installing program on node: " + nodeId);
-                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue(), true);
+                        // FIXME rozsyłanie programu powinno być określane w konsoli
+                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue(), false);
                         loadProgram(groovyProgram);
                     }
+                    break;
+
+                case START_TEST_PROGRAM_EXECUTION:
+                    LOG.debug(">> START_TEST_PROGRAM_EXECUTION event");
+                    programToInstall = (Pair<Integer, String>) event.getPayload();
+                    // The program should be installed in current node.
+                    if(programToInstall.getKey()!=null && programToInstall.getKey().equals(nodeId)){
+                        LOG.debug("Installing program on node: " + nodeId);
+                        GroovyProgram groovyProgram = new GroovyProgram(programToInstall.getValue(), true);
+                        testProgram(groovyProgram);
+                    }
+                    break;
+
+                case SIM_START_NODES:
+                    new Thread(this).start();
                     break;
             }
         } catch (Exception exc){

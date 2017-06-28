@@ -19,7 +19,7 @@ public interface PhenomenaFactory {
     @Deprecated
     PhenomenonModel<GeoPosition> createPhenomenon(Map<AbilityType , Map<IPhenomenonTimeRange, Object>> values, List<GeoPosition> points);
 
-    PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points);
+    PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, List<GeoPosition> points, boolean infinite);
 
     /**
      * Creates phenomenon which is attached to a specific device.
@@ -32,6 +32,6 @@ public interface PhenomenaFactory {
      * @return
      *      phenomenon attached to a device.
      */
-    PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, Device attachedTo);
+    PhenomenonModel<GeoPosition> createPhenomenon(String phenomenonName , Map<Class , Map<IPhenomenonTimeRange, ConfigurationSpace>> phenomenonValues, Device attachedTo, boolean infinite);
 
 }

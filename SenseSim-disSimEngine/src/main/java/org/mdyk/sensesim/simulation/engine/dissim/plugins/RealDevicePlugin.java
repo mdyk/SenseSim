@@ -56,11 +56,11 @@ public class RealDevicePlugin implements IRealDevicePlugin{
         new Thread(new Runnable(){
             @Override
             public void run(){
-                try {
-                    Main.main(new String[]{});
-                } catch (Exception ex) {
-                    Logger.getLogger(RealDevicePlugin.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                try {
+//                    Main.main(new String[]{});
+//                } catch (Exception ex) {
+//                    Logger.getLogger(RealDevicePlugin.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
         }).start();        
     }

@@ -1,11 +1,13 @@
 package org.mdyk.netsim.logic.node.program;
 
+import java.io.OutputStream;
+
 /**
  * Interface for program executed by device
  */
 public interface SensorProgram {
 
-    enum ProgramStatus {LOADED, FINISHED_OK, DURING_ECECUTION, FINISHED_ERROR}
+    enum ProgramStatus {LOADED, FINISHED_OK, DURING_EXECUTION, FINISHED_ERROR}
 
     /**
      * Executes program
@@ -40,5 +42,8 @@ public interface SensorProgram {
      * @return
      */
     ProgramStatus getStatus();
+
+    OutputStream getOutput();
+    
 
 }

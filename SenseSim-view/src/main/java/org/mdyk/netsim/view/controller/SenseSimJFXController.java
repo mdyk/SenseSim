@@ -69,8 +69,8 @@ public class SenseSimJFXController implements Initializable {
     private TreeView<String> nodesTree;
     @FXML
     private SwingNode swingMapNode;
-    @FXML
-    private Pane observationsPane;
+//    @FXML
+//    private Pane observationsPane;
     @FXML
     private TextField details_nodeId;
     @FXML
@@ -83,6 +83,8 @@ public class SenseSimJFXController implements Initializable {
     private OSMNodeView selectedNode;
 
     private Stage informationNeedConsole;
+
+    private Stage programConsole;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -131,47 +133,22 @@ public class SenseSimJFXController implements Initializable {
 
     public void loadProgram() {
         LOG.debug(">> loadProgram");
-        Dialog<Pair<Integer, String>> dialog = new Dialog<>();
-        dialog.setTitle("Write program for the network");
-        dialog.setHeaderText("Here you can macroprogram you network.");
-        ButtonType loginButtonType = new ButtonType("Send program", ButtonBar.ButtonData.OK_DONE);
-        dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
 
-        GridPane grid = new GridPane();
-        grid.setHgap(10);
-        grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/ProgramConsole.fxml"));
 
-        ChoiceBox<Integer> nodeId = new ChoiceBox<>(FXCollections.observableArrayList(nodeViews.keySet()));
-        CheckBox sendToAll = new CheckBox();
-        TextArea codeArea = new TextArea();
-        codeArea.setMinHeight(600);
-        codeArea.setMinWidth(800);
-        codeArea.setPromptText("Program");
+        try {
+            Parent parent = fxmlLoader.load();
+            programConsole = new Stage();
+            programConsole.initModality(Modality.NONE);
+            programConsole.initStyle(StageStyle.DECORATED);
+            programConsole.setScene(new Scene(parent));
+            ProgramConsoleController controller = fxmlLoader.getController();
+            controller.populateDevices(nodeViews);
+            programConsole.show();
+        } catch (IOException e) {
+            LOG.error(e.getMessage() , e);
+        }
 
-        grid.add(new Label("Node's id:"), 0, 0);
-        grid.add(nodeId, 1, 0);
-        grid.add(new Label("Send program to all nodes"),0,1);
-        grid.add(sendToAll,1,1);
-        grid.add(new Label("Code:"), 0, 2);
-        grid.add(codeArea, 1, 2);
-
-        dialog.getDialogPane().setContent(grid);
-
-        Platform.runLater(nodeId::requestFocus);
-
-        dialog.setResultConverter(dialogButton -> {
-            if (dialogButton == loginButtonType) {
-                return new Pair<>(nodeId.getValue(), codeArea.getText());
-            }
-            return null;
-        });
-
-        Optional<Pair<Integer, String>> result = dialog.showAndWait();
-
-        result.ifPresent(program -> {
-            EventBusHolder.getEventBus().post(EventFactory.loadProgram(program.getKey(),program.getValue()));
-        });
         LOG.debug("<< loadProgram");
     }
 
@@ -192,14 +169,17 @@ public class SenseSimJFXController implements Initializable {
         nodesTree.getSelectionModel().selectedItemProperty().addListener((observableValue, stringTreeItem, stringTreeItem2) -> {
             Platform.runLater(() -> {
                 details_nodeId.setText(observableValue.getValue().getValue());
-                selectedNode = nodeViews.get(Integer.parseInt(observableValue.getValue().getValue()));
+
+                String[] nameSplit = observableValue.getValue().getValue().split("-");
+
+                selectedNode = nodeViews.get(Integer.parseInt(nameSplit[0]));
 
                 if(selectedNode != null) {
                     nodeLatitude.setText(String.valueOf(selectedNode.getLat()));
                     nodeLongitude.setText(String.valueOf(selectedNode.getLon()));
                 }
-                observationsPane.getChildren().clear();
-                observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
+//                observationsPane.getChildren().clear();
+//                observationsPane.getChildren().add(nodesAbilities.get(selectedNode.getID()));
             });
         });
 
@@ -241,7 +221,7 @@ public class SenseSimJFXController implements Initializable {
         LOG.debug(">> addNode");
         node.renderNode();
         nodeViews.put(id, node);
-        TreeItem<String> treeItem = new TreeItem<>(""+id);
+        TreeItem<String> treeItem = new TreeItem<>(""+id + "-"+node.getNode().getName() );
         this.nodesTree.getRoot().getChildren().add(treeItem);
 
         TabPane abilityPane = new TabPane();
@@ -362,7 +342,7 @@ public class SenseSimJFXController implements Initializable {
     }
 
     @Subscribe
-    public synchronized void processEvent(InternalEvent event) {
+    public void processEvent(InternalEvent event) {
         try {
             GeoDeviceNode sensorModelNode;
             switch (event.getEventType()) {
@@ -408,14 +388,14 @@ public class SenseSimJFXController implements Initializable {
                     OSMEventView envEvent = new OSMEventView((PhenomenonModel<GeoPosition>) event.getPayload(), app.getMapContainer(), "");
                     addEvent(1, envEvent);
                     break;
-                case NODE_START_SENSE:
-                    sensorModelNode = (GeoDeviceNode) event.getPayload();
-                    nodeViews.get(sensorModelNode.getID()).startSense();
-                    break;
-                case NODE_END_SENSE:
-                    sensorModelNode = (GeoDeviceNode) event.getPayload();
-                    process_NODE_END_SENSE(sensorModelNode);
-                    break;
+//                case NODE_START_SENSE:
+//                    sensorModelNode = (GeoDeviceNode) event.getPayload();
+//                    nodeViews.get(sensorModelNode.getID()).startSense();
+//                    break;
+//                case NODE_END_SENSE:
+//                    sensorModelNode = (GeoDeviceNode) event.getPayload();
+//                    process_NODE_END_SENSE(sensorModelNode);
+//                    break;
             }
         } catch(Throwable tr){
             LOG.error(tr.getMessage() , tr);

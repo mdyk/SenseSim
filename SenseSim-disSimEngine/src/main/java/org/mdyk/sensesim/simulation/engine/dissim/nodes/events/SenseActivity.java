@@ -22,8 +22,8 @@ public class SenseActivity extends BasicSimAction<DisSimNodeEntity, Object> {
     private Environment environment;
 
 
-    public SenseActivity(DisSimNodeEntity entity , SensorModel sensorModel , Environment environment, double period, double duration) throws SimControlException {
-        super(entity,0 , period , duration);
+    public SenseActivity(DisSimNodeEntity entity , SensorModel sensorModel , Environment environment, double period, double duration, double delayToRun) throws SimControlException {
+        super(entity,delayToRun , period , duration);
         this.sensorModel = sensorModel;
         this.entity = entity;
         this.environment = environment;
@@ -44,7 +44,15 @@ public class SenseActivity extends BasicSimAction<DisSimNodeEntity, Object> {
         for(PhenomenonModel phenomenon : observedPhenomena) {
             // FIXME poprawne wyliczanie odległości
             if(!Functions.isPointInRegion(entity.deviceLogic.getPosition(), phenomenon.getPhenomenonRegionPoints())) {
-                continue;
+
+                if(phenomenon.getAttachedDevice()!=null && phenomenon.getAttachedDevice().getID() == this.entity.getDeviceLogic().getID()) {
+                    ConfigurationSpace observation = sensorModel.getObservation(phenomenon, simTime() , 0);
+                    if(observation != null) {
+                        entity.deviceLogic.addObservation(sensorModel.getConfigurationSpaceClass() , simTime() , observation);
+                    }
+                } else {
+                    continue;
+                }
             }
 
             ConfigurationSpace observation = sensorModel.getObservation(phenomenon, simTime() , 0);
@@ -53,7 +61,7 @@ public class SenseActivity extends BasicSimAction<DisSimNodeEntity, Object> {
             }
         }
 
-        EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(entity.getDeviceLogic()));
+       // EventBusHolder.getEventBus().post(EventFactory.endSenseEvent(entity.getDeviceLogic()));
 
     }
 }

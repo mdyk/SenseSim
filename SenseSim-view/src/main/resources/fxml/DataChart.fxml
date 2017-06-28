@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.chart.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.mdyk.netsim.view.controller.DataChartController">
+   <children>
+      <ToggleButton mnemonicParsing="false" fx:id="refreshButton" text="Refresh">
+         <VBox.margin>
+            <Insets bottom="10.0" left="15.0" right="15.0" top="15.0" />
+         </VBox.margin>
+      </ToggleButton>
+      <LineChart fx:id="chart">
+        <xAxis>
+          <NumberAxis side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" side="LEFT" />
+        </yAxis>
+      </LineChart>
+   </children>
+</VBox>

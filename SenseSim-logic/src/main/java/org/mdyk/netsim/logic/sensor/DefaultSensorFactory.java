@@ -15,4 +15,17 @@ public class DefaultSensorFactory implements SensorFactory {
         }
     }
 
+    @Override
+    public SensorModel<?, ?> buildSensor(String className, int sensorId) {
+
+        try {
+            SensorModel<?,?> model = (SensorModel<?, ?>) Class.forName(className).newInstance();
+            model.setId(sensorId);
+            return model;
+        } catch (Exception e) {
+            throw new RuntimeException("Cannot instantiate class " + className , e);
+        }
+        
+    }
+
 }

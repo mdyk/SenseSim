@@ -10,6 +10,14 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
  */
 public abstract class SensorModel<O extends ObserverModel<?,?> , R extends ConfigurationSpace> {
 
+    protected int id;
+
+    public abstract int getId();
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     /**
      * Returns sensor name.
      * @return
@@ -44,7 +52,7 @@ public abstract class SensorModel<O extends ObserverModel<?,?> , R extends Confi
      */
     public abstract R getObservation(PhenomenonModel phenomenonModel , double time , double distance);
 
-    public abstract Class getConfigurationSpaceClass();
+    public abstract Class<? extends ConfigurationSpace> getConfigurationSpaceClass();
 
 
     final public String toString() {

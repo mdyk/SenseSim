@@ -10,6 +10,7 @@ import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.movement.geo.GeoMovementAlgorithm;
 import org.mdyk.netsim.logic.movement.geo.GeoRouteMovementAlgorithm;
+import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.geo.DeviceLogic;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
@@ -40,6 +41,7 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     protected Environment environment;
     // FIXME do zmiany
     public WirelessChannel wirelessChannel;
+    public NetworkManager networkManager;
     private DeviceSimEntity deviceSimEntity;
     private DeviceStatistics deviceStatistics;
     protected CommunicationProcessFactory communicationProcessFactory;
@@ -53,13 +55,14 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     public DisSimDeviceLogic(@Assisted("id") int id, @Assisted("name") String name, @Assisted GeoPosition position,
                              @Assisted("radioRange") int radioRange, int bandwidth,
                              @Assisted double velocity, @Assisted List<AbilityType> abilities, List<SensorModel<?,?>> sensors, List<CommunicationInterface> communicationInterfaces,
-                             Environment environment, WirelessChannel wirelessChannel, CommunicationProcessFactory communicationProcessFactory) {
+                             Environment environment, WirelessChannel wirelessChannel, NetworkManager networkManager, CommunicationProcessFactory communicationProcessFactory) {
         super(id,name, position, radioRange, bandwidth, velocity, abilities, sensors, communicationInterfaces);
 
         this.currentMovementAlg = new GeoRouteMovementAlgorithm();
         this.environment = environment;
         this.wirelessChannel = wirelessChannel;
         this.communicationProcessFactory = communicationProcessFactory;
+        this.networkManager = networkManager;
         this.isMoveing = true;
     }
 
@@ -99,37 +102,41 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     protected void onMessage(double time, Message message) {
         // TODO execute program
 
-        if(onMessageHandler != null) {
-            onMessageHandler.apply(message);
-        }
-
-        if(message.getMessageDest() != id) {
-            List<DeviceNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(this);
-            List<DeviceNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
-
-            startCommunication(message,hopTargets.toArray(new DeviceNode[hopTargets.size()]));
-
-        }
+//        if(onMessageHandler != null) {
+//            onMessageHandler.apply(message);
+//        }
+//
+//        if(message.getMessageDest() != id) {
+//            List<DeviceNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(this);
+//            List<DeviceNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
+//
+//            startCommunication(message,hopTargets.toArray(new DeviceNode[hopTargets.size()]));
+//
+//        }
 
     }
 
     @Override
     @SuppressWarnings("unchecked")
     protected void onMessage(double time, int communicationInterfaceId, Message message) {
-        if(onMessageHandler != null) {
-            onMessageHandler.apply(message);
+        try {
+            if (onMessageHandler != null) {
+                onMessageHandler.apply(message);
+            }
+        } catch (Exception exc) {
+            LOG.error(exc.getMessage() , exc);
         }
 
-        if(message.getMessageDest() != id) {
-            List<DeviceNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(communicationInterfaceId, this);
-            List<DeviceNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
-
-            HashMap<Integer , List<DeviceNode<GeoPosition>>> receivers = new HashMap<>();
-            receivers.put(communicationInterfaceId , hopTargets);
-
-            startCommunication(message,receivers);
-
-        }
+//        if(message.getMessageDest() != id) {
+//            List<DeviceNode<GeoPosition>> neighbors = wirelessChannel.scanForNeighbors(communicationInterfaceId, this);
+//            List<DeviceNode<GeoPosition>> hopTargets = routingAlgorithm.getNodesToHop(this.id, message.getMessageDest(),message,neighbors);
+//
+//            HashMap<Integer , List<DeviceNode<GeoPosition>>> receivers = new HashMap<>();
+//            receivers.put(communicationInterfaceId , hopTargets);
+//
+//            startCommunication(message,receivers);
+//
+//        }
     }
 
     @Override
@@ -191,17 +198,22 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
 
     @Override
     public void move() {
-        LOG.debug(">> move node: " + getID());
-        if(!isMoveing || route == null || route.size() == 0) return;
-        // TODO założenie że pędkość podawana jest w kilomwtrach. Trzeba to przenieść do konfiguracji.
-        double velocityMetersPerSec = this.velocity / 3.6;
-        LOG.trace("Velocity in km/h: " + velocity + " velocity in m/sec: " +velocityMetersPerSec);
+        try {
+            LOG.debug(">> move node: " + getID());
+            if (!isMoveing || route == null || route.size() == 0) return;
+            // TODO założenie że pędkość podawana jest w kilomwtrach. Trzeba to przenieść do konfiguracji.
+            double velocityMetersPerSec = this.velocity / 3.6;
+            LOG.trace("Velocity in km/h: " + velocity + " velocity in m/sec: " + velocityMetersPerSec);
 
-        GeoPosition newPosition = currentMovementAlg.nextPositionToCheckpoint(this.position, velocityMetersPerSec * StartMoveActivity.END_MOVE_DELAY);
-        LOG.debug(String.format("moveing from position %s to %s ", this.getPosition().toString(), newPosition.toString()));
-        this.setPosition(newPosition);
-        EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(this));
-        LOG.debug("<< move node: " + getID());
+            GeoPosition newPosition = currentMovementAlg.nextPositionToCheckpoint(this.position, velocityMetersPerSec * MoveActivity.END_MOVE_DELAY);
+            LOG.debug(String.format("moving from position %s to %s ", this.getPosition().toString(), newPosition.toString()));
+            this.setPosition(newPosition);
+            this.networkManager.actualizeNaighbours(this);
+            EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(this));
+            LOG.debug("<< move node: " + getID());
+        } catch (Exception e) {
+            LOG.error(e.getMessage() , e);
+        }
     }
 
     @SafeVarargs

@@ -344,6 +344,11 @@ public class OWLMiddleware extends Thread implements Middleware {
     }
 
     @Override
+    public void loadProgram(String code) {
+
+    }
+
+    @Override
     public List<SensorProgram> getPrograms() {
         return null;
     }

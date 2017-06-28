@@ -2,6 +2,9 @@ package org.mdyk.netsim.logic.node.program.groovy;
 
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStream;
+
 
 public class GroovyProgram implements SensorProgram {
 
@@ -9,12 +12,14 @@ public class GroovyProgram implements SensorProgram {
     private boolean resend;
     private ProgramStatus programStatus;
     private Object result;
+    private OutputStream outputStream;
 
     private int PID;
 
     public GroovyProgram(String groovyScript, boolean resend) {
         this.groovyScript = groovyScript;
         this.resend = resend;
+        this.outputStream = new ByteArrayOutputStream();
     }
 
     @Override
@@ -52,6 +57,11 @@ public class GroovyProgram implements SensorProgram {
         return programStatus;
     }
 
+    @Override
+    public OutputStream getOutput() {
+        return outputStream;
+    }
+
     public String getGroovyScript() {
         return groovyScript;
     }
@@ -64,4 +74,7 @@ public class GroovyProgram implements SensorProgram {
         this.result = result;
     }
 
+    public void setOutputStream(OutputStream outputStream) {
+        this.outputStream = outputStream;
+    }
 }

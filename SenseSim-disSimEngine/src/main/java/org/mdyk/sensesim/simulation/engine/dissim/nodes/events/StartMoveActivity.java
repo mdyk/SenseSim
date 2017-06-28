@@ -4,7 +4,7 @@ import dissim.simspace.core.BasicSimStateChange;
 import dissim.simspace.core.SimControlException;
 import org.apache.log4j.Logger;
 
-
+@Deprecated
 public class StartMoveActivity extends BasicSimStateChange<DisSimNodeEntity, Object> {
 
     private static final Logger LOG = Logger.getLogger(StartMoveActivity.class);
@@ -20,11 +20,17 @@ public class StartMoveActivity extends BasicSimStateChange<DisSimNodeEntity, Obj
         this.disSimNodeEntity = disSimNodeEntity;
     }
 
+    public StartMoveActivity(DisSimNodeEntity disSimNodeEntity, double delay) throws SimControlException {
+        super(disSimNodeEntity,delay);
+        this.disSimNodeEntity = disSimNodeEntity;
+    }
+
 
     @Override
     protected void transition() throws SimControlException {
         LOG.debug(">> StartMoveActivity.transition");
         disSimNodeEntity.endMoveActivity = new EndMoveActivity(END_MOVE_DELAY, disSimNodeEntity);
+        this.terminate();
         LOG.debug("<< StartMoveActivity.transition");
     }
 

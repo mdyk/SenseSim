@@ -50,7 +50,9 @@ public interface IDeviceModel<P extends Position> {
 
     void setRoutingAlgorithm(RoutingAlgorithm routingAlgorithm);
 
-    Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> getObservations();
+    Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> getObservations();
+
+    Map<Double, List<ConfigurationSpace>> getObservations(Class<? extends ConfigurationSpace> configurationSpace, int samplesCount);
 
     @Deprecated
     Map<AbilityType, List<PhenomenonValue>> old_getObservations();

@@ -8,6 +8,7 @@ import org.mdyk.netsim.logic.network.DefaultWirelessChannel;
 import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.network.WirelessChannel;
 import org.mdyk.netsim.logic.node.*;
+import org.mdyk.netsim.logic.node.program.groovy.GroovyMiddlewareFactory;
 import org.mdyk.netsim.logic.node.program.owl.OWLMiddlewareFactory;
 import org.mdyk.netsim.logic.node.statistics.DefaultStatisticsFactory;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
@@ -25,6 +26,8 @@ import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFacto
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.RealDevicePlugin;
 import pl.edu.wat.integrator.MyResource;
+import sensesim.integration.mcop.MCopPlugin;
+import sensesim.integration.mcop.MCopPluginFactory;
 
 
 public class SenseSimConfig extends AbstractModule {
@@ -43,11 +46,12 @@ public class SenseSimConfig extends AbstractModule {
         bind(APIFactory.class).to(DisSimAPIFactory.class);
         bind(SensorFactory.class).to(DefaultSensorFactory.class);
         bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
-        bind(MiddlewareFactory.class).to(OWLMiddlewareFactory.class);
+//        bind(MiddlewareFactory.class).to(OWLMiddlewareFactory.class);
+        bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
         bind(DeviceStatisticsFactory.class).to(DefaultStatisticsFactory.class);
         bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
         bind(IRealDevicePlugin.class).to(RealDevicePlugin.class);
-        bind(MyResource.class);
+        bind(MCopPluginFactory.class).to(org.mdyk.sensesim.integrator.mcop.plugin.MCopPluginFactoryImpl.class);
     }
 
 }

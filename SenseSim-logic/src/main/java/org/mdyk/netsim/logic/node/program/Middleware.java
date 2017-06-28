@@ -3,6 +3,7 @@ package org.mdyk.netsim.logic.node.program;
 import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 
+import java.awt.image.VolatileImage;
 import java.util.List;
 
 /**
@@ -20,6 +21,12 @@ public interface Middleware {
     void setDeviceSimEntity(DeviceSimEntity simEntity);
 
     void loadProgram(SensorProgram program);
+
+    /**
+     * Loads program basing on its source code
+     * @param code
+     */
+    void loadProgram(String code);
 
     List<SensorProgram> getPrograms();
 

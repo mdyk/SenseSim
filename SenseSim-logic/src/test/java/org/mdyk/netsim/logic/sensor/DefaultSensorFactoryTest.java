@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.sensor;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.mdyk.netsim.logic.sensor.temp.PT100Sensor;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 
 public class DefaultSensorFactoryTest {

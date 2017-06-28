@@ -22,10 +22,10 @@ public interface GeoMovementAlgorithm extends MovementAlgorithm {
      *      speed of a node.
      * @return
      */
-    public GeoPosition nextPositionToCheckpoint(GeoPosition currentPosition, GeoPosition nextCheckpoint, double speed);
+    GeoPosition nextPositionToCheckpoint(GeoPosition currentPosition, GeoPosition nextCheckpoint, double speed);
 
-    public GeoPosition nextPositionToCheckpoint(GeoPosition currentPosition, double speed);
+    GeoPosition nextPositionToCheckpoint(GeoPosition currentPosition, double speed);
 
-    public void setRoute(List<GeoPosition> route);
+    void setRoute(List<GeoPosition> route);
 
 }

@@ -16,6 +16,7 @@ import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
+import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.MoveActivity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity;
 
 import java.util.*;
@@ -46,7 +47,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     public void api_startMove() {
         LOG.trace(">> api_startMove()");
         try {
-            ((DisSimNodeEntity) deviceSimEntity).startMoveActivity = new StartMoveActivity((DisSimNodeEntity) deviceSimEntity);
+            ((DisSimNodeEntity) deviceSimEntity).startMoveActivity = new MoveActivity((DisSimNodeEntity) deviceSimEntity);
             // FIXME przeprojektowanie interfejsów tak, żeby nie było konieczne rzutowanie
             ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).startMoveing();
         } catch (SimControlException e) {
@@ -81,7 +82,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void api_sendMessage(int messageId, int originSource, int originDest, int communicationInterfaceId, Object content, Integer size) {
+    public void api_sendMessage(long messageId, int originSource, int originDest, int communicationInterfaceId, Object content, Integer size) {
         Message message = new SimpleMessage(messageId, originSource, originDest , content, size);
         List<DeviceNode> neighbours =  ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(communicationInterfaceId, deviceSimEntity.getDeviceLogic());
         List<DeviceNode<GeoPosition>> nodesToHop = deviceSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(deviceSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
@@ -96,6 +97,19 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     public Map<AbilityType, List<PhenomenonValue>> api_getObservations() {
         LOG.trace(">< api_getObservations()");
         return deviceSimEntity.getDeviceLogic().old_getObservations();
+    }
+
+    @Override
+    public List<ConfigurationSpace> api_getObservations(Class<? extends ConfigurationSpace> configurationSpace, int samplesCount) {
+
+        Map<Double, List<ConfigurationSpace>> observationsMap = deviceSimEntity.getDeviceLogic().getObservations(configurationSpace , samplesCount);
+        List<ConfigurationSpace> observationsList = new ArrayList<>();
+
+        for(Double time : observationsMap.keySet()) {
+            observationsList.addAll(observationsMap.get(time));
+        }
+
+        return observationsList;
     }
 
     @Override
@@ -163,6 +177,11 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     }
 
     @Override
+    public String api_getName() {
+        return deviceSimEntity.getDeviceLogic().getName();
+    }
+
+    @Override
     public PhenomenonValue api_getCurrentObservation(AbilityType abilityType) {
 
         Map<AbilityType, List<PhenomenonValue>> obserations = deviceSimEntity.getDeviceLogic().old_getObservations();
@@ -184,11 +203,11 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     @Override
     public ConfigurationSpace api_getSensorCurrentObservation(SensorModel sensor) {
 
-        TreeMap<Double, List<ConfigurationSpace>> observations = deviceSimEntity.getDeviceLogic().getObservations().get(sensor.getConfigurationSpaceClass());
+        Map<Double, List<ConfigurationSpace>> observations = deviceSimEntity.getDeviceLogic().getObservations().get(sensor.getConfigurationSpaceClass());
 
         ConfigurationSpace observation = null;
         if(observations != null && !observations.isEmpty()) {
-            List<ConfigurationSpace> latestObservations = observations.get(observations.lastKey());
+            List<ConfigurationSpace> latestObservations = observations.get(((TreeMap)observations).lastKey());
             observation = latestObservations.get(latestObservations.size()-1);
         }
 

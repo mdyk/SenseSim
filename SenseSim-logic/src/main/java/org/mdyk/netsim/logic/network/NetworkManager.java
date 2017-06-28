@@ -92,19 +92,19 @@ public class NetworkManager<P extends Position> {
 
     @Subscribe
     public void processEvent(InternalEvent event) {
-        LOG.debug(">> processEvent");
+//        LOG.debug(">> processEvent");
         switch(event.getEventType()){
             case NEW_NODE:
                 LOG.debug("NEW_NODE event");
                 DeviceNode sensorNode = (DeviceNode) event.getPayload();
                 actualizeNaighbours(sensorNode);
                 break;
-            case NODE_POSITION_CHANGED:
-                LOG.debug("NODE_POSITION_CHANGED event");
-                actualizeNaighbours((DeviceNode) event.getPayload());
-                break;
+//            case NODE_POSITION_CHANGED:
+//                LOG.debug("NODE_POSITION_CHANGED event");
+//                actualizeNaighbours((DeviceNode) event.getPayload());
+//                break;
         }
-        LOG.debug("<< processEvent");
+//        LOG.debug("<< processEvent");
     }
 
     public void actualizeNaighbours(DeviceNode changedDevice) {

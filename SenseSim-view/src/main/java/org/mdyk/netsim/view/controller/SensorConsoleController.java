@@ -8,7 +8,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
@@ -17,7 +19,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 import org.mdyk.netsim.logic.event.EventBusHolder;
@@ -31,8 +36,11 @@ import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.netsim.view.controlls.table.CommunicationStatistics;
 import org.mdyk.netsim.view.controlls.table.ProgramStatistics;
 import org.mdyk.netsim.view.node.OSMNodeView;
+import org.reactfx.util.FxTimer;
 
+import java.io.IOException;
 import java.net.URL;
+import java.time.Duration;
 import java.util.*;
 
 
@@ -82,7 +90,11 @@ public class SensorConsoleController implements Initializable {
     @FXML
     private TableColumn<ProgramStatistics , String> pidColumn;
     @FXML
+    private TableColumn<ProgramStatistics , String> programLog;
+
+    @FXML
     private TableColumn<ProgramStatistics , String> programStatus;
+
     private ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
     private Map<String , ObservableList<PhenomenonValue>> observationsChartData;
     private ObservableList<CommunicationStatistics> commStatistics = FXCollections.observableArrayList();
@@ -108,6 +120,7 @@ public class SensorConsoleController implements Initializable {
 
         pidColumn.setCellValueFactory(new PropertyValueFactory<>("PID"));
         programStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        programLog.setCellValueFactory(new PropertyValueFactory<>("output"));
         programsTable.setItems(programStatistics);
 
 
@@ -142,6 +155,11 @@ public class SensorConsoleController implements Initializable {
         for(SensorModel sm : nodeView.getNode().getSensors()) {
             observationsChartData.put(sm.getName() , FXCollections.observableArrayList());
         }
+
+        FxTimer.runPeriodically(
+                Duration.ofMillis(1000),
+                this::showObservationsForAbility);
+
     }
 
     public void setNodeView(OSMNodeView nodeView) {
@@ -157,61 +175,6 @@ public class SensorConsoleController implements Initializable {
                     break;
                 case NODE_END_SENSE:
                     showObservationsForAbility();
-
-//                    SensorModel sensorModel = (SensorModel) abilityChooser.getValue();
-//
-//                    if(sensorModel != null) {
-//                    Platform.runLater(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            if(nodeView != null) {
-//                                for (SensorModel sm : nodeView.getNode().getSensors()) {
-//                                    Map<Double, List<ConfigurationSpace>> observations2 = nodeView.getNode().getObservations().get(sm.getConfigurationSpaceClass());
-//
-//                                    Map<Double, List<ConfigurationSpace>> observations = new HashMap<>(observations2);
-//
-//                                    for (Double time : observations.keySet()) {
-//                                        for (ConfigurationSpace configurationSpace : observations.get(time)) {
-//                                            ObservableList<PhenomenonValue> chartData = observationsChartData.get(sm.getName());
-//
-//                                            if (chartData.size() == 0) {
-//                                                chartData.add(new PhenomenonValue(time, configurationSpace));
-//                                            } else if (chartData.get(chartData.size() - 1).getTime() != time) {
-//                                                chartData.add(new PhenomenonValue(time, configurationSpace));
-//                                            }
-//
-//                                        }
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    });
-
-
-
-
-
-
-//                    }
-
-//                    SensorModel abilityName = (SensorModel) abilityChooser.getValue();
-//
-//                    if(abilityName == null) {
-//                        return;
-//                    }
-//
-//                    Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
-//
-//                    if(observations != null) {
-//
-//                        List<PhenomenonValue> observationsList = new ArrayList<>();
-//
-//                        for(Double time : observations.keySet()) {
-//                            for(ConfigurationSpace configurationSpace : observations.get(time)) {
-//                                chartData.add(new XYChart.Data(time,Double.parseDouble(configurationSpace.getStringValue())));
-//                            }
-//                        }
-//                    }
                     break;
             }
         } catch (Exception e) {
@@ -289,19 +252,25 @@ public class SensorConsoleController implements Initializable {
             return;
         }
 
-        Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
 
-        Platform.runLater(() -> {
+
+//        Platform.runLater(() -> {
+            Map<Double, List<ConfigurationSpace>> observations = nodeView.getNode().getObservations(abilityName.getConfigurationSpaceClass() , 50);
             if(observations != null) {
 
                 List<PhenomenonValue> observationsList = new ArrayList<>();
 
-                for(Double time : observations.keySet()) {
+//                Map<Double, List<ConfigurationSpace>> observationsCopy = new HashMap<>(observations);
+                Iterator<Double> it = observations.keySet().iterator();
+
+                while (it.hasNext()) {
+                    Double time = it.next();
                     for(ConfigurationSpace configurationSpace : observations.get(time)) {
                         observationsList.add(new PhenomenonValue(time , configurationSpace));
 //                        chartData.add(new XYChart.Data(time,Double.parseDouble(configurationSpace.getStringValue())));
                     }
                 }
+
                 observationsList.sort(new PhenomenonValue.DescTimeComparator());
                 List<PhenomenonValue> observationsSublist;
                 if(observationsList.size() > 50) {
@@ -309,11 +278,12 @@ public class SensorConsoleController implements Initializable {
                 } else {
                     observationsSublist = observationsList;
                 }
-
-                observationsData.clear();
-                observationsData.addAll(observationsSublist);
+                Platform.runLater(() -> {
+                    observationsData.clear();
+                    observationsData.addAll(observationsSublist);
+                });
             }
-        });
+//        });
     }
 
     private void actualizePositionLabel() {
@@ -331,82 +301,33 @@ public class SensorConsoleController implements Initializable {
             return;
         }
 
-        Stage stage = new Stage();
-        stage.setTitle(abilityName.getName() + " observations");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/DataChart.fxml"));
 
-        Pane chartPane = new Pane();
-        chartPane.resize(800, 600);
-        HBox hBox = new HBox();
-        chartPane.getChildren().add(hBox);
+        try {
+            Parent parent = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.NONE);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setScene(new Scene(parent));
+            DataChartController controller = fxmlLoader.getController();
+            controller.setData(abilityName, nodeView);
+            controller.start();
+            stage.show();
 
-        //defining the axes
-        final NumberAxis xAxis = new NumberAxis();
-        final NumberAxis yAxis = new NumberAxis();
-        xAxis.setLabel("Time (s)");
-        //creating the chart
-        final LineChart<Number, Number> lineChart =
-                    new LineChart<Number, Number>(xAxis, yAxis);
+            stage.setTitle(nodeView.getNode().getName() + " " + abilityName.getName());
 
-        lineChart.setTitle(((SensorModel) this.abilityChooser.getValue()).getName());
-        //defining a series
-        XYChart.Series<Number , Number> series = new XYChart.Series<>();
-        series.setName(((SensorModel) this.abilityChooser.getValue()).unitName());
-
-
-        Button refreshButton = new Button("Refresh chart");
-
-        refreshButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                refreshPlotData(series);
-            }
-        });
-
-        hBox.getChildren().add(refreshButton);
-        hBox.getChildren().add(lineChart);
-        lineChart.resize(800, 600);
-        Scene scene = new Scene(chartPane, 800, 600);
-        lineChart.getData().add(series);
+            stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+                public void handle(WindowEvent we) {
+                    controller.stop();
+                }
+            });
 
 
-        refreshPlotData(series);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    private void refreshPlotData(XYChart.Series<Number, Number> series) {
-        SensorModel abilityName = (SensorModel) abilityChooser.getValue();
-
-        if(abilityName == null) {
-            return;
+        } catch (IOException e) {
+            LOG.error(e.getMessage() , e);
         }
 
-        Platform.runLater(() -> {
-
-            Map<Double, List<ConfigurationSpace>> sourceObservations = nodeView.getNode().getObservations().get(abilityName.getConfigurationSpaceClass());
-
-            Map<Double, List<ConfigurationSpace>> observations = new HashMap<>(sourceObservations);
-
-            if(observations != null) {
-
-                for (Double time : observations.keySet()) {
-                    for (ConfigurationSpace configurationSpace : observations.get(time)) {
-
-                            if (series.getData().size() == 0) {
-                                series.getData().add(new XYChart.Data(time ,Double.parseDouble(configurationSpace.getStringValue())));
-                            } else if (!(series.getData().get(series.getData().size()-1)).getXValue().equals(time)) {
-                                series.getData().add(new XYChart.Data(time ,Double.parseDouble(configurationSpace.getStringValue())));
-                            }
-
-                    }
-                }
-
-            }
-        });
-
-
     }
-
 
     private enum CommType {Incoming, Outgoing}
 

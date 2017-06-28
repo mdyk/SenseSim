@@ -13,6 +13,7 @@ import org.mdyk.netsim.mathModel.device.IDeviceModel;
 import org.mdyk.netsim.view.controller.SensorConsoleController;
 import org.openstreetmap.gui.jmapviewer.JMapViewer;
 import org.openstreetmap.gui.jmapviewer.MapMarkerDot;
+import webservices.Platform;
 
 import java.awt.*;
 import java.io.IOException;
@@ -63,6 +64,7 @@ public class OSMNodeView extends GeoNodeView<JMapViewer> {
 
     @Override
     public void relocate(GeoPosition newPosition) {
+
         mapMaker.setLat(newPosition.getLatitude());
         mapMaker.setLon(newPosition.getLongitude());
         nodeContainer.repaint();

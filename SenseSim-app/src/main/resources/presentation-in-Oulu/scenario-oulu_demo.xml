@@ -1,0 +1,1207 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<scenario id="1" >
+
+    <scenarioOntology>
+        <OntologyFile>CombatTriageOntology.owl</OntologyFile>
+        <OntologyIRI>http://www.semanticweb.org/mariuszchmielewski/ontologies/2016/6/untitled-ontology-9</OntologyIRI>
+    </scenarioOntology>
+
+    <scenarioBoundaries>
+        <checkpoint>
+            <latitude>65.020432</latitude>
+            <longitude>25.484443</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>65.020432</latitude>
+            <longitude>25.484443</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>65.020432</latitude>
+            <longitude>25.484443</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>65.020432</latitude>
+            <longitude>25.484443</longitude>
+        </checkpoint>
+    </scenarioBoundaries>
+
+    <nodes>
+
+        <node id="1" name="platoon-commander">
+             <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilitiesCommander.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="Tactical">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>1</connectedDeviceId>
+                            <connectedDeviceId>11</connectedDeviceId>
+                            <connectedDeviceId>21</connectedDeviceId>
+                            <connectedDeviceId>31</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors/>
+            <startPosition>
+                <latitude>65.020432</latitude>
+                <longitude>25.484443</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+
+        <node id="11" name="Squad 1 Leader">
+              <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilitiesClusterHead.groovy</programFile>
+                <programFile>capabilititesClusterHead-monitoring.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="Tactical">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>1</connectedDeviceId>
+                            <connectedDeviceId>11</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019735</latitude>
+                <longitude>25.486164</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019735</latitude>
+                    <longitude>25.486164</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019075</latitude>
+                    <longitude>25.483373</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017956</latitude>
+                    <longitude>25.481785</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017175</latitude>
+                    <longitude>25.484580</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.015880</latitude>
+                    <longitude>25.489874</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020565</latitude>
+                    <longitude>25.495813</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020004</latitude>
+                    <longitude>25.487836</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="12" name="Squad 1 Rifleman #1">
+          <speed>4</speed>
+        <radioRange>80</radioRange>
+        <radioBandwidth>5000</radioBandwidth>
+        <sesnorImplType>GeoSensorNode</sesnorImplType>
+        <routingAlgType>FloodingRouting</routingAlgType>
+        <middleware>
+            <middlewareClass>string</middlewareClass>
+            <!--Zero or more repetitions:-->
+             <programFile>capabilititesSoldier.groovy</programFile>
+        </middleware>
+        <sensorAbilities>
+            <ability>TEMPERATURE</ability>
+            <ability>PHOTO</ability>
+        </sensorAbilities>
+        <communicationInterfaces>
+            <communicationInterface id="1" name="WiFi-Direct">
+                <radioRange>80</radioRange>
+                <radioInputBandwidth>5000</radioInputBandwidth>
+                <radioOutputBandwidth>5000</radioOutputBandwidth>
+                <routingAlgType>FloodingRouting</routingAlgType>
+                <topologyType>
+                    <adhocM2M/>
+                </topologyType>
+            </communicationInterface>
+        </communicationInterfaces>
+        <sensors>
+            <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+            <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+            <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+            <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+        </sensors>
+        <startPosition>
+            <latitude>65.019632</latitude>
+            <longitude>25.485605</longitude>
+        </startPosition>
+        <route>
+            <checkpoint>
+                <latitude>65.019632</latitude>
+                <longitude>25.485605</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.019075</latitude>
+                <longitude>25.483373</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.017956</latitude>
+                <longitude>25.481785</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.017175</latitude>
+                <longitude>25.484580</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.015880</latitude>
+                <longitude>25.489874</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.020565</latitude>
+                <longitude>25.495813</longitude>
+            </checkpoint>
+            <checkpoint>
+                <latitude>65.020004</latitude>
+                <longitude>25.487836</longitude>
+            </checkpoint>
+        </route>
+    </node>
+        <node id="13" name="Squad 1 Machine Gunner">
+              <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                 <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019932</latitude>
+                <longitude>25.487030</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019932</latitude>
+                    <longitude>25.487030</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019075</latitude>
+                    <longitude>25.483373</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017956</latitude>
+                    <longitude>25.481785</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017175</latitude>
+                    <longitude>25.484580</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.015880</latitude>
+                    <longitude>25.489874</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020565</latitude>
+                    <longitude>25.495813</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020004</latitude>
+                    <longitude>25.487836</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="14" name="Squad 1 Grenadier">
+              <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                 <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019496</latitude>
+                <longitude>25.485379</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019496</latitude>
+                    <longitude>25.485379</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019038</latitude>
+                    <longitude>25.483469</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017931</latitude>
+                    <longitude>25.481908</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017248</latitude>
+                    <longitude>25.484655</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.016080</latitude>
+                    <longitude>25.489917</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020592</latitude>
+                    <longitude>25.496113</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019922</latitude>
+                    <longitude>25.487879</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="15" name="Squad 1 Grenadier Support">
+              <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                 <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019613</latitude>
+                <longitude>25.485969</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019613</latitude>
+                    <longitude>25.485969</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019038</latitude>
+                    <longitude>25.483469</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017931</latitude>
+                    <longitude>25.481908</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017248</latitude>
+                    <longitude>25.484655</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.016080</latitude>
+                    <longitude>25.489917</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020592</latitude>
+                    <longitude>25.496113</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019922</latitude>
+                    <longitude>25.487879</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="16" name="Squad 1 Rifleman #2">
+              <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                 <programFile>capabilititesSoldier.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.019777</latitude>
+                <longitude>25.486726</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.019777</latitude>
+                    <longitude>25.486726</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019038</latitude>
+                    <longitude>25.483469</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017931</latitude>
+                    <longitude>25.481908</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.017248</latitude>
+                    <longitude>25.484655</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.016080</latitude>
+                    <longitude>25.489917</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.020592</latitude>
+                    <longitude>25.496113</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019922</latitude>
+                    <longitude>25.487879</longitude>
+                </checkpoint>
+            </route>
+        </node>
+
+        <node id="21" name="Squad 2 Leader">
+            <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilitiesClusterHead.groovy</programFile>
+                <programFile>capabilititesClusterHead-monitoring.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <communicationInterface id="2" name="Tactical">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <fixedTopology>
+                            <connectedDeviceId>1</connectedDeviceId>
+                            <connectedDeviceId>21</connectedDeviceId>
+                        </fixedTopology>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.021281</latitude>
+                <longitude>25.483362</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.021281</latitude>
+                    <longitude>25.483362</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019758</latitude>
+                    <longitude>25.480181</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.021281</latitude>
+                    <longitude>25.483362</longitude>
+                </checkpoint>
+            </route>
+
+        </node>
+        <node id="22" name="Squad 2 Rifleman #1">
+            <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilititesSoldier-team2.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.020249</latitude>
+                <longitude>25.484899</longitude>
+            </startPosition>
+            <route>
+
+            </route>
+        </node>
+        <node id="23" name="Squad 2 Machine Gunner">
+            <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilititesSoldier-team2.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.021172</latitude>
+                <longitude>25.483759</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.021172</latitude>
+                    <longitude>25.483759</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019758</latitude>
+                    <longitude>25.480181</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.021172</latitude>
+                    <longitude>25.483759</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="24" name="Squad 2 Rifleman #2">
+            <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilititesSoldier-team2.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.020190</latitude>
+                <longitude>25.484668</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+        <node id="25" name="Squad 2 Grenadier">
+            <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilititesSoldier-team2.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.021141</latitude>
+                <longitude>25.482568</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.021141</latitude>
+                    <longitude>25.482568</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019758</latitude>
+                    <longitude>25.480181</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.021141</latitude>
+                    <longitude>25.482568</longitude>
+                </checkpoint>
+            </route>
+        </node>
+        <node id="26" name="Squad 2 Grenadier Support">
+            <speed>4</speed>
+            <radioRange>80</radioRange>
+            <radioBandwidth>5000</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <programFile>capabilititesSoldier-team2.groovy</programFile>
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>80</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.saturation.SaturationSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.ecg.EcgSensor</sensorClass>
+                <sensorClass>org.mdyk.netsim.logic.sensor.rfid.RfidSensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>65.021014</latitude>
+                <longitude>25.483051</longitude>
+            </startPosition>
+            <route>
+                <checkpoint>
+                    <latitude>65.021014</latitude>
+                    <longitude>25.483051</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.019758</latitude>
+                    <longitude>25.480181</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>65.021014</latitude>
+                    <longitude>25.483051</longitude>
+                </checkpoint>
+            </route>
+        </node>
+
+
+    </nodes>
+    <phenomena>
+
+        <!--Soldier 11-->
+
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="11"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="11"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman-riot.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="11"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <!--End Soldier 11-->
+
+        <!--Soldier 12-->
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="12"/>
+            <phenomenonValueSet startTime="1" endTime="100" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-dead.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="12"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman-riot.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="12"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <!--End Soldier 12-->
+
+        <!--Soldier 13-->
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="13"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="13"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman-machinegunner.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="13"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <!--End Soldier 13-->
+
+        <!--Soldier 14-->
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="14"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="14"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman-granadier.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="14"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample-exhausted.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <!--End Soldier 14-->
+
+        <!--Soldier 15-->
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="15"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="15"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="15"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample-exhausted.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <!--End Soldier 15-->
+
+        <!--Soldier 16-->
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="16"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="16"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman-riot.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="16"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <!--End Soldier 16-->
+
+        <!--Soldier 21-->
+
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="21"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="21"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="21"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <!--End Soldier 21-->
+
+        <!--Soldier 22-->
+
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="22"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min-critical.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="22"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="22"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <!--End Soldier 22-->
+
+        <!--Soldier 23-->
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="23"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="23"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman-machinegunner.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="23"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <!--End Soldier 23-->
+
+        <!--Soldier 24-->
+
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="24"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min-critical.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="24"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="24"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <!--End Soldier 24-->
+
+        <!--Soldier 25-->
+
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="25"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="25"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-rifleman-granadier.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="25"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <!--End Soldier 25-->
+
+        <!--Soldier 26-->
+
+        <phenomenon name="string" phenomenonType="observer">
+            <attachedTo nodeId="26"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <csvFile>
+                    <csvFile>temp-ok.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="ECG" configurationClass="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.ecg.EcgConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>ecg-ok-10-min-critical.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+        <phenomenon name="rfid" phenomenonType="observer">
+            <attachedTo nodeId="26"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.rfid.RfidConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>rfid-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <phenomenon name="SaO2" phenomenonType="observer">
+            <attachedTo nodeId="26"/>
+            <phenomenonValueSet startTime="1" endTime="INFINITE" abilityName="RFID" configurationClass="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.so2.SaturationConfigurationSpaceFactory">
+                <csvFile>
+                    <csvFile>so2-sample.csv</csvFile>
+                </csvFile>
+            </phenomenonValueSet>
+        </phenomenon>
+
+        <!--End Soldier 26 -->
+
+    </phenomena>
+</scenario>

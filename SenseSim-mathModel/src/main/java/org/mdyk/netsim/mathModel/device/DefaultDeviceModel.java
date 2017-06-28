@@ -1,5 +1,7 @@
 package org.mdyk.netsim.mathModel.device;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.mathModel.ability.AbilityType;
@@ -30,7 +32,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     /**
      * Holds device observations
      */
-    protected Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observationsFromObserver;
+    protected final Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observationsFromObserver;
     @Deprecated
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
@@ -49,7 +51,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.abilities = abilities;
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
-        observationsFromObserver = new HashMap<>();
+        observationsFromObserver = Collections.synchronizedMap(new HashMap<>()) ;
     }
 
     @Deprecated
@@ -64,7 +66,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
         this.sensors = sensors;
-        observationsFromObserver = new HashMap<>();
+        observationsFromObserver = Collections.synchronizedMap(new HashMap<>()) ;
     }
 
     protected DefaultDeviceModel(int id, String name, P position, int radioRange , int bandwidth ,
@@ -80,7 +82,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.observations = new HashMap<>();
         this.messagesMap = new HashMap<>();
         this.sensors = sensors;
-        this.observationsFromObserver = new HashMap<>();
+        this.observationsFromObserver = Collections.synchronizedMap(new HashMap<>()) ;
         this.communicationInterfaces = communicationInterfaces;
     }
 
@@ -146,8 +148,36 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
 
 
     @Override
-    public Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> getObservations() {
-        return observationsFromObserver;
+    public Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> getObservations() {
+        Map<Class<? extends ConfigurationSpace>, Map<Double, List<ConfigurationSpace>>> observations;
+
+           observations = new HashMap<>(observationsFromObserver);
+        
+        return observations;
+    }
+
+    @Override
+    public Map<Double, List<ConfigurationSpace>> getObservations(Class<? extends ConfigurationSpace> configurationSpace, int samplesCount) {
+
+        TreeMap<Double, List<ConfigurationSpace>> observations = new TreeMap<>();
+
+        if(observationsFromObserver.containsKey(configurationSpace)) {
+
+            if(observationsFromObserver.get(configurationSpace).keySet().size() >= samplesCount) {
+
+               List<Double> keys = Lists.newArrayList(Iterables.limit(observationsFromObserver.get(configurationSpace).descendingMap().keySet(), samplesCount));
+
+               for(Double key : keys) {
+                    observations.put(key , observationsFromObserver.get(configurationSpace).get(key));
+               }
+
+            } else {
+                observations = new TreeMap<>(observationsFromObserver.get(configurationSpace));
+            }
+
+        }
+
+        return observations;
     }
 
     @Override
@@ -177,30 +207,26 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     @Override
     public void addObservation(Class<? extends ConfigurationSpace> configurationSpaceClass, Double time, ConfigurationSpace value) {
         LOG.debug("Adding observation [confClass=" + configurationSpaceClass.getName() + " time=" + time + " , value=" + value + "]");
+            List<ConfigurationSpace> observationsAtTime;
 
-        List<ConfigurationSpace> observationsAtTime;
+            if (value == null) {
+                LOG.trace("[device " + this.getID() + "] No value at time + " + time);
+                return;
+            }
 
-        if(value == null ) {
-            LOG.trace("[device "+ this.getID() +"] No value at time + " + time);
-            return;
-        }
-
-        if(!observationsFromObserver.containsKey(configurationSpaceClass)) {
-            observationsAtTime = new ArrayList<>();
-            observationsAtTime.add(value);
-            TreeMap<Double , List<ConfigurationSpace>> valueMap = new TreeMap<>();
-            valueMap.put(time , observationsAtTime);
-            observationsFromObserver.put(configurationSpaceClass, valueMap);
-        }
-        else if(!observationsFromObserver.get(configurationSpaceClass).containsKey(time)) {
-            observationsAtTime = new ArrayList<>();
-            observationsAtTime.add(value);
-            observationsFromObserver.get(configurationSpaceClass).put(time , observationsAtTime);
-        }
-        else {
-            observationsFromObserver.get(configurationSpaceClass).get(time).add(value);
-        }
-
+            if (!observationsFromObserver.containsKey(configurationSpaceClass)) {
+                observationsAtTime = Collections.synchronizedList(new ArrayList<>());
+                observationsAtTime.add(value);
+                TreeMap<Double, List<ConfigurationSpace>> valueMap = new TreeMap<>();
+                valueMap.put(time, observationsAtTime);
+                observationsFromObserver.put(configurationSpaceClass, valueMap);
+            } else if (!observationsFromObserver.get(configurationSpaceClass).containsKey(time)) {
+                observationsAtTime = new ArrayList<>();
+                observationsAtTime.add(value);
+                observationsFromObserver.get(configurationSpaceClass).put(time, observationsAtTime);
+            } else {
+                observationsFromObserver.get(configurationSpaceClass).get(time).add(value);
+            }
     }
 
     @Override
