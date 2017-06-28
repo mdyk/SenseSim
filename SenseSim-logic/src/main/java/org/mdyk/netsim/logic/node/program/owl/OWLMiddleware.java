@@ -69,7 +69,7 @@ public class OWLMiddleware extends Thread implements Middleware {
     private void populateIndyviduals() {
 
         // Dodanie do ontologii informacji o obserwowanym żołnierzu
-        OWLClass soldierClass = df.getOWLClass(IRI.create(ontologyIRI,"#BiologicalObject"));
+        OWLClass soldierClass = df.getOWLClass(IRI.create(ontologyIRI,"#BiologicalObjNect"));
         soldier = df.getOWLNamedIndividual(IRI.create(ontologyIRI , "#"+soldierName));
         OWLClassAssertionAxiom soldierClassAssertion = df.getOWLClassAssertionAxiom(soldierClass , soldier);
         manager.addAxiom(ontology , soldierClassAssertion);
@@ -193,7 +193,6 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                     String queryString = "SELECT distinct ?ind \n"
                             + "WHERE { ?ind rdf:type ont:" + needInfon.getRelationParam().getRelationType() + " }\n";
-                    ;
 
                     Query q = queryParser.parse(prefix + queryString, reasoner.getKB());
                     QueryResult qr = QueryEngine.exec(q);
@@ -234,7 +233,6 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                     String queryString = "SELECT distinct ?ind \n"
                             + "WHERE { ?ind rdf:type ont:" + needInfon.getRelationParam().getRelationType() + " }\n";
-                    ;
 
                     Query q = queryParser.parse(prefix + queryString, reasoner.getKB());
                     QueryResult qr = QueryEngine.exec(q);
