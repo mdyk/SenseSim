@@ -140,11 +140,15 @@ public class XMLScenario implements Scenario {
                             owlMiddleware.loadOntology(ontologyFile, scenario.getScenarioOntology().getOntologyIRI());
                         }
 
-                        for(String programFilePath : nodeType.getMiddleware().getProgramFile()) {
-                            String fullPath = scenarioFile.getParent() + "/" + programFilePath;
-                            String code = FileUtils.readFileToString(new File(fullPath));
-                            middleware.loadProgram(code);
+                        if(nodeType.getMiddleware() != null && nodeType.getMiddleware().getProgramFile() != null ) {
+                            for(String programFilePath : nodeType.getMiddleware().getProgramFile()) {
+                                String fullPath = scenarioFile.getParent() + "/" + programFilePath;
+                                String code = FileUtils.readFileToString(new File(fullPath));
+                                middleware.loadProgram(code);
+                            }
                         }
+
+
 
                         nodesList.add(node);
                         break;

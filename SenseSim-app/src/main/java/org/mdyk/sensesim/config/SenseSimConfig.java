@@ -25,8 +25,6 @@ import org.mdyk.sensesim.simulation.engine.dissim.nodes.DisSimSensorsLogicFactor
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.DisSimPhenomenaFactory;
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
 import org.mdyk.sensesim.simulation.engine.dissim.plugins.RealDevicePlugin;
-import pl.edu.wat.integrator.MyResource;
-import sensesim.integration.mcop.MCopPlugin;
 import sensesim.integration.mcop.MCopPluginFactory;
 
 
@@ -39,15 +37,15 @@ public class SenseSimConfig extends AbstractModule {
         bind(NetworkManager.class);
         install(new FactoryModuleBuilder().build(ScenarioFactory.class));
 
-        //TODO zebranie w jedną konfigurację dla silnika symulacyjnego
+//      TODO zebranie w jedną konfigurację dla silnika symulacyjnego
         bind(SimEngine.class).to(DisSimEngine.class);
         bind(DeviceLogicFactory.class).to(DisSimSensorsLogicFactory.class);
         bind(SimEntityFactory.class).to(DisSimEntityFactory.class);
         bind(APIFactory.class).to(DisSimAPIFactory.class);
         bind(SensorFactory.class).to(DefaultSensorFactory.class);
         bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
-//        bind(MiddlewareFactory.class).to(OWLMiddlewareFactory.class);
-        bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
+        bind(MiddlewareFactory.class).to(OWLMiddlewareFactory.class);
+//        bind(MiddlewareFactory.class).to(GroovyMiddlewareFactory.class);
         bind(DeviceStatisticsFactory.class).to(DefaultStatisticsFactory.class);
         bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
         bind(IRealDevicePlugin.class).to(RealDevicePlugin.class);

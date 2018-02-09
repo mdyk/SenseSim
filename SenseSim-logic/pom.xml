@@ -146,6 +146,11 @@
             <groupId>net.sourceforge.owlapi</groupId>
             <artifactId>pellet-core-ignazio1977</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.mdyk</groupId>
+            <artifactId>SesnseSim-integration</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
