@@ -46,7 +46,8 @@ import sensesim.integration.mcop.MCopPluginFactory;
 public class DisSimEngine implements SimEngine, Runnable {
 
     private static final Logger LOG = Logger.getLogger(DisSimEngine.class);
-
+    @Inject
+    MCopPluginFactory mCopPluginFactory;
     @Inject
     private DevicesFactory devicesFactory;
     @Inject
@@ -55,9 +56,6 @@ public class DisSimEngine implements SimEngine, Runnable {
     private ScenarioFactory scenarioFactory;
     @Inject
     private Environment environment;
-    @Inject
-    MCopPluginFactory mCopPluginFactory;
-
     private File scenarioXML;
 
     private List<Device> deviceList = new ArrayList<>();
@@ -86,6 +84,7 @@ public class DisSimEngine implements SimEngine, Runnable {
             PhenomenonSimEntity phenomenonSimEntity = new PhenomenonSimEntity(model);
             phenomenaList.add(phenomenonSimEntity);
             environment.addPhenomenon(phenomenonSimEntity);
+            environment.startEvent(model);
 
             //FIXME SHIT CODE !!!!!!
             if(model.getAttachedDevice() != null) {
@@ -97,6 +96,7 @@ public class DisSimEngine implements SimEngine, Runnable {
                 }
             }
         }
+
 
         new Thread(() -> {
             mCopPluginFactory.getMCopPlugin().start();

@@ -36,14 +36,15 @@ public class Infon {
         // TODO do poprawy sposob rozpoznawania parametrow
         if(relation.contains("?")) {
             isRelationParam = true;
+            relation = relation.replace("?","");
+            relation = relation.replace(" ","");
+
+            String[] splittedRelation = relation.split(":");
+
+            relationParam = new RelationParam(splittedRelation[0] , splittedRelation[1]);
         }
 
-        relation = relation.replace("?","");
-        relation = relation.replace(" ","");
 
-        String[] splittedRelation = relation.split(":");
-
-        relationParam = new RelationParam(splittedRelation[0] , splittedRelation[1]);
 
 
         this.polarity = split[split.length-1];

@@ -23,6 +23,8 @@ import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
+import org.mdyk.netsim.logic.util.GeoPosition;
+import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.semanticweb.owlapi.apibinding.OWLManager;
@@ -61,6 +63,7 @@ public class OWLMiddleware extends Thread implements Middleware {
     private OWLNamedIndividual soldier;
     private String deviceName;
     private OWLNamedIndividual device;
+    private Map<Integer , String> communicationInterfaces;
 
     private HashMap <Integer , Boolean> resendResponse = new HashMap<>();
 
@@ -398,7 +401,6 @@ public class OWLMiddleware extends Thread implements Middleware {
                 if(informationNeed.getKey()!=null && informationNeed.getKey().equals(nodeId)){
                     LOG.debug(informationNeed.getValue());
                     this.informationNeeds.put(informationNeed.getValue().hashCode() , new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue()));
-
                 }
                 resendInformationNeed(informationNeed);
                 break;
@@ -407,13 +409,22 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     private void resendInformationNeed(Pair<Integer, String> informationNeed) {
         LOG.trace(">> resendInformationNeed");
-        List<Integer> neighbours = deviceAPI.api_scanForNeighbors();
+
+        communicationInterfaces = deviceAPI.api_listCommunicationInterfaces();
+
+        Map<Integer, List<Integer>> neighboursMap = new HashMap<>();
+
+        for(Integer commInt : communicationInterfaces.keySet()) {
+            List<Integer> neighbours = new ArrayList<>();
+            neighbours.addAll(deviceAPI.api_scanForNeighbors(commInt));
+            neighboursMap.put(commInt, neighbours);
+        }
 
         InformationNeedContent informationNeedContent = new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue());
 
-        for (Integer neighbour : neighbours) {
-            deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, informationNeedContent , informationNeedContent.getInformationNeedString().getBytes().length );
-        }
+//        for (Integer neighbour : neighbours) {
+//            deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, informationNeedContent , informationNeedContent.getInformationNeedString().getBytes().length );
+//        }
         LOG.trace("<< resendInformationNeed");
     }
 
@@ -427,6 +438,49 @@ public class OWLMiddleware extends Thread implements Middleware {
             deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, responseContent , responseContent.getContent().getBytes().length );
         }
         LOG.trace("<< resendInformationNeedResponse");
+    }
+
+    /**
+     * Verifies which known devices are within the area of the information need
+     * @param informationNeedContent - content of the information need basing on which the device should decide whether
+     * @return Map<Integer, List<Integer>> - map which keys represent id of the communication interface and values are lists of devices (ids)
+     *          which are in the area of the Information Need.
+     */
+    public Map<Integer, List<Integer>> checkKnownDevicesINArea(Map<Integer, List<Integer>> knownDevices, InformationNeedContent informationNeedContent) {
+
+        String spatialLocation = informationNeedContent.getInfon().getSpatialLocation();
+
+        // TODO weryfikacja w jakiej formie jest lokalizacja. MOże być w postaci punktow lat lon lub konkretnego obiektu/nazwanego obszaru
+
+        // Przypadek kiedy są to punkty lat/lon
+        // (52.231073#21.007506);(52.230797#21.008139);(52.230488#21.007726);(52.230554;21.007243);(52.23079#21.007115)
+
+        List<GeoPosition> geoPosition =  parseLatLonLocation(spatialLocation);
+
+        Functions.isPointInRegion((GeoPosition) this.deviceAPI.api_getPosition(), geoPosition);
+
+        return null;
+    }
+
+    public List<GeoPosition> parseLatLonLocation(String spatialLocationString) {
+
+        List<GeoPosition> geoPositions = new ArrayList<>();
+
+        // TODO weryfikacja formatu
+        String[] pointsStrings = spatialLocationString.split(";");
+
+        for(String pointString : pointsStrings) {
+            pointString = pointString.replace("(","").replace(")","");
+            String[] point = pointString.split("#");
+
+            geoPositions.add(new GeoPosition(Double.parseDouble(point[0]),Double.parseDouble(point[1])));
+        }
+
+        return geoPositions;
+    }
+
+    public void askForPosition() {
+
     }
 
     @Override
