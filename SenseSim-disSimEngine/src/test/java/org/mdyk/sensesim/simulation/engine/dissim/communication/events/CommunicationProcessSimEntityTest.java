@@ -129,6 +129,10 @@ public class CommunicationProcessSimEntityTest {
             return -1;
         }
 
+        public int getCommunicationInterface(){
+            return 1;
+        }
+
     }
 
 

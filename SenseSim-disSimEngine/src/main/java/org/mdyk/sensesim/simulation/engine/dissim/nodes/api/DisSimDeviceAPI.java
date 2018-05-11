@@ -83,7 +83,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     @Override
     @SuppressWarnings("unchecked")
     public void api_sendMessage(long messageId, int originSource, int originDest, int communicationInterfaceId, Object content, Integer size) {
-        Message message = new SimpleMessage(messageId, originSource, originDest , content, size);
+        Message message = new SimpleMessage(messageId, originSource, originDest, communicationInterfaceId , content, size);
         List<DeviceNode> neighbours =  ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(communicationInterfaceId, deviceSimEntity.getDeviceLogic());
         List<DeviceNode<GeoPosition>> nodesToHop = deviceSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(deviceSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
 

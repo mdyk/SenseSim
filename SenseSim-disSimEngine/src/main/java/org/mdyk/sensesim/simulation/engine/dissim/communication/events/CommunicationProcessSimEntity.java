@@ -102,7 +102,7 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
 
 
     @Override
-    public int getCommunicationIntterfaceId() {
-        return commProcess.getCommunicationIntterfaceId();
+    public int getCommunicationInterfaceId() {
+        return commProcess.getCommunicationInterfaceId();
     }
 }

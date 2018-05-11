@@ -16,10 +16,10 @@ import java.util.List;
 public class CommunicationActivity extends BasicSimAction<CommunicationProcessSimEntity , Object> {
 
     private static final Logger LOG = Logger.getLogger(CommunicationActivity.class);
+    private static  final double duration = 0.1;
     private DeviceNode sender;
     private DeviceNode receiver;
     private double period;
-    private static  final double duration = 0.1;
 
     public CommunicationActivity(CommunicationProcessSimEntity entity, double period) throws SimControlException {
         super(entity,0.0 , period, duration);
@@ -38,7 +38,8 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
     protected void transitionOnFinish() throws SimControlException {
         LOG.trace(">> EndCommunicationActivity.transition() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
         // Checking if receiver is still a neighbour for sender
-        int communicationInterfaceId = getSimEntity().getCommunicationIntterfaceId();
+        int communicationInterfaceId = getSimEntity().getCommunicationInterfaceId();
+
         List<DeviceNode> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(communicationInterfaceId,sender);
 
         if(getSimEntity().getCommunicationStatus(simTime()).equals(CommunicationStatus.SUCCESS)) {

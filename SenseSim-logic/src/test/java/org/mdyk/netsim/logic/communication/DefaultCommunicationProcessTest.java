@@ -166,6 +166,8 @@ public class DefaultCommunicationProcessTest {
         public int getMessageDest() {
             return -1;
         }
+
+        public int getCommunicationInterface() {return 1;}
     }
 
 }

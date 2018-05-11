@@ -12,6 +12,7 @@ import com.clarkparsia.pellet.sparqldl.parser.QueryParser;
 import com.google.common.eventbus.Subscribe;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
+import org.json.JSONObject;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventType;
@@ -22,8 +23,14 @@ import org.mdyk.netsim.logic.infon.message.ResponseForNeedContent;
 import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
+import org.mdyk.netsim.logic.node.program.owl.messages.InformationNeedMessage;
+import org.mdyk.netsim.logic.node.program.owl.messages.MessageParser;
+import org.mdyk.netsim.logic.node.program.owl.messages.TopologyDiscoveryMessage;
+import org.mdyk.netsim.logic.node.program.owl.messages.TopologyDiscoveryResponseMessage;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
+import org.mdyk.netsim.logic.util.Position;
+import org.mdyk.netsim.logic.util.PositionParser;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
@@ -64,6 +71,7 @@ public class OWLMiddleware extends Thread implements Middleware {
     private String deviceName;
     private OWLNamedIndividual device;
     private Map<Integer , String> communicationInterfaces;
+    private Map<Integer, List<Neighbour>> neighbours = new HashMap<>();
 
     private HashMap <Integer , Boolean> resendResponse = new HashMap<>();
 
@@ -133,43 +141,74 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         EventBusHolder.getEventBus().register(this);
 
+        communicationInterfaces = deviceAPI.api_listCommunicationInterfaces();
+
         manager = OWLManager.createOWLOntologyManager();
 
         deviceAPI.api_setOnMessageHandler(new Function<Message, Object>() {
             @Override
             public Object apply(Message message) {
 
+                // TODO wiadomosci przesyłane w postaci JSON lub cbor. Rozpoznanie na podstawie rodzaju akcji
                 Object messageContent = message.getMessageContent();
+                InformationNeedMessage inm = MessageParser.parseJSON(String.valueOf(messageContent));
 
-                if(messageContent instanceof InformationNeedContent){
-                    InformationNeedContent informationNeedContent = (InformationNeedContent) messageContent;
-                    if (!informationNeeds.containsKey(informationNeedContent.getInformationNeedString().hashCode())) {
-                        informationNeeds.put(informationNeedContent.getInformationNeedString().hashCode() , informationNeedContent);
-                        processInformationNeed(informationNeedContent.getInformationNeedString().hashCode());
-                    }
+                switch (inm.getMessageType()) {
+                    case TOPOLOGY_DISCOVERY_ASK:
+                        TopologyDiscoveryMessage tdm = (TopologyDiscoveryMessage) inm;
+                        responseForTopologyDiscovery(message.getCommunicationInterface(),tdm);
+                        break;
+
+                    case TOPOLOGY_DISCOVERY_RESP:
+                        TopologyDiscoveryResponseMessage tdmr = (TopologyDiscoveryResponseMessage) inm;
+                        handleTopologyDiscoveryResp(tdmr);
+                        break;
                 }
 
-                if(messageContent instanceof ResponseForNeedContent) {
-                    ResponseForNeedContent responseForNeedContent = (ResponseForNeedContent) messageContent;
-
-                    // if device has response for current need then append received need to it and resend
-                    if(informationNeedResponse.containsKey(responseForNeedContent.getNeedId())) {
-
-                        if(!responseForNeedContent.getContent().contains(informationNeedResponse.get(responseForNeedContent.getNeedId()))) {
-                            informationNeedResponse.put(responseForNeedContent.getNeedId(), informationNeedResponse.get(responseForNeedContent.getNeedId())+" & "+responseForNeedContent.getContent());
-                            resendResponse.put(responseForNeedContent.getNeedId(), true);
-                        }
-                    }
-
-                    if (responseForNeedContent.getAskingNodeId() == nodeId) {
-                        EventBusHolder.post(EventType.INFORMATION_NEED_FULLLFILLED , responseForNeedContent);
-                    }
-                }
+//                if(messageContent instanceof InformationNeedContent){
+//                    InformationNeedContent informationNeedContent = (InformationNeedContent) messageContent;
+//                    if (!informationNeeds.containsKey(informationNeedContent.getInformationNeedString().hashCode())) {
+//                        informationNeeds.put(informationNeedContent.getInformationNeedString().hashCode() , informationNeedContent);
+//                        processInformationNeed(informationNeedContent.getInformationNeedString().hashCode());
+//                    }
+//                }
+//
+//                if(messageContent instanceof ResponseForNeedContent) {
+//                    ResponseForNeedContent responseForNeedContent = (ResponseForNeedContent) messageContent;
+//
+//                    // if device has response for current need then append received need to it and resend
+//                    if(informationNeedResponse.containsKey(responseForNeedContent.getNeedId())) {
+//
+//                        if(!responseForNeedContent.getContent().contains(informationNeedResponse.get(responseForNeedContent.getNeedId()))) {
+//                            informationNeedResponse.put(responseForNeedContent.getNeedId(), informationNeedResponse.get(responseForNeedContent.getNeedId())+" & "+responseForNeedContent.getContent());
+//                            resendResponse.put(responseForNeedContent.getNeedId(), true);
+//                        }
+//                    }
+//
+//                    if (responseForNeedContent.getAskingNodeId() == nodeId) {
+//                        EventBusHolder.post(EventType.INFORMATION_NEED_FULLLFILLED , responseForNeedContent);
+//                    }
+//                }
 
                 return null;
             }
         });
         this.start();
+    }
+
+    public void responseForTopologyDiscovery(int commInterface, TopologyDiscoveryMessage tdm) {
+        LOG.trace(">> responseForTopologyDiscovery tdm = " + tdm.toString());
+        actualizeNeighbours();
+        GeoPosition position = (GeoPosition) deviceAPI.api_getPosition();
+        TopologyDiscoveryResponseMessage topologyDiscoveryResponseMessage = new TopologyDiscoveryResponseMessage(deviceAPI.api_getMyID() , position);
+        deviceAPI.api_sendMessage(nextMsgId(),nodeId , tdm.getSourceNode() , commInterface, topologyDiscoveryResponseMessage.toJSON(), topologyDiscoveryResponseMessage.getSize());
+        LOG.trace("<< responseForTopologyDiscovery");
+    }
+
+    public void handleTopologyDiscoveryResp(TopologyDiscoveryResponseMessage tdrm){
+        LOG.trace(">> handleTopologyDiscoveryResp tdrm = " + tdrm.toString());
+        this.updateNeighbourPosition(tdrm.getNodeId(),tdrm.getPosition());
+        LOG.trace("<< handleTopologyDiscoveryResp");
     }
 
     // FIXME potrzebny poważny refactor
@@ -401,26 +440,59 @@ public class OWLMiddleware extends Thread implements Middleware {
                 if(informationNeed.getKey()!=null && informationNeed.getKey().equals(nodeId)){
                     LOG.debug(informationNeed.getValue());
                     this.informationNeeds.put(informationNeed.getValue().hashCode() , new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue()));
+                    processInformationNeed(informationNeed);
+
                 }
-                resendInformationNeed(informationNeed);
+//                resendInformationNeed(informationNeed);
+
+
+
                 break;
         }
+    }
+
+    // TODO najlepiej gdyby na wejsciu był JSON
+    private void processInformationNeed(Pair<Integer, String> informationNeed) {
+        topologyDiscovery();
+        resendInformationNeed(informationNeed);
     }
 
     private void resendInformationNeed(Pair<Integer, String> informationNeed) {
         LOG.trace(">> resendInformationNeed");
 
-        communicationInterfaces = deviceAPI.api_listCommunicationInterfaces();
-
-        Map<Integer, List<Integer>> neighboursMap = new HashMap<>();
-
-        for(Integer commInt : communicationInterfaces.keySet()) {
-            List<Integer> neighbours = new ArrayList<>();
-            neighbours.addAll(deviceAPI.api_scanForNeighbors(commInt));
-            neighboursMap.put(commInt, neighbours);
-        }
+//        communicationInterfaces = deviceAPI.api_listCommunicationInterfaces();
+//
+//        Map<Integer, List<Integer>> neighboursMap = new HashMap<>();
+//
+//        for(Integer commInt : communicationInterfaces.keySet()) {
+//            List<Integer> neighbours = new ArrayList<>();
+//            neighbours.addAll(deviceAPI.api_scanForNeighbors(commInt));
+//            neighboursMap.put(commInt, neighbours);
+//        }
 
         InformationNeedContent informationNeedContent = new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue());
+        List<GeoPosition> needArea = PositionParser.parsePositionsList(informationNeedContent.getInfon().getSpatialLocation());
+
+        boolean sentToNeighbourInRange = false;
+        for(Integer commInt : this.neighbours.keySet()) {
+            for(Neighbour n : this.neighbours.get(commInt)) {
+                if (Functions.isPointInRegion(n.getPosition() , needArea) ) {
+                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedContent, informationNeedContent.getInformationNeedString().getBytes().length);
+                    sentToNeighbourInRange = true;
+                }
+            }
+        }
+
+        if(!sentToNeighbourInRange) {
+            for(Integer commInt : this.neighbours.keySet()) {
+                for(Neighbour n : this.neighbours.get(commInt)) {
+                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedContent, informationNeedContent.getInformationNeedString().getBytes().length);
+                }
+            }
+        }
+
+
+//        informationNeedContent.getInfon().getSpatialLocation()
 
 //        for (Integer neighbour : neighbours) {
 //            deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, informationNeedContent , informationNeedContent.getInformationNeedString().getBytes().length );
@@ -435,7 +507,7 @@ public class OWLMiddleware extends Thread implements Middleware {
         ResponseForNeedContent responseContent = new ResponseForNeedContent(informationNeedId, askingNode , informationNeedResponse);
 
         for (Integer neighbour : neighbours) {
-            deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, responseContent , responseContent.getContent().getBytes().length );
+            deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour,responseContent , responseContent.getContent().getBytes().length );
         }
         LOG.trace("<< resendInformationNeedResponse");
     }
@@ -459,6 +531,9 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         Functions.isPointInRegion((GeoPosition) this.deviceAPI.api_getPosition(), geoPosition);
 
+        topologyDiscovery();
+
+
         return null;
     }
 
@@ -479,8 +554,62 @@ public class OWLMiddleware extends Thread implements Middleware {
         return geoPositions;
     }
 
-    public void askForPosition() {
+    /**
+     * Zadanie związane z odkryciem topologii i położenia węzłów
+     */
+    public void topologyDiscovery() {
+        this.actualizeNeighbours();
+        sendPositionQuery();
 
+        boolean wait = true;
+
+        LOG.debug("--- Waiting for position from neighgours [simTime="+deviceSimEntity.getSimTime()+"]" );
+
+        while (wait) {
+            for(Integer commInt : neighbours.keySet()) {
+                for(Neighbour n : this.neighbours.get(commInt)) {
+                    wait &= (n.getPosition() == null);
+                }
+            }
+        }
+
+        LOG.debug("--- Position from all neighgours received [simTime="+deviceSimEntity.getSimTime()+"]");
+
+    }
+
+    private void sendPositionQuery() {
+        TopologyDiscoveryMessage tdm = new TopologyDiscoveryMessage(this.nodeId);
+
+        for(Integer commInt : communicationInterfaces.keySet()) {
+            for(Neighbour n : this.neighbours.get(commInt)) {
+                deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), n.getId(), commInt, tdm.toJSON(), tdm.getSize());
+            }
+        }
+
+    }
+
+    public void actualizeNeighbours() {
+        for(Integer commInt : communicationInterfaces.keySet()) {
+            List<Integer> neighboursIds = deviceAPI.api_scanForNeighbors(commInt);
+            List<Neighbour> neighbours = new ArrayList<>();
+
+            for(Integer id : neighboursIds) {
+                Neighbour neighbour = new Neighbour(id , null);
+                neighbours.add(neighbour);
+            }
+
+            this.neighbours.put(commInt, neighbours);
+        }
+    }
+
+    private void updateNeighbourPosition(int neighbourId, GeoPosition position) {
+        for(Integer commInt : neighbours.keySet()) {
+            for(Neighbour n : this.neighbours.get(commInt)) {
+                if(n.getId() == neighbourId) {
+                    n.setPosition(position);
+                }
+            }
+        }
     }
 
     @Override
@@ -542,4 +671,36 @@ public class OWLMiddleware extends Thread implements Middleware {
 //            e.printStackTrace();
 //        }
     }
+
+    private int nextMsgId() {
+        msgId++;
+        return nodeId * 10000 + msgId;
+    }
+
+    private class Neighbour {
+        int id;
+        GeoPosition position;
+
+        public Neighbour(int id, GeoPosition position) {
+            this.id = id;
+            this.position = position;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public GeoPosition getPosition() {
+            return position;
+        }
+
+        public void setPosition(GeoPosition position) {
+            this.position = position;
+        }
+    }
+
 }

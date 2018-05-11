@@ -44,4 +44,10 @@ public interface Message {
      */
     int getMessageDest();
 
+    /**
+     * Returns the id of the communication interface of the message sender.
+     * @return
+     */
+    int getCommunicationInterface();
+
 }

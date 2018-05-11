@@ -138,6 +138,10 @@ public class StatisticsTest {
             return -1;
         }
 
+        public int getCommunicationInterface() {
+            return 1;
+        }
+
     }
 
 }

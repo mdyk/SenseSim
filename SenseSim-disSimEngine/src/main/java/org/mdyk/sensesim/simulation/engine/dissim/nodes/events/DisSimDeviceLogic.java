@@ -35,19 +35,17 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
 
 
     private static final Logger LOG = Logger.getLogger(DisSimDeviceLogic.class);
-
-    protected List<GeoPosition> route;
-    protected GeoMovementAlgorithm currentMovementAlg;
-    protected Environment environment;
     // FIXME do zmiany
     public WirelessChannel wirelessChannel;
     public NetworkManager networkManager;
-    private DeviceSimEntity deviceSimEntity;
-    private DeviceStatistics deviceStatistics;
-    protected CommunicationProcessFactory communicationProcessFactory;
     // FIXME do zmiany
     public Function<Message, Object> onMessageHandler;
-
+    protected List<GeoPosition> route;
+    protected GeoMovementAlgorithm currentMovementAlg;
+    protected Environment environment;
+    protected CommunicationProcessFactory communicationProcessFactory;
+    private DeviceSimEntity deviceSimEntity;
+    private DeviceStatistics deviceStatistics;
     private boolean isMoveing;
 
 
@@ -140,23 +138,23 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     }
 
     @Override
-    public void setLatitude(double latitude) {
-        this.position.setLongitude(latitude);
-    }
-
-    @Override
     public double getLatitude() {
         return position.getLatitude();
     }
 
     @Override
-    public void setLongitude(double longitude) {
-        position.setLongitude(longitude);
+    public void setLatitude(double latitude) {
+        this.position.setLongitude(latitude);
     }
 
     @Override
     public double getLongitude() {
         return position.getLongitude();
+    }
+
+    @Override
+    public void setLongitude(double longitude) {
+        position.setLongitude(longitude);
     }
 
     @Override
@@ -199,18 +197,18 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     @Override
     public void move() {
         try {
-            LOG.debug(">> move node: " + getID());
+            LOG.trace(">> move node: " + getID());
             if (!isMoveing || route == null || route.size() == 0) return;
             // TODO założenie że pędkość podawana jest w kilomwtrach. Trzeba to przenieść do konfiguracji.
             double velocityMetersPerSec = this.velocity / 3.6;
             LOG.trace("Velocity in km/h: " + velocity + " velocity in m/sec: " + velocityMetersPerSec);
 
             GeoPosition newPosition = currentMovementAlg.nextPositionToCheckpoint(this.position, velocityMetersPerSec * MoveActivity.END_MOVE_DELAY);
-            LOG.debug(String.format("moving from position %s to %s ", this.getPosition().toString(), newPosition.toString()));
+            LOG.trace(String.format("moving from position %s to %s ", this.getPosition().toString(), newPosition.toString()));
             this.setPosition(newPosition);
             this.networkManager.actualizeNaighbours(this);
             EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(this));
-            LOG.debug("<< move node: " + getID());
+            LOG.trace("<< move node: " + getID());
         } catch (Exception e) {
             LOG.error(e.getMessage() , e);
         }

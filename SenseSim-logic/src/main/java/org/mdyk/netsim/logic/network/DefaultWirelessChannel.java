@@ -28,6 +28,7 @@ public class DefaultWirelessChannel implements WirelessChannel<GeoPosition> {
         return nodesList;
     }
 
+    // TODO do uwzględnienia czas odkrywania sąsiadów
     @Override
     public List<DeviceNode<GeoPosition>> scanForNeighbors(int commIntId, DeviceNode<GeoPosition> requestedSensorNode) {
         LOG.trace(">>> scanForNeighbors [request device: " + requestedSensorNode.getID() + " , communication interface id: "+ commIntId +" ");

@@ -104,6 +104,7 @@ public interface DeviceAPI<P extends Position> {
     @Deprecated
     List<Integer> api_scanForNeighbors();
 
+    // TODO powinno być synchroniczne
     /**
      * Orders a device to scan for its neighbours.
      * @param communicationInterfaceId

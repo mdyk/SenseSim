@@ -10,6 +10,7 @@ public class SimpleMessage implements Message {
     private Object content;
     private Integer size;
     private long id;
+    private int communicationInterfaceId;
 
     /**
      *
@@ -24,12 +25,22 @@ public class SimpleMessage implements Message {
      * @param size
      *      size of the message in bytes.
      */
+    @Deprecated
     public SimpleMessage(long id, int originSource, int originDest, Object content, Integer size) {
         this.id = id;
         this.originSource = originSource;
         this.originDest = originDest;
         this.content = content;
         this.size = size;
+    }
+
+    public SimpleMessage(long id, int originSource, int originDest , int communicationInterfaceId, Object content, Integer size) {
+        this.originSource = originSource;
+        this.originDest = originDest;
+        this.content = content;
+        this.size = size;
+        this.id = id;
+        this.communicationInterfaceId = communicationInterfaceId;
     }
 
     @Override
@@ -61,5 +72,10 @@ public class SimpleMessage implements Message {
     @Override
     public int getMessageDest() {
         return originDest;
+    }
+
+    @Override
+    public int getCommunicationInterface() {
+        return this.communicationInterfaceId;
     }
 }

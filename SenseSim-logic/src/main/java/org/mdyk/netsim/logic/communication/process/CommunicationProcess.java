@@ -87,6 +87,6 @@ public interface CommunicationProcess {
      * @return
      *      numerical id of the communication interface
      */
-    int getCommunicationIntterfaceId();
+    int getCommunicationInterfaceId();
 
 }

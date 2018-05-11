@@ -108,7 +108,7 @@ public class DefaultCommunicationProcess implements CommunicationProcess {
     }
 
     @Override
-    public int getCommunicationIntterfaceId() {
+    public int getCommunicationInterfaceId() {
         return this.communicationInterfaceId;
     }
 
