@@ -175,19 +175,48 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <VBox prefHeight="274.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="272.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <ComboBox fx:id="commTypChooser" onAction="#showCommunicationByType" prefWidth="200.0" />
-                              <TableView fx:id="commTable" layoutX="94.0" layoutY="48.0" prefHeight="274.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                                <columns>
-                                  <TableColumn fx:id="commId" prefWidth="75.0" text="Comm ID" />
-                                  <TableColumn fx:id="commReceiver" prefWidth="76.0" text="Receiver" />
-                                    <TableColumn fx:id="commStatus" prefWidth="100.0" text="Status" />
-                                    <TableColumn fx:id="commStartTime" prefWidth="118.0" text="Start time" />
-                                    <TableColumn fx:id="commEndTime" prefWidth="112.0" text="End time" />
-                                    <TableColumn fx:id="commMessageSize" prefWidth="112.0" text="Message size" />
-                                </columns>
-                              </TableView>
+                              <TabPane prefHeight="288.0" prefWidth="580.0" tabClosingPolicy="UNAVAILABLE">
+                                <tabs>
+                                  <Tab text="Outgoing">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TableView fx:id="outgoingCommTable" prefHeight="167.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                  <columns>
+                                                    <TableColumn fx:id="commIdOutgoing" prefWidth="75.0" text="Comm ID" />
+                                                    <TableColumn fx:id="commReceiverOutgoing" prefWidth="76.0" text="Receiver" />
+                                                      <TableColumn fx:id="commStatusOutgoing" prefWidth="100.0" text="Status" />
+                                                      <TableColumn fx:id="commStartTimeOutgoing" prefWidth="118.0" text="Start time" />
+                                                      <TableColumn fx:id="commEndTimeOutgoing" prefWidth="112.0" text="End time" />
+                                                      <TableColumn fx:id="commMessageSizeOutgoing" prefWidth="112.0" text="Message size" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                  <Tab text="Incoming">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TableView fx:id="incomingCommTable" prefHeight="167.0" prefWidth="580.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                                   <columns>
+                                                      <TableColumn fx:id="commIdIncoming" prefWidth="75.0" text="Comm ID" />
+                                                      <TableColumn fx:id="commReceiverIncoming" prefWidth="76.0" text="Receiver" />
+                                                      <TableColumn fx:id="commStatusIncoming" prefWidth="100.0" text="Status" />
+                                                      <TableColumn fx:id="commStartTimeIncoming" prefWidth="118.0" text="Start time" />
+                                                      <TableColumn fx:id="commEndTimeIncoming" prefWidth="112.0" text="End time" />
+                                                      <TableColumn fx:id="commMessageSizeIncoming" prefWidth="112.0" text="Message size" />
+                                                   </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </Tab>
+                                </tabs>
+                              </TabPane>
                            </children>
                            <padding>
                               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

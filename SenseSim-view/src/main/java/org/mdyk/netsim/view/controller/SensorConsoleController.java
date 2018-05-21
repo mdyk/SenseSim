@@ -63,41 +63,62 @@ public class SensorConsoleController implements Initializable {
     private TextField radioRange;
     @FXML
     private ComboBox abilityChooser;
-    @FXML
-    private ComboBox commTypChooser;
+//    @FXML
+//    private ComboBox commTypChooser;
     @FXML
     private TableView<PhenomenonValue> abilityTable;
     @FXML
     private TableColumn<PhenomenonValue, String> simTimeColumn;
     @FXML
     private TableColumn<PhenomenonValue, Object> observationsColumn;
+//    @FXML
+//    private TableView<CommunicationStatistics> commTable;
+
     @FXML
-    private TableView<CommunicationStatistics> commTable;
+    private TableView<CommunicationStatistics> incomingCommTable;
     @FXML
-    private TableColumn<CommunicationStatistics, Integer> commId;
+    private TableView<CommunicationStatistics> outgoingCommTable;
+
     @FXML
-    private TableColumn<CommunicationStatistics, String> commReceiver;
+    private TableColumn<CommunicationStatistics, Integer> commIdIncoming;
     @FXML
-    private TableColumn<CommunicationStatistics, String> commStatus;
+    private TableColumn<CommunicationStatistics, String> commReceiverIncoming;
     @FXML
-    private TableColumn<CommunicationStatistics, String> commStartTime;
+    private TableColumn<CommunicationStatistics, String> commStatusIncoming;
     @FXML
-    private TableColumn<CommunicationStatistics, String> commEndTime;
+    private TableColumn<CommunicationStatistics, String> commStartTimeIncoming;
     @FXML
-    private TableColumn<CommunicationStatistics, String> commMessageSize;
+    private TableColumn<CommunicationStatistics, String> commEndTimeIncoming;
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commMessageSizeIncoming;
+
+    @FXML
+    private TableColumn<CommunicationStatistics, Integer> commIdOutgoing;
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commReceiverOutgoing;
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commStatusOutgoing;
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commStartTimeOutgoing;
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commEndTimeOutgoing;
+    @FXML
+    private TableColumn<CommunicationStatistics, String> commMessageSizeOutgoing;
+
     @FXML
     private TableView<ProgramStatistics> programsTable;
     @FXML
     private TableColumn<ProgramStatistics , String> pidColumn;
     @FXML
     private TableColumn<ProgramStatistics , String> programLog;
-
     @FXML
     private TableColumn<ProgramStatistics , String> programStatus;
 
     private ObservableList<PhenomenonValue> observationsData = FXCollections.observableArrayList();
     private Map<String , ObservableList<PhenomenonValue>> observationsChartData;
-    private ObservableList<CommunicationStatistics> commStatistics = FXCollections.observableArrayList();
+//    private ObservableList<CommunicationStatistics> commStatistics = FXCollections.observableArrayList();
+    private ObservableList<CommunicationStatistics> incomingCommStatistics = FXCollections.observableArrayList();
+    private ObservableList<CommunicationStatistics> outgoingCommStatistics = FXCollections.observableArrayList();
     private ObservableList<ProgramStatistics> programStatistics = FXCollections.observableArrayList();
 
     @Override
@@ -110,13 +131,44 @@ public class SensorConsoleController implements Initializable {
         observationsColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
         abilityTable.setItems(observationsData);
 
-        commId.setCellValueFactory(new PropertyValueFactory<>("commId"));
-        commReceiver.setCellValueFactory(new PropertyValueFactory<>("receiverId"));
-        commStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
-        commStartTime.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-        commEndTime.setCellValueFactory(new PropertyValueFactory<>("endTime"));
-        commMessageSize.setCellValueFactory(new PropertyValueFactory<>("messageSize"));
-        commTable.setItems(commStatistics);
+        commIdOutgoing.setCellValueFactory(new PropertyValueFactory<>("commId"));
+        commReceiverOutgoing.setCellValueFactory(new PropertyValueFactory<>("receiverId"));
+        commStatusOutgoing.setCellValueFactory(new PropertyValueFactory<>("status"));
+        commStartTimeOutgoing.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        commEndTimeOutgoing.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        commMessageSizeOutgoing.setCellValueFactory(new PropertyValueFactory<>("messageSize"));
+        outgoingCommTable.setItems(outgoingCommStatistics);
+
+
+        outgoingCommTable.setRowFactory( tv -> {
+            TableRow<CommunicationStatistics> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    CommunicationStatistics rowData = row.getItem();
+                    showMessageContent(rowData.getMessage().getMessageString());
+                }
+            });
+            return row ;
+        });
+
+        incomingCommTable.setRowFactory( tv -> {
+            TableRow<CommunicationStatistics> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    CommunicationStatistics rowData = row.getItem();
+                    showMessageContent(rowData.getMessage().getMessageString());
+                }
+            });
+            return row ;
+        });
+
+        commIdIncoming.setCellValueFactory(new PropertyValueFactory<>("commId"));
+        commReceiverIncoming.setCellValueFactory(new PropertyValueFactory<>("receiverId"));
+        commStatusIncoming.setCellValueFactory(new PropertyValueFactory<>("status"));
+        commStartTimeIncoming.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        commEndTimeIncoming.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        commMessageSizeIncoming.setCellValueFactory(new PropertyValueFactory<>("messageSize"));
+        incomingCommTable.setItems(incomingCommStatistics);
 
         pidColumn.setCellValueFactory(new PropertyValueFactory<>("PID"));
         programStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
@@ -142,12 +194,12 @@ public class SensorConsoleController implements Initializable {
         commTypes.add(CommType.Incoming.name());
         commTypes.add(CommType.Outgoing.name());
 
-        commTypChooser.setItems(commTypes);
-        commTypChooser.setValue(CommType.Outgoing.name());
+//        commTypChooser.setItems(commTypes);
+//        commTypChooser.setValue(CommType.Outgoing.name());
 
         actualizePositionLabel();
         showPrograms();
-        showCommunicationByType();
+//        showCommunicationByType();
         showObservationsForAbility();
 
         observationsChartData = new HashMap<>();
@@ -213,37 +265,37 @@ public class SensorConsoleController implements Initializable {
 
     private void showCommunication(DeviceStatistics deviceStatistics, CommType commType) {
         if (deviceStatistics.getSensorId() == this.nodeView.getID()) {
-            List<CommunicationStatistics> communicationStatistics = new ArrayList<>();
-            switch (commType) {
-                case Incoming:
-                    for(CommunicationProcess process : deviceStatistics.getIncomingCommunication()) {
-                        communicationStatistics.add(new CommunicationStatistics(process));
-                    }
-                    break;
+            List<CommunicationStatistics> incommingCommunicationStatistics = new ArrayList<>();
+            List<CommunicationStatistics> outgoingCommunicationStatistics = new ArrayList<>();
 
-                case Outgoing:
-                    for(CommunicationProcess process : deviceStatistics.getOutgoingCommunication()) {
-                        communicationStatistics.add(new CommunicationStatistics(process));
-                    }
-                    break;
+            for(CommunicationProcess process : deviceStatistics.getIncomingCommunication()) {
+                incommingCommunicationStatistics.add(new CommunicationStatistics(process));
             }
 
             Platform.runLater(()-> {
-                this.commStatistics.clear();
-                this.commStatistics.addAll(communicationStatistics);
+                this.incomingCommStatistics.clear();
+                this.incomingCommStatistics.addAll(incommingCommunicationStatistics);
             });
 
+            for(CommunicationProcess process : deviceStatistics.getOutgoingCommunication()) {
+                outgoingCommunicationStatistics.add(new CommunicationStatistics(process));
+            }
+
+            Platform.runLater(()-> {
+                this.outgoingCommStatistics.clear();
+                this.outgoingCommStatistics.addAll(outgoingCommunicationStatistics);
+            });
         }
     }
 
-    public void showCommunicationByType() {
-        String commTypeString = (String) this.commTypChooser.getValue();
-
-        if(commTypeString != null && statistics != null) {
-            showCommunication(statistics , CommType.valueOf(commTypeString));
-        }
-
-    }
+//    private void showCommunicationByType() {
+//        String commTypeString = (String) this.commTypChooser.getValue();
+//
+//        if(commTypeString != null && statistics != null) {
+//            showCommunication(statistics , CommType.valueOf(commTypeString));
+//        }
+//
+//    }
 
     public void showObservationsForAbility() {
         SensorModel abilityName = (SensorModel) abilityChooser.getValue();
@@ -291,6 +343,25 @@ public class SensorConsoleController implements Initializable {
             latitude.setText(Double.toString(nodeView.getLat()));
             longitude.setText(Double.toString(nodeView.getLon()));
         });
+    }
+
+
+    public void showMessageContent(String message) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/MessageContent.fxml"));
+
+        try {
+            Parent parent = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.NONE);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setScene(new Scene(parent));
+            MessageContentController controller = fxmlLoader.getController();
+            controller.setMessage(message);
+            stage.show();
+
+        } catch (IOException e) {
+            LOG.error(e.getMessage() , e);
+        }
     }
 
     public void showPlot() {

@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.node.program.owl.messages;
 
 
 import org.json.JSONObject;
+import org.mdyk.netsim.logic.infon.Infon;
 
 public class MessageParser {
 
@@ -10,6 +11,7 @@ public class MessageParser {
     public static final String SOURCE_NODE_KEY = "s";
     public static final String DEST_NODE_KEY = "d";
     public static final String POSITION_KEY = "p";
+    public static final String INFON = "i";
 
     public static InformationNeedMessage parseJSON(String JSONString) {
 
@@ -26,6 +28,10 @@ public class MessageParser {
             case TOPOLOGY_DISCOVERY_RESP:
                 inm = new TopologyDiscoveryResponseMessage(String.valueOf(jsonObject.get(NODE_ID_KEY)), String.valueOf(jsonObject.get(POSITION_KEY)));
                 break;
+
+            case INFORMATION_NEED_ASK:
+                inm = new InformationNeedAskMessage(new Infon(String.valueOf(jsonObject.get(INFON))));
+                break;
         }
 
         return inm;
@@ -33,7 +39,8 @@ public class MessageParser {
 
     public enum MessageType {
         TOPOLOGY_DISCOVERY_ASK("td"),
-        TOPOLOGY_DISCOVERY_RESP("tdr");
+        TOPOLOGY_DISCOVERY_RESP("tdr"),
+        INFORMATION_NEED_ASK("in");
 
 
         private final String jsonKey;

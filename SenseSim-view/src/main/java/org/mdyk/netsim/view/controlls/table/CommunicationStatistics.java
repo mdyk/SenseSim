@@ -1,6 +1,7 @@
 package org.mdyk.netsim.view.controlls.table;
 
 
+import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationProcess;
 
 public class CommunicationStatistics {
@@ -11,6 +12,7 @@ public class CommunicationStatistics {
     private String startTime;
     private String endTime;
     private double messageSize;
+    private Message message;
 
     public CommunicationStatistics(int commId, String receiverId, String status, String startTime, String endTime, double messageSize) {
         this.commId = commId;
@@ -28,6 +30,7 @@ public class CommunicationStatistics {
         this.startTime = String.valueOf(communicationProcess.getStartTime());
         this.endTime = String.valueOf(communicationProcess.getEndTime());
         this.messageSize = communicationProcess.getMessage().getSize();
+        this.message = communicationProcess.getMessage();
     }
 
     public int getCommId() {
@@ -76,6 +79,10 @@ public class CommunicationStatistics {
 
     public void setMessageSize(double messageSize) {
         this.messageSize = messageSize;
+    }
+
+    public Message getMessage() {
+        return message;
     }
 }
 

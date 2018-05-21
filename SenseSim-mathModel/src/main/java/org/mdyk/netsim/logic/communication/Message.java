@@ -50,4 +50,8 @@ public interface Message {
      */
     int getCommunicationInterface();
 
+    default String getMessageString() {
+        return toString();
+    }
+
 }

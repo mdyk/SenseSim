@@ -7,7 +7,7 @@ import org.mdyk.netsim.mathModel.device.IDeviceModel;
 /**
  * Interface for communication process in SenseSim
  */
-public interface CommunicationProcess {
+public interface  CommunicationProcess {
 
 
     /**

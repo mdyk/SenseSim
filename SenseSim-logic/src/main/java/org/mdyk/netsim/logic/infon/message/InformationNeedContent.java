@@ -26,4 +26,10 @@ public class InformationNeedContent {
     public Infon getInfon() {
         return infon;
     }
+
+
+    @Override
+    public String toString() {
+        return informationNeedString;
+    }
 }

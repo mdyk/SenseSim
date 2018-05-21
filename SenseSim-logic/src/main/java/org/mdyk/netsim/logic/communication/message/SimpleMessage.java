@@ -78,4 +78,9 @@ public class SimpleMessage implements Message {
     public int getCommunicationInterface() {
         return this.communicationInterfaceId;
     }
+
+    @Override
+    public String getMessageString() {
+        return content.toString();
+    }
 }
