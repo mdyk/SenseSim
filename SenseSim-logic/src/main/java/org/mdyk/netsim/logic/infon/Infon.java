@@ -140,6 +140,44 @@ public class Infon {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Infon infon = (Infon) o;
+
+        if (isRelationParam != infon.isRelationParam) return false;
+        if (areObjectsParam != infon.areObjectsParam) return false;
+        if (isTemporalLocationParam != infon.isTemporalLocationParam) return false;
+        if (isSpatialLocationParam != infon.isSpatialLocationParam) return false;
+        if (isPolarityParam != infon.isPolarityParam) return false;
+        if (relation != null ? !relation.equals(infon.relation) : infon.relation != null) return false;
+        if (objects != null ? !objects.equals(infon.objects) : infon.objects != null) return false;
+        if (temporalLocation != null ? !temporalLocation.equals(infon.temporalLocation) : infon.temporalLocation != null)
+            return false;
+        if (spatialLocation != null ? !spatialLocation.equals(infon.spatialLocation) : infon.spatialLocation != null)
+            return false;
+        if (polarity != null ? !polarity.equals(infon.polarity) : infon.polarity != null) return false;
+        return relationParam != null ? relationParam.equals(infon.relationParam) : infon.relationParam == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = relation != null ? relation.hashCode() : 0;
+        result = 31 * result + (objects != null ? objects.hashCode() : 0);
+        result = 31 * result + (temporalLocation != null ? temporalLocation.hashCode() : 0);
+        result = 31 * result + (spatialLocation != null ? spatialLocation.hashCode() : 0);
+        result = 31 * result + (polarity != null ? polarity.hashCode() : 0);
+        result = 31 * result + (isRelationParam ? 1 : 0);
+        result = 31 * result + (relationParam != null ? relationParam.hashCode() : 0);
+        result = 31 * result + (areObjectsParam ? 1 : 0);
+        result = 31 * result + (isTemporalLocationParam ? 1 : 0);
+        result = 31 * result + (isSpatialLocationParam ? 1 : 0);
+        result = 31 * result + (isPolarityParam ? 1 : 0);
+        return result;
+    }
+
+    @Override
     public String toString() {
 
         StringBuilder builder = new StringBuilder();
