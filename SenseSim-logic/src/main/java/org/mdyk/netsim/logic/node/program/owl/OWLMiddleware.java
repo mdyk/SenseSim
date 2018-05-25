@@ -12,10 +12,8 @@ import com.clarkparsia.pellet.sparqldl.parser.QueryParser;
 import com.google.common.eventbus.Subscribe;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.event.EventBusHolder;
-import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.infon.Infon;
 import org.mdyk.netsim.logic.infon.message.InformationNeedContent;
@@ -23,13 +21,9 @@ import org.mdyk.netsim.logic.infon.message.ResponseForNeedContent;
 import org.mdyk.netsim.logic.node.api.DeviceAPI;
 import org.mdyk.netsim.logic.node.program.Middleware;
 import org.mdyk.netsim.logic.node.program.SensorProgram;
-import org.mdyk.netsim.logic.node.program.owl.messages.InformationNeedMessage;
-import org.mdyk.netsim.logic.node.program.owl.messages.MessageParser;
-import org.mdyk.netsim.logic.node.program.owl.messages.TopologyDiscoveryMessage;
-import org.mdyk.netsim.logic.node.program.owl.messages.TopologyDiscoveryResponseMessage;
+import org.mdyk.netsim.logic.node.program.owl.messages.*;
 import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
-import org.mdyk.netsim.logic.util.Position;
 import org.mdyk.netsim.logic.util.PositionParser;
 import org.mdyk.netsim.mathModel.Functions;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
@@ -163,6 +157,12 @@ public class OWLMiddleware extends Thread implements Middleware {
                         TopologyDiscoveryResponseMessage tdmr = (TopologyDiscoveryResponseMessage) inm;
                         handleTopologyDiscoveryResp(tdmr);
                         break;
+
+                    case INFORMATION_NEED_ASK:
+                        InformationNeedAskMessage inam = (InformationNeedAskMessage) inm;
+                        handleInformationNeedAsk(inam);
+                        break;
+
                 }
 
 //                if(messageContent instanceof InformationNeedContent){
@@ -209,6 +209,12 @@ public class OWLMiddleware extends Thread implements Middleware {
         LOG.trace(">> handleTopologyDiscoveryResp tdrm = " + tdrm.toString());
         this.updateNeighbourPosition(tdrm.getNodeId(),tdrm.getPosition());
         LOG.trace("<< handleTopologyDiscoveryResp");
+    }
+
+    public void handleInformationNeedAsk(InformationNeedAskMessage inam) {
+        LOG.trace(">> handleInformationNeedAsk");
+        // TODO
+        LOG.trace("<< handleInformationNeedAsk");
     }
 
     // FIXME potrzebny poważny refactor
