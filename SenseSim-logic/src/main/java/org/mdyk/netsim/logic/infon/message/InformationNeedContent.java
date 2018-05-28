@@ -3,6 +3,10 @@ package org.mdyk.netsim.logic.infon.message;
 
 import org.mdyk.netsim.logic.infon.Infon;
 
+@Deprecated
+/**
+ * w zastępsitwie użyć wiadomości związanych z potrzebą informacyjną
+ */
 public class InformationNeedContent {
 
     private int askingNodeId;

@@ -58,7 +58,11 @@ public class OWLMiddleware extends Thread implements Middleware {
     private OWLDataFactory df = OWLManager.getOWLDataFactory();
     private OWLOntologyManager manager;
     // keys are  ids of information need
+    @Deprecated
     private Map<Integer , InformationNeedContent> informationNeeds = new HashMap<>();
+
+    private Map<Integer , InformationNeedAskMessage> informationNeedAskMsgs = new HashMap<>();
+
     private Map<Integer , String> informationNeedResponse = new HashMap<>();
     private String soldierName;
     private OWLNamedIndividual soldier;
@@ -160,7 +164,8 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                     case INFORMATION_NEED_ASK:
                         InformationNeedAskMessage inam = (InformationNeedAskMessage) inm;
-                        handleInformationNeedAsk(inam);
+//                        handleInformationNeedAsk(inam);
+                        processInformationNeed(inam);
                         break;
 
                 }
@@ -445,45 +450,36 @@ public class OWLMiddleware extends Thread implements Middleware {
                 // The program should be installed in current node.
                 if(informationNeed.getKey()!=null && informationNeed.getKey().equals(nodeId)){
                     LOG.debug(informationNeed.getValue());
-                    this.informationNeeds.put(informationNeed.getValue().hashCode() , new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue()));
-                    processInformationNeed(informationNeed);
+//                    this.informationNeeds.put(informationNeed.getValue().hashCode() , new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue()));
+                    Infon infon = new Infon(informationNeed.getValue());
 
+                    InformationNeedAskMessage askMessage = new InformationNeedAskMessage(this.nodeId, infon);
+
+                    this.informationNeedAskMsgs.put(informationNeed.getValue().hashCode(), askMessage);
+                    processInformationNeed(askMessage);
                 }
-//                resendInformationNeed(informationNeed);
-
-
 
                 break;
         }
     }
 
     // TODO najlepiej gdyby na wejsciu był JSON
-    private void processInformationNeed(Pair<Integer, String> informationNeed) {
+    private void processInformationNeed(InformationNeedAskMessage informationNeedAsk) {
         topologyDiscovery();
-        resendInformationNeed(informationNeed);
+        resendInformationNeed(informationNeedAsk);
     }
 
-    private void resendInformationNeed(Pair<Integer, String> informationNeed) {
+    private void resendInformationNeed(InformationNeedAskMessage informationNeedAsk) {
         LOG.trace(">> resendInformationNeed");
 
-//        communicationInterfaces = deviceAPI.api_listCommunicationInterfaces();
-//
-//        Map<Integer, List<Integer>> neighboursMap = new HashMap<>();
-//
-//        for(Integer commInt : communicationInterfaces.keySet()) {
-//            List<Integer> neighbours = new ArrayList<>();
-//            neighbours.addAll(deviceAPI.api_scanForNeighbors(commInt));
-//            neighboursMap.put(commInt, neighbours);
-//        }
-
-        InformationNeedContent informationNeedContent = new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue());
-        List<GeoPosition> needArea = PositionParser.parsePositionsList(informationNeedContent.getInfon().getSpatialLocation());
+//        InformationNeedContent informationNeedContent = new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue());
+        List<GeoPosition> needArea = PositionParser.parsePositionsList(informationNeedAsk.getInfon().getSpatialLocation());
 
         boolean sentToNeighbourInRange = false;
         for(Integer commInt : this.neighbours.keySet()) {
             for(Neighbour n : this.neighbours.get(commInt)) {
                 if (Functions.isPointInRegion(n.getPosition() , needArea) ) {
-                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedContent, informationNeedContent.getInformationNeedString().getBytes().length);
+                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());
                     sentToNeighbourInRange = true;
                 }
             }
@@ -492,17 +488,11 @@ public class OWLMiddleware extends Thread implements Middleware {
         if(!sentToNeighbourInRange) {
             for(Integer commInt : this.neighbours.keySet()) {
                 for(Neighbour n : this.neighbours.get(commInt)) {
-                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedContent, informationNeedContent.getInformationNeedString().getBytes().length);
+                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());
                 }
             }
         }
 
-
-//        informationNeedContent.getInfon().getSpatialLocation()
-
-//        for (Integer neighbour : neighbours) {
-//            deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), neighbour, informationNeedContent , informationNeedContent.getInformationNeedString().getBytes().length );
-//        }
         LOG.trace("<< resendInformationNeed");
     }
 
@@ -569,7 +559,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         boolean wait = true;
 
-        LOG.debug("--- Waiting for position from neighgours [simTime="+deviceSimEntity.getSimTime()+"]" );
+        LOG.debug("--- Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+"]" );
 
         while (wait) {
             for(Integer commInt : neighbours.keySet()) {
@@ -579,7 +569,7 @@ public class OWLMiddleware extends Thread implements Middleware {
             }
         }
 
-        LOG.debug("--- Position from all neighgours received [simTime="+deviceSimEntity.getSimTime()+"]");
+        LOG.debug("--- Position from all neighbours received [simTime="+deviceSimEntity.getSimTime()+"]");
 
     }
 

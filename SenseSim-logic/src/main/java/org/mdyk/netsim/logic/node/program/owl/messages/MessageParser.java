@@ -30,7 +30,7 @@ public class MessageParser {
                 break;
 
             case INFORMATION_NEED_ASK:
-                inm = new InformationNeedAskMessage(new Infon(String.valueOf(jsonObject.get(INFON))));
+                inm = new InformationNeedAskMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), new Infon(String.valueOf(jsonObject.get(INFON))));
                 break;
         }
 

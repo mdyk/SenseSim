@@ -17,7 +17,6 @@ import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.MoveActivity;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.StartMoveActivity;
 
 import java.util.*;
 import java.util.function.Function;
@@ -84,6 +83,7 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
     @SuppressWarnings("unchecked")
     public void api_sendMessage(long messageId, int originSource, int originDest, int communicationInterfaceId, Object content, Integer size) {
         Message message = new SimpleMessage(messageId, originSource, originDest, communicationInterfaceId , content, size);
+        // FIXME skanowanie w poszukiwaniu sąsiadów nie powinno odbywać się w tym miejscu. Powinno zostać samo wysłanie wiadomości
         List<DeviceNode> neighbours =  ((DisSimDeviceLogic) deviceSimEntity.getDeviceLogic()).wirelessChannel.scanForNeighbors(communicationInterfaceId, deviceSimEntity.getDeviceLogic());
         List<DeviceNode<GeoPosition>> nodesToHop = deviceSimEntity.getDeviceLogic().getRoutingAlgorithm().getNodesToHop(deviceSimEntity.getDeviceLogic().getID(), originDest , message , neighbours);
 

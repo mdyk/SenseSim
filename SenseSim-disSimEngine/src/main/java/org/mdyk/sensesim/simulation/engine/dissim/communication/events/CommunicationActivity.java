@@ -31,12 +31,12 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
 
     @Override
     protected void transitionOnStart() throws SimControlException {
-        
+        LOG.trace(">< CommunicationActivity.transitionOnStart() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
     }
 
     @Override
     protected void transitionOnFinish() throws SimControlException {
-        LOG.trace(">> EndCommunicationActivity.transition() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
+        LOG.trace(">> CommunicationActivity.transitionOnFinish() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
         // Checking if receiver is still a neighbour for sender
         int communicationInterfaceId = getSimEntity().getCommunicationInterfaceId();
 
@@ -69,6 +69,6 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
             this.deactivateRepetition();
         }
         EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.COMM_PROC_UPDATE , getSimEntity().commProcess));
-        LOG.trace("<< EndCommunicationActivity.transition()");
+        LOG.trace("<< CommunicationActivity.transitionOnFinish()");
     }
 }
