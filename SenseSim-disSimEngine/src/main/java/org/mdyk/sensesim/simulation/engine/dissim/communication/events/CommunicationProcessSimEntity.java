@@ -20,8 +20,6 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
 
     protected DefaultCommunicationProcess commProcess;
     protected WirelessChannel wirelessChannel;
-    protected StartCommunicationActivity startCommunicationActivity;
-    protected EndCommunicationActivity endCommunicationActivity;
 
     protected CommunicationActivity communicationActivity;
 
@@ -31,7 +29,6 @@ public class CommunicationProcessSimEntity extends BasicSimEntity implements Com
         this.wirelessChannel = wirelessChannel;
         commProcess = new DefaultCommunicationProcess(id,sender,receiver, communicationInterfaceId,startTime,message);
         try {
-//            startCommunicationActivity = new StartCommunicationActivity(this);
             communicationActivity = new CommunicationActivity(this , 0.1);
         } catch (SimControlException e) {
             LOG.error(e.getMessage(), e);

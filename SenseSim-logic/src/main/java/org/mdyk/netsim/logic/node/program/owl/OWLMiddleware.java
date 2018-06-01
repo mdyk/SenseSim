@@ -496,6 +496,7 @@ public class OWLMiddleware extends Thread implements Middleware {
         LOG.trace("<< resendInformationNeed");
     }
 
+    @Deprecated
     private void resendInformationNeedResponse(int informationNeedId, Integer askingNode , String informationNeedResponse) {
         LOG.trace(">> resendInformationNeedResponse");
         List<Integer> neighbours = deviceAPI.api_scanForNeighbors();
@@ -558,15 +559,25 @@ public class OWLMiddleware extends Thread implements Middleware {
         sendPositionQuery();
 
         boolean wait = true;
+        int count = 1;
 
         LOG.debug("--- Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+"]" );
 
-        while (wait) {
+        while (wait && count < 20) {
             for(Integer commInt : neighbours.keySet()) {
                 for(Neighbour n : this.neighbours.get(commInt)) {
                     wait &= (n.getPosition() == null);
                 }
             }
+
+            // FIXME dodac opoznienie symulacyjne
+            try {
+                Thread.sleep(500);
+                count ++;
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         }
 
         LOG.debug("--- Position from all neighbours received [simTime="+deviceSimEntity.getSimTime()+"]");
