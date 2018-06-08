@@ -7,8 +7,9 @@ import org.mdyk.netsim.logic.infon.Infon;
 public class InformationNeedAskMessage implements InformationNeedMessage {
 
     private final MessageParser.MessageType messageType = MessageParser.MessageType.INFORMATION_NEED_ASK;
-    private Infon infon;
+    private final Infon infon;
     private int sourceNode;
+    private int needId;
 
 
     public InformationNeedAskMessage(int sourceNode , Infon infon) {
@@ -26,6 +27,7 @@ public class InformationNeedAskMessage implements InformationNeedMessage {
         jsonObject.put(MessageParser.MESSAGE_ACTION_KEY, messageType.getJsonValue());
         jsonObject.put(MessageParser.INFON , infon.toString());
         jsonObject.put(MessageParser.SOURCE_NODE_KEY , sourceNode);
+        jsonObject.put(MessageParser.NEED_ID , getId());
         return jsonObject.toString();
     }
 
@@ -41,4 +43,13 @@ public class InformationNeedAskMessage implements InformationNeedMessage {
     public int getSourceNode() {
         return sourceNode;
     }
+
+
+    public int getId() {
+        int result = messageType.hashCode();
+        result = 31 * result + infon.hashCode();
+        result = 31 * result + sourceNode;
+        return result;
+    }
+
 }

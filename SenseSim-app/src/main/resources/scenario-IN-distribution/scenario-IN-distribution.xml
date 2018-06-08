@@ -31,7 +31,7 @@
         <node id="1" name="dev_1">
              <speed>4</speed>
             <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
+            <radioBandwidth>5</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <middleware>
@@ -46,8 +46,8 @@
             <communicationInterfaces>
                 <!--<communicationInterface id="1" name="WiFi-Direct">-->
                     <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<radioInputBandwidth>50</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>50</radioOutputBandwidth>-->
                     <!--<routingAlgType>FloodingRouting</routingAlgType>-->
                     <!--<topologyType>-->
                         <!--<adhocM2M/>-->
@@ -55,8 +55,8 @@
                 <!--</communicationInterface>-->
                 <communicationInterface id="1" name="Tactical">
                     <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <radioInputBandwidth>50</radioInputBandwidth>
+                    <radioOutputBandwidth>50</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
@@ -81,7 +81,7 @@
         <node id="2" name="dev_2">
             <speed>4</speed>
             <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
+            <radioBandwidth>5</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <middleware>
@@ -96,8 +96,8 @@
             <communicationInterfaces>
                 <!--<communicationInterface id="1" name="WiFi-Direct">-->
                     <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<radioInputBandwidth>50</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>50</radioOutputBandwidth>-->
                     <!--<routingAlgType>FloodingRouting</routingAlgType>-->
                     <!--<topologyType>-->
                         <!--<adhocM2M/>-->
@@ -105,8 +105,8 @@
                 <!--</communicationInterface>-->
                 <communicationInterface id="1" name="Tactical">
                     <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <radioInputBandwidth>50</radioInputBandwidth>
+                    <radioOutputBandwidth>50</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
@@ -132,7 +132,7 @@
         <node id="3" name="dev_3">
             <speed>4</speed>
             <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
+            <radioBandwidth>5</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <middleware>
@@ -147,8 +147,8 @@
             <communicationInterfaces>
                 <!--<communicationInterface id="1" name="WiFi-Direct">-->
                     <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<radioInputBandwidth>50</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>50</radioOutputBandwidth>-->
                     <!--<routingAlgType>FloodingRouting</routingAlgType>-->
                     <!--<topologyType>-->
                         <!--<adhocM2M/>-->
@@ -156,8 +156,8 @@
                 <!--</communicationInterface>-->
                 <communicationInterface id="1" name="Tactical">
                     <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <radioInputBandwidth>50</radioInputBandwidth>
+                    <radioOutputBandwidth>50</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
@@ -179,7 +179,7 @@
         <node id="4" name="dev_4">
             <speed>4</speed>
             <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
+            <radioBandwidth>5</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <middleware>
@@ -194,8 +194,8 @@
             <communicationInterfaces>
                 <!--<communicationInterface id="1" name="WiFi-Direct">-->
                     <!--<radioRange>80</radioRange>-->
-                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<radioInputBandwidth>50</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>50</radioOutputBandwidth>-->
                     <!--<routingAlgType>FloodingRouting</routingAlgType>-->
                     <!--<topologyType>-->
                         <!--<adhocM2M/>-->
@@ -203,8 +203,8 @@
                 <!--</communicationInterface>-->
                 <communicationInterface id="1" name="Tactical">
                     <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <radioInputBandwidth>50</radioInputBandwidth>
+                    <radioOutputBandwidth>50</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
@@ -227,7 +227,7 @@
         <node id="5" name="dev_5">
             <speed>4</speed>
             <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
+            <radioBandwidth>5</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <middleware>
@@ -242,8 +242,8 @@
             <communicationInterfaces>
                 <!--<communicationInterface id="1" name="WiFi-Direct">-->
                 <!--<radioRange>80</radioRange>-->
-                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<radioInputBandwidth>50</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>50</radioOutputBandwidth>-->
                 <!--<routingAlgType>FloodingRouting</routingAlgType>-->
                 <!--<topologyType>-->
                 <!--<adhocM2M/>-->
@@ -251,8 +251,8 @@
                 <!--</communicationInterface>-->
                 <communicationInterface id="1" name="Tactical">
                     <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <radioInputBandwidth>50</radioInputBandwidth>
+                    <radioOutputBandwidth>50</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
@@ -276,7 +276,7 @@
         <node id="6" name="dev_6">
             <speed>4</speed>
             <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
+            <radioBandwidth>5</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <middleware>
@@ -291,8 +291,8 @@
             <communicationInterfaces>
                 <!--<communicationInterface id="1" name="WiFi-Direct">-->
                 <!--<radioRange>80</radioRange>-->
-                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<radioInputBandwidth>50</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>50</radioOutputBandwidth>-->
                 <!--<routingAlgType>FloodingRouting</routingAlgType>-->
                 <!--<topologyType>-->
                 <!--<adhocM2M/>-->
@@ -300,8 +300,8 @@
                 <!--</communicationInterface>-->
                 <communicationInterface id="1" name="Tactical">
                     <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <radioInputBandwidth>50</radioInputBandwidth>
+                    <radioOutputBandwidth>50</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
@@ -324,7 +324,7 @@
         <node id="7" name="dev_7">
             <speed>4</speed>
             <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
+            <radioBandwidth>5</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <middleware>
@@ -339,8 +339,8 @@
             <communicationInterfaces>
                 <!--<communicationInterface id="1" name="WiFi-Direct">-->
                 <!--<radioRange>80</radioRange>-->
-                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<radioInputBandwidth>50</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>50</radioOutputBandwidth>-->
                 <!--<routingAlgType>FloodingRouting</routingAlgType>-->
                 <!--<topologyType>-->
                 <!--<adhocM2M/>-->
@@ -348,8 +348,8 @@
                 <!--</communicationInterface>-->
                 <communicationInterface id="1" name="Tactical">
                     <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <radioInputBandwidth>50</radioInputBandwidth>
+                    <radioOutputBandwidth>50</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
@@ -371,7 +371,7 @@
         <node id="8" name="dev_8">
             <speed>4</speed>
             <radioRange>80</radioRange>
-            <radioBandwidth>5000</radioBandwidth>
+            <radioBandwidth>5</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>
             <routingAlgType>FloodingRouting</routingAlgType>
             <middleware>
@@ -386,8 +386,8 @@
             <communicationInterfaces>
                 <!--<communicationInterface id="1" name="WiFi-Direct">-->
                 <!--<radioRange>80</radioRange>-->
-                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
-                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<radioInputBandwidth>50</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>50</radioOutputBandwidth>-->
                 <!--<routingAlgType>FloodingRouting</routingAlgType>-->
                 <!--<topologyType>-->
                 <!--<adhocM2M/>-->
@@ -395,8 +395,8 @@
                 <!--</communicationInterface>-->
                 <communicationInterface id="1" name="Tactical">
                     <radioRange>80</radioRange>
-                    <radioInputBandwidth>5000</radioInputBandwidth>
-                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <radioInputBandwidth>50</radioInputBandwidth>
+                    <radioOutputBandwidth>50</radioOutputBandwidth>
                     <routingAlgType>FloodingRouting</routingAlgType>
                     <topologyType>
                         <fixedTopology>
@@ -422,7 +422,7 @@
             <phenomenonArea>
                 <checkpoint>
                     <latitude>52.231073</latitude>
-                    <longitude>21.007506</longitude>
+                    <longitude>21.00756</longitude>
                 </checkpoint>
                 <checkpoint>
                     <latitude>52.230797</latitude>

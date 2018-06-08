@@ -61,7 +61,15 @@ public class OWLMiddleware extends Thread implements Middleware {
     @Deprecated
     private Map<Integer , InformationNeedContent> informationNeeds = new HashMap<>();
 
+    /**
+     * Kolekcja zapytań o informację
+     */
     private Map<Integer , InformationNeedAskMessage> informationNeedAskMsgs = new HashMap<>();
+
+    /**
+     * Kolekcja określająca ile razy dana potrzeba informacyjna zaostała rozesłana.
+     */
+    private Map<Integer , Integer> informationNeedAskResendCount = new HashMap<>();
 
     private Map<Integer , String> informationNeedResponse = new HashMap<>();
     private String soldierName;
@@ -205,7 +213,7 @@ public class OWLMiddleware extends Thread implements Middleware {
         LOG.trace(">> responseForTopologyDiscovery tdm = " + tdm.toString());
         actualizeNeighbours();
         GeoPosition position = (GeoPosition) deviceAPI.api_getPosition();
-        TopologyDiscoveryResponseMessage topologyDiscoveryResponseMessage = new TopologyDiscoveryResponseMessage(deviceAPI.api_getMyID() , position);
+        TopologyDiscoveryResponseMessage topologyDiscoveryResponseMessage = new TopologyDiscoveryResponseMessage(deviceAPI.api_getMyID() , position, tdm.getNeedId());
         deviceAPI.api_sendMessage(nextMsgId(),nodeId , tdm.getSourceNode() , commInterface, topologyDiscoveryResponseMessage.toJSON(), topologyDiscoveryResponseMessage.getSize());
         LOG.trace("<< responseForTopologyDiscovery");
     }
@@ -213,6 +221,10 @@ public class OWLMiddleware extends Thread implements Middleware {
     public void handleTopologyDiscoveryResp(TopologyDiscoveryResponseMessage tdrm){
         LOG.trace(">> handleTopologyDiscoveryResp tdrm = " + tdrm.toString());
         this.updateNeighbourPosition(tdrm.getNodeId(),tdrm.getPosition());
+
+
+        this.resendInformationNeed(tdrm.getNodeId(), tdrm.getNeedId());
+
         LOG.trace("<< handleTopologyDiscoveryResp");
     }
 
@@ -455,7 +467,8 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                     InformationNeedAskMessage askMessage = new InformationNeedAskMessage(this.nodeId, infon);
 
-                    this.informationNeedAskMsgs.put(informationNeed.getValue().hashCode(), askMessage);
+                    this.informationNeedAskMsgs.put(askMessage.getId() , askMessage);
+                    this.informationNeedAskResendCount.put(askMessage.getId(), 0);
                     processInformationNeed(askMessage);
                 }
 
@@ -465,10 +478,28 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     // TODO najlepiej gdyby na wejsciu był JSON
     private void processInformationNeed(InformationNeedAskMessage informationNeedAsk) {
-        topologyDiscovery();
-        resendInformationNeed(informationNeedAsk);
+        topologyDiscovery(informationNeedAsk.getId());
+//        resendInformationNeed(informationNeedAsk);
     }
 
+    private void resendInformationNeed(int neighbourId, int inamId) {
+
+        InformationNeedAskMessage informationNeedAsk = this.informationNeedAskMsgs.get(inamId);
+        List<GeoPosition> needArea = PositionParser.parsePositionsList(informationNeedAsk.getInfon().getSpatialLocation());
+
+        //FIXME do poprawy tak żeby nie trzeba było iterowac po wszystkich sasiadach
+        for(Integer commInt : this.neighbours.keySet()) {
+            for(Neighbour n : this.neighbours.get(commInt)) {
+                if (n.getId() == neighbourId && Functions.isPointInRegion(n.getPosition() , needArea) ) {
+                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());
+                    int count = this.informationNeedAskResendCount.get(informationNeedAsk.getId());
+                    this.informationNeedAskResendCount.put(informationNeedAsk.getId(), count);
+                }
+            }
+        }
+    }
+
+    @Deprecated
     private void resendInformationNeed(InformationNeedAskMessage informationNeedAsk) {
         LOG.trace(">> resendInformationNeed");
 
@@ -515,6 +546,7 @@ public class OWLMiddleware extends Thread implements Middleware {
      * @return Map<Integer, List<Integer>> - map which keys represent id of the communication interface and values are lists of devices (ids)
      *          which are in the area of the Information Need.
      */
+    @Deprecated
     public Map<Integer, List<Integer>> checkKnownDevicesINArea(Map<Integer, List<Integer>> knownDevices, InformationNeedContent informationNeedContent) {
 
         String spatialLocation = informationNeedContent.getInfon().getSpatialLocation();
@@ -528,7 +560,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         Functions.isPointInRegion((GeoPosition) this.deviceAPI.api_getPosition(), geoPosition);
 
-        topologyDiscovery();
+//        topologyDiscovery();
 
 
         return null;
@@ -554,23 +586,23 @@ public class OWLMiddleware extends Thread implements Middleware {
     /**
      * Zadanie związane z odkryciem topologii i położenia węzłów
      */
-    public void topologyDiscovery() {
+    public void topologyDiscovery(int informationNeedId) {
         this.actualizeNeighbours();
-        sendPositionQuery();
+        sendPositionQuery(informationNeedId);
 
         boolean wait = true;
         int count = 1;
 
         LOG.debug("--- Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+"]" );
 
-        while (wait && count < 20) {
+        while (wait && count < 40) {
             for(Integer commInt : neighbours.keySet()) {
                 for(Neighbour n : this.neighbours.get(commInt)) {
                     wait &= (n.getPosition() == null);
                 }
             }
 
-            // FIXME dodac opoznienie symulacyjne
+//            // FIXME dodac opoznienie symulacyjne
             try {
                 Thread.sleep(500);
                 count ++;
@@ -584,8 +616,8 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     }
 
-    private void sendPositionQuery() {
-        TopologyDiscoveryMessage tdm = new TopologyDiscoveryMessage(this.nodeId);
+    private void sendPositionQuery(int needId) {
+        TopologyDiscoveryMessage tdm = new TopologyDiscoveryMessage(this.nodeId, needId);
 
         for(Integer commInt : communicationInterfaces.keySet()) {
             for(Neighbour n : this.neighbours.get(commInt)) {

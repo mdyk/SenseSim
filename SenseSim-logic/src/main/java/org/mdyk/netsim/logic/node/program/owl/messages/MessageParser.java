@@ -12,6 +12,7 @@ public class MessageParser {
     public static final String DEST_NODE_KEY = "d";
     public static final String POSITION_KEY = "p";
     public static final String INFON = "i";
+    public static final String NEED_ID = "nid";
 
     public static InformationNeedMessage parseJSON(String JSONString) {
 
@@ -22,11 +23,11 @@ public class MessageParser {
 
         switch (MessageType.getMessageType(action)) {
             case TOPOLOGY_DISCOVERY_ASK:
-                inm = new TopologyDiscoveryMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)));
+                inm = new TopologyDiscoveryMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), String.valueOf(jsonObject.get(NEED_ID)));
                 break;
 
             case TOPOLOGY_DISCOVERY_RESP:
-                inm = new TopologyDiscoveryResponseMessage(String.valueOf(jsonObject.get(NODE_ID_KEY)), String.valueOf(jsonObject.get(POSITION_KEY)));
+                inm = new TopologyDiscoveryResponseMessage(String.valueOf(jsonObject.get(NODE_ID_KEY)), String.valueOf(jsonObject.get(POSITION_KEY)), String.valueOf(jsonObject.get(NEED_ID)));
                 break;
 
             case INFORMATION_NEED_ASK:

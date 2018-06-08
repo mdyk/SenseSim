@@ -11,4 +11,6 @@ public interface InformationNeedMessage {
         return toJSON().getBytes().length;
     }
 
+    int getId();
+
 }

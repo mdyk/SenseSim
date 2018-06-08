@@ -18,8 +18,8 @@ import java.util.List;
 public class CommunicationActivity extends BasicSimAction<CommunicationProcessSimEntity , Object> {
 
     private static final Logger LOG = Logger.getLogger(CommunicationActivity.class);
-    private static  final double duration = 0.1;
-    CommunicationReportBean crb;
+    private static  final double duration = 0.01;
+    private CommunicationReportBean crb;
     private DeviceNode sender;
     private DeviceNode receiver;
     private double period;
@@ -31,13 +31,7 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
         this.period = period;
         crb = new CommunicationReportBean();
         EventBusHolder.getEventBus().register(this);
-    }
 
-    @Override
-    protected void transitionOnStart() throws SimControlException {
-        LOG.trace(">< CommunicationActivity.transitionOnStart() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
-
-        //TODO zalogowanie rozpoczęcia z czasem sim
 
         double startTime = simTime();
         String messageContent = getSimEntity().getMessage().getMessageString();
@@ -58,6 +52,12 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
         crb.setCommStatus(commStatus.name());
 
         CommunicationReport.updateCommReport(crb);
+
+    }
+
+    @Override
+    protected void transitionOnStart() throws SimControlException {
+        LOG.trace(">< CommunicationActivity.transitionOnStart() [sender="+sender.getID()+" receiver="+receiver.getID()+"]");
     }
 
     @Override
@@ -77,7 +77,7 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
 
             crb.setSimTimeEnd(simTime());
             crb.setCommStatus(CommunicationStatus.SUCCESS.name());
-            CommunicationReport.updateCommReport(crb);
+            CommunicationReport.updateCommReport(new CommunicationReportBean(crb));
 
         } else if(neighbours.contains(receiver)) {
             LOG.trace("Receiver is neighbour of a sender");
@@ -91,6 +91,10 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
                 receiver.receiveMessage(simTime(),communicationInterfaceId,getSimEntity().getMessage());
                 this.terminate();
                 this.deactivateRepetition();
+
+                crb.setSimTimeEnd(simTime());
+                crb.setCommStatus(CommunicationStatus.SUCCESS.name());
+                CommunicationReport.updateCommReport(new CommunicationReportBean(crb));
             }
 
         } else {
@@ -101,7 +105,7 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
 
             crb.setSimTimeEnd(simTime());
             crb.setCommStatus(CommunicationStatus.FAILURE.name());
-            CommunicationReport.updateCommReport(crb);
+            CommunicationReport.updateCommReport(new CommunicationReportBean(crb));
         }
         EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.COMM_PROC_UPDATE , getSimEntity().commProcess));
         LOG.trace("<< CommunicationActivity.transitionOnFinish()");

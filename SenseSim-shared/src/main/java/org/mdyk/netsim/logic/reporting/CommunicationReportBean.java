@@ -38,6 +38,22 @@ public class CommunicationReportBean {
     private String commStatus;
 
 
+    public CommunicationReportBean() {
+    }
+
+    public CommunicationReportBean(CommunicationReportBean crb) {
+        this.simTimeStart = crb.simTimeStart;
+        this.simTimeEnd = crb.simTimeEnd;
+        this.sender = crb.sender;
+        this.receiver = crb.receiver;
+        this.messageType = crb.messageType;
+        this.messageContent = crb.messageContent;
+        this.messageId = crb.messageId;
+        this.messageSize = crb.messageSize;
+        this.commProcId = crb.commProcId;
+        this.commStatus = crb.commStatus;
+    }
+
     public double getSimTimeStart() {
         return simTimeStart;
     }
@@ -117,4 +133,7 @@ public class CommunicationReportBean {
     public void setCommStatus(String commStatus) {
         this.commStatus = commStatus;
     }
+
+
+
 }
