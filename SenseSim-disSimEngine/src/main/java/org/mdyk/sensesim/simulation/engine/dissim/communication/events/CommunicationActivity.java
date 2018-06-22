@@ -18,7 +18,7 @@ import java.util.List;
 public class CommunicationActivity extends BasicSimAction<CommunicationProcessSimEntity , Object> {
 
     private static final Logger LOG = Logger.getLogger(CommunicationActivity.class);
-    private static  final double duration = 0.1;
+    private static  final double duration = 0.01;
     private CommunicationReportBean crb;
     private DeviceNode sender;
     private DeviceNode receiver;
@@ -42,7 +42,7 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
 
 
         crb.setSender(sender.getID());
-        crb.setSender(receiver.getID());
+        crb.setReceiver(receiver.getID());
         crb.setSimTimeStart(startTime);
         crb.setSimTimeEnd(-1.0);
         crb.setMessageContent(messageContent);

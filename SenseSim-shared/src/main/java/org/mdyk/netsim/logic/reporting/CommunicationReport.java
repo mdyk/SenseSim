@@ -20,7 +20,7 @@ public class CommunicationReport {
     private static String commReportFile = "communicationReport.csv";
 
 
-    public static void updateCommReport(CommunicationReportBean updatedCrb) {
+    public static synchronized void updateCommReport(CommunicationReportBean updatedCrb) {
         try {
             List<CommunicationReportBean> records =  getRecords();
 
@@ -63,7 +63,7 @@ public class CommunicationReport {
         return records;
     }
 
-    public static void saveRecords(List<CommunicationReportBean> records) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+    public static synchronized void saveRecords(List<CommunicationReportBean> records) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
         Writer writer = new FileWriter(commReportFile);
 
         StatefulBeanToCsvBuilder beanToCsv = new StatefulBeanToCsvBuilder(writer);

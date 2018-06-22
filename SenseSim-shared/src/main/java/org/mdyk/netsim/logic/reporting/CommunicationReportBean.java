@@ -36,6 +36,9 @@ public class CommunicationReportBean {
     @CsvBindByName
     @CsvBindByPosition(position = 8)
     private String commStatus;
+    @CsvBindByName
+    @CsvBindByPosition(position = 9)
+    private Double commTime;
 
 
     public CommunicationReportBean() {
@@ -52,6 +55,7 @@ public class CommunicationReportBean {
         this.messageSize = crb.messageSize;
         this.commProcId = crb.commProcId;
         this.commStatus = crb.commStatus;
+        this.commTime = crb.commTime;
     }
 
     public Double getSimTimeStart() {
@@ -132,5 +136,17 @@ public class CommunicationReportBean {
 
     public void setCommStatus(String commStatus) {
         this.commStatus = commStatus;
+    }
+
+    public Double getCommTime() {
+        if (simTimeStart != null && simTimeEnd !=null) {
+            return simTimeEnd - simTimeStart;
+        } else {
+            return -1.0;
+        }
+    }
+
+    public void setCommTime(Double commTime) {
+        this.commTime = commTime;
     }
 }
