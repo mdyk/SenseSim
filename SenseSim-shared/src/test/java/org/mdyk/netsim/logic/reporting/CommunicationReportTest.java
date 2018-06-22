@@ -24,11 +24,11 @@ public class CommunicationReportTest {
         crb.setSimTimeStart(2.0);
         crb.setSimTimeEnd(3.0);
         crb.setCommStatus("DURING_COMM");
-        crb.setMessageId(222);
+        crb.setMessageId(222l);
         crb.setMessageContent("message content");
         crb.setSender(45);
         crb.setReceiver(46);
-        crb.setMessageType("td");
+//        crb.setMessageType("td");
         crb.setMessageSize(5000);
 
         CommunicationReport.updateCommReport(crb);
@@ -47,11 +47,11 @@ public class CommunicationReportTest {
         crb.setSimTimeStart(2.0);
         crb.setSimTimeEnd(3.0);
         crb.setCommStatus("DURING_COMM");
-        crb.setMessageId(222);
+        crb.setMessageId(222l);
         crb.setMessageContent("message content");
         crb.setSender(45);
         crb.setReceiver(46);
-        crb.setMessageType("td");
+//        crb.setMessageType("td");
         crb.setMessageSize(5000);
 
         CommunicationReport.updateCommReport(crb);
@@ -64,11 +64,11 @@ public class CommunicationReportTest {
         crb2.setSimTimeStart(2.0);
         crb2.setSimTimeEnd(3.0);
         crb2.setCommStatus("SUCCESS");
-        crb2.setMessageId(222);
+        crb2.setMessageId(222l);
         crb2.setMessageContent("message content");
         crb2.setSender(45);
         crb2.setReceiver(46);
-        crb2.setMessageType("td");
+//        crb2.setMessageType("td");
         crb2.setMessageSize(5000);
 
         CommunicationReport.updateCommReport(crb2);

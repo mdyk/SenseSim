@@ -221,8 +221,6 @@ public class OWLMiddleware extends Thread implements Middleware {
     public void handleTopologyDiscoveryResp(TopologyDiscoveryResponseMessage tdrm){
         LOG.trace(">> handleTopologyDiscoveryResp tdrm = " + tdrm.toString());
         this.updateNeighbourPosition(tdrm.getNodeId(),tdrm.getPosition());
-
-
         this.resendInformationNeed(tdrm.getNodeId(), tdrm.getNeedId());
 
         LOG.trace("<< handleTopologyDiscoveryResp");
@@ -466,9 +464,6 @@ public class OWLMiddleware extends Thread implements Middleware {
                     Infon infon = new Infon(informationNeed.getValue());
 
                     InformationNeedAskMessage askMessage = new InformationNeedAskMessage(this.nodeId, infon);
-
-                    this.informationNeedAskMsgs.put(askMessage.getId() , askMessage);
-                    this.informationNeedAskResendCount.put(askMessage.getId(), 0);
                     processInformationNeed(askMessage);
                 }
 
@@ -476,9 +471,12 @@ public class OWLMiddleware extends Thread implements Middleware {
         }
     }
 
-    // TODO najlepiej gdyby na wejsciu był JSON
+
     private void processInformationNeed(InformationNeedAskMessage informationNeedAsk) {
-        topologyDiscovery(informationNeedAsk.getId());
+        informationNeedAsk.processedInNode(this.nodeId);
+        this.informationNeedAskMsgs.put(informationNeedAsk.getId() , informationNeedAsk);
+        this.informationNeedAskResendCount.put(informationNeedAsk.getId(), 0);
+        topologyDiscovery(informationNeedAsk);
 //        resendInformationNeed(informationNeedAsk);
     }
 
@@ -490,7 +488,7 @@ public class OWLMiddleware extends Thread implements Middleware {
         //FIXME do poprawy tak żeby nie trzeba było iterowac po wszystkich sasiadach
         for(Integer commInt : this.neighbours.keySet()) {
             for(Neighbour n : this.neighbours.get(commInt)) {
-                if (n.getId() == neighbourId && Functions.isPointInRegion(n.getPosition() , needArea) ) {
+                if (n.getId() == neighbourId && Functions.isPointInRegion(n.getPosition() , needArea) && !informationNeedAsk.wasProcessedBy(n.getId())) {
                     deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());
                     int count = this.informationNeedAskResendCount.get(informationNeedAsk.getId());
                     this.informationNeedAskResendCount.put(informationNeedAsk.getId(), count);
@@ -586,42 +584,44 @@ public class OWLMiddleware extends Thread implements Middleware {
     /**
      * Zadanie związane z odkryciem topologii i położenia węzłów
      */
-    public void topologyDiscovery(int informationNeedId) {
+    public void topologyDiscovery(InformationNeedAskMessage informationNeedAsk) {
         this.actualizeNeighbours();
-        sendPositionQuery(informationNeedId);
+        sendPositionQuery(informationNeedAsk);
 
-        boolean wait = true;
-        int count = 1;
-
-        LOG.debug("--- Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+"]" );
-
-        while (wait && count < 40) {
-            for(Integer commInt : neighbours.keySet()) {
-                for(Neighbour n : this.neighbours.get(commInt)) {
-                    wait &= (n.getPosition() == null);
-                }
-            }
-
-//            // FIXME dodac opoznienie symulacyjne
-            try {
-                Thread.sleep(500);
-                count ++;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        LOG.debug("--- Position from all neighbours received [simTime="+deviceSimEntity.getSimTime()+"]");
+//        boolean wait = true;
+//        int count = 1;
+//
+//        LOG.debug("--- Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+"]" );
+//
+//        while (wait && count < 40) {
+//            for(Integer commInt : neighbours.keySet()) {
+//                for(Neighbour n : this.neighbours.get(commInt)) {
+//                    wait &= (n.getPosition() == null);
+//                }
+//            }
+//
+////            // FIXME dodac opoznienie symulacyjne
+//            try {
+//                Thread.sleep(500);
+//                count ++;
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
+//
+//        LOG.debug("--- Position from all neighbours received [simTime="+deviceSimEntity.getSimTime()+"]");
 
     }
 
-    private void sendPositionQuery(int needId) {
-        TopologyDiscoveryMessage tdm = new TopologyDiscoveryMessage(this.nodeId, needId);
+    private void sendPositionQuery(InformationNeedAskMessage informationNeedAsk) {
+        TopologyDiscoveryMessage tdm = new TopologyDiscoveryMessage(this.nodeId, informationNeedAsk.getId());
 
         for(Integer commInt : communicationInterfaces.keySet()) {
             for(Neighbour n : this.neighbours.get(commInt)) {
-                deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), n.getId(), commInt, tdm.toJSON(), tdm.getSize());
+                if(!informationNeedAsk.wasProcessedBy(n.getId())) {
+                    deviceAPI.api_sendMessage(msgId++, deviceAPI.api_getMyID(), n.getId(), commInt, tdm.toJSON(), tdm.getSize());
+                }
             }
         }
 

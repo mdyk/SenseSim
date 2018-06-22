@@ -8,33 +8,33 @@ public class CommunicationReportBean {
 
     @CsvBindByName
     @CsvBindByPosition(position = 0)
-    private double simTimeStart;
+    private Double simTimeStart;
     @CsvBindByName
     @CsvBindByPosition(position = 1)
-    private double simTimeEnd;
+    private Double simTimeEnd;
     @CsvBindByName
     @CsvBindByPosition(position = 2)
-    private int sender;
+    private Integer sender;
     @CsvBindByName
     @CsvBindByPosition(position = 3)
-    private int receiver;
+    private Integer receiver;
+//    @CsvBindByName
+//    @CsvBindByPosition(position = 4)
+//    private String messageType;
     @CsvBindByName
     @CsvBindByPosition(position = 4)
-    private String messageType;
-    @CsvBindByName
-    @CsvBindByPosition(position = 5)
     private String messageContent;
     @CsvBindByName
+    @CsvBindByPosition(position = 5)
+    private Long messageId;
+    @CsvBindByName
     @CsvBindByPosition(position = 6)
-    private long messageId;
+    private Integer messageSize;
     @CsvBindByName
     @CsvBindByPosition(position = 7)
-    private int messageSize;
+    private Integer commProcId;
     @CsvBindByName
     @CsvBindByPosition(position = 8)
-    private int commProcId;
-    @CsvBindByName
-    @CsvBindByPosition(position = 9)
     private String commStatus;
 
 
@@ -46,7 +46,7 @@ public class CommunicationReportBean {
         this.simTimeEnd = crb.simTimeEnd;
         this.sender = crb.sender;
         this.receiver = crb.receiver;
-        this.messageType = crb.messageType;
+//        this.messageType = crb.messageType;
         this.messageContent = crb.messageContent;
         this.messageId = crb.messageId;
         this.messageSize = crb.messageSize;
@@ -54,45 +54,45 @@ public class CommunicationReportBean {
         this.commStatus = crb.commStatus;
     }
 
-    public double getSimTimeStart() {
+    public Double getSimTimeStart() {
         return simTimeStart;
     }
 
-    public void setSimTimeStart(double simTimeStart) {
+    public void setSimTimeStart(Double simTimeStart) {
         this.simTimeStart = simTimeStart;
     }
 
-    public double getSimTimeEnd() {
+    public Double getSimTimeEnd() {
         return simTimeEnd;
     }
 
-    public void setSimTimeEnd(double simTimeEnd) {
+    public void setSimTimeEnd(Double simTimeEnd) {
         this.simTimeEnd = simTimeEnd;
     }
 
-    public int getSender() {
+    public Integer getSender() {
         return sender;
     }
 
-    public void setSender(int sender) {
+    public void setSender(Integer sender) {
         this.sender = sender;
     }
 
-    public int getReceiver() {
+    public Integer getReceiver() {
         return receiver;
     }
 
-    public void setReceiver(int receiver) {
+    public void setReceiver(Integer receiver) {
         this.receiver = receiver;
     }
 
-    public String getMessageType() {
-        return messageType;
-    }
-
-    public void setMessageType(String messageType) {
-        this.messageType = messageType;
-    }
+//    public String getMessageType() {
+//        return messageType;
+//    }
+//
+//    public void setMessageType(String messageType) {
+//        this.messageType = messageType;
+//    }
 
     public String getMessageContent() {
         return messageContent;
@@ -102,27 +102,27 @@ public class CommunicationReportBean {
         this.messageContent = messageContent;
     }
 
-    public long getMessageId() {
+    public Long getMessageId() {
         return messageId;
     }
 
-    public void setMessageId(long messageId) {
+    public void setMessageId(Long messageId) {
         this.messageId = messageId;
     }
 
-    public int getMessageSize() {
+    public Integer getMessageSize() {
         return messageSize;
     }
 
-    public void setMessageSize(int messageSize) {
+    public void setMessageSize(Integer messageSize) {
         this.messageSize = messageSize;
     }
 
-    public int getCommProcId() {
+    public Integer getCommProcId() {
         return commProcId;
     }
 
-    public void setCommProcId(int commProcId) {
+    public void setCommProcId(Integer commProcId) {
         this.commProcId = commProcId;
     }
 
@@ -133,7 +133,4 @@ public class CommunicationReportBean {
     public void setCommStatus(String commStatus) {
         this.commStatus = commStatus;
     }
-
-
-
 }

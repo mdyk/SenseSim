@@ -1,24 +1,35 @@
 package org.mdyk.netsim.logic.node.program.owl.messages;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mdyk.netsim.logic.infon.Infon;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InformationNeedAskMessage implements InformationNeedMessage {
 
     private final MessageParser.MessageType messageType = MessageParser.MessageType.INFORMATION_NEED_ASK;
     private final Infon infon;
     private int sourceNode;
-    private int needId;
+    private List<Integer> processedInNodes;
 
 
     public InformationNeedAskMessage(int sourceNode , Infon infon) {
         this.infon = infon;
         this.sourceNode = sourceNode;
+        processedInNodes = new ArrayList<>();
     }
 
-    public InformationNeedAskMessage(String sourceNode, Infon infon) {
+    public InformationNeedAskMessage(String sourceNode, Infon infon, JSONArray processedInNodes) {
         this(Integer.parseInt(sourceNode) , infon);
+
+        for(int ii=0; ii < processedInNodes.length(); ii++){
+//            System.out.println(processedInNodes.getJSONObject(ii);
+            this.processedInNodes.add(Integer.parseInt(String.valueOf(processedInNodes.get(ii))));
+        }
+
     }
 
     @Override
@@ -28,6 +39,7 @@ public class InformationNeedAskMessage implements InformationNeedMessage {
         jsonObject.put(MessageParser.INFON , infon.toString());
         jsonObject.put(MessageParser.SOURCE_NODE_KEY , sourceNode);
         jsonObject.put(MessageParser.NEED_ID , getId());
+        jsonObject.put(MessageParser.PROCESSED_NODES, processedInNodes);
         return jsonObject.toString();
     }
 
@@ -44,6 +56,15 @@ public class InformationNeedAskMessage implements InformationNeedMessage {
         return sourceNode;
     }
 
+    public void processedInNode(int nodeId) {
+        if(!processedInNodes.contains(nodeId)){
+            processedInNodes.add(nodeId);
+        }
+    }
+
+    public boolean wasProcessedBy(int nodeId) {
+        return processedInNodes.contains(nodeId);
+    }
 
     public int getId() {
         int result = messageType.hashCode();

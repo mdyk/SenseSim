@@ -13,6 +13,7 @@ public class MessageParser {
     public static final String POSITION_KEY = "p";
     public static final String INFON = "i";
     public static final String NEED_ID = "nid";
+    public static final String PROCESSED_NODES = "psn";
 
     public static InformationNeedMessage parseJSON(String JSONString) {
 
@@ -31,7 +32,7 @@ public class MessageParser {
                 break;
 
             case INFORMATION_NEED_ASK:
-                inm = new InformationNeedAskMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), new Infon(String.valueOf(jsonObject.get(INFON))));
+                inm = new InformationNeedAskMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), new Infon(String.valueOf(jsonObject.get(INFON))), jsonObject.getJSONArray(PROCESSED_NODES));
                 break;
         }
 

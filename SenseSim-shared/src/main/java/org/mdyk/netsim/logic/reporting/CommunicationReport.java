@@ -35,7 +35,7 @@ public class CommunicationReport {
 
             saveRecords(records);
 
-        } catch (CsvRequiredFieldEmptyException | IOException | CsvDataTypeMismatchException e) {
+        } catch (Exception e) {
             LOG.error(e);
         }
     }
@@ -70,6 +70,7 @@ public class CommunicationReport {
         StatefulBeanToCsv statefulBeanToCsv = beanToCsv.build();
 
         statefulBeanToCsv.write(records);
+        writer.flush();
         writer.close();
     }
 
