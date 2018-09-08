@@ -1,14 +1,4 @@
 <?xml version="1.0"?>
-
-
-<!DOCTYPE Ontology [
-    <!ENTITY xsd "http://www.w3.org/2001/XMLSchema#" >
-    <!ENTITY xml "http://www.w3.org/XML/1998/namespace" >
-    <!ENTITY rdfs "http://www.w3.org/2000/01/rdf-schema#" >
-    <!ENTITY rdf "http://www.w3.org/1999/02/22-rdf-syntax-ns#" >
-]>
-
-
 <Ontology xmlns="http://www.w3.org/2002/07/owl#"
      xml:base="http://www.semanticweb.org/mariuszchmielewski/ontologies/2016/6/untitled-ontology-9"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -16,199 +6,221 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="http://www.semanticweb.org/mariuszchmielewski/ontologies/2016/6/untitled-ontology-9">
-    <Prefix name="" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="" IRI="http://www.semanticweb.org/mariuszchmielewski/ontologies/2016/6/untitled-ontology-9#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
     <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
     <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
     <Declaration>
-        <Class IRI="#AJP-4.10A-TriageHumanStateDomain"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Actuator"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#BioMedicalSensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#BiologicalObject"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#BiologicalObjectStateDomain"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#BiologicalStimulus"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ChestStrapHeartRateMonitor"/>
+        <DataProperty IRI="#Object_identifier"/>
     </Declaration>
     <Declaration>
         <Class IRI="#CognitiveSensor"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Device"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#DeviceWithBiomedicalSensors"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#DeviceWithMultipleSensors"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#DeviceWithSensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ElectroDermalActivitySensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#HeartRate"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#HumanStateDomain"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#InvasiveSensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#InvasiveTemperatureSensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Moisture"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#MonitoredBiologicalObject"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#MonitoredObject"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#MonitoredObjectByDevice"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#MonitoredObjectByDeviceWithSensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#NonInvasiveSensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#NonInvasiveTemperatureSensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Object"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ObjectState"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#ObjectStateDomain"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#PT100"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#PhysicalStimulus"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Pressure"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Pulse"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#PulsoOxymetrySensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Pulsooximeter"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Sensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#SensorDataPackage"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#SensorWhichActuates"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Stimulus"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#Temperature"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#TemperatureSensor"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#TermalyMonitoredObject"/>
-    </Declaration>
-    <Declaration>
-        <Class IRI="#TriageHumanStateDomain"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#Device_contains_Sensor"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#Device_is-diagnosing_Object"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#ObjectState_classified-as_ObjectStateDomain"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#ObjectState_describes_Object"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#ObjectState_evaluated-by_Device"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#ObjectState_evaluated-using_SensorDataPackage"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#Object_described-by_ObjectState"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#Object_diagnosed-by_Device"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#Object_provides_Stimulus"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#SensorDataPackage_evaluates_Stimulus"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#SensorDataPackage_gathered-from_Sensor"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#Sensor_provided-by_Device"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#Sensor_reads_Stimulus"/>
-    </Declaration>
-    <Declaration>
-        <ObjectProperty IRI="#Stimulus_read-by_Sensor"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#Object_identifier"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#Object_name"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#SensorDataPackage_has-measurement-time"/>
-    </Declaration>
-    <Declaration>
-        <DataProperty IRI="#SensorDataPackage_has-milivolts"/>
-    </Declaration>
-    <Declaration>
-        <NamedIndividual IRI="#DelayedTreatment_T2_AJP-4.10A-TriageHumanStateDomain"/>
+        <NamedIndividual IRI="#ImmediateTreatment_T1_AJP-4.10A-TriageHumanStateDomain"/>
     </Declaration>
     <Declaration>
         <NamedIndividual IRI="#ExpectantTreatment_T4_AJP-4.10A-TriageHumanStateDomain"/>
     </Declaration>
     <Declaration>
-        <NamedIndividual IRI="#ImmediateTreatment_T1_AJP-4.10A-TriageHumanStateDomain"/>
+        <Class IRI="#OWLClass_e369fb85_b75b_4cf4_bb45_d956b7765754"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#OWLObjectProperty_424e5a2d_3e82_4dc4_b876_349411afa870"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Device_is-diagnosing_Object"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ChestStrapHeartRateMonitor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PhysicalStimulus"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#InvasiveTemperatureSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#NonInvasiveTemperatureSensor"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#OWLNamedIndividual_69f20894_69eb_4a98_9771_04eb1d629880"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#Object_name"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#DeviceWithMultipleSensors"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Device_contains_Sensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ElectroDermalActivitySensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#OWLClass_a2fbe5ec_f3b0_43e6_8aa2_a39507630ccd"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BiologicalStimulus"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#ObjectState_evaluated-by_Device"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Object"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Sensor_reads_Stimulus"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pulsooximeter"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BiologicalObject"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#DeviceWithSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#NonInvasiveSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#HeartRate"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#InvasiveSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#MonitoredObjectByDevice"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ObjectStateDomain"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Sensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#AJP-4.10A-TriageHumanStateDomain"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#SensorDataPackage_has-milivolts"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BiologicalObjectStateDomain"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Sensor_provided-by_Device"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#BioMedicalSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#OWLClass_605f8aff_deba_4bdc_accd_b993d5537422"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#OWLObjectProperty_de8afeef_fd44_4a52_abda_0bdaf955df1e"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#ObjectState"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#MonitoredObject"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Stimulus_read-by_Sensor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Object_described-by_ObjectState"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Stimulus"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#ObjectState_classified-as_ObjectStateDomain"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#TermalyMonitoredObject"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#MonitoredObjectByDeviceWithSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Device"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PulsoOxymetrySensor"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#SensorDataPackage_gathered-from_Sensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Actuator"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#ObjectState_describes_Object"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Moisture"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pulse"/>
     </Declaration>
     <Declaration>
         <NamedIndividual IRI="#MinimalTreatment_T3_AJP-4.10A-TriageHumanStateDomain"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#MonitoredBiologicalObject"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#SensorDataPackage_has-measurement-time"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#TriageHumanStateDomain"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#DeviceWithBiomedicalSensors"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#ObjectState_evaluated-using_SensorDataPackage"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#SensorDataPackage_evaluates_Stimulus"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#TemperatureSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Temperature"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Pressure"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#DelayedTreatment_T2_AJP-4.10A-TriageHumanStateDomain"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SensorDataPackage"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#OWLClass_bbeb0d51_5e3a_4ff3_8328_0bb10a37b8ac"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Object_provides_Stimulus"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#Object_diagnosed-by_Device"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#PT100"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#SensorWhichActuates"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#HumanStateDomain"/>
     </Declaration>
     <EquivalentClasses>
         <Class IRI="#DeviceWithBiomedicalSensors"/>
@@ -259,19 +271,16 @@
         </ObjectSomeValuesFrom>
     </EquivalentClasses>
     <EquivalentClasses>
-        <Class IRI="#SensorWhichActuates"/>
-        <ObjectIntersectionOf>
-            <Class IRI="#Actuator"/>
-            <Class IRI="#Sensor"/>
-        </ObjectIntersectionOf>
-    </EquivalentClasses>
-    <EquivalentClasses>
         <Class IRI="#TemperatureSensor"/>
         <ObjectSomeValuesFrom>
             <ObjectProperty IRI="#Sensor_reads_Stimulus"/>
             <Class IRI="#Temperature"/>
         </ObjectSomeValuesFrom>
     </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="#AJP-4.10A-TriageHumanStateDomain"/>
+        <Class IRI="#OWLClass_605f8aff_deba_4bdc_accd_b993d5537422"/>
+    </SubClassOf>
     <SubClassOf>
         <Class IRI="#AJP-4.10A-TriageHumanStateDomain"/>
         <Class IRI="#TriageHumanStateDomain"/>
@@ -361,6 +370,22 @@
         <Class IRI="#TemperatureSensor"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#OWLClass_a2fbe5ec_f3b0_43e6_8aa2_a39507630ccd"/>
+        <Class IRI="#MonitoredBiologicalObject"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#OWLClass_bbeb0d51_5e3a_4ff3_8328_0bb10a37b8ac"/>
+        <Class IRI="#OWLClass_605f8aff_deba_4bdc_accd_b993d5537422"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#OWLClass_e369fb85_b75b_4cf4_bb45_d956b7765754"/>
+        <Class IRI="#Device"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#OWLClass_e369fb85_b75b_4cf4_bb45_d956b7765754"/>
+        <Class IRI="#DeviceWithBiomedicalSensors"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#PT100"/>
         <Class IRI="#NonInvasiveTemperatureSensor"/>
     </SubClassOf>
@@ -427,6 +452,15 @@
     </DisjointClasses>
     <DisjointClasses>
         <Class IRI="#Device"/>
+        <Class IRI="#Object"/>
+        <Class IRI="#ObjectState"/>
+        <Class IRI="#ObjectStateDomain"/>
+        <Class IRI="#Sensor"/>
+        <Class IRI="#SensorDataPackage"/>
+        <Class IRI="#Stimulus"/>
+    </DisjointClasses>
+    <DisjointClasses>
+        <Class IRI="#Device"/>
         <Class IRI="#Sensor"/>
     </DisjointClasses>
     <ClassAssertion>
@@ -445,15 +479,28 @@
         <Class IRI="#AJP-4.10A-TriageHumanStateDomain"/>
         <NamedIndividual IRI="#MinimalTreatment_T3_AJP-4.10A-TriageHumanStateDomain"/>
     </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#OWLClass_a2fbe5ec_f3b0_43e6_8aa2_a39507630ccd"/>
+        <NamedIndividual IRI="#OWLNamedIndividual_69f20894_69eb_4a98_9771_04eb1d629880"/>
+    </ClassAssertion>
     <DifferentIndividuals>
         <NamedIndividual IRI="#DelayedTreatment_T2_AJP-4.10A-TriageHumanStateDomain"/>
         <NamedIndividual IRI="#ExpectantTreatment_T4_AJP-4.10A-TriageHumanStateDomain"/>
         <NamedIndividual IRI="#ImmediateTreatment_T1_AJP-4.10A-TriageHumanStateDomain"/>
         <NamedIndividual IRI="#MinimalTreatment_T3_AJP-4.10A-TriageHumanStateDomain"/>
     </DifferentIndividuals>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#OWLObjectProperty_de8afeef_fd44_4a52_abda_0bdaf955df1e"/>
+        <NamedIndividual IRI="#OWLNamedIndividual_69f20894_69eb_4a98_9771_04eb1d629880"/>
+        <NamedIndividual IRI="#ImmediateTreatment_T1_AJP-4.10A-TriageHumanStateDomain"/>
+    </ObjectPropertyAssertion>
     <InverseObjectProperties>
-        <ObjectProperty IRI="#Sensor_provided-by_Device"/>
         <ObjectProperty IRI="#Device_contains_Sensor"/>
+        <ObjectProperty IRI="#Sensor_provided-by_Device"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#OWLObjectProperty_424e5a2d_3e82_4dc4_b876_349411afa870"/>
+        <ObjectProperty IRI="#OWLObjectProperty_de8afeef_fd44_4a52_abda_0bdaf955df1e"/>
     </InverseObjectProperties>
     <InverseObjectProperties>
         <ObjectProperty IRI="#ObjectState_describes_Object"/>
@@ -470,6 +517,14 @@
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#Device_is-diagnosing_Object"/>
         <Class IRI="#Device"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#OWLObjectProperty_424e5a2d_3e82_4dc4_b876_349411afa870"/>
+        <Class IRI="#OWLClass_605f8aff_deba_4bdc_accd_b993d5537422"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#OWLObjectProperty_de8afeef_fd44_4a52_abda_0bdaf955df1e"/>
+        <Class IRI="#Object"/>
     </ObjectPropertyDomain>
     <ObjectPropertyDomain>
         <ObjectProperty IRI="#ObjectState_classified-as_ObjectStateDomain"/>
@@ -522,6 +577,14 @@
     <ObjectPropertyRange>
         <ObjectProperty IRI="#Device_is-diagnosing_Object"/>
         <Class IRI="#Object"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#OWLObjectProperty_424e5a2d_3e82_4dc4_b876_349411afa870"/>
+        <Class IRI="#Object"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#OWLObjectProperty_de8afeef_fd44_4a52_abda_0bdaf955df1e"/>
+        <Class IRI="#OWLClass_605f8aff_deba_4bdc_accd_b993d5537422"/>
     </ObjectPropertyRange>
     <ObjectPropertyRange>
         <ObjectProperty IRI="#ObjectState_classified-as_ObjectStateDomain"/>
@@ -604,11 +667,46 @@
     <AnnotationAssertion>
         <AnnotationProperty abbreviatedIRI="rdfs:comment"/>
         <IRI>#ImmediateTreatment_T1_AJP-4.10A-TriageHumanStateDomain</IRI>
-        <Literal datatypeIRI="&rdf;PlainLiteral">To consist of those requiring emergency care and life-saving surgery. These procedures should not be time-consuming and should concern only those patients with high chances of survival.</Literal>
+        <Literal datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">To consist of those requiring emergency care and life-saving surgery. These procedures should not be time-consuming and should concern only those patients with high chances of survival.</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#OWLClass_605f8aff_deba_4bdc_accd_b993d5537422</IRI>
+        <Literal xml:lang="pl" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Relation</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#OWLClass_a2fbe5ec_f3b0_43e6_8aa2_a39507630ccd</IRI>
+        <Literal xml:lang="pl" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Soldier</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#OWLClass_bbeb0d51_5e3a_4ff3_8328_0bb10a37b8ac</IRI>
+        <Literal xml:lang="pl" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">ImmediateTreatment</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#OWLClass_e369fb85_b75b_4cf4_bb45_d956b7765754</IRI>
+        <Literal xml:lang="pl" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">PressureSensor</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#OWLNamedIndividual_69f20894_69eb_4a98_9771_04eb1d629880</IRI>
+        <Literal xml:lang="pl" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Soldier_1</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#OWLObjectProperty_424e5a2d_3e82_4dc4_b876_349411afa870</IRI>
+        <Literal xml:lang="pl" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Relation_has_Object</Literal>
+    </AnnotationAssertion>
+    <AnnotationAssertion>
+        <AnnotationProperty abbreviatedIRI="rdfs:label"/>
+        <IRI>#OWLObjectProperty_de8afeef_fd44_4a52_abda_0bdaf955df1e</IRI>
+        <Literal xml:lang="pl" datatypeIRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral">Object_is-in_Relation</Literal>
     </AnnotationAssertion>
 </Ontology>
 
 
 
-<!-- Generated by the OWL API (version 3.5.1) http://owlapi.sourceforge.net -->
+<!-- Generated by the OWL API (version 4.2.8.20170104-2310) https://github.com/owlcs/owlapi -->
 
