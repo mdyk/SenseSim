@@ -71,7 +71,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         communicationInterfaces = deviceAPI.api_listCommunicationInterfaces();
 
-        kb = new KnowledgeBase();
+        kb = new KnowledgeBase("Device-"+this.deviceSimEntity.getDeviceLogic().getName());
 
         deviceAPI.api_setOnMessageHandler(new Function<Message, Object>() {
             @Override
@@ -182,6 +182,7 @@ public class OWLMiddleware extends Thread implements Middleware {
     @Deprecated
     public void loadOntology(File ontologyFile , String ontologyIRI) throws OWLOntologyCreationException {
         kb.loadOntology(ontologyFile,ontologyIRI);
+        kb.saveKBSnapshot(this.deviceSimEntity.getSimTime());
     }
 
     @Subscribe

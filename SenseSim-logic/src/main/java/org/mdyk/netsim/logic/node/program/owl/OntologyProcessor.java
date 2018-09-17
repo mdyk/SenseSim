@@ -3,15 +3,20 @@ package org.mdyk.netsim.logic.node.program.owl;
 
 import com.clarkparsia.pellet.owlapiv3.PelletReasoner;
 import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
+import org.apache.log4j.Logger;
 import org.semanticweb.owlapi.apibinding.OWLManager;
+import org.semanticweb.owlapi.io.FileDocumentTarget;
 import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.reasoner.NodeSet;
-import org.semanticweb.owlapi.search.EntitySearcher;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.Arrays;
 
 public class OntologyProcessor {
+
+    private static final Logger LOG = Logger.getLogger(OntologyProcessor.class);
 
     private static final String relationClassName = "Relation";
     private static final String objectClassName = "Object";
@@ -48,6 +53,25 @@ public class OntologyProcessor {
 
     }
 
+    /**
+     * Saves current ontology in a different file
+     */
+    public void saveOntologySnapshot(String fileName, double simTime) {
+        LOG.trace(">> saveOntologySnapshot simTime="+simTime);
+
+        //Create a file for the new format
+        File fileformated = new File(fileName+"-"+simTime+".owl");
+
+        try {
+            fileformated.createNewFile();
+            manager.saveOntology(ontology, new FileDocumentTarget(fileformated));
+        } catch (OWLOntologyStorageException | IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        LOG.trace("<< saveOntologySnapshot");
+    }
+
     public boolean relationExists(String relationName) {
 
         if(relationName.equalsIgnoreCase("isUnknown")) {
@@ -62,22 +86,19 @@ public class OntologyProcessor {
     }
 
     private boolean subClassExists(String parentClass , String childClass) {
-        OWLClass realtionClass = null;
+        OWLClass realtionClass = findClass(parentClass);
 
-        for (OWLClass cls : ontology.getClassesInSignature()) {
-            if(labelForClass(cls).equals(parentClass)) {
-                realtionClass = cls;
-            }
-        }
         // FIXME
         assert realtionClass != null;
 
         NodeSet<OWLClass> subClasses = reasoner.getSubClasses(realtionClass, true);
 
         for (OWLClass subClass : subClasses.getFlattened()) {
+
             if(labelForClass(subClass).equals(childClass)) {
                 return true;
             }
+
         }
 
         return false;
@@ -85,16 +106,69 @@ public class OntologyProcessor {
 
     private String labelForClass(OWLClass owlClass) {
 
-        String label = null;
+        String stringId = owlClass.toStringID();
 
-        for (OWLAnnotation a : EntitySearcher.getAnnotations(owlClass, ontology, df.getRDFSLabel())) {
-            OWLAnnotationValue val = a.getValue();
-            if (val instanceof OWLLiteral) {
-                label = ((OWLLiteral) val).getLiteral();
+        return stringId.split("#")[1];
+    }
+
+    public OWLClass createClass(String name) {
+        String iri = ontologyIRI+"#"+name;
+        return createClass(convertStringToIRI(iri));
+    }
+
+    public OWLClass createClass(IRI iri) {
+        return df.getOWLClass(iri);
+    }
+
+    public OWLClass findClass(String name) {
+        OWLClass owlClass = null;
+
+        for (OWLClass cls : ontology.getClassesInSignature()) {
+            if(labelForClass(cls).equals(name)) {
+                owlClass = cls;
             }
         }
 
-        return label;
+        return owlClass;
     }
 
+    public OWLAxiomChange createSubclass(OWLClass subclass, OWLClass superclass) {
+        return new AddAxiom(ontology, df.getOWLSubClassOfAxiom(subclass, superclass));
+    }
+
+    private IRI convertStringToIRI(String ns) {
+        return IRI.create(ns);
+    }
+
+    /**
+     * With ontology o, property in refHolder points to a refTo.
+     *
+     * @param o         The ontology reference
+     * @param property  the data property reference
+     * @param refHolder the container of the property
+     * @param refTo     the class the property points to
+     * @return a patch to the ontology
+     */
+    public OWLAxiomChange associateObjectPropertyWithClass(OWLOntology o,
+                                                           OWLObjectProperty property,
+                                                           OWLClass refHolder,
+                                                           OWLClass refTo) {
+        OWLClassExpression hasSomeRefTo = df.getOWLObjectSomeValuesFrom(property, refTo);
+        OWLSubClassOfAxiom ax = df.getOWLSubClassOfAxiom(refHolder, hasSomeRefTo);
+        return new AddAxiom(o, ax);
+    }
+
+    public void applyChange(OWLAxiomChange... axiom) {
+        applyChanges(axiom);
+    }
+
+    private void applyChanges(OWLAxiomChange... axioms) {
+        manager.applyChanges(Arrays.asList(axioms));
+    }
+
+    public OWLAxiomChange associateIndividualWithClass(OWLOntology o,
+                                                       OWLClass clazz,
+                                                       OWLIndividual individual) {
+        return new AddAxiom(o, df.getOWLClassAssertionAxiom(clazz, individual));
+    }
 }
