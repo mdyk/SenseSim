@@ -62,6 +62,10 @@ public class InformationNeedAskMessage implements InformationNeedMessage {
         }
     }
 
+    public List<Integer> getProcessedInNodes() {
+        return processedInNodes;
+    }
+
     public boolean wasProcessedBy(int nodeId) {
         return processedInNodes.contains(nodeId);
     }

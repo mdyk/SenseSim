@@ -22,6 +22,14 @@ public class Infon {
     private boolean isSpatialLocationParam = false;
     private boolean isPolarityParam = false;
 
+    public Infon(String relation, ArrayList<String> objects, String temporalLocation, String spatialLocation, String polarity) {
+        this.relation = relation;
+        this.objects = objects;
+        this.temporalLocation = temporalLocation;
+        this.spatialLocation = spatialLocation;
+        this.polarity = polarity;
+    }
+
     public Infon(Infon infon) {
         this(infon.toString());
     }

@@ -42,7 +42,8 @@ public class MessageParser {
     public enum MessageType {
         TOPOLOGY_DISCOVERY_ASK("td"),
         TOPOLOGY_DISCOVERY_RESP("tdr"),
-        INFORMATION_NEED_ASK("in");
+        INFORMATION_NEED_ASK("in"),
+        INFORMATION_NEED_RESP("inr");
 
 
         private final String jsonKey;

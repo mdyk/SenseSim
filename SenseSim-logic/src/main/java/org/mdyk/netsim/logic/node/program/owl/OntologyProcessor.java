@@ -6,6 +6,8 @@ import com.clarkparsia.pellet.owlapiv3.PelletReasonerFactory;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.NodeSet;
+import org.semanticweb.owlapi.search.EntitySearcher;
 
 import java.io.File;
 
@@ -36,7 +38,6 @@ public class OntologyProcessor {
                 "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\n" +
                 "PREFIX ont: <"+this.ontologyIRI+"#>";
 
-//        populateIndyviduals();
 
         try {
             manager.saveOntology(ontology, new SystemOutDocumentTarget());
@@ -45,6 +46,55 @@ public class OntologyProcessor {
             e.printStackTrace();
         }
 
+    }
+
+    public boolean relationExists(String relationName) {
+
+        if(relationName.equalsIgnoreCase("isUnknown")) {
+            return true;
+        }
+
+        return subClassExists(relationClassName , relationName);
+    }
+
+    public boolean objectExists(String objectName) {
+        return subClassExists(objectClassName , objectName);
+    }
+
+    private boolean subClassExists(String parentClass , String childClass) {
+        OWLClass realtionClass = null;
+
+        for (OWLClass cls : ontology.getClassesInSignature()) {
+            if(labelForClass(cls).equals(parentClass)) {
+                realtionClass = cls;
+            }
+        }
+        // FIXME
+        assert realtionClass != null;
+
+        NodeSet<OWLClass> subClasses = reasoner.getSubClasses(realtionClass, true);
+
+        for (OWLClass subClass : subClasses.getFlattened()) {
+            if(labelForClass(subClass).equals(childClass)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private String labelForClass(OWLClass owlClass) {
+
+        String label = null;
+
+        for (OWLAnnotation a : EntitySearcher.getAnnotations(owlClass, ontology, df.getRDFSLabel())) {
+            OWLAnnotationValue val = a.getValue();
+            if (val instanceof OWLLiteral) {
+                label = ((OWLLiteral) val).getLiteral();
+            }
+        }
+
+        return label;
     }
 
 }

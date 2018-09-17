@@ -3,8 +3,8 @@
 <scenario id="1" >
 
     <scenarioOntology>
-        <OntologyFile>CombatTriageOntology.owl</OntologyFile>
-        <OntologyIRI>http://www.semanticweb.org/mariuszchmielewski/ontologies/2016/6/untitled-ontology-9</OntologyIRI>
+        <OntologyFile>cognitive-agent-ontology2.owl</OntologyFile>
+        <OntologyIRI>http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog</OntologyIRI>
     </scenarioOntology>
 
     <scenarioBoundaries>
