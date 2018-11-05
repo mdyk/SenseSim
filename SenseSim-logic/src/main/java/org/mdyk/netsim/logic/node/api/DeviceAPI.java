@@ -153,4 +153,15 @@ public interface DeviceAPI<P extends Position> {
 
     ConfigurationSpace api_getSensorCurrentObservation(SensorModel sensor);
 
+    /**
+     * Device stays in IDLE mode, but may receive incoming messages
+     * @param time
+     *      defines how long the device should stay in IDLE
+     * @return
+     *      false when IDLE is finished
+     *      true when should stay in IDLE
+     *
+     */
+    void api_stayIdleFor(double time);
+
 }

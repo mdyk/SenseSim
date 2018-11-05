@@ -197,7 +197,7 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
     @Override
     public void move() {
         try {
-            LOG.trace(">> move node: " + getID());
+//            LOG.trace(">> move node: " + getID());
             if (!isMoveing || route == null || route.size() == 0) return;
             // TODO założenie że pędkość podawana jest w kilomwtrach. Trzeba to przenieść do konfiguracji.
             double velocityMetersPerSec = this.velocity / 3.6;
@@ -208,7 +208,7 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
             this.setPosition(newPosition);
             this.networkManager.actualizeNaighbours(this);
             EventBusHolder.getEventBus().post(EventFactory.createNodePositionChangedEvent(this));
-            LOG.trace("<< move node: " + getID());
+//            LOG.trace("<< move node: " + getID());
         } catch (Exception e) {
             LOG.error(e.getMessage() , e);
         }

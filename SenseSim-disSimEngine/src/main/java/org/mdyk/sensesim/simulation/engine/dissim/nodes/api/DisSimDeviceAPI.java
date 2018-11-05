@@ -14,6 +14,7 @@ import org.mdyk.netsim.mathModel.device.connectivity.CommunicationInterface;
 import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonValue;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
+import org.mdyk.sensesim.simulation.engine.dissim.communication.events.CommunicationIdleSimEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimDeviceLogic;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.MoveActivity;
@@ -212,5 +213,20 @@ public class DisSimDeviceAPI implements DeviceAPI<GeoPosition> {
         }
 
         return observation;
+    }
+
+    @Override
+    public void api_stayIdleFor(double time) {
+        LOG.trace(">>  api_stayIdleFor [time = "+time+" ]");
+
+        boolean idle = true;
+
+        CommunicationIdleSimEntity communicationIdleSimEntity = new CommunicationIdleSimEntity(time);
+
+        while (idle) {
+            idle = communicationIdleSimEntity.isInIDLE();
+        }
+
+        LOG.trace("<< api_stayIdleFor");
     }
 }

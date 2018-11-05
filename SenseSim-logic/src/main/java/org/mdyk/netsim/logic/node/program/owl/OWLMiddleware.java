@@ -125,11 +125,11 @@ public class OWLMiddleware extends Thread implements Middleware {
     }
 
     public void handleTopologyDiscoveryResp(TopologyDiscoveryResponseMessage tdrm){
-        LOG.trace(">> handleTopologyDiscoveryResp tdrm = " + tdrm.toString());
+        LOG.trace(">> handleTopologyDiscoveryResp tdrm = " + tdrm.toString());                 
         this.updateNeighbourPosition(tdrm.getNodeId(),tdrm.getPosition());
 
         // Rozesłanie tylko jeśli była taka potrzeba
-        this.resendInformationNeed(tdrm.getNodeId(), tdrm.getNeedId());
+       // this.resendInformationNeed(tdrm.getNodeId(), tdrm.getNeedId());
 
         LOG.trace("<< handleTopologyDiscoveryResp");
     }
@@ -226,19 +226,16 @@ public class OWLMiddleware extends Thread implements Middleware {
         informationNeedAsk.processedInNode(this.nodeId);
         this.informationNeedAskMsgs.put(informationNeedAsk.getId() , informationNeedAsk);
         this.informationNeedAskResendCount.put(informationNeedAsk.getId(), 0);
-
-//        //fixme To powinno wynikać z weryfikacji potrzeby
-
-
+        
         if(verify) {
             List<INProcessStatus> inProcessStatus = verifyInformationNeed(informationNeedAsk);
 
-            if(inProcessStatus.contains(INProcessStatus.RESEND)) {
-                resendInformationNeed(informationNeedAsk.getId());
-            }
-
             if(inProcessStatus.contains(INProcessStatus.UPDATE_TOPOLOGY)) {
                 topologyDiscovery(informationNeedAsk);
+            }
+
+            if(inProcessStatus.contains(INProcessStatus.RESEND)) {
+                resendInformationNeed(informationNeedAsk.getId());
             }
 
             if(inProcessStatus.contains(INProcessStatus.ASK_FOR_RELATION)) {
@@ -525,6 +522,7 @@ public class OWLMiddleware extends Thread implements Middleware {
         this.actualizeNeighbours();
         sendPositionQuery(informationNeedAsk);
 
+//        deviceAPI.api_stayIdleFor(2);
 
 
 //        boolean wait = true;
@@ -540,12 +538,12 @@ public class OWLMiddleware extends Thread implements Middleware {
 //            }
 //
 ////            // FIXME dodac opoznienie symulacyjne
-//            try {
-//                Thread.sleep(500);
+            try {
+                Thread.sleep(2000);
 //                count ++;
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 //
 //        }
 //
