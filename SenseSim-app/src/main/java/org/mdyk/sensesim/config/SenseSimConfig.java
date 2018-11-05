@@ -46,7 +46,7 @@ public class SenseSimConfig extends AbstractModule {
         bind(DeviceStatisticsFactory.class).to(DefaultStatisticsFactory.class);
         bind(CommunicationProcessFactory.class).to(DisSimCommunicationProcessFactory.class);
 //        bind(IRealDevicePlugin.class).to(RealDevicePlugin.class);
-        bind(MCopPluginFactory.class).to(org.mdyk.sensesim.integrator.mcop.plugin.MCopPluginFactoryImpl.class);
+//        bind(MCopPluginFactory.class).to(org.mdyk.sensesim.integrator.mcop.plugin.MCopPluginFactoryImpl.class);
     }
 
 }

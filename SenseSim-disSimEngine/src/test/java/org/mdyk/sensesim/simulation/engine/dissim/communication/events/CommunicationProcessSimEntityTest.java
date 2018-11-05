@@ -56,7 +56,7 @@ public class CommunicationProcessSimEntityTest {
                 bind(PhenomenaFactory.class).to(DisSimPhenomenaFactory.class);
                 bind(DeviceStatisticsFactory.class).to(DefaultStatisticsFactory.class);
                 install(new FactoryModuleBuilder().build(ScenarioFactory.class));
-                bind(MCopPluginFactory.class).to(org.mdyk.sensesim.integrator.mcop.plugin.MCopPluginFactoryImpl.class);
+//                bind(MCopPluginFactory.class).to(org.mdyk.sensesim.integrator.mcop.plugin.MCopPluginFactoryImpl.class);
             }
         });
 

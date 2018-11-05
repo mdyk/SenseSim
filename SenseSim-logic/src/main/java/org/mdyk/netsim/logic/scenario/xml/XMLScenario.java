@@ -48,7 +48,7 @@ public class XMLScenario implements Scenario {
     private MCopPluginFactory mCopPluginFactory;
 
     @Inject
-    public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory, SensorFactory sensorFactory, MCopPluginFactory mCopPluginFactory) throws XMLScenarioLoadException {
+    public XMLScenario(@Assisted File file, DevicesFactory devicesFactory, PhenomenaFactory phenomenaFactory, SensorFactory sensorFactory) throws XMLScenarioLoadException {
         JAXBContext jaxbContext;
         try {
             scenarioFile = file;
@@ -58,7 +58,7 @@ public class XMLScenario implements Scenario {
             this.devicesFactory = devicesFactory;
             this.phenomenaFactory = phenomenaFactory;
             this.sensorFactory = sensorFactory;
-            this.mCopPluginFactory = mCopPluginFactory;
+//            this.mCopPluginFactory = mCopPluginFactory;
             this.xmlTypeConverter = new XmlTypeConverter(scenarioFile.getParent());
         } catch (JAXBException e) {
             LOG.error(e.getMessage(), e);

@@ -41,8 +41,8 @@ import java.util.List;
 public class DisSimEngine implements SimEngine, Runnable {
 
     private static final Logger LOG = Logger.getLogger(DisSimEngine.class);
-    @Inject
-    MCopPluginFactory mCopPluginFactory;
+//    @Inject
+//    MCopPluginFactory mCopPluginFactory;
     @Inject
     private DevicesFactory devicesFactory;
     @Inject
@@ -93,9 +93,9 @@ public class DisSimEngine implements SimEngine, Runnable {
         }
 
 
-        new Thread(() -> {
-            mCopPluginFactory.getMCopPlugin().start();
-        }).start();
+//        new Thread(() -> {
+//            mCopPluginFactory.getMCopPlugin().start();
+//        }).start();
 
         EventBusHolder.post(EventFactory.createScenarioLoadedEvent(scenario));
     }
@@ -135,10 +135,10 @@ public class DisSimEngine implements SimEngine, Runnable {
     private void addNodes(List<Device> nodesList) {
         for (Device deviceModel : nodesList) {
             addNode(deviceModel);
-            mCopPluginFactory.getMCopPlugin().addUnit((long) deviceModel.getDeviceLogic().getID(),
-                    deviceModel.getDeviceLogic().getName() ,
-                    deviceModel.getDeviceLogic().getPosition().getLatitude() ,
-                    deviceModel.getDeviceLogic().getPosition().getLongitude());
+//            mCopPluginFactory.getMCopPlugin().addUnit((long) deviceModel.getDeviceLogic().getID(),
+//                    deviceModel.getDeviceLogic().getName() ,
+//                    deviceModel.getDeviceLogic().getPosition().getLatitude() ,
+//                    deviceModel.getDeviceLogic().getPosition().getLongitude());
         }
     }
 

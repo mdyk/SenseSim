@@ -10,8 +10,6 @@ import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.scenario.xml.XMLScenarioLoadException;
 import org.mdyk.netsim.mathModel.MathModule;
 import org.mdyk.sensesim.config.SenseSimConfig;
-import sensesim.integration.mcop.MCopPluginFactory;
-import webservices.Platform;
 
 import java.io.File;
 
