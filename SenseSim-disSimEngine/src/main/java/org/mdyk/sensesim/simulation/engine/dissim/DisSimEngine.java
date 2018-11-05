@@ -4,6 +4,9 @@ import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import dissim.simspace.core.SimControlException;
 import dissim.simspace.core.SimModel;
+import net.xeoh.plugins.base.PluginManager;
+import net.xeoh.plugins.base.impl.PluginManagerFactory;
+import net.xeoh.plugins.base.util.PluginManagerUtil;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.Environment;
 import org.mdyk.netsim.logic.event.EventBusHolder;
@@ -11,15 +14,17 @@ import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.network.NetworkManager;
 import org.mdyk.netsim.logic.node.Device;
+import org.mdyk.netsim.logic.node.DevicesFactory;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.ScenarioFactory;
 import org.mdyk.netsim.logic.simEngine.SimEngine;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.mathModel.phenomena.PhenomenonModel;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.DisSimNodeEntity;
-import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.EndMoveActivity;
 import org.mdyk.sensesim.simulation.engine.dissim.nodes.events.MoveActivity;
 import org.mdyk.sensesim.simulation.engine.dissim.phenomena.PhenomenonSimEntity;
+import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
+import sensesim.integration.mcop.MCopPluginFactory;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,16 +32,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
-
-import net.xeoh.plugins.base.PluginManager;
-import net.xeoh.plugins.base.impl.PluginManagerFactory;
-import net.xeoh.plugins.base.util.PluginManagerUtil;
-import net.xeoh.plugins.base.util.uri.ClassURI;
-import org.mdyk.netsim.logic.node.DevicesFactory;
-import org.mdyk.sensesim.simulation.engine.dissim.plugins.IRealDevicePlugin;
-import org.mdyk.sensesim.simulation.engine.dissim.plugins.RealDevicePlugin;
-import sensesim.integration.mcop.MCopPluginFactory;
 
 
 /**
@@ -71,7 +66,7 @@ public class DisSimEngine implements SimEngine, Runnable {
         scenario.initialize();
         List<Device> nodeList = scenario.scenarioDevices();
         PluginManager pluginManager = PluginManagerFactory.createPluginManager();
-        pluginManager.addPluginsFrom(ClassURI.PLUGIN(RealDevicePlugin.class));
+//        pluginManager.addPluginsFrom(ClassURI.PLUGIN(RealDevicePlugin.class));
         Collection<IRealDevicePlugin> plugins = new PluginManagerUtil(pluginManager).getPlugins(IRealDevicePlugin.class);
         for(IRealDevicePlugin plugin: plugins){
             plugin.setDeviceFactory(devicesFactory);
