@@ -65,7 +65,7 @@ public class RealDevicePlugin implements IRealDevicePlugin{
     
     @Subscribe
     public void processEvent(InternalEvent event) {
-        pl.edu.wat.integrator.Device device;
+//        pl.edu.wat.integrator.Device device;
 //        switch(event.getEventType()){
 //            case NEW_REAL_DEVICE:
 //                device = (pl.edu.wat.integrator.Device)event.getPayload();
@@ -106,14 +106,14 @@ public class RealDevicePlugin implements IRealDevicePlugin{
 //        return realDevices.containsKey(d.getDeviceAPI().api_getMyID());
         return true;
     }
-    private void updateDevice(pl.edu.wat.integrator.Device device){
-//        Device updateDevice = findDeviceById(device.getId());
-//        if (updateDevice != null && isRealDevice(updateDevice)){
-//            updateDevice.getDeviceLogic().setPosition(new GeoPosition(device.getLocation().getX(), device.getLocation().getY()));
-//            EventBusHolder.post(EventType.NODE_POSITION_CHANGED, updateDevice);
-//        }
-    }
-    
+//    private void updateDevice(pl.edu.wat.integrator.Device device){
+////        Device updateDevice = findDeviceById(device.getId());
+////        if (updateDevice != null && isRealDevice(updateDevice)){
+////            updateDevice.getDeviceLogic().setPosition(new GeoPosition(device.getLocation().getX(), device.getLocation().getY()));
+////            EventBusHolder.post(EventType.NODE_POSITION_CHANGED, updateDevice);
+////        }
+//    }
+//
     private void sendMessageToRealDevice(SimpleMessage msg) throws Exception{
 //        if (isRealDevice(findDeviceById(msg.getMessageDest()))){
 //            DeviceManager.sendMessageToDevice(msg.getMessageDest(), msg);
