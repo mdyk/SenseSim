@@ -1,6 +1,7 @@
 package org.mdyk.netsim.logic.node.program.owl.messages;
 
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.mdyk.netsim.logic.infon.Infon;
 
@@ -20,6 +21,16 @@ public class InformationNeedRespMessage implements InformationNeedMessage {
         processedInNodes = new ArrayList<>();
         id = informationNeedId;
         this.sourceNode = sourceNode;
+    }
+
+    public InformationNeedRespMessage(String sourceNode, String needId, Infon infon, JSONArray processedInNodes) {
+        this(Integer.parseInt(sourceNode), Integer.parseInt(needId) , infon);
+
+        for(int ii=0; ii < processedInNodes.length(); ii++){
+//            System.out.println(processedInNodes.getJSONObject(ii);
+            this.processedInNodes.add(Integer.parseInt(String.valueOf(processedInNodes.get(ii))));
+        }
+
     }
 
 
@@ -46,5 +57,9 @@ public class InformationNeedRespMessage implements InformationNeedMessage {
 
     public int getSourceNode() {
         return sourceNode;
+    }
+
+    public Infon getInfon() {
+        return infon;
     }
 }

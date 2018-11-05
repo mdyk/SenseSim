@@ -104,10 +104,13 @@ public class OntologyProcessor {
         return false;
     }
 
+    private String labelForProperty(OWLObjectProperty objectProperty) {
+        String stringId = objectProperty.toStringID();
+        return stringId.split("#")[1];
+    }
+
     private String labelForClass(OWLClass owlClass) {
-
         String stringId = owlClass.toStringID();
-
         return stringId.split("#")[1];
     }
 
@@ -132,6 +135,18 @@ public class OntologyProcessor {
         return owlClass;
     }
 
+    public OWLObjectProperty findProperty(String propertyName) {
+        OWLObjectProperty property = null;
+
+        for(OWLObjectProperty prop : ontology.getObjectPropertiesInSignature()) {
+            if(labelForProperty(prop).equals(propertyName)) {
+                property = prop;
+            }
+        }
+
+        return property;
+    }
+
     public OWLAxiomChange createSubclass(OWLClass subclass, OWLClass superclass) {
         return new AddAxiom(ontology, df.getOWLSubClassOfAxiom(subclass, superclass));
     }
@@ -143,19 +158,17 @@ public class OntologyProcessor {
     /**
      * With ontology o, property in refHolder points to a refTo.
      *
-     * @param o         The ontology reference
      * @param property  the data property reference
      * @param refHolder the container of the property
      * @param refTo     the class the property points to
      * @return a patch to the ontology
      */
-    public OWLAxiomChange associateObjectPropertyWithClass(OWLOntology o,
-                                                           OWLObjectProperty property,
+    public OWLAxiomChange associateObjectPropertyWithClass(OWLObjectProperty property,
                                                            OWLClass refHolder,
                                                            OWLClass refTo) {
         OWLClassExpression hasSomeRefTo = df.getOWLObjectSomeValuesFrom(property, refTo);
         OWLSubClassOfAxiom ax = df.getOWLSubClassOfAxiom(refHolder, hasSomeRefTo);
-        return new AddAxiom(o, ax);
+        return new AddAxiom(ontology, ax);
     }
 
     public void applyChange(OWLAxiomChange... axiom) {

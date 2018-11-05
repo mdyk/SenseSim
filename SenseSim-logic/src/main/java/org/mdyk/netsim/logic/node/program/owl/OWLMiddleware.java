@@ -1,6 +1,7 @@
 package org.mdyk.netsim.logic.node.program.owl;
 
 
+import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import javafx.util.Pair;
 import org.apache.log4j.Logger;
@@ -55,6 +56,10 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     private Map<Integer , String> communicationInterfaces;
     private Map<Integer, List<Neighbour>> neighbours = new HashMap<>();
+
+    /**
+     * keys are neigbours ids
+     */
     private Map<Integer, Neighbour> neighboursCombinedList = new HashMap<>();
 
     private HashMap <Integer , Boolean> resendResponse = new HashMap<>();
@@ -122,24 +127,32 @@ public class OWLMiddleware extends Thread implements Middleware {
     public void handleTopologyDiscoveryResp(TopologyDiscoveryResponseMessage tdrm){
         LOG.trace(">> handleTopologyDiscoveryResp tdrm = " + tdrm.toString());
         this.updateNeighbourPosition(tdrm.getNodeId(),tdrm.getPosition());
+
+        // Rozesłanie tylko jeśli była taka potrzeba
         this.resendInformationNeed(tdrm.getNodeId(), tdrm.getNeedId());
 
         LOG.trace("<< handleTopologyDiscoveryResp");
     }
 
     public void handleInformationNeedResponse(InformationNeedRespMessage inrm) {
-        LOG.trace(">> handleTopologyDiscoveryResp");
+        LOG.trace(">> handleInformationNeedResponse");
 
         // 1. zweryfikowanie czy jestem odbiorcą
         if(inrm.getSourceNode() == this.getId()) {
             // oznaczenie że udzielono odpowiedzi na potrzebę
             this.informationNeedResponse.put(inrm.getId(), inrm.toJSON());
+
+            Infon respInfon = inrm.getInfon();
+            LOG.info("Reponse Infon = " + respInfon);
+            // Zapisanie odpowiedzi w BD.
+            kb.populateKB(respInfon);
+
         }
 
 
         // 2. jesli nie jestem odbiorcą to wyszukanie obsłużonych potrzeb i wybranie z nich odbiorcy
 
-        LOG.trace("<< handleTopologyDiscoveryResp");
+        LOG.trace("<< handleInformationNeedResponse");
     }
 
     public void handleInformationNeedAsk(InformationNeedAskMessage inam) {
@@ -186,21 +199,26 @@ public class OWLMiddleware extends Thread implements Middleware {
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void handleEvents(InternalEvent event) {
-        switch (event.getEventType()) {
-            case ANSWER_INFORMATION_NEED:
-                Pair<Integer, String> informationNeed = (Pair<Integer, String>) event.getPayload();
-                // The program should be installed in current node.
-                if(informationNeed.getKey()!=null && informationNeed.getKey().equals(nodeId)){
-                    LOG.debug(informationNeed.getValue());
+        try {
+            switch (event.getEventType()) {
+                case ANSWER_INFORMATION_NEED:
+                    Pair<Integer, String> informationNeed = (Pair<Integer, String>) event.getPayload();
+                    // The program should be installed in current node.
+                    if (informationNeed.getKey() != null && informationNeed.getKey().equals(nodeId)) {
+                        LOG.debug(informationNeed.getValue());
 //                    this.informationNeeds.put(informationNeed.getValue().hashCode() , new InformationNeedContent(informationNeed.getKey() , informationNeed.getValue()));
-                    Infon infon = new Infon(informationNeed.getValue());
+                        Infon infon = new Infon(informationNeed.getValue());
 
-                    InformationNeedAskMessage askMessage = new InformationNeedAskMessage(this.nodeId, infon);
-                    processInformationNeed(askMessage, true);
-                }
+                        InformationNeedAskMessage askMessage = new InformationNeedAskMessage(this.nodeId, infon);
+                        processInformationNeed(askMessage, true);
+                    }
 
-                break;
+                    break;
+            }
+        } catch(Exception exc) {
+            LOG.error(exc.getMessage(), exc);
         }
     }
 
@@ -215,14 +233,20 @@ public class OWLMiddleware extends Thread implements Middleware {
         if(verify) {
             List<INProcessStatus> inProcessStatus = verifyInformationNeed(informationNeedAsk);
 
+            if(inProcessStatus.contains(INProcessStatus.RESEND)) {
+                resendInformationNeed(informationNeedAsk.getId());
+            }
+
             if(inProcessStatus.contains(INProcessStatus.UPDATE_TOPOLOGY)) {
                 topologyDiscovery(informationNeedAsk);
             }
 
             if(inProcessStatus.contains(INProcessStatus.ASK_FOR_RELATION)) {
                 String relation = informationNeedAsk.getInfon().getRelation();
-                Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+relation+",?l,t,1>>");
+
+                Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+relation+",?l,?t,1>>");
                 InformationNeedAskMessage relationUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
+                relationUnknownNeed.processedInNode(this.nodeId);
                 for (Integer neighbourId : neighboursCombinedList.keySet()) {
                     Neighbour neighbour = neighboursCombinedList.get(neighbourId);
                     deviceAPI.api_sendMessage(this.nextMsgId(), deviceAPI.api_getMyID(), neighbour.getId(), neighbour.commInt, relationUnknownNeed.toJSON(), relationUnknownNeed.getSize());
@@ -258,7 +282,7 @@ public class OWLMiddleware extends Thread implements Middleware {
             // Procesowanie potrzeby
             //respondForInformationNeed(informationNeedAsk);
             inProcessStatus.add(INProcessStatus.PROCESS_IN_NODE);
-
+            inProcessStatus.add(INProcessStatus.RESEND);
             if(!informationNeedAsk.getInfon().isSpatialLocationParam()) {
                 inProcessStatus.add(INProcessStatus.UPDATE_TOPOLOGY);
                 inProcessStatus.add(INProcessStatus.RESEND);
@@ -272,7 +296,6 @@ public class OWLMiddleware extends Thread implements Middleware {
 //            processInformationNeed(relationUnknownNeed, false);
 
             inProcessStatus.add(INProcessStatus.ASK_FOR_RELATION);
-
             if(!informationNeedAsk.getInfon().isSpatialLocationParam()) {
                 inProcessStatus.add(INProcessStatus.UPDATE_TOPOLOGY);
                 inProcessStatus.add(INProcessStatus.RESEND);
@@ -317,11 +340,19 @@ public class OWLMiddleware extends Thread implements Middleware {
             //FIXME na razie odesłanie informacji o tym że relacja/obiekt nie są znane
             Infon relRespInfon = new Infon(inam.getInfon());
             inrm = new InformationNeedRespMessage(this.nodeId,inam.getId(),relRespInfon);
+
+            // Ustalenie we własnej bazie wiedzy jak odpoweidzieć
+
+            // Sparwdzenie czy wystepuje takie pojęcie w KB
+
         }
 
         if(inrm != null) {
             sendInformationNeedResponse(inrm, inam);
         }
+
+        //TODO Przypadek kiedy trzeba przeslac zapytanie dalej:
+
 
     }
 
@@ -363,6 +394,13 @@ public class OWLMiddleware extends Thread implements Middleware {
 //        }
     }
 
+    private void resendInformationNeed(int inamId) {
+        for(Integer nId : neighboursCombinedList.keySet()) {
+            resendInformationNeed(nId,inamId);
+        }
+    }
+
+
     private void resendInformationNeed(int neighbourId, int inamId) {
 
         InformationNeedAskMessage informationNeedAsk = this.informationNeedAskMsgs.get(inamId);
@@ -379,7 +417,8 @@ public class OWLMiddleware extends Thread implements Middleware {
         for(Integer commInt : this.neighbours.keySet()) {
             for(Neighbour n : this.neighbours.get(commInt)) {
                 if (n.getId() == neighbourId  && !informationNeedAsk.wasProcessedBy(n.getId())) {
-                    if(areaImportant && !Functions.isPointInRegion(n.getPosition() , needArea) ) {
+                    // FIXME sprawdzenie pozycji jest nadmiarowe. DO poprawy proces uzyskiwania położenia od sąsiadów.
+                    if(areaImportant && n.getPosition() != null && !Functions.isPointInRegion(n.getPosition() , needArea) ) {
                         continue;
                     }
                     deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());

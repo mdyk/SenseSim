@@ -39,6 +39,20 @@ public class OntologyProcessorTest {
     }
 
     @Test
+    public void findProperty() throws Exception {
+        String ontologyPath = "/Users/michal/Documents/Workspace/SenseSim/SenseSim-app/src/main/resources/scenario-IN-distribution/cognitive-agent-ontology.owl";
+        String ontologyIRI = "http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontology";
+
+        OntologyProcessor ontologyProcessor = new OntologyProcessor();
+
+        File ontologyFile = new File(ontologyPath);
+        ontologyProcessor.loadOntology(ontologyFile,ontologyIRI);
+
+        TestCase.assertNotNull(ontologyProcessor.findProperty("consistsOf"));
+
+    }
+
+    @Test
     public void saveOntologySnapshot() throws Exception {
         String ontologyPath = "/Users/michal/Documents/Workspace/SenseSim/SenseSim-app/src/main/resources/scenario-IN-distribution/cognitive-agent-ontology.owl";
         String ontologyIRI = "http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontology";

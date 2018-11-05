@@ -5,9 +5,12 @@ import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.infon.Infon;
 import org.semanticweb.owlapi.model.OWLAxiomChange;
 import org.semanticweb.owlapi.model.OWLClass;
+import org.semanticweb.owlapi.model.OWLObjectProperty;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.Set;
 
 public class KnowledgeBase {
 
@@ -38,8 +41,11 @@ public class KnowledgeBase {
         LOG.trace("<< saveKBSnapshot");
     }
 
-    public void populateKB(Infon ... situation) {
+    //FIXME obsługa statusów wynikowych
+    public Set<KBProcessStatus> populateKB(Infon ... situation) {
         LOG.trace(">> populateKB kbName="+kbName);
+
+        Set<KBProcessStatus> processStatuses = new HashSet<>();
 
         if(LOG.isDebugEnabled()) {
             for(Infon infon : situation) {
@@ -52,7 +58,9 @@ public class KnowledgeBase {
 
             switch(relation) {
                 case CONSISTS_OF:
-
+                    String classFrom = infon.getObjects().get(0);
+                    String classTo = infon.getObjects().get(1);
+                    addProperyToClass(CONSISTS_OF,classFrom,classTo);
                     break;
 
                 case HAS_OBSERVER:
@@ -73,6 +81,28 @@ public class KnowledgeBase {
         }
 
         LOG.trace("<< populateKB");
+        return processStatuses;
+    }
+
+    private void addProperyToClass(String property, String classFrom, String classTo) {
+        LOG.trace(">> addProperyToClass property="+property+" classFrom="+classFrom+" classTo="+classTo);
+
+        OWLClass owlClassFrom = op.findClass(classFrom);
+        OWLClass owlClassTo = op.findClass(classTo);
+
+        OWLObjectProperty owlProperty = op.findProperty(property);
+
+        if (owlClassFrom != null && owlClassTo != null && owlProperty != null) {
+
+            OWLAxiomChange change = op.associateObjectPropertyWithClass(owlProperty,owlClassFrom,owlClassTo);
+            op.applyChange(change);
+
+        } else {
+            // FIXME poprawna obsługa wyjątków.
+            throw new RuntimeException("[addProperyToClass] nie istnieje klasa lub property ");
+        }
+
+        LOG.trace("<< addProperyToClass");
     }
 
     private void addSubclass(String child, String parent) {

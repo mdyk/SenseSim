@@ -34,6 +34,10 @@ public class MessageParser {
             case INFORMATION_NEED_ASK:
                 inm = new InformationNeedAskMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), new Infon(String.valueOf(jsonObject.get(INFON))), jsonObject.getJSONArray(PROCESSED_NODES));
                 break;
+
+            case INFORMATION_NEED_RESP:
+                inm = new InformationNeedRespMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), String.valueOf(jsonObject.get(NEED_ID)), new Infon(String.valueOf(jsonObject.get(INFON))), jsonObject.getJSONArray(PROCESSED_NODES));
+                break;
         }
 
         return inm;
