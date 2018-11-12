@@ -135,24 +135,51 @@ public class OWLMiddleware extends Thread implements Middleware {
     }
 
     public void handleInformationNeedResponse(InformationNeedRespMessage inrm) {
-        LOG.trace(">> handleInformationNeedResponse");
+        LOG.debug(">> handleInformationNeedResponse [inamId="+inrm.getId()+" ;nodeId="+this.nodeId+"]");
 
         // 1. zweryfikowanie czy jestem odbiorcą
-        if(inrm.getSourceNode() == this.getId()) {
+        if(inrm.getSourceNode() == this.nodeId) {
             // oznaczenie że udzielono odpowiedzi na potrzebę
             this.informationNeedResponse.put(inrm.getId(), inrm.toJSON());
 
-            Infon respInfon = inrm.getInfon();
-            LOG.info("Reponse Infon = " + respInfon);
-            // Zapisanie odpowiedzi w BD.
-            kb.populateKB(respInfon);
+            InformationNeedAskMessage inam = informationNeedAskMsgs.get(inrm.getId());
+
+            // Uzupełnienie włanej bazy wiedzy jeśli jest to opowiedź na zapytanie o wiedzę
+            if(inam.getInfon().getRelation().equals(KnowledgeBase.UNKNOWN_RELATION)) {
+                // Uzupełnienie bazy
+                for (String object : inam.getInfon().getObjects()) {
+                    if(kb.isRelationUnknown(object)) {
+
+                        kb.deatchUnknownRelation(object);
+                        kb.addRelation(object, KnowledgeBase.LogicOperator.AND,inrm.getInfons());
+
+                    } else if (kb.isObjectUnknown(object)) {
+                        // TODO
+                    }
+                }
+
+                // TODO usuniecie potrzeby na ktora juz odpowiedziano [jeszcze do przyyslenia czy nie rtrzeba tego jakos oznaczac inaczej]
+                // FIXME nie usuwac tylko oznaczyc stan jako przeprocesowany
+                informationNeedAskMsgs.remove(inrm.getId());
+
+                // Sprawdzenie czy mozna odpowiedziec na ktores z zapytań
+                for (InformationNeedAskMessage informationNeedAskMessage : this.informationNeedAskMsgs.values()){
+                    processInformationNeed(informationNeedAskMessage,true);
+                }
+
+            }
+
+//            Infon respInfon = inrm.getInfon();
+//            LOG.info("Reponse Infon = " + respInfon);
+//            // Zapisanie odpowiedzi w BD.
+//            kb.populateKB(respInfon);
 
         }
 
 
         // 2. jesli nie jestem odbiorcą to wyszukanie obsłużonych potrzeb i wybranie z nich odbiorcy
 
-        LOG.trace("<< handleInformationNeedResponse");
+        LOG.debug("<< handleInformationNeedResponse");
     }
 
     public void handleInformationNeedAsk(InformationNeedAskMessage inam) {
@@ -240,8 +267,11 @@ public class OWLMiddleware extends Thread implements Middleware {
             if(inProcessStatus.contains(INProcessStatus.ASK_FOR_RELATION)) {
                 String relation = informationNeedAsk.getInfon().getRelation();
 
+                kb.addUnknownRelation(relation);
+
                 Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+relation+",?l,?t,1>>");
                 InformationNeedAskMessage relationUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
+                this.informationNeedAskMsgs.put(relationUnknownNeed.getId() , relationUnknownNeed);
                 relationUnknownNeed.processedInNode(this.nodeId);
                 for (Integer neighbourId : neighboursCombinedList.keySet()) {
                     Neighbour neighbour = neighboursCombinedList.get(neighbourId);
@@ -264,7 +294,9 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         // Verify if relation is known
         String relation = informationNeedAsk.getInfon().getRelation();
-        boolean relationExists = kb.getOntologyProcessor().relationExists(relation);
+//        boolean relationExists = kb.getOntologyProcessor().relationExists(relation);
+
+        boolean relationExists = kb.getRelationDefinition(relation) != null;
 
         List<String> unknownObjects = new ArrayList<>();
         for(String object : informationNeedAsk.getInfon().getObjects()) {
@@ -339,7 +371,7 @@ public class OWLMiddleware extends Thread implements Middleware {
             Infon unknownRelationInfon = new Infon(inam.getInfon());
 
             // Odesłanie informacji że relacja jest nieznana
-            inrm = new InformationNeedRespMessage(this.nodeId,inam.getId(),unknownRelationInfon);
+            inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId(),unknownRelationInfon);
 
             // FIXME obsługa więcej niż jednej relacji
             for (String unknownRelation : inam.getInfon().getObjects()) {
@@ -350,8 +382,10 @@ public class OWLMiddleware extends Thread implements Middleware {
             }
 
             Infon relRespInfon = new Infon(inam.getInfon());
-            inrm = new InformationNeedRespMessage(this.nodeId,inam.getId(),relRespInfon);
+//            inrm = new InformationNeedRespMessage(this.nodeId,inam.getId(),relRespInfon);
             inrm.procecessedInNode(this.nodeId);
+
+        } else {
 
         }
 

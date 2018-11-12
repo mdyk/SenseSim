@@ -5,6 +5,9 @@ import org.mdyk.netsim.logic.infon.Infon;
 
 import java.io.File;
 
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
+
 /**
  * Created by michal on 17.09.2018.
  */
@@ -66,6 +69,29 @@ public class KnowledgeBaseTest {
         kb.addRelation("Immediate", KnowledgeBase.LogicOperator.AND, infon);
 
         kb.saveKBSnapshot(5.0);
+
+    }
+
+    @Test
+    public void addUnknownRelation() throws Exception {
+        String ontologyPath = "/Users/michal/Documents/Workspace/SenseSim/SenseSim-app/src/main/resources/scenario-IN-distribution/cognitive-agent-ontology.owl";
+        String ontologyIRI = "http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontology";
+
+        File ontologyFile = new File(ontologyPath);
+
+        KnowledgeBase kb = new KnowledgeBase("device-1");
+
+        kb.loadOntology(ontologyFile,ontologyIRI);
+
+        kb.addUnknownRelation("fooRelation");
+
+        kb.saveKBSnapshot(6.0);
+
+        assertTrue(kb.getOntologyProcessor().relationExists("fooRelation"));
+        assertTrue(kb.isRelationUnknown("fooRelation"));
+
+        kb.deatchUnknownRelation("fooRelation");
+        assertFalse(kb.isRelationUnknown("fooRelation"));
 
     }
 

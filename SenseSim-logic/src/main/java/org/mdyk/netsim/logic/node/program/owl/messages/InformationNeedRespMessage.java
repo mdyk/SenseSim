@@ -28,6 +28,7 @@ public class InformationNeedRespMessage implements InformationNeedMessage {
 
     public InformationNeedRespMessage(String sourceNode, String needId, JSONArray processedInNodes) {
 //        this(Integer.parseInt(sourceNode), Integer.parseInt(needId) , infon);
+        this.processedInNodes = new ArrayList<>();
         id = Integer.parseInt(needId);
         this.sourceNode = Integer.parseInt(sourceNode);
 

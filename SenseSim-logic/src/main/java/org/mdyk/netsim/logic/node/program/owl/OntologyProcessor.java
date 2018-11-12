@@ -8,6 +8,7 @@ import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.io.FileDocumentTarget;
 import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.InferenceType;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 
 import java.io.File;
@@ -18,8 +19,10 @@ public class OntologyProcessor {
 
     public static final String relationClassName = "Relation";
     public static final String objectClassName = "Object";
+    public static final String unknownClassName = "Unknown";
+
     private static final Logger LOG = Logger.getLogger(OntologyProcessor.class);
-    private static final String unknownClassName = "Unknown";
+
 
     String	prefix;
     private OWLOntology ontology;
@@ -78,6 +81,14 @@ public class OntologyProcessor {
         }
 
         return subClassExists(relationClassName , relationName);
+    }
+
+    public boolean isRelationUnknown(String relationName) {
+        if(relationName.equalsIgnoreCase("isUnknown")) {
+            return false;
+        }
+
+        return subClassExists(unknownClassName , relationName);
     }
 
     public boolean objectExists(String objectName) {
@@ -176,6 +187,7 @@ public class OntologyProcessor {
 
     private void applyChanges(OWLAxiomChange... axioms) {
         manager.applyChanges(Arrays.asList(axioms));
+        reasoner.flush();
     }
 
     public OWLIndividual createIndividual(String individualName) {
@@ -185,6 +197,10 @@ public class OntologyProcessor {
 
     private OWLIndividual createIndividual(IRI iri) {
         return df.getOWLNamedIndividual(iri);
+    }
+
+    public OWLAxiomChange detachParentClass(OWLClass subclass, OWLClass superclass) {
+        return new RemoveAxiom(ontology, df.getOWLSubClassOfAxiom(subclass, superclass));
     }
 
     public OWLAxiomChange associateIndividualWithClass(OWLClass clazz,

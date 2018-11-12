@@ -10,6 +10,7 @@ import java.util.*;
 
 public class KnowledgeBase {
 
+
     public static final String UNKNOWN_RELATION = "isUnknown";
     private static final Logger LOG = Logger.getLogger(KnowledgeBase.class);
     private static final String OF_TYPE = "ofType";
@@ -81,6 +82,12 @@ public class KnowledgeBase {
         return processStatuses;
     }
 
+    public void addRelation(String relationName, LogicOperator operator, List<Infon> infons) {
+        Infon[] infArray = new Infon[infons.size()];
+        infArray = infons.toArray(infArray);
+        addRelation(relationName,operator,infArray);
+    }
+
     // FIXME to powinno się znajdować w metodzie populateKB
     public void addRelation(String relationName, LogicOperator operator, Infon ... infons) {
         if(!op.relationExists(relationName)){
@@ -95,6 +102,10 @@ public class KnowledgeBase {
         // Dodanie indyvidual do ontologii
         OWLIndividual individual = op.createIndividual(relationName);
         op.applyChange(op.associateIndividualWithClass(relationClass , individual));
+
+        if(op.isRelationUnknown(relationName)) {
+
+        }
 
     }
 
@@ -138,6 +149,43 @@ public class KnowledgeBase {
 
     public RelationDefinition getRelationDefinition(String relationName) {
         return this.retionDefinitions.get(relationName);
+    }
+
+    public void addUnknownRelation(String relationName) {
+        LOG.trace(">> addUnknownRelation");
+
+        OWLClass unknownClass = op.findClass(OntologyProcessor.unknownClassName);
+        OWLClass relationClass = op.findClass(OntologyProcessor.relationClassName);
+
+        OWLClass newRelation = op.createClass(relationName);
+
+        OWLAxiomChange c1 = op.createSubclass(newRelation,unknownClass);
+        OWLAxiomChange c2 = op.createSubclass(newRelation,relationClass);
+
+        op.applyChange(c1,c2);
+
+        LOG.trace("<< addUnknownRelation");
+    }
+
+    public void deatchUnknownRelation(String className) {
+        OWLClass unknownClass = op.findClass(OntologyProcessor.unknownClassName);
+        OWLClass clazz = op.findClass(className);
+
+        op.applyChange(op.detachParentClass(clazz,unknownClass));
+
+    }
+
+    public boolean isRelationUnknown(String relation) {
+        return op.isRelationUnknown(relation);
+    }
+
+    public void addUnknownObject(String unknownObject) {
+
+    }
+
+    // FIXME
+    public boolean isObjectUnknown(String object) {
+        return false;
     }
 
     public OntologyProcessor getOntologyProcessor() {
