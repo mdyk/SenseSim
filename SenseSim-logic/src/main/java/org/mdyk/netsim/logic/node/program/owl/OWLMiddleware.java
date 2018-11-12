@@ -192,7 +192,6 @@ public class OWLMiddleware extends Thread implements Middleware {
         //updateOntologyDataProperties();
     }
 
-    @Deprecated
     public void loadOntology(File ontologyFile , String ontologyIRI) throws OWLOntologyCreationException {
         kb.loadOntology(ontologyFile,ontologyIRI);
         kb.saveKBSnapshot(this.deviceSimEntity.getSimTime());
@@ -609,6 +608,10 @@ public class OWLMiddleware extends Thread implements Middleware {
     private int nextMsgId() {
         msgId++;
         return nodeId * 10000 + msgId;
+    }
+
+    public KnowledgeBase getKb() {
+        return this.kb;
     }
 
     private class Neighbour {

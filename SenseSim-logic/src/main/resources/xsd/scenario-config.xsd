@@ -102,8 +102,16 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="knowledgeBaseType">
+        <xs:sequence>
+            <xs:element type="xs:string" name="infon" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="nodeType">
         <xs:sequence>
+            <xs:element type="scenarioOntologyType" name="nodeOntology" />
+            <xs:element type="knowledgeBaseType" name="initialKB" />
             <xs:element type="xs:string" name="speed"/>
             <xs:element type="xs:string" name="radioRange"/>
             <xs:element type="xs:string" name="radioBandwidth"/>

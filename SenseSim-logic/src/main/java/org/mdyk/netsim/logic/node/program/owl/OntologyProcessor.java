@@ -16,10 +16,9 @@ import java.util.Arrays;
 
 public class OntologyProcessor {
 
+    public static final String relationClassName = "Relation";
+    public static final String objectClassName = "Object";
     private static final Logger LOG = Logger.getLogger(OntologyProcessor.class);
-
-    private static final String relationClassName = "Relation";
-    private static final String objectClassName = "Object";
     private static final String unknownClassName = "Unknown";
 
     String	prefix;
@@ -179,9 +178,17 @@ public class OntologyProcessor {
         manager.applyChanges(Arrays.asList(axioms));
     }
 
-    public OWLAxiomChange associateIndividualWithClass(OWLOntology o,
-                                                       OWLClass clazz,
+    public OWLIndividual createIndividual(String individualName) {
+        String iri = ontologyIRI+"#"+individualName;
+        return createIndividual(convertStringToIRI(iri));
+    }
+
+    private OWLIndividual createIndividual(IRI iri) {
+        return df.getOWLNamedIndividual(iri);
+    }
+
+    public OWLAxiomChange associateIndividualWithClass(OWLClass clazz,
                                                        OWLIndividual individual) {
-        return new AddAxiom(o, df.getOWLClassAssertionAxiom(clazz, individual));
+        return new AddAxiom(ontology, df.getOWLClassAssertionAxiom(clazz, individual));
     }
 }

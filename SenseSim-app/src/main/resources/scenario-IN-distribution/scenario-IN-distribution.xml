@@ -29,7 +29,11 @@
     <nodes>
 
         <node id="1" name="dev_1">
-             <speed>4</speed>
+            <initialKB>
+                <!--Zero or more repetitions:-->
+                <infon>Immediate = &lt;&lt; lessThan, BodyTemp, 36, ?l, ?t, 1 &gt;&gt;</infon>
+            </initialKB>
+            <speed>4</speed>
             <radioRange>80</radioRange>
             <radioBandwidth>500</radioBandwidth>
             <sesnorImplType>GeoSensorNode</sesnorImplType>

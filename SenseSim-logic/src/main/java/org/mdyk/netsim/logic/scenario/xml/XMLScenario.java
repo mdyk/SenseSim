@@ -4,9 +4,11 @@ import com.google.inject.assistedinject.Assisted;
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.environment.phenomena.PhenomenaFactory;
+import org.mdyk.netsim.logic.infon.Infon;
 import org.mdyk.netsim.logic.node.Device;
 import org.mdyk.netsim.logic.node.DevicesFactory;
 import org.mdyk.netsim.logic.node.program.Middleware;
+import org.mdyk.netsim.logic.node.program.owl.KnowledgeBase;
 import org.mdyk.netsim.logic.node.program.owl.OWLMiddleware;
 import org.mdyk.netsim.logic.scenario.Scenario;
 import org.mdyk.netsim.logic.scenario.xml.util.XmlTypeConverter;
@@ -96,7 +98,7 @@ public class XMLScenario implements Scenario {
         }
 
         if(scenarioRegion.size() > 0) {
-            mCopPluginFactory.getMCopPlugin().setCenter(scenarioRegion.get(0).getLatitude(), scenarioRegion.get(0).getLongitude());
+//            mCopPluginFactory.getMCopPlugin().setCenter(scenarioRegion.get(0).getLatitude(), scenarioRegion.get(0).getLongitude());
         }
 
 
@@ -135,9 +137,64 @@ public class XMLScenario implements Scenario {
                         // FIXME refactor w taki sposób ze nie bedzie porzebny instanceof
                         if(middleware instanceof OWLMiddleware) {
                             OWLMiddleware owlMiddleware = (OWLMiddleware) middleware;
-                            String filePath = scenarioFile.getParent() + "/" + scenario.getScenarioOntology().getOntologyFile();
+
+                            String ontologyFileName;
+                            String ontologyIRI;
+
+                            if(nodeType.getNodeOntology() != null) {
+                                ontologyFileName = nodeType.getNodeOntology().getOntologyFile();
+                                ontologyIRI = nodeType.getNodeOntology().getOntologyIRI();
+                            } else {
+                                ontologyFileName = scenario.getScenarioOntology().getOntologyFile();
+                                ontologyIRI = scenario.getScenarioOntology().getOntologyIRI();
+                            }
+
+                            String filePath = scenarioFile.getParent() + "/" + ontologyFileName;
                             File ontologyFile = new File(filePath);
-                            owlMiddleware.loadOntology(ontologyFile, scenario.getScenarioOntology().getOntologyIRI());
+                            owlMiddleware.loadOntology(ontologyFile, ontologyIRI);
+
+
+                            // ładowanie bazy wiedzy
+
+                            KnowledgeBaseType kbt = nodeType.getInitialKB();
+                            if(kbt != null) {
+                                for (String infonString : kbt.getInfon()) {
+                                    if (infonString.contains("=")) {
+                                        // dodanie relacji
+
+                                        String[] relationArr = infonString.split("=");
+                                        String relationName = relationArr[0];
+                                        KnowledgeBase.LogicOperator operator = KnowledgeBase.LogicOperator.AND;
+
+                                        String[] infonsString = new String[0];
+
+                                        if (relationArr[1].contains("^")) {
+                                            operator = KnowledgeBase.LogicOperator.AND;
+                                            infonsString = relationArr[1].split("^");
+                                        } else if (relationArr[1].contains("v")) {
+                                            operator = KnowledgeBase.LogicOperator.OR;
+                                            infonsString = relationArr[1].split("v");
+                                        } else {
+                                            infonsString = new String[1];
+                                            infonsString[0] = relationArr[1];
+                                        }
+
+                                        Infon[] infonsArr = new Infon[infonsString.length];
+                                        for (int i = 0; i < infonsArr.length; i++) {
+                                            Infon infon = new Infon(infonsString[i]);
+                                            infonsArr[i] = infon;
+                                        }
+
+                                        owlMiddleware.getKb().addRelation(relationName, operator, infonsArr);
+
+                                    } else {
+                                        Infon infon = new Infon(infonString);
+                                        owlMiddleware.getKb().populateKB(infon);
+                                    }
+                                }
+                            }
+
+
                         }
 
                         if(nodeType.getMiddleware() != null && nodeType.getMiddleware().getProgramFile() != null ) {

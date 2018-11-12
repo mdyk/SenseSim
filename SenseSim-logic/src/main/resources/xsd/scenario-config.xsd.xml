@@ -25,6 +25,10 @@
   <nodes>
     <!--Zero or more repetitions:-->
     <node id="string" name="string">
+      <initialKB>
+        <!--Zero or more repetitions:-->
+        <infon>string</infon>
+      </initialKB>
       <speed>string</speed>
       <radioRange>string</radioRange>
       <radioBandwidth>string</radioBandwidth>

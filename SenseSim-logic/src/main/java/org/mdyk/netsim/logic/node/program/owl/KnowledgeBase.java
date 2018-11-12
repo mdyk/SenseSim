@@ -3,14 +3,10 @@ package org.mdyk.netsim.logic.node.program.owl;
 
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.infon.Infon;
-import org.semanticweb.owlapi.model.OWLAxiomChange;
-import org.semanticweb.owlapi.model.OWLClass;
-import org.semanticweb.owlapi.model.OWLObjectProperty;
-import org.semanticweb.owlapi.model.OWLOntologyCreationException;
+import org.semanticweb.owlapi.model.*;
 
 import java.io.File;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class KnowledgeBase {
 
@@ -20,13 +16,14 @@ public class KnowledgeBase {
     private static final String CONSISTS_OF = "consistsOf";
     private static final String PERCEIVES = "perceives";
     private static final String HAS_OBSERVER = "hasObserver";
-
     private OntologyProcessor op;
     private String kbName;
+    private Map<String, RelationDefinition> retionDefinitions;
 
     public KnowledgeBase(String kbName) {
         this.op = new OntologyProcessor();
         this.kbName = kbName;
+        this.retionDefinitions = new HashMap<>();
     }
 
     public void loadOntology(File ontologyFile , String ontologyIRI) throws OWLOntologyCreationException {
@@ -84,6 +81,23 @@ public class KnowledgeBase {
         return processStatuses;
     }
 
+    // FIXME to powinno się znajdować w metodzie populateKB
+    public void addRelation(String relationName, LogicOperator operator, Infon ... infons) {
+        if(!op.relationExists(relationName)){
+            addSubclass(relationName,OntologyProcessor.relationClassName);
+        }
+
+        OWLClass relationClass = op.findClass(relationName);
+
+        RelationDefinition definition = new RelationDefinition(relationName, operator , infons);
+        this.retionDefinitions.put(relationName, definition);
+
+        // Dodanie indyvidual do ontologii
+        OWLIndividual individual = op.createIndividual(relationName);
+        op.applyChange(op.associateIndividualWithClass(relationClass , individual));
+
+    }
+
     private void addProperyToClass(String property, String classFrom, String classTo) {
         LOG.trace(">> addProperyToClass property="+property+" classFrom="+classFrom+" classTo="+classTo);
 
@@ -122,7 +136,38 @@ public class KnowledgeBase {
         LOG.trace("<< addSubclass");
     }
 
+    public RelationDefinition getRelationDefinition(String relationName) {
+        return this.retionDefinitions.get(relationName);
+    }
+
     public OntologyProcessor getOntologyProcessor() {
         return op;
     }
+
+    public enum LogicOperator {OR, AND}
+
+    public class RelationDefinition {
+        private List<Infon> infons;
+        private LogicOperator operator;
+        private String name;
+
+        public RelationDefinition(String name, LogicOperator operator, Infon ... infons) {
+            this.infons = Arrays.asList(infons);
+            this.operator = operator;
+            this.name = name;
+        }
+
+        public List<Infon> getInfons() {
+            return infons;
+        }
+
+        public LogicOperator getOperator() {
+            return operator;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
 }

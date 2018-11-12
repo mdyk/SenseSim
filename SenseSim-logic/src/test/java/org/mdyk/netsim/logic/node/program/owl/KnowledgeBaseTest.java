@@ -10,6 +10,8 @@ import java.io.File;
  */
 public class KnowledgeBaseTest {
 
+
+
     @Test
     public void populateKB() throws Exception {
         String ontologyPath = "/Users/michal/Documents/Workspace/SenseSim/SenseSim-app/src/main/resources/scenario-IN-distribution/cognitive-agent-ontology.owl";
@@ -44,6 +46,27 @@ public class KnowledgeBaseTest {
         kb.populateKB(i4,i5);
 
         kb.saveKBSnapshot(4.0);
+
+
+    }
+
+    @Test
+    public void addRelation() throws Exception {
+        String ontologyPath = "/Users/michal/Documents/Workspace/SenseSim/SenseSim-app/src/main/resources/scenario-IN-distribution/cognitive-agent-ontology.owl";
+        String ontologyIRI = "http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontology";
+
+        File ontologyFile = new File(ontologyPath);
+
+
+        KnowledgeBase kb = new KnowledgeBase("device-1");
+
+        kb.loadOntology(ontologyFile,ontologyIRI);
+
+        Infon infon = new Infon("<<lessThan,BodyTemperature,36,?l,?t,1>>");
+
+        kb.addRelation("immediate", KnowledgeBase.LogicOperator.AND, infon);
+
+        kb.saveKBSnapshot(5.0);
 
     }
 
