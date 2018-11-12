@@ -159,6 +159,9 @@ public class XMLScenario implements Scenario {
                             KnowledgeBaseType kbt = nodeType.getInitialKB();
                             if(kbt != null) {
                                 for (String infonString : kbt.getInfon()) {
+
+                                    infonString = infonString.replace(" ","");
+
                                     if (infonString.contains("=")) {
                                         // dodanie relacji
 

@@ -57,14 +57,13 @@ public class KnowledgeBaseTest {
 
         File ontologyFile = new File(ontologyPath);
 
-
         KnowledgeBase kb = new KnowledgeBase("device-1");
 
         kb.loadOntology(ontologyFile,ontologyIRI);
 
         Infon infon = new Infon("<<lessThan,BodyTemperature,36,?l,?t,1>>");
 
-        kb.addRelation("immediate", KnowledgeBase.LogicOperator.AND, infon);
+        kb.addRelation("Immediate", KnowledgeBase.LogicOperator.AND, infon);
 
         kb.saveKBSnapshot(5.0);
 

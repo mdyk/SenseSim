@@ -4,6 +4,10 @@ package org.mdyk.netsim.logic.node.program.owl.messages;
 import org.json.JSONObject;
 import org.mdyk.netsim.logic.infon.Infon;
 
+import javax.sound.sampled.Line;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MessageParser {
 
     public static final String MESSAGE_ACTION_KEY = "a";
@@ -36,7 +40,21 @@ public class MessageParser {
                 break;
 
             case INFORMATION_NEED_RESP:
-                inm = new InformationNeedRespMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), String.valueOf(jsonObject.get(NEED_ID)), new Infon(String.valueOf(jsonObject.get(INFON))), jsonObject.getJSONArray(PROCESSED_NODES));
+
+                String infonsString = String.valueOf(jsonObject.get(INFON));
+
+                String[] infonsStringArr = infonsString.split(";");
+
+                List<Infon> infons = new ArrayList<>();
+                for(String infonString : infonsStringArr) {
+                    Infon i = new Infon(infonString);
+                    infons.add(i);
+                }
+
+                inm = new InformationNeedRespMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), String.valueOf(jsonObject.get(NEED_ID)), jsonObject.getJSONArray(PROCESSED_NODES));
+
+                ((InformationNeedRespMessage)inm).addInfon(infons);
+
                 break;
         }
 

@@ -333,13 +333,25 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         //FIXME obsługa isUnknown (do uspójnienia z innymi relacjami)
         if(inam.getInfon().getRelation().equalsIgnoreCase(KnowledgeBase.UNKNOWN_RELATION)) {
-            //FIXME na razie odesłanie informacji o tym że relacja/obiekt nie są znane
+            // Ustalenie we własnej bazie wiedzy jak odpoweidzieć
+            // Sparwdzenie czy wystepuje takie pojęcie w KB
+
+            Infon unknownRelationInfon = new Infon(inam.getInfon());
+
+            // Odesłanie informacji że relacja jest nieznana
+            inrm = new InformationNeedRespMessage(this.nodeId,inam.getId(),unknownRelationInfon);
+
+            // FIXME obsługa więcej niż jednej relacji
+            for (String unknownRelation : inam.getInfon().getObjects()) {
+                KnowledgeBase.RelationDefinition rd = getKb().getRelationDefinition(unknownRelation);
+                if(rd != null) {
+                    inrm.addInfon(rd.getInfons());
+                }
+            }
+
             Infon relRespInfon = new Infon(inam.getInfon());
             inrm = new InformationNeedRespMessage(this.nodeId,inam.getId(),relRespInfon);
-
-            // Ustalenie we własnej bazie wiedzy jak odpoweidzieć
-
-            // Sparwdzenie czy wystepuje takie pojęcie w KB
+            inrm.procecessedInNode(this.nodeId);
 
         }
 
