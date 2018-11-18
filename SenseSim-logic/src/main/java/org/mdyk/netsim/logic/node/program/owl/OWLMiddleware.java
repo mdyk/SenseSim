@@ -22,10 +22,7 @@ import org.mdyk.netsim.mathModel.Functions;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 
@@ -45,14 +42,15 @@ public class OWLMiddleware extends Thread implements Middleware {
     /**
      * Kolekcja zapytań o informację
      */
-    private Map<Integer , InformationNeedAskMessage> informationNeedAskMsgs = new HashMap<>();
+    @Deprecated
+//    private Map<Integer , InformationNeedAskMessage> informationNeedAskMsgs = new HashMap<>();
 
     /**
      * Kolekcja określająca ile razy dana potrzeba informacyjna zaostała rozesłana.
      */
     private Map<Integer , Integer> informationNeedAskResendCount = new HashMap<>();
 
-    private Map<Integer , String> informationNeedResponse = new HashMap<>();
+//    private Map<Integer , String> informationNeedResponse = new HashMap<>();
 
     private Map<Integer , String> communicationInterfaces;
     private Map<Integer, List<Neighbour>> neighbours = new HashMap<>();
@@ -66,7 +64,8 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     private KnowledgeBase kb;
 
-//    private OntologyProcessor ontologyProcessor;
+
+    private List<InformationNeedProcess> inProcesses = Collections.synchronizedList(new ArrayList<>());
 
 
     @Override
@@ -99,6 +98,8 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                     case INFORMATION_NEED_ASK:
                         InformationNeedAskMessage inam = (InformationNeedAskMessage) inm;
+                        InformationNeedProcess inProcess = new InformationNeedProcess(inam);
+                        inProcesses.add(inProcess);
                         processInformationNeed(inam, true);
                         break;
 
@@ -140,9 +141,17 @@ public class OWLMiddleware extends Thread implements Middleware {
         // 1. zweryfikowanie czy jestem odbiorcą
         if(inrm.getSourceNode() == this.nodeId) {
             // oznaczenie że udzielono odpowiedzi na potrzebę
-            this.informationNeedResponse.put(inrm.getId(), inrm.toJSON());
 
-            InformationNeedAskMessage inam = informationNeedAskMsgs.get(inrm.getId());
+            InformationNeedProcess inProcess = getInProcess(inrm.getId());
+
+            if (inProcess == null) {
+                LOG.error("InformationNeedProcess is null inId = " + inrm.getId());
+                return;
+            }
+
+            InformationNeedAskMessage inam = inProcess.getInam();
+
+            inProcess.setAnswer(inrm);
 
             // Uzupełnienie włanej bazy wiedzy jeśli jest to opowiedź na zapytanie o wiedzę
             if(inam.getInfon().getRelation().equals(KnowledgeBase.UNKNOWN_RELATION)) {
@@ -158,13 +167,13 @@ public class OWLMiddleware extends Thread implements Middleware {
                     }
                 }
 
-                // TODO usuniecie potrzeby na ktora juz odpowiedziano [jeszcze do przyyslenia czy nie rtrzeba tego jakos oznaczac inaczej]
-                // FIXME nie usuwac tylko oznaczyc stan jako przeprocesowany
-                informationNeedAskMsgs.remove(inrm.getId());
-
+                inProcess.setAnswered();
                 // Sprawdzenie czy mozna odpowiedziec na ktores z zapytań
-                for (InformationNeedAskMessage informationNeedAskMessage : this.informationNeedAskMsgs.values()){
-                    processInformationNeed(informationNeedAskMessage,true);
+                for (InformationNeedProcess process : inProcesses) {
+                    if(!process.isAnswered()) {
+                        processInformationNeed(process.getInam(), true);
+                    }
+
                 }
 
             }
@@ -195,8 +204,6 @@ public class OWLMiddleware extends Thread implements Middleware {
     public void setDeviceSimEntity(DeviceSimEntity simEntity) {
         this.deviceSimEntity = simEntity;
         this.nodeId = this.deviceSimEntity.getDeviceLogic().getID();
-//        soldierName = "Soldier_"+deviceSimEntity.getDeviceLogic().getID();
-//        deviceName = "Device_"+deviceSimEntity.getDeviceLogic().getID();
     }
 
     @Override
@@ -238,6 +245,10 @@ public class OWLMiddleware extends Thread implements Middleware {
                         Infon infon = new Infon(informationNeed.getValue());
 
                         InformationNeedAskMessage askMessage = new InformationNeedAskMessage(this.nodeId, infon);
+
+                        InformationNeedProcess inProcess = new InformationNeedProcess(askMessage);
+                        inProcesses.add(inProcess);
+
                         processInformationNeed(askMessage, true);
                     }
 
@@ -250,7 +261,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     private void processInformationNeed(InformationNeedAskMessage informationNeedAsk, boolean verify) {
         informationNeedAsk.processedInNode(this.nodeId);
-        this.informationNeedAskMsgs.put(informationNeedAsk.getId() , informationNeedAsk);
+
         this.informationNeedAskResendCount.put(informationNeedAsk.getId(), 0);
         
         if(verify) {
@@ -271,7 +282,11 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                 Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+relation+",?l,?t,1>>");
                 InformationNeedAskMessage relationUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
-                this.informationNeedAskMsgs.put(relationUnknownNeed.getId() , relationUnknownNeed);
+
+                InformationNeedProcess unknownRelationProcess = new InformationNeedProcess(relationUnknownNeed);
+                this.inProcesses.add(unknownRelationProcess);
+//                this.informationNeedAskMsgs.put(relationUnknownNeed.getId() , relationUnknownNeed);
+
                 relationUnknownNeed.processedInNode(this.nodeId);
                 for (Integer neighbourId : neighboursCombinedList.keySet()) {
                     Neighbour neighbour = neighboursCombinedList.get(neighbourId);
@@ -318,11 +333,6 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         }
         else if (!relationExists && unknownObjects.size() == 0) {
-            // Zapytanie o relację. Dodoanie jej do ontologii w gałęzi unknown
-//            Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+relation+",?l,t,1>>");
-//            InformationNeedAskMessage relationUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
-//            processInformationNeed(relationUnknownNeed, false);
-
             inProcessStatus.add(INProcessStatus.ASK_FOR_RELATION);
             if(!informationNeedAsk.getInfon().isSpatialLocationParam()) {
                 inProcessStatus.add(INProcessStatus.UPDATE_TOPOLOGY);
@@ -341,10 +351,7 @@ public class OWLMiddleware extends Thread implements Middleware {
         }
         else if (!relationExists && unknownObjects.size() > 0) {
             // Wysłanie zapytania z prośbą o wyjaśnienie relacji i obiektów. Dodanie obu do gałęzi unknown
-//            Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+relation+",?l,t,1>>");
-//            InformationNeedAskMessage relationUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
 //            // Nie ma weryfikacji bo urządzenie na pewno nie zna odpowiedzi na to żądanie
-//            processInformationNeed(relationUnknownNeed, false);
             inProcessStatus.add(INProcessStatus.ASK_FOR_OBJECTS);
             inProcessStatus.add(INProcessStatus.ASK_FOR_RELATION);
 
@@ -382,7 +389,6 @@ public class OWLMiddleware extends Thread implements Middleware {
             }
 
             Infon relRespInfon = new Infon(inam.getInfon());
-//            inrm = new InformationNeedRespMessage(this.nodeId,inam.getId(),relRespInfon);
             inrm.procecessedInNode(this.nodeId);
 
         } else {
@@ -421,19 +427,6 @@ public class OWLMiddleware extends Thread implements Middleware {
                 deviceAPI.api_sendMessage(this.nextMsgId(), deviceAPI.api_getMyID(), neighbour.getId(), neighbour.commInt, inrm.toJSON(), inrm.getSize());
             }
         }
-
-//        for(Integer commInt : this.neighbours.keySet()) {
-//            if(sendingFinished) break;
-//            for(Neighbour n : this.neighbours.get(commInt)) {
-//
-//                if(n.getId() == inam.getSourceNode()) {
-//                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,inrm.toJSON(), inrm.getSize());
-//                    sendingFinished = true;
-//                    break;
-//                }
-//
-//            }
-//        }
     }
 
     private void resendInformationNeed(int inamId) {
@@ -445,7 +438,14 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     private void resendInformationNeed(int neighbourId, int inamId) {
 
-        InformationNeedAskMessage informationNeedAsk = this.informationNeedAskMsgs.get(inamId);
+        InformationNeedProcess inProcess = getInProcess(inamId);
+
+        if(inProcess == null) {
+            LOG.error("No process with id = " + inamId);
+            return;
+        }
+
+        InformationNeedAskMessage informationNeedAsk = inProcess.getInam();
 
         List<GeoPosition> needArea = new ArrayList<>();
         // Określa czy przy rozsyłaniu potrzeby ma być uwzględnione położenie
@@ -638,13 +638,22 @@ public class OWLMiddleware extends Thread implements Middleware {
         }
     }
 
+    private InformationNeedProcess getInProcess(int inId) {
+        for(InformationNeedProcess process : inProcesses) {
+            if(process.getId() == inId) {
+                return process;
+            }
+        }
+        return null;
+    }
+
     @Override
     public void run() {
 
         // FIXME powinno to odbywać się jako poprawne zdarzenia symulacyjne
         while(true) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
