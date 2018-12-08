@@ -88,6 +88,15 @@
         </node>
 
         <node id="2" name="dev_2">
+            <initialKB>
+                <!--Zero or more repetitions:-->
+                <infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; consistsOf, Human, BodyTemperature, ?l, ?t, 1 &gt;&gt;</infon>
+            </initialKB>
             <speed>4</speed>
             <radioRange>80</radioRange>
             <radioBandwidth>500</radioBandwidth>

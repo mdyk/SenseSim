@@ -60,8 +60,6 @@ public class OWLMiddleware extends Thread implements Middleware {
      */
     private Map<Integer, Neighbour> neighboursCombinedList = new HashMap<>();
 
-    private HashMap <Integer , Boolean> resendResponse = new HashMap<>();
-
     private KnowledgeBase kb;
 
 
