@@ -6,6 +6,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog">
+    <Prefix name="" IRI="http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog#"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
@@ -21,10 +22,13 @@
         <ObjectProperty IRI="#isPerceivedBy"/>
     </Declaration>
     <Declaration>
-        <Class IRI="#Object"/>
+        <NamedIndividual IRI="#s1"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Location"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Object"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Unknown"/>
@@ -42,10 +46,13 @@
         <Class IRI="#Immediate"/>
     </Declaration>
     <Declaration>
-        <ObjectProperty IRI="#perceives"/>
+        <Class IRI="#TemperatureObserver"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Relation"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#perceives"/>
     </Declaration>
     <Declaration>
         <Class IRI="#StateOfAffair"/>
@@ -56,6 +63,34 @@
     <Declaration>
         <Class IRI="#Sensor"/>
     </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#Observer"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#perceives"/>
+            <Class IRI="#StateOfAffair"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Phenomenon"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#consistsOf"/>
+            <Class IRI="#StateOfAffair"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Sensor"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasObserver"/>
+            <Class IRI="#Observer"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#StateOfAffair"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#isPerceivedBy"/>
+            <Class IRI="#Observer"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
     <SubClassOf>
         <Class IRI="#Immediate"/>
         <Class IRI="#Relation"/>
@@ -64,12 +99,22 @@
         <Class IRI="#Sensor"/>
         <Class IRI="#Object"/>
     </SubClassOf>
-    <DisjointClasses>
-        <Class IRI="#Location"/>
-        <Class IRI="#Object"/>
+    <SubClassOf>
+        <Class IRI="#TemperatureObserver"/>
         <Class IRI="#Observer"/>
-        <Class IRI="#Phenomenon"/>
-    </DisjointClasses>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Unknown"/>
+        <Class IRI="#Location"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Unknown"/>
+        <Class IRI="#Object"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Unknown"/>
+        <Class IRI="#Relation"/>
+    </SubClassOf>
     <SubObjectPropertyOf>
         <ObjectProperty IRI="#consistsOf"/>
         <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>

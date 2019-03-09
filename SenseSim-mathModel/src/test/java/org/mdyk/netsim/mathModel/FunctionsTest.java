@@ -93,4 +93,32 @@ public class FunctionsTest {
     }
 
 
+    @Test
+    public void isPointInRegionWholePoland() {
+
+        List<GeoPosition> region = new LinkedList<>();
+
+
+
+        GeoPosition position1 = new GeoPosition(53.721823, 14.323730);
+        GeoPosition position2 = new GeoPosition(54.177929, 23.380290);
+        GeoPosition position3 = new GeoPosition(49.638199, 23.728027);
+        GeoPosition position4 = new GeoPosition(49.295487, 15.378418);
+//        GeoPosition position4 = new GeoPosition(52.230554, 21.007243);
+
+        region.add(position1);
+        region.add(position2);
+        region.add(position3);
+        region.add(position4);
+
+
+        GeoPosition pointInRegion = new GeoPosition(52.230856, 21.006546);
+        TestCase.assertTrue(Functions.isPointInRegion(pointInRegion, region));
+
+//        GeoPosition pointOutsideRegion = new GeoPosition(52.233173, 21.013820);
+//        TestCase.assertTrue(!Functions.isPointInRegion(pointOutsideRegion, region));
+
+    }
+
+
 }

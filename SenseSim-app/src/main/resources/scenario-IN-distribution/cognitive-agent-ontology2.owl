@@ -1,10 +1,11 @@
 <?xml version="1.0"?>
-<rdf:RDF xmlns="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#"
-     xml:base="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14"
+<rdf:RDF xmlns="http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog#"
+     xml:base="http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog"
      xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:owl="http://www.w3.org/2002/07/owl#"
      xmlns:xml="http://www.w3.org/XML/1998/namespace"
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:untitled-ontology-14="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
     <owl:Ontology rdf:about="http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog"/>
     
@@ -152,6 +153,12 @@
     <!-- http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_0adfe042_8e84_4ca4_b3c8_1d5fc3068f1c -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_0adfe042_8e84_4ca4_b3c8_1d5fc3068f1c">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLObjectProperty_cc88b625_c2df_48e5_8bf2_e83dad4274d2"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_599e28cb_4194_4195_b0f2_7bd3555dc2ed"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_e8542188_e499_4a48_ab28_12675faa8e29"/>
         <owl:disjointWith rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_78ff2543_5941_4718_a820_c2fe3a4e93ee"/>
         <rdfs:label xml:lang="pl">Sensor</rdfs:label>
@@ -200,12 +207,12 @@
     <!-- http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_3d02fb03_806d_4e15_b4c1_facebe141c19 -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_3d02fb03_806d_4e15_b4c1_facebe141c19">
-        <rdfs:subClassOf>
+        <owl:equivalentClass>
             <owl:Restriction>
                 <owl:onProperty rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLObjectProperty_cc88b625_c2df_48e5_8bf2_e83dad4274d2"/>
                 <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_4021d527_e21f_42b1_8085_337b8c7c0675"/>
             </owl:Restriction>
-        </rdfs:subClassOf>
+        </owl:equivalentClass>
         <rdfs:label xml:lang="pl">Phenomenon</rdfs:label>
     </owl:Class>
     
@@ -228,6 +235,12 @@
     <!-- http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_599e28cb_4194_4195_b0f2_7bd3555dc2ed -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_599e28cb_4194_4195_b0f2_7bd3555dc2ed">
+        <owl:equivalentClass>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLObjectProperty_088a03d7_1f76_407c_8db1_a230f3a618dc"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_4021d527_e21f_42b1_8085_337b8c7c0675"/>
+            </owl:Restriction>
+        </owl:equivalentClass>
         <rdfs:label xml:lang="pl">Observer</rdfs:label>
     </owl:Class>
     
@@ -244,7 +257,6 @@
     <!-- http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_78ff2543_5941_4718_a820_c2fe3a4e93ee -->
 
     <owl:Class rdf:about="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_78ff2543_5941_4718_a820_c2fe3a4e93ee">
-        <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_3d02fb03_806d_4e15_b4c1_facebe141c19"/>
         <rdfs:subClassOf rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_e8542188_e499_4a48_ab28_12675faa8e29"/>
         <rdfs:subClassOf>
             <owl:Restriction>
@@ -323,7 +335,7 @@
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLNamedIndividual_24b22fab_3696_4576_9412_b07ac1131ad3">
         <rdf:type rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLClass_e8542188_e499_4a48_ab28_12675faa8e29"/>
-        <OWLObjectProperty_4906fce5_bd07_4985_8e3c_61fad5ecc7b4 rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLNamedIndividual_e7e68827_4655_4c65_a434_90e690be556a"/>
+        <untitled-ontology-14:OWLObjectProperty_4906fce5_bd07_4985_8e3c_61fad5ecc7b4 rdf:resource="http://www.semanticweb.org/michal/ontologies/2018/7/untitled-ontology-14#OWLNamedIndividual_e7e68827_4655_4c65_a434_90e690be556a"/>
         <rdfs:label xml:lang="pl">Soldier_1</rdfs:label>
     </owl:NamedIndividual>
     

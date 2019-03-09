@@ -15,18 +15,21 @@ public class InformationNeedAskMessage implements InformationNeedMessage {
     private final Infon infon;
     private int sourceNode;
     private List<Integer> processedInNodes;
-    private UUID id;
+    private int id;
 
 
     public InformationNeedAskMessage(int sourceNode , Infon infon) {
         this.infon = infon;
         this.sourceNode = sourceNode;
         processedInNodes = new ArrayList<>();
-        this.id = UUID.randomUUID();
+        this.id = UUID.randomUUID().hashCode();
     }
 
-    public InformationNeedAskMessage(String sourceNode, Infon infon, JSONArray processedInNodes) {
-        this(Integer.parseInt(sourceNode) , infon);
+    public InformationNeedAskMessage(String nid, String sourceNode, Infon infon, JSONArray processedInNodes) {
+        this.infon = infon;
+        this.id = Integer.parseInt(nid);
+        this.sourceNode = Integer.parseInt(sourceNode);
+        this.processedInNodes = new ArrayList<>();
 
         for(int ii=0; ii < processedInNodes.length(); ii++){
 //            System.out.println(processedInNodes.getJSONObject(ii);
@@ -78,7 +81,7 @@ public class InformationNeedAskMessage implements InformationNeedMessage {
 //        int result = messageType.hashCode();
 //        result = 31 * result + infon.hashCode();
 //        result = 31 * result + sourceNode;
-        return id.hashCode();
+        return id;
     }
 
 }

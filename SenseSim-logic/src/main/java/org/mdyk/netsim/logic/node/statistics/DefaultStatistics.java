@@ -17,11 +17,10 @@ import java.util.List;
 public class DefaultStatistics implements DeviceStatistics {
 
     private static final Logger LOG = Logger.getLogger(DefaultStatistics.class);
-
-    private Device device;
     List<CommunicationProcess> incomingComms;
     List<CommunicationProcess> outgoingComms;
     List<SensorProgram> sensorPrograms;
+    private Device device;
 
     public DefaultStatistics() {
         this.incomingComms = new ArrayList<>();
@@ -34,10 +33,10 @@ public class DefaultStatistics implements DeviceStatistics {
     public void addCommunication(CommunicationProcess communicationProcess) {
         LOG.trace(">> addCommunication");
         if(communicationProcess.getSender().getID() == device.getDeviceLogic().getID()) {
-            LOG.debug("adding process " + communicationProcess.getID() + " as outgoing");
+            LOG.trace("adding process " + communicationProcess.getID() + " as outgoing");
             addCommunication(communicationProcess, outgoingComms);
         } else if (communicationProcess.getReceiver().getID() == device.getDeviceLogic().getID()) {
-            LOG.debug("adding process " + communicationProcess.getID() + " as incoming");
+            LOG.trace("adding process " + communicationProcess.getID() + " as incoming");
             addCommunication(communicationProcess, incomingComms);
         }
         LOG.trace("<< addCommunication");

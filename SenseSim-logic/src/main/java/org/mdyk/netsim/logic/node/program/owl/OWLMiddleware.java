@@ -97,8 +97,21 @@ public class OWLMiddleware extends Thread implements Middleware {
                     case INFORMATION_NEED_ASK:
                         InformationNeedAskMessage inam = (InformationNeedAskMessage) inm;
                         InformationNeedProcess inProcess = new InformationNeedProcess(inam);
-                        inProcesses.add(inProcess);
-                        processInformationNeed(inam, true);
+
+                        boolean newIN = true;
+
+                        // TODO zalogowanie do pliku
+                        for(InformationNeedProcess ip : inProcesses) {
+                            if(ip.getId() == inam.getId()) {
+                                newIN = false;
+                                LOG.info("Device "+deviceAPI.api_getMyID()+" already contains IN with nid: " +inam.getId());
+                            }
+                        }
+
+                        if(newIN) {
+                            inProcesses.add(inProcess);
+                            processInformationNeed(inam, true);
+                        }
                         break;
 
                     case INFORMATION_NEED_RESP:
@@ -344,8 +357,8 @@ public class OWLMiddleware extends Thread implements Middleware {
 
             if(!informationNeedAsk.getInfon().isSpatialLocationParam()) {
                 inProcessStatus.add(INProcessStatus.UPDATE_TOPOLOGY);
-                inProcessStatus.add(INProcessStatus.RESEND);
             }
+            inProcessStatus.add(INProcessStatus.RESEND);
         }
         else if (!relationExists && unknownObjects.size() > 0) {
             // Wysłanie zapytania z prośbą o wyjaśnienie relacji i obiektów. Dodanie obu do gałęzi unknown
@@ -428,6 +441,9 @@ public class OWLMiddleware extends Thread implements Middleware {
     }
 
     private void resendInformationNeed(int inamId) {
+
+        actualizeNeighbours();
+
         for(Integer nId : neighboursCombinedList.keySet()) {
             resendInformationNeed(nId,inamId);
         }
