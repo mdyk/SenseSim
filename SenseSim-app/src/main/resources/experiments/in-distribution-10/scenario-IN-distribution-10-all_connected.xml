@@ -544,6 +544,62 @@
             </route>
         </node>
 
+        <node id="10" name="dev_10">
+            <initialKB>
+                <!--Zero or more repetitions:-->
+                <infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>
+            </initialKB>
+            <speed>4</speed>
+            <radioRange>1000</radioRange>
+            <radioBandwidth>500</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <!--<programFile>capabilitiesCommander.groovy</programFile>-->
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>1000</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <!--<communicationInterface id="1" name="Tactical">-->
+                <!--<radioRange>1000</radioRange>-->
+                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                <!--<topologyType>-->
+                <!--<fixedTopology>-->
+                <!--<connectedDeviceId>5</connectedDeviceId>-->
+                <!--<connectedDeviceId>9</connectedDeviceId>-->
+                <!--</fixedTopology>-->
+                <!--</topologyType>-->
+                <!--</communicationInterface>-->
+            </communicationInterfaces>
+            <sensors/>
+            <startPosition>
+                <latitude>52.229775</latitude>
+                <longitude>21.007195</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+
     </nodes>
     <phenomena>
 

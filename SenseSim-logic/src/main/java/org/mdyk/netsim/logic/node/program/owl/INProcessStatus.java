@@ -12,6 +12,10 @@ public enum INProcessStatus  {
     // Wyślij zapytanie o nieznane obiekty
     ASK_FOR_OBJECTS_AND_RELATION,
 
+    LOCALIZATION_NOT_IMPORTANT,
+
+    LOCALIZATION_IMPORTANT,
+
     RESEND,
     PROCESS_IN_NODE,
     UPDATE_TOPOLOGY;

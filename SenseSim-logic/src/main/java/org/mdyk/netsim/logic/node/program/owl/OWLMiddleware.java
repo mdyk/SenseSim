@@ -140,8 +140,12 @@ public class OWLMiddleware extends Thread implements Middleware {
         LOG.trace(">> handleTopologyDiscoveryResp tdrm = " + tdrm.toString());                 
         this.updateNeighbourPosition(tdrm.getNodeId(),tdrm.getPosition());
 
-        // Rozesłanie tylko jeśli była taka potrzeba
-       // this.resendInformationNeed(tdrm.getNodeId(), tdrm.getNeedId());
+        InformationNeedProcess inProcess = getInProcess(tdrm.getNeedId());
+
+        if(inProcess != null && !inProcess.wasSentTo(tdrm.getNodeId())) {
+            resendInformationNeed(tdrm.getNodeId(),tdrm.getNeedId());
+            inProcess.wasSentTo(tdrm.getId());
+        }
 
         LOG.trace("<< handleTopologyDiscoveryResp");
     }
@@ -283,7 +287,11 @@ public class OWLMiddleware extends Thread implements Middleware {
             }
 
             if(inProcessStatus.contains(INProcessStatus.RESEND)) {
-                resendInformationNeed(informationNeedAsk.getId());
+                if (inProcessStatus.contains(INProcessStatus.LOCALIZATION_IMPORTANT)) {
+                    resendInformationNeed(informationNeedAsk.getId(), false);
+                } else if (inProcessStatus.contains(INProcessStatus.LOCALIZATION_NOT_IMPORTANT)) {
+                    resendInformationNeed(informationNeedAsk.getId(), true);
+                }
             }
 
             if(inProcessStatus.contains(INProcessStatus.ASK_FOR_RELATION)) {
@@ -339,7 +347,9 @@ public class OWLMiddleware extends Thread implements Middleware {
             inProcessStatus.add(INProcessStatus.RESEND);
             if(!informationNeedAsk.getInfon().isSpatialLocationParam()) {
                 inProcessStatus.add(INProcessStatus.UPDATE_TOPOLOGY);
-                inProcessStatus.add(INProcessStatus.RESEND);
+                inProcessStatus.add(INProcessStatus.LOCALIZATION_IMPORTANT);
+            } else {
+                inProcessStatus.add(INProcessStatus.LOCALIZATION_NOT_IMPORTANT);
             }
 
         }
@@ -348,6 +358,9 @@ public class OWLMiddleware extends Thread implements Middleware {
             if(!informationNeedAsk.getInfon().isSpatialLocationParam()) {
                 inProcessStatus.add(INProcessStatus.UPDATE_TOPOLOGY);
                 inProcessStatus.add(INProcessStatus.RESEND);
+                inProcessStatus.add(INProcessStatus.LOCALIZATION_IMPORTANT);
+            } else {
+                inProcessStatus.add(INProcessStatus.LOCALIZATION_NOT_IMPORTANT);
             }
 
         }
@@ -357,6 +370,9 @@ public class OWLMiddleware extends Thread implements Middleware {
 
             if(!informationNeedAsk.getInfon().isSpatialLocationParam()) {
                 inProcessStatus.add(INProcessStatus.UPDATE_TOPOLOGY);
+                inProcessStatus.add(INProcessStatus.LOCALIZATION_IMPORTANT);
+            } else {
+                inProcessStatus.add(INProcessStatus.LOCALIZATION_NOT_IMPORTANT);
             }
             inProcessStatus.add(INProcessStatus.RESEND);
         }
@@ -369,6 +385,9 @@ public class OWLMiddleware extends Thread implements Middleware {
             if(!informationNeedAsk.getInfon().isSpatialLocationParam()) {
                 inProcessStatus.add(INProcessStatus.UPDATE_TOPOLOGY);
                 inProcessStatus.add(INProcessStatus.RESEND);
+                inProcessStatus.add(INProcessStatus.LOCALIZATION_IMPORTANT);
+            } else {
+                inProcessStatus.add(INProcessStatus.LOCALIZATION_NOT_IMPORTANT);
             }
         }
 
@@ -440,9 +459,11 @@ public class OWLMiddleware extends Thread implements Middleware {
         }
     }
 
-    private void resendInformationNeed(int inamId) {
+    private void resendInformationNeed(int inamId, boolean actualizeNeighbours) {
 
-        actualizeNeighbours();
+        if(actualizeNeighbours) {
+            actualizeNeighbours();
+        }
 
         for(Integer nId : neighboursCombinedList.keySet()) {
             resendInformationNeed(nId,inamId);
@@ -469,20 +490,30 @@ public class OWLMiddleware extends Thread implements Middleware {
             areaImportant = true;
         }
 
-        //FIXME do poprawy tak żeby nie trzeba było iterowac po wszystkich sasiadach
-        for(Integer commInt : this.neighbours.keySet()) {
-            for(Neighbour n : this.neighbours.get(commInt)) {
-                if (n.getId() == neighbourId  && !informationNeedAsk.wasProcessedBy(n.getId())) {
-                    // FIXME sprawdzenie pozycji jest nadmiarowe. DO poprawy proces uzyskiwania położenia od sąsiadów.
-                    if(areaImportant && n.getPosition() != null && !Functions.isPointInRegion(n.getPosition() , needArea) ) {
-                        continue;
-                    }
-                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());
-                    int count = this.informationNeedAskResendCount.get(informationNeedAsk.getId());
-                    this.informationNeedAskResendCount.put(informationNeedAsk.getId(), count);
-                }
+        Neighbour neighbour = neighboursCombinedList.get(neighbourId);
+
+        if(areaImportant) {
+            if (neighbour.getPosition() != null && Functions.isPointInRegion(neighbour.getPosition() , needArea)) {
+                deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),neighbour.getId(), neighbour.commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());
             }
+        } else {
+            deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),neighbour.getId(), neighbour.commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());
         }
+
+//        //FIXME do poprawy tak żeby nie trzeba było iterowac po wszystkich sasiadach
+//        for(Integer commInt : this.neighbours.keySet()) {
+//            for(Neighbour n : this.neighbours.get(commInt)) {
+//                if (n.getId() == neighbourId  && !informationNeedAsk.wasProcessedBy(n.getId())) {
+//                    // FIXME sprawdzenie pozycji jest nadmiarowe. DO poprawy proces uzyskiwania położenia od sąsiadów.
+//                    if(areaImportant && n.getPosition() != null && !Functions.isPointInRegion(n.getPosition() , needArea) ) {
+//                        continue;
+//                    }
+//                    deviceAPI.api_sendMessage(this.nextMsgId(),deviceAPI.api_getMyID(),n.getId(), commInt,informationNeedAsk.toJSON(), informationNeedAsk.getSize());
+//                    int count = this.informationNeedAskResendCount.get(informationNeedAsk.getId());
+//                    this.informationNeedAskResendCount.put(informationNeedAsk.getId(), count);
+//                }
+//            }
+//        }
     }
 
     private boolean isDeviceInNeedArea(GeoPosition devicePosition, InformationNeedAskMessage inam) {
@@ -584,25 +615,44 @@ public class OWLMiddleware extends Thread implements Middleware {
 //        deviceAPI.api_stayIdleFor(2);
 
 
-//        boolean wait = true;
+//        boolean noPosition = true;
 //        int count = 1;
 //
-//        LOG.debug("--- Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+"]" );
+//        LOG.debug("--- Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+" , nodeId = "+ deviceAPI.api_getMyID() +"]" );
 //
-//        while (wait && count < 40) {
-//            for(Integer commInt : neighbours.keySet()) {
-//                for(Neighbour n : this.neighbours.get(commInt)) {
-//                    wait &= (n.getPosition() == null);
+//        while (noPosition && count < 500) {
+//            noPosition = false;
+//            for (Neighbour n : neighboursCombinedList.values()) {
+//                if(n.getPosition() == null) {
+//                    noPosition = true;
 //                }
 //            }
 //
+////            for (Integer commInt : neighbours.keySet()) {
+////                for (Neighbour n : this.neighbours.get(commInt)) {
+////                    wait &= (n.getPosition() == null);
+////                }
+////            }
+//
+////            try {
+////                Thread.sleep(100);
+//////                count ++;
+////            } catch (InterruptedException e) {
+////                e.printStackTrace();
+////            }
+//
+//            count ++;
+//        }
+
+//        LOG.debug("--- Stopped Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+" , nodeId = "+ deviceAPI.api_getMyID() +"]" );
+//
 ////            // FIXME dodac opoznienie symulacyjne
-            try {
-                Thread.sleep(2000);
-//                count ++;
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(2000);
+////                count ++;
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 //
 //        }
 //
@@ -643,10 +693,12 @@ public class OWLMiddleware extends Thread implements Middleware {
     }
 
     private void updateNeighbourPosition(int neighbourId, GeoPosition position) {
+
         for(Integer commInt : neighbours.keySet()) {
             for(Neighbour n : this.neighbours.get(commInt)) {
                 if(n.getId() == neighbourId) {
                     n.setPosition(position);
+                    neighboursCombinedList.get(neighbourId).setPosition(position);
                 }
             }
         }
