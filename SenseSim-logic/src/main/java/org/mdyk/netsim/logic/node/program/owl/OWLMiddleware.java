@@ -288,9 +288,9 @@ public class OWLMiddleware extends Thread implements Middleware {
 
             if(inProcessStatus.contains(INProcessStatus.RESEND)) {
                 if (inProcessStatus.contains(INProcessStatus.LOCALIZATION_IMPORTANT)) {
-                    resendInformationNeed(informationNeedAsk.getId(), false);
+                    resendInformationNeed(informationNeedAsk.getId(), false, true);
                 } else if (inProcessStatus.contains(INProcessStatus.LOCALIZATION_NOT_IMPORTANT)) {
-                    resendInformationNeed(informationNeedAsk.getId(), true);
+                    resendInformationNeed(informationNeedAsk.getId(), true, true);
                 }
             }
 
@@ -459,14 +459,28 @@ public class OWLMiddleware extends Thread implements Middleware {
         }
     }
 
-    private void resendInformationNeed(int inamId, boolean actualizeNeighbours) {
+    /**
+     *
+     * @param inamId
+     *          ID if the information need to be resend
+     * @param actualizeNeighbours
+     *          flag which indicates if before resending the need device should actualize its knowledge about neighbours
+     * @param skipProcessed
+     *          if true the need won't be sent to the devices which have already processed it.
+     */
+    private void resendInformationNeed(int inamId, boolean actualizeNeighbours, boolean skipProcessed) {
+
+        InformationNeedProcess inProcess = getInProcess(inamId);
 
         if(actualizeNeighbours) {
             actualizeNeighbours();
         }
 
-        for(Integer nId : neighboursCombinedList.keySet()) {
-            resendInformationNeed(nId,inamId);
+        for(Integer neighbourId : neighboursCombinedList.keySet()) {
+            if(skipProcessed && inProcess.wasProcessedBy(neighbourId)) {
+                continue;
+            }
+            resendInformationNeed(neighbourId,inamId);
         }
     }
 

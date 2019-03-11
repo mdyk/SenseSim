@@ -23,6 +23,7 @@ public class InformationNeedProcess {
         this.answered = false;
         this.status = INStatus.RECEIVED;
         this.resendedTo = new ArrayList<>();
+
     }
 
     public void setAnswer(InformationNeedRespMessage inrm) {
@@ -62,6 +63,10 @@ public class InformationNeedProcess {
 
     public int getId () {
         return this.inam.getId();
+    }
+
+    public boolean wasProcessedBy(int nodeId) {
+        return inam.wasProcessedBy(nodeId);
     }
 
     public enum INStatus {
