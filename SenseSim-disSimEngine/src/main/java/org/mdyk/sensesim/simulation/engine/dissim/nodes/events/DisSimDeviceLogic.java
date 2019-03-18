@@ -237,6 +237,12 @@ public class DisSimDeviceLogic extends DefaultDeviceModel<GeoPosition> implement
         }
     }
 
+
+    @Override
+    public void messageSentFinished(int communicationInterface, Message message) {
+        this.freeOutboundBandwith(communicationInterface , message.getSize());
+    }
+
     // TODO metody do usunięcia w sytuacji kiedy interrupt będzie działać poprawnie
     public void stopMoveing() {
         this.isMoveing = false;

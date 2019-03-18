@@ -137,6 +137,11 @@ public class GeoDeviceNodeThread extends DeviceNodeThread<GeoPosition, GeoMoveme
         
     }
 
+    @Override
+    public void messageSentFinished(int communicationInterface, Message message) {
+
+    }
+
 
     @Override
     public List<GeoPosition> getRoute() {

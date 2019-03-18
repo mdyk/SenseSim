@@ -129,6 +129,11 @@ public class NetworkManagerTest {
         }
 
         @Override
+        public void messageSentFinished(int communicationInterface, Message message) {
+
+        }
+
+        @Override
         public void startCommunication(Message message, HashMap receivers) {
             
         }

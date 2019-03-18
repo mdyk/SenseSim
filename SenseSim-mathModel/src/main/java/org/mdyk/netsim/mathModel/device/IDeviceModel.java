@@ -96,6 +96,31 @@ public interface IDeviceModel<P extends Position> {
 
     CommunicationInterface getCommunicationInterface(int commIntId);
 
+    double getInboundBandwithCapacity(int commIntId);
+
+    double getOutboundBandwithCapacity(int commIntId);
+
+    /**
+     *
+     * @param commIntId
+     * @param bits
+     * @return
+     *      true if given amout can be reserved, false otherwise
+     */
+    boolean reserveInboundBandwith(int commIntId , double bits);
+
+    void freeInboundBandwith(int commIntId , double bits);
+
+    /**
+     *
+     * @param commIntId
+     * @param bits
+     * @return
+     *      true if given amout can be reserved, false otherwise
+     */
+    boolean reserveOutboundBandwith(int commIntId , double bits);
+
+    void freeOutboundBandwith(int commIntId , double bits);
 
     // TODO zasoby, programy, SNT
 

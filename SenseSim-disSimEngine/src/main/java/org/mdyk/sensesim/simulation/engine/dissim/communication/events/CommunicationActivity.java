@@ -3,6 +3,7 @@ package org.mdyk.sensesim.simulation.engine.dissim.communication.events;
 import dissim.simspace.core.SimControlException;
 import dissim.simspace.process.BasicSimAction;
 import org.apache.log4j.Logger;
+import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.communication.process.CommunicationStatus;
 import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.node.statistics.event.DeviceStatisticsEvent;
@@ -68,6 +69,22 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
 
         List<DeviceNode> neighbours = getSimEntity().wirelessChannel.scanForNeighbors(communicationInterfaceId,sender);
 
+        Message message = getSimEntity().getMessage();
+
+        // Both sender and receiver have the same communication interface type, which is assured by the scna
+        double bandwidth = Math.min(sender.getCommunicationInterface(communicationInterfaceId).getOutputBandwidth() , receiver.getCommunicationInterface(communicationInterfaceId).getInputBandwidth());
+        int bitsToSent = (int) Math.floor(bandwidth * (period + duration));
+
+        if(sender.getOutboundBandwithCapacity(communicationInterfaceId) <= message.getSize() || receiver.getInboundBandwithCapacity(communicationInterfaceId) <= message.getSize()) {
+            crb.setSimTimeEnd(simTime());
+            crb.setCommStatus(CommunicationStatus.ON_HOLD.name());
+            CommunicationReport.updateCommReport(new CommunicationReportBean(crb));
+//            EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.COMM_PROC_UPDATE , getSimEntity().commProcess));
+        } else {
+            sender.reserveOutboundBandwith(communicationInterfaceId , message.getSize());
+            receiver.reserveInboundBandwith(communicationInterfaceId , message.getSize());
+        }
+
         if(getSimEntity().getCommunicationStatus(simTime()).equals(CommunicationStatus.SUCCESS)) {
             LOG.trace("Communication is successful");
             receiver.receiveMessage(simTime(),communicationInterfaceId,getSimEntity().getMessage());
@@ -82,11 +99,8 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
 
         } else if(neighbours.contains(receiver)) {
             LOG.trace("Receiver is neighbour of a sender");
-            // Both sender and receiver have the same communication interface type, which is assured by the scna
-            double bandwidth = Math.min(sender.getCommunicationInterface(communicationInterfaceId).getOutputBandwidth() , receiver.getCommunicationInterface(communicationInterfaceId).getInputBandwidth());
 
-            int sentBits = (int) Math.floor(bandwidth * (period + duration));
-            getSimEntity().addBitsSent(sentBits);
+            getSimEntity().addBitsSent(bitsToSent);
 
             if(getSimEntity().getCommunicationStatus(simTime()).equals(CommunicationStatus.SUCCESS)) {
                 receiver.receiveMessage(simTime(),communicationInterfaceId,getSimEntity().getMessage());
@@ -98,6 +112,9 @@ public class CommunicationActivity extends BasicSimAction<CommunicationProcessSi
                 CommunicationReport.updateCommReport(new CommunicationReportBean(crb));
                 EventBusHolder.getEventBus().post(new DeviceStatisticsEvent(DeviceStatisticsEvent.EventType.COMM_PROC_UPDATE , getSimEntity().commProcess));
             }
+
+            sender.freeOutboundBandwith(communicationInterfaceId , bitsToSent);
+            receiver.freeInboundBandwith(communicationInterfaceId , bitsToSent);
 
         } else {
             LOG.trace("Receiver is not neighbour of a sender");

@@ -277,7 +277,7 @@ public class OWLMiddleware extends Thread implements Middleware {
     private void processInformationNeed(InformationNeedAskMessage informationNeedAsk, boolean verify) {
         informationNeedAsk.processedInNode(this.nodeId);
 
-        this.informationNeedAskResendCount.put(informationNeedAsk.getId(), 0);
+        //this.informationNeedAskResendCount.put(informationNeedAsk.getId(), 0);
         
         if(verify) {
             List<INProcessStatus> inProcessStatus = verifyInformationNeed(informationNeedAsk);

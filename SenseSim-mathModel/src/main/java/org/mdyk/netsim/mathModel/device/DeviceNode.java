@@ -39,4 +39,7 @@ public interface DeviceNode<P extends Position> extends IDeviceModel<P> {
 
     // TODO instalacja programu i pobieranie danych z sensorów
 
+    void messageSentFinished(int communicationInterface, Message message);
+
+
 }

@@ -27,6 +27,11 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
     @Deprecated
     protected double        radioRange;
     protected List<CommunicationInterface> communicationInterfaces;
+
+    protected Map<Integer , Double> inboundCommIntCapacity;
+
+    protected Map<Integer , Double> outboundCommIntCapacity;
+
     @Deprecated
     protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     /**
@@ -84,6 +89,16 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
         this.sensors = sensors;
         this.observationsFromObserver = Collections.synchronizedMap(new HashMap<>()) ;
         this.communicationInterfaces = communicationInterfaces;
+
+        this.inboundCommIntCapacity = new HashMap<>();
+
+        this.outboundCommIntCapacity = new HashMap<>();
+
+        for(CommunicationInterface commInt : communicationInterfaces) {
+            inboundCommIntCapacity.put(commInt.getId() ,commInt.getInputBandwidth());
+            outboundCommIntCapacity.put(commInt.getId() ,commInt.getOutputBandwidth());
+        }
+
     }
 
     @Override
@@ -290,5 +305,65 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
 
         return communicationInterface;
     }
+
+    @Override
+    public double getInboundBandwithCapacity(int commIntId) {
+        return this.inboundCommIntCapacity.get(commIntId);
+    }
+
+    @Override
+    public double getOutboundBandwithCapacity(int commIntId) {
+        return this.outboundCommIntCapacity.get(commIntId);
+    }
+
+    @Override
+    public boolean reserveInboundBandwith(int commIntId , double bits) {
+        double currentCapacity =  getInboundBandwithCapacity(commIntId);
+        double newCapacity = currentCapacity - bits;
+        if (newCapacity >= 0) {
+            this.inboundCommIntCapacity.put(commIntId, newCapacity);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void freeInboundBandwith(int commIntId , double bits) {
+        double referenceBandwith = getCommunicationInterface(commIntId).getInputBandwidth();
+
+        double newBandwith = getInboundBandwithCapacity(commIntId) + bits;
+
+        if (newBandwith > referenceBandwith) {
+            this.inboundCommIntCapacity.put(commIntId, referenceBandwith);
+        } else {
+            this.inboundCommIntCapacity.put(commIntId, newBandwith);
+        }
+
+    }
+
+    @Override
+    public boolean reserveOutboundBandwith(int commIntId , double bits) {
+        double currentCapacity =  getOutboundBandwithCapacity(commIntId);
+        double newCapacity = currentCapacity - bits;
+        if (newCapacity >= 0) {
+            this.outboundCommIntCapacity.put(commIntId, newCapacity);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void freeOutboundBandwith(int commIntId , double bits) {
+        double referenceBandwith = getCommunicationInterface(commIntId).getOutputBandwidth();
+
+        double newBandwith = getOutboundBandwithCapacity(commIntId) + bits;
+
+        if (newBandwith > referenceBandwith) {
+            this.outboundCommIntCapacity.put(commIntId, referenceBandwith);
+        } else {
+            this.outboundCommIntCapacity.put(commIntId, newBandwith);
+        }
+    }
+
 
 }
