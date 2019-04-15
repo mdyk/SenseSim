@@ -123,9 +123,7 @@ public class KnowledgeBase {
                 OWLClass owlClass = op.getSubClass().asOWLClass();
 
                 OWLObjectSomeValuesFrom owlObjectSomeValuesFrom = (OWLObjectSomeValuesFrom) op.getSuperClass();
-
                 OntologyProcessor ontologyProcessor = new OntologyProcessor();
-
                 owlObjectSomeValuesFrom.getProperty().asOWLObjectProperty();
 
                 if(ontologyProcessor.labelForProperty(owlObjectSomeValuesFrom.getProperty().asOWLObjectProperty()).equalsIgnoreCase(PERCEIVES)) {

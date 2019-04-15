@@ -19,6 +19,7 @@ import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.logic.util.PositionParser;
 import org.mdyk.netsim.mathModel.Functions;
+import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
 import java.io.File;
@@ -431,7 +432,33 @@ public class OWLMiddleware extends Thread implements Middleware {
                 if (rel != null) {
                     ArrayList<String> obj = infon.getObjects();
                     kb.isStateOfAffair(obj.get(1));
+                    String soa = obj.get(1);
                     obj.get(2);
+
+                    List<String> sensorsNames = kb.sensorsWhichPerceivesSOA(soa);
+                    List<SensorModel<?,?>> sensorModels = this.deviceAPI.api_getSensorsList();
+
+                    SensorModel sensorForRelation = null;
+
+                    // sprawdzenie czy posiadam sensory 
+                    for(SensorModel<?,?> model : sensorModels){
+                        for(String sensorName : sensorsNames) {
+                            if(model.getName().equalsIgnoreCase(sensorName)) {
+                                sensorForRelation = model;
+                            }
+                        }
+                    }
+
+
+
+                    switch (rel.getName()) {
+                        case "lessThan":
+
+                            deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
+
+                            break;
+                    }
+
                 }
 
             }
@@ -638,53 +665,6 @@ public class OWLMiddleware extends Thread implements Middleware {
     public void topologyDiscovery(InformationNeedAskMessage informationNeedAsk) {
         this.actualizeNeighbours();
         sendPositionQuery(informationNeedAsk);
-
-//        deviceAPI.api_stayIdleFor(2);
-
-
-//        boolean noPosition = true;
-//        int count = 1;
-//
-//        LOG.debug("--- Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+" , nodeId = "+ deviceAPI.api_getMyID() +"]" );
-//
-//        while (noPosition && count < 500) {
-//            noPosition = false;
-//            for (Neighbour n : neighboursCombinedList.values()) {
-//                if(n.getPosition() == null) {
-//                    noPosition = true;
-//                }
-//            }
-//
-////            for (Integer commInt : neighbours.keySet()) {
-////                for (Neighbour n : this.neighbours.get(commInt)) {
-////                    wait &= (n.getPosition() == null);
-////                }
-////            }
-//
-////            try {
-////                Thread.sleep(100);
-//////                count ++;
-////            } catch (InterruptedException e) {
-////                e.printStackTrace();
-////            }
-//
-//            count ++;
-//        }
-
-//        LOG.debug("--- Stopped Waiting for position from neighbours [simTime="+deviceSimEntity.getSimTime()+" , nodeId = "+ deviceAPI.api_getMyID() +"]" );
-//
-////            // FIXME dodac opoznienie symulacyjne
-//            try {
-//                Thread.sleep(2000);
-////                count ++;
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//
-//        LOG.debug("--- Position from all neighbours received [simTime="+deviceSimEntity.getSimTime()+"]");
-
     }
 
     private void sendPositionQuery(InformationNeedAskMessage informationNeedAsk) {
