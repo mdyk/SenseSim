@@ -115,9 +115,27 @@ public class KnowledgeBase {
     public List<String> sensorsWhichPerceivesSOA(String stateOfAffairName) {
         List<String> sensorsNames = new ArrayList<>();
 
-        OWLClass sensorClass = op.findClass(OntologyProcessor.sensorClass);
 
-            
+        for (OWLSubClassOfAxiom op : getOntologyProcessor().getOntology().getAxioms(AxiomType.SUBCLASS_OF)) {
+
+            if(op.getSuperClass() instanceof OWLObjectSomeValuesFrom){
+
+                OWLClass owlClass = op.getSubClass().asOWLClass();
+
+                OWLObjectSomeValuesFrom owlObjectSomeValuesFrom = (OWLObjectSomeValuesFrom) op.getSuperClass();
+
+                OntologyProcessor ontologyProcessor = new OntologyProcessor();
+
+                owlObjectSomeValuesFrom.getProperty().asOWLObjectProperty();
+
+                if(ontologyProcessor.labelForProperty(owlObjectSomeValuesFrom.getProperty().asOWLObjectProperty()).equalsIgnoreCase(PERCEIVES)) {
+                    if(ontologyProcessor.labelForClass(owlObjectSomeValuesFrom.getFiller().asOWLClass()).equalsIgnoreCase(stateOfAffairName)) {
+                        String sensorName = ontologyProcessor.labelForClass(owlClass);
+                        sensorsNames.add(sensorName);
+                    }
+                }
+            }
+        }
 
         return sensorsNames;
     }

@@ -8,6 +8,10 @@ import org.semanticweb.owlapi.reasoner.Node;
 import org.semanticweb.owlapi.reasoner.NodeSet;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 
@@ -106,7 +110,12 @@ public class OntologyProcessorTest {
 
     @Test
     public void test() {
-        File file = new File("/Users/michal/Documents/Workspace/SenseSim/Device-dev_1-0.0.owl");
+
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource("Device-dev_1-0.0.owl");
+
+        File file = new File(resource.getFile());
         OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
         OWLOntology ontology;
 
@@ -126,11 +135,12 @@ public class OntologyProcessorTest {
 
             System.out.println("Classes");
             System.out.println("--------------------------------");
-            for (OWLClass cls : classes) {
-                System.out.println("+: " + cls.getIRI().getShortForm());
 
-                System.out.println(" \tObject Property Domain");
-                for (OWLSubClassOfAxiom op : ontology.getAxioms(AxiomType.SUBCLASS_OF)) {
+            String sota = "Temperature";
+            String property = "perceives";
+            List<OWLClass> sensors = new ArrayList<>();
+
+            for (OWLSubClassOfAxiom op : ontology.getAxioms(AxiomType.SUBCLASS_OF)) {
 //                    if (op.getDomain().equals(cls)) {
 //                        for(OWLObjectProperty oop : op.getObjectPropertiesInSignature()){
 //                            System.out.println("\t\t +: " + oop.getIRI().getShortForm());
@@ -138,26 +148,69 @@ public class OntologyProcessorTest {
 //                        //System.out.println("\t\t +: " + op.getProperty().getNamedProperty().getIRI().getShortForm());
 //                    }
 
-                    System.out.println(op.getSuperClass().getObjectPropertiesInSignature());
+//                    System.out.println(op.getSuperClass().getObjectPropertiesInSignature());
                     if(op.getSuperClass() instanceof OWLObjectSomeValuesFrom){
+
+                        OWLClass owlClass = op.getSubClass().asOWLClass();
+
                         OWLObjectSomeValuesFrom owlObjectSomeValuesFrom = (OWLObjectSomeValuesFrom) op.getSuperClass();
 
-                        owlObjectSomeValuesFrom.getFiller().asOWLClass();
-                        System.out.println(owlObjectSomeValuesFrom);
-                    }
-                }
+                        OntologyProcessor ontologyProcessor = new OntologyProcessor();
 
-                System.out.println(" \tData Property Domain");
-                for (OWLDataPropertyDomainAxiom dp : ontology.getAxioms(AxiomType.DATA_PROPERTY_DOMAIN)) {
-                    if (dp.getDomain().equals(cls)) {
-                        for(OWLDataProperty odp : dp.getDataPropertiesInSignature()){
-                            System.out.println("\t\t +: " + odp.getIRI().getShortForm());
+                        owlObjectSomeValuesFrom.getProperty().asOWLObjectProperty();
+
+                        if(ontologyProcessor.labelForProperty(owlObjectSomeValuesFrom.getProperty().asOWLObjectProperty()).equalsIgnoreCase(property)) {
+                            if(ontologyProcessor.labelForClass(owlObjectSomeValuesFrom.getFiller().asOWLClass()).equalsIgnoreCase(sota)) {
+                                sensors.add(owlClass);
+                            }
                         }
-                        //System.out.println("\t\t +:" + dp.getProperty());
+
+//                        System.out.println(ontologyProcessor.labelForProperty(owlObjectSomeValuesFrom.getProperty().asOWLObjectProperty()));
+//
+//
+//                        System.out.println(owlObjectSomeValuesFrom);
                     }
-                }
+
+//                System.out.println(op);
 
             }
+
+
+//            for (OWLClass cls : classes) {
+//                System.out.println("+: " + cls.getIRI().getShortForm());
+//
+//                System.out.println(" \tObject Property Domain");
+//                for (OWLSubClassOfAxiom op : ontology.getAxioms(AxiomType.SUBCLASS_OF)) {
+////                    if (op.getDomain().equals(cls)) {
+////                        for(OWLObjectProperty oop : op.getObjectPropertiesInSignature()){
+////                            System.out.println("\t\t +: " + oop.getIRI().getShortForm());
+////                        }
+////                        //System.out.println("\t\t +: " + op.getProperty().getNamedProperty().getIRI().getShortForm());
+////                    }
+//
+////                    System.out.println(op.getSuperClass().getObjectPropertiesInSignature());
+////                    if(op.getSuperClass() instanceof OWLObjectSomeValuesFrom){
+////                        OWLObjectSomeValuesFrom owlObjectSomeValuesFrom = (OWLObjectSomeValuesFrom) op.getSuperClass();
+////
+////                        owlObjectSomeValuesFrom.getFiller().asOWLClass();
+////                        System.out.println(owlObjectSomeValuesFrom);
+////                    }
+//
+//                    System.out.println(op);
+//
+//                }
+
+//                System.out.println(" \tData Property Domain");
+//                for (OWLDataPropertyDomainAxiom dp : ontology.getAxioms(AxiomType.DATA_PROPERTY_DOMAIN)) {
+//                    if (dp.getDomain().equals(cls)) {
+//                        for(OWLDataProperty odp : dp.getDataPropertiesInSignature()){
+//                            System.out.println("\t\t +: " + odp.getIRI().getShortForm());
+//                        }
+//                        //System.out.println("\t\t +:" + dp.getProperty());
+//                    }
+//                }
+
+//            }
 
         } catch (OWLOntologyCreationException ex) {
 //            Logger.getLogger(OntologyAPI.class.getName()).log(Level.SEVERE, null, ex);

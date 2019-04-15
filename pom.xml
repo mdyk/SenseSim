@@ -18,18 +18,18 @@
         <module>SesnseSim-integration</module>
     </modules>
 
-    <repositories>
-        <repository>
-            <id>SenseSim</id>
-            <name>SenseSim</name>
-            <url>http://ci.ms4ds.wat.edu.pl:8081/nexus/content/groups/SenseSim/</url>
-        </repository>
-        <repository>
-            <id>SymSG</id>
-            <name>SymSG</name>
-            <url>http://uranus.wat.edu.pl:8081/nexus/content/repositories/SymSG/</url>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>SenseSim</id>-->
+            <!--<name>SenseSim</name>-->
+            <!--<url>http://ci.ms4ds.wat.edu.pl:8081/nexus/content/groups/SenseSim/</url>-->
+        <!--</repository>-->
+        <!--<repository>-->
+            <!--<id>SymSG</id>-->
+            <!--<name>SymSG</name>-->
+            <!--<url>http://uranus.wat.edu.pl:8081/nexus/content/repositories/SymSG/</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
     <properties>
         <main.basedir>${project.basedir}</main.basedir>
@@ -97,11 +97,11 @@
                 <version>1.0.2</version>
                 <!--<systemPath>C:\Users\student\Desktop\jspf-1.0.2.bin\dist\jspf.core-1.0.2.jar</systemPath>-->
             </dependency>
-            <dependency>
-                <groupId>pl.edu.wat</groupId>
-                <artifactId>integrator</artifactId>
-                <version>1.0-20160713-SNAPSHOT</version>
-            </dependency>
+            <!--<dependency>-->
+                <!--<groupId>pl.edu.wat</groupId>-->
+                <!--<artifactId>integrator</artifactId>-->
+                <!--<version>1.0-20160713-SNAPSHOT</version>-->
+            <!--</dependency>-->
             <dependency>
                 <groupId>org.mdyk</groupId>
                 <artifactId>SenseSim-mCOP-plugin</artifactId>

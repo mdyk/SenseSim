@@ -126,12 +126,12 @@ public class OntologyProcessor {
     }
 
 
-    private String labelForProperty(OWLObjectProperty objectProperty) {
+    public String labelForProperty(OWLObjectProperty objectProperty) {
         String stringId = objectProperty.toStringID();
         return stringId.split("#")[1];
     }
 
-    private String labelForClass(OWLClass owlClass) {
+    public String labelForClass(OWLClass owlClass) {
         String stringId = owlClass.toStringID();
         return stringId.split("#")[1];
     }
@@ -218,5 +218,10 @@ public class OntologyProcessor {
     public OWLAxiomChange associateIndividualWithClass(OWLClass clazz,
                                                        OWLIndividual individual) {
         return new AddAxiom(ontology, df.getOWLClassAssertionAxiom(clazz, individual));
+    }
+
+
+    public OWLOntology getOntology() {
+        return ontology;
     }
 }
