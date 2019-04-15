@@ -193,6 +193,7 @@ public class XMLScenario implements Scenario {
                                     } else {
                                         Infon infon = new Infon(infonString);
                                         owlMiddleware.getKb().populateKB(infon);
+                                        owlMiddleware.getKb().saveKBSnapshot(0.0);
                                     }
                                 }
                             }

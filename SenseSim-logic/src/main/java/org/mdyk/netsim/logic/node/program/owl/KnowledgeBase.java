@@ -20,11 +20,13 @@ public class KnowledgeBase {
     private OntologyProcessor op;
     private String kbName;
     private Map<String, RelationDefinition> retionDefinitions;
+    private Map<String, StandardRelationDefinition> standardRelationDefinitions;
 
     public KnowledgeBase(String kbName) {
         this.op = new OntologyProcessor();
         this.kbName = kbName;
         this.retionDefinitions = new HashMap<>();
+        populateStandardRelations();
     }
 
     public void loadOntology(File ontologyFile , String ontologyIRI) throws OWLOntologyCreationException {
@@ -53,16 +55,16 @@ public class KnowledgeBase {
 
         for(Infon infon : situation) {
             String relation = infon.getRelation();
-
+            String classFrom = infon.getObjects().get(0);
+            String classTo = infon.getObjects().get(1);
             switch(relation) {
                 case CONSISTS_OF:
-                    String classFrom = infon.getObjects().get(0);
-                    String classTo = infon.getObjects().get(1);
                     addProperyToClass(CONSISTS_OF,classFrom,classTo);
                     break;
 
                 case HAS_OBSERVER:
-
+                    // TODO weryfikacja czy klasy są odowiednich typow: hasObserver(Sensor, Observer)
+                    addProperyToClass(HAS_OBSERVER,classFrom,classTo);
                     break;
 
                 case OF_TYPE:
@@ -72,7 +74,8 @@ public class KnowledgeBase {
                     break;
 
                 case PERCEIVES:
-
+                    // TODO weryfikacja czy klasy są odowiednich typow: hasObserver(Object, StateOfAffair)
+                    addProperyToClass(PERCEIVES,classFrom,classTo);
                     break;
             }
 
@@ -108,6 +111,17 @@ public class KnowledgeBase {
         }
 
     }
+
+    public List<String> sensorsWhichPerceivesSOA(String stateOfAffairName) {
+        List<String> sensorsNames = new ArrayList<>();
+
+        OWLClass sensorClass = op.findClass(OntologyProcessor.sensorClass);
+
+            
+
+        return sensorsNames;
+    }
+
 
     private void addProperyToClass(String property, String classFrom, String classTo) {
         LOG.trace(">> addProperyToClass property="+property+" classFrom="+classFrom+" classTo="+classTo);
@@ -151,6 +165,18 @@ public class KnowledgeBase {
         return this.retionDefinitions.get(relationName);
     }
 
+    public StandardRelationDefinition getStandardRelationDefinition(String relationName) {
+        return this.standardRelationDefinitions.get(relationName);
+    }
+
+    public boolean isPhenomenon(String objName) {
+        return op.subClassExists(OntologyProcessor.phenomenonClass , objName);
+    }
+
+    public boolean isStateOfAffair(String objName) {
+        return op.subClassExists(OntologyProcessor.stateOfAffairClass , objName);
+    }
+
     public void addUnknownRelation(String relationName) {
         LOG.trace(">> addUnknownRelation");
 
@@ -192,7 +218,21 @@ public class KnowledgeBase {
         return op;
     }
 
+
+    private void populateStandardRelations() {
+        this.standardRelationDefinitions = new HashMap<>();
+
+        StandardRelationDefinition lessThan = new StandardRelationDefinition("lessThan", "StateOfAffair", "Integer", OWLClass.class, Double.class);
+
+        standardRelationDefinitions.put("lessThan" , lessThan);
+
+        // TODO pozostałe relacje
+
+    }
+
+
     public enum LogicOperator {OR, AND}
+
 
     public class RelationDefinition {
         private List<Infon> infons;
@@ -216,6 +256,55 @@ public class KnowledgeBase {
         public String getName() {
             return name;
         }
+    }
+
+
+    public class StandardRelationDefinition {
+        private String name;
+        private String firstArg;
+        private String secondArg;
+
+        private Class firstArgType;
+        private Class scondArgType;
+
+
+        public StandardRelationDefinition(String name, String firstArg, String secondArg, Class firstArgType, Class scondArgType) {
+            this.name = name;
+            this.firstArg = firstArg;
+            this.secondArg = secondArg;
+            this.firstArgType = firstArgType;
+            this.scondArgType = scondArgType;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getFirstArg() {
+            return firstArg;
+        }
+
+        public String getSecondArg() {
+            return secondArg;
+        }
+
+        public Class getFirstArgType() {
+            return firstArgType;
+        }
+
+        public Class getScondArgType() {
+            return scondArgType;
+        }
+
+        public boolean standInRelation (Object firstArg , Object secondArg) {
+            Double arg1 = (Double) firstArg;
+            Double arg2 = (Double) secondArg;
+
+            return arg1 < arg2;
+
+        }
+
+
     }
 
 }

@@ -423,6 +423,19 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         } else {
 
+            // Polarity is a paramter
+            if(inam.getInfon().isPolarityParam()) {
+                Infon infon = inam.getInfon();
+                KnowledgeBase.StandardRelationDefinition rel = kb.getStandardRelationDefinition(infon.getRelation());
+
+                if (rel != null) {
+                    ArrayList<String> obj = infon.getObjects();
+                    kb.isStateOfAffair(obj.get(1));
+                    obj.get(2);
+                }
+
+            }
+
         }
 
         if(inrm != null) {

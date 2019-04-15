@@ -1,0 +1,644 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+
+<scenario id="1" >
+
+    <scenarioOntology>
+        <OntologyFile>cognitive-agent-ontology.owl</OntologyFile>
+        <OntologyIRI>http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontology</OntologyIRI>
+    </scenarioOntology>
+
+    <scenarioBoundaries>
+        <checkpoint>
+            <latitude>52.230856</latitude>
+            <longitude>21.006546</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>52.231237</latitude>
+            <longitude>21.008252</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>52.230212</latitude>
+            <longitude>21.008987</longitude>
+        </checkpoint>
+        <checkpoint>
+            <latitude>52.229775</latitude>
+            <longitude>21.007195</longitude>
+        </checkpoint>
+    </scenarioBoundaries>
+
+    <nodes>
+
+        <node id="1" name="dev_1">
+            <initialKB>
+                <!--Zero or more repetitions:-->
+                <infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; ofType, TemperatureSensor, Sensor, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; perceives, TemperatureSensor, Temperature, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>
+                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>
+            </initialKB>
+            <speed>4</speed>
+            <radioRange>1000</radioRange>
+            <radioBandwidth>500</radioBandwidth>
+            <sesnorImplType>GeoSensorNode</sesnorImplType>
+            <routingAlgType>FloodingRouting</routingAlgType>
+            <middleware>
+                <middlewareClass>string</middlewareClass>
+                <!--Zero or more repetitions:-->
+                <!--<programFile>capabilitiesCommander.groovy</programFile>-->
+            </middleware>
+            <sensorAbilities>
+                <ability>TEMPERATURE</ability>
+                <ability>PHOTO</ability>
+            </sensorAbilities>
+            <communicationInterfaces>
+                <communicationInterface id="1" name="WiFi-Direct">
+                    <radioRange>1000</radioRange>
+                    <radioInputBandwidth>5000</radioInputBandwidth>
+                    <radioOutputBandwidth>5000</radioOutputBandwidth>
+                    <routingAlgType>FloodingRouting</routingAlgType>
+                    <topologyType>
+                        <adhocM2M/>
+                    </topologyType>
+                </communicationInterface>
+                <!--<communicationInterface id="1" name="Tactical">-->
+                    <!--<radioRange>1000</radioRange>-->
+                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                    <!--<topologyType>-->
+                        <!--<fixedTopology>-->
+                            <!--<connectedDeviceId>1</connectedDeviceId>-->
+                            <!--<connectedDeviceId>2</connectedDeviceId>-->
+                            <!--<connectedDeviceId>3</connectedDeviceId>-->
+                            <!--<connectedDeviceId>7</connectedDeviceId>-->
+                            <!--<connectedDeviceId>8</connectedDeviceId>-->
+                        <!--</fixedTopology>-->
+                    <!--</topologyType>-->
+                <!--</communicationInterface>-->
+            </communicationInterfaces>
+            <sensors>
+                <sensorClass>org.mdyk.netsim.logic.sensor.temp.PT100Sensor</sensorClass>
+            </sensors>
+            <startPosition>
+                <latitude>52.230478</latitude>
+                <longitude>21.006911</longitude>
+            </startPosition>
+            <route>
+            </route>
+        </node>
+
+        <!--<node id="2" name="dev_2">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>500</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                    <!--<radioRange>1000</radioRange>-->
+                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                    <!--<topologyType>-->
+                        <!--<adhocM2M/>-->
+                    <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>1</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>2</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>4</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>5</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>6</connectedDeviceId>&ndash;&gt;-->
+
+                        <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230672</latitude>-->
+                <!--<longitude>21.007329</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+        <!--<node id="3" name="dev_3">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>500</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                    <!--<radioRange>1000</radioRange>-->
+                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                    <!--<topologyType>-->
+                        <!--<adhocM2M/>-->
+                    <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>1</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>3</connectedDeviceId>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230419</latitude>-->
+                <!--<longitude>21.007447</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+        <!--<node id="4" name="dev_4">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>500</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                    <!--<radioRange>1000</radioRange>-->
+                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                    <!--<topologyType>-->
+                        <!--<adhocM2M/>-->
+                    <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>2</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>4</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>5</connectedDeviceId>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230662</latitude>-->
+                <!--<longitude>21.007742</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+        <!--<node id="5" name="dev_5">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>500</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                    <!--<radioRange>1000</radioRange>-->
+                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                    <!--<topologyType>-->
+                        <!--<adhocM2M/>-->
+                    <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>2</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>4</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>5</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>6</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>9</connectedDeviceId>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.23082</latitude>-->
+                <!--<longitude>21.007823</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+        <!--<node id="6" name="dev_6">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>500</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                <!--<radioRange>1000</radioRange>-->
+                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                <!--<topologyType>-->
+                <!--<adhocM2M/>-->
+                <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>2</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>5</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>6</connectedDeviceId>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230886</latitude>-->
+                <!--<longitude>21.007512</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+        <!--<node id="7" name="dev_7">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>5000</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                <!--<radioRange>1000</radioRange>-->
+                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                <!--<topologyType>-->
+                <!--<adhocM2M/>-->
+                <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>1</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>7</connectedDeviceId>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230537</latitude>-->
+                <!--<longitude>21.006412</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+        <!--<node id="8" name="dev_8">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>500</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                <!--<radioRange>1000</radioRange>-->
+                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                <!--<topologyType>-->
+                <!--<adhocM2M/>-->
+                <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>1</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>8</connectedDeviceId>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.230298</latitude>-->
+                <!--<longitude>21.00639</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+        <!--<node id="9" name="dev_9">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>500</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                <!--<radioRange>1000</radioRange>-->
+                <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                <!--<topologyType>-->
+                <!--<adhocM2M/>-->
+                <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                        <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>5</connectedDeviceId>&ndash;&gt;-->
+                            <!--&lt;!&ndash;<connectedDeviceId>9</connectedDeviceId>&ndash;&gt;-->
+                        <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.231295</latitude>-->
+                <!--<longitude>21.008864</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+        <!--<node id="10" name="dev_10">-->
+            <!--<initialKB>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--<infon>&lt;&lt; ofType, BodyTemperature, Phenomenon, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Human, Object, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Soldier, Human, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; ofType, Temperature, StateOfAffair, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>-->
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>-->
+            <!--</initialKB>-->
+            <!--<speed>4</speed>-->
+            <!--<radioRange>1000</radioRange>-->
+            <!--<radioBandwidth>500</radioBandwidth>-->
+            <!--<sesnorImplType>GeoSensorNode</sesnorImplType>-->
+            <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+            <!--<middleware>-->
+                <!--<middlewareClass>string</middlewareClass>-->
+                <!--&lt;!&ndash;Zero or more repetitions:&ndash;&gt;-->
+                <!--&lt;!&ndash;<programFile>capabilitiesCommander.groovy</programFile>&ndash;&gt;-->
+            <!--</middleware>-->
+            <!--<sensorAbilities>-->
+                <!--<ability>TEMPERATURE</ability>-->
+                <!--<ability>PHOTO</ability>-->
+            <!--</sensorAbilities>-->
+            <!--<communicationInterfaces>-->
+                <!--<communicationInterface id="1" name="WiFi-Direct">-->
+                    <!--<radioRange>1000</radioRange>-->
+                    <!--<radioInputBandwidth>5000</radioInputBandwidth>-->
+                    <!--<radioOutputBandwidth>5000</radioOutputBandwidth>-->
+                    <!--<routingAlgType>FloodingRouting</routingAlgType>-->
+                    <!--<topologyType>-->
+                        <!--<adhocM2M/>-->
+                    <!--</topologyType>-->
+                <!--</communicationInterface>-->
+                <!--&lt;!&ndash;<communicationInterface id="1" name="Tactical">&ndash;&gt;-->
+                <!--&lt;!&ndash;<radioRange>1000</radioRange>&ndash;&gt;-->
+                <!--&lt;!&ndash;<radioInputBandwidth>5000</radioInputBandwidth>&ndash;&gt;-->
+                <!--&lt;!&ndash;<radioOutputBandwidth>5000</radioOutputBandwidth>&ndash;&gt;-->
+                <!--&lt;!&ndash;<routingAlgType>FloodingRouting</routingAlgType>&ndash;&gt;-->
+                <!--&lt;!&ndash;<topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;<fixedTopology>&ndash;&gt;-->
+                <!--&lt;!&ndash;<connectedDeviceId>5</connectedDeviceId>&ndash;&gt;-->
+                <!--&lt;!&ndash;<connectedDeviceId>9</connectedDeviceId>&ndash;&gt;-->
+                <!--&lt;!&ndash;</fixedTopology>&ndash;&gt;-->
+                <!--&lt;!&ndash;</topologyType>&ndash;&gt;-->
+                <!--&lt;!&ndash;</communicationInterface>&ndash;&gt;-->
+            <!--</communicationInterfaces>-->
+            <!--<sensors/>-->
+            <!--<startPosition>-->
+                <!--<latitude>52.229775</latitude>-->
+                <!--<longitude>21.007195</longitude>-->
+            <!--</startPosition>-->
+            <!--<route>-->
+            <!--</route>-->
+        <!--</node>-->
+
+    </nodes>
+    <phenomena>
+
+        <phenomenon name="example" phenomenonType="observer">
+            <phenomenonArea>
+                <checkpoint>
+                    <latitude>52.231073</latitude>
+                    <longitude>21.00756</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>52.230797</latitude>
+                    <longitude>21.008139</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>52.230488</latitude>
+                    <longitude>21.007726</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>52.230554</latitude>
+                    <longitude>21.007243</longitude>
+                </checkpoint>
+                <checkpoint>
+                    <latitude>52.23079</latitude>
+                    <longitude>21.007115</longitude>
+                </checkpoint>
+            </phenomenonArea>
+            <!--Zero or more repetitions:-->
+            <phenomenonValueSet startTime="0" endTime="10000" abilityName="TEMPERATURE" configurationClass="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace" configurationSpaceFactory="org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigSpaceFactory">
+                <phenomenonValue>
+                    <observerValue fromTime="0" toTime="10000">
+                        <value>20</value>
+                    </observerValue>
+                </phenomenonValue>
+            </phenomenonValueSet>
+        </phenomenon>
+
+    </phenomena>
+</scenario>

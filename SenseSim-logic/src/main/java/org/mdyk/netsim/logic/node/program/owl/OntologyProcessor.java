@@ -20,6 +20,9 @@ public class OntologyProcessor {
     public static final String relationClassName = "Relation";
     public static final String objectClassName = "Object";
     public static final String unknownClassName = "Unknown";
+    public static final String phenomenonClass = "Phenomenon";
+    public static final String stateOfAffairClass = "StateOfAffair";
+    public static final String sensorClass = "Sensor";
 
     private static final Logger LOG = Logger.getLogger(OntologyProcessor.class);
 
@@ -95,7 +98,7 @@ public class OntologyProcessor {
         return subClassExists(objectClassName , objectName);
     }
 
-    private boolean subClassExists(String parentClass , String childClass) {
+    public boolean subClassExists(String parentClass , String childClass) {
         OWLClass realtionClass = findClass(parentClass);
 
         // FIXME
@@ -113,6 +116,15 @@ public class OntologyProcessor {
 
         return false;
     }
+
+    public NodeSet<OWLClass> getSubclasses(String parentClass) {
+        OWLClass realtionClass = findClass(parentClass);
+
+
+
+        return reasoner.getSubClasses(realtionClass, false);
+    }
+
 
     private String labelForProperty(OWLObjectProperty objectProperty) {
         String stringId = objectProperty.toStringID();
