@@ -2,6 +2,7 @@ package org.mdyk.netsim.logic.node.program.owl;
 
 import junit.framework.TestCase;
 import org.junit.Test;
+import org.mdyk.netsim.logic.infon.Infon;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.model.*;
 import org.semanticweb.owlapi.reasoner.Node;
@@ -102,11 +103,29 @@ public class OntologyProcessorTest {
         }
 
 //        Node<OWLClass> subClasses =  ontologyProcessor.getSubclasses("Observer");
+    }
+
+    @Test
+    public void tempertaureUnknown() throws Exception {
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource("Device-dev_1-0.0.owl");
+
+        OntologyProcessor op = new OntologyProcessor();
+        op.loadOntology(new File(resource.getFile()), "http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontology");
+
+        String objectName = "Temperature";
+
+        OWLClass clazz = op.findClass(objectName);
+
+        NodeSet<OWLClass> superClasses = op.getSuperClasses(clazz);
+
+        if(superClasses.containsEntity(op.findClass("StateOfAffair"))) {
+
+        }
 
 
 
     }
-
 
     @Test
     public void test() {

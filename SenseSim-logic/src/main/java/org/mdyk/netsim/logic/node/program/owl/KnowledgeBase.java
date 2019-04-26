@@ -4,6 +4,7 @@ package org.mdyk.netsim.logic.node.program.owl;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.infon.Infon;
 import org.semanticweb.owlapi.model.*;
+import org.semanticweb.owlapi.reasoner.NodeSet;
 
 import java.io.File;
 import java.util.*;
@@ -110,6 +111,36 @@ public class KnowledgeBase {
 
         }
 
+    }
+
+    public List<Infon> collectKnowledgeAboutObject(String objectName) {
+
+        List<Infon> infons = new ArrayList<>();
+
+        OWLClass clazz = op.findClass(objectName);
+
+        if(clazz == null) {
+            return infons;
+        }
+
+        NodeSet<OWLClass> superClasses = op.getSuperClasses(clazz);
+
+        for (OWLClass owlClass : superClasses.getFlattened()) {
+            Infon i = new Infon("<< "+ OF_TYPE +" , " + objectName + " , "+ op.labelForClass(owlClass) +", ?l, ?t, 1 >>");
+            infons.add(i);
+        }
+
+        if(superClasses.containsEntity(op.findClass("StateOfAffair"))) {
+            List<String> sensors = sensorsWhichPerceivesSOA(objectName);
+
+            for (String sensor : sensors) {
+                Infon i = new Infon("<< "+ PERCEIVES +","+ sensor +"," + objectName + " , ?l, ?t, 1 >>");
+                infons.add(i);
+            }
+
+        }
+
+        return infons;
     }
 
     public List<String> sensorsWhichPerceivesSOA(String stateOfAffairName) {

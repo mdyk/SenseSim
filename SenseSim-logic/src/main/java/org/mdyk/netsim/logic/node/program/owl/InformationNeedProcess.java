@@ -69,6 +69,8 @@ public class InformationNeedProcess {
         return inam.wasProcessedBy(nodeId);
     }
 
+
+
     public enum INStatus {
         RECEIVED,
         FOR_PROCESSING,

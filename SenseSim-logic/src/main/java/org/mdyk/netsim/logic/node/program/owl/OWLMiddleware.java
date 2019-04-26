@@ -4,9 +4,11 @@ package org.mdyk.netsim.logic.node.program.owl;
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import javafx.util.Pair;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.mdyk.netsim.logic.communication.Message;
 import org.mdyk.netsim.logic.event.EventBusHolder;
+import org.mdyk.netsim.logic.event.EventType;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.infon.Infon;
 import org.mdyk.netsim.logic.infon.message.InformationNeedContent;
@@ -19,6 +21,8 @@ import org.mdyk.netsim.logic.node.simentity.DeviceSimEntity;
 import org.mdyk.netsim.logic.util.GeoPosition;
 import org.mdyk.netsim.logic.util.PositionParser;
 import org.mdyk.netsim.mathModel.Functions;
+import org.mdyk.netsim.mathModel.observer.ConfigurationSpace;
+import org.mdyk.netsim.mathModel.observer.temperature.TemperatureConfigurationSpace;
 import org.mdyk.netsim.mathModel.sensor.SensorModel;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 
@@ -179,18 +183,26 @@ public class OWLMiddleware extends Thread implements Middleware {
                         kb.addRelation(object, KnowledgeBase.LogicOperator.AND,inrm.getInfons());
 
                     } else if (kb.isObjectUnknown(object)) {
-                        // TODO
+                        for (Infon i : inrm.getInfons()) {
+                            kb.populateKB(i);
+                        }
                     }
                 }
 
                 inProcess.setAnswered();
+
+
                 // Sprawdzenie czy mozna odpowiedziec na ktores z zapytań
-                for (InformationNeedProcess process : inProcesses) {
+                for (Iterator<InformationNeedProcess> it = inProcesses.iterator(); it.hasNext();) {
+                    InformationNeedProcess process = it.next();
                     if(!process.isAnswered()) {
                         processInformationNeed(process.getInam(), true);
                     }
-
                 }
+
+            } else {
+                LOG.info("Response for nid " + inam.getId() + " " + inrm.toJSON());
+                EventBusHolder.post(new InternalEvent(EventType.INFORMATION_NEED_FULLLFILLED, inrm.toJSON()));
 
             }
 
@@ -203,15 +215,19 @@ public class OWLMiddleware extends Thread implements Middleware {
 
 
         // 2. jesli nie jestem odbiorcą to wyszukanie obsłużonych potrzeb i wybranie z nich odbiorcy
+        else {
+            InformationNeedProcess INprocess = getInProcess(inrm.getId());
+            INprocess.setAnswered();
+            INprocess.setAnswer(inrm);
+
+            this.actualizeNeighbours();
+            sendInformationNeedResponse(inrm, INprocess.getInam());
+
+        }
 
         LOG.debug("<< handleInformationNeedResponse");
     }
 
-    public void handleInformationNeedAsk(InformationNeedAskMessage inam) {
-        LOG.trace(">> handleInformationNeedAsk");
-        // TODO
-        LOG.trace("<< handleInformationNeedAsk");
-    }
 
     public void setDeviceAPI(DeviceAPI api) {
         this.deviceAPI = api;
@@ -314,6 +330,25 @@ public class OWLMiddleware extends Thread implements Middleware {
                 }
             }
 
+            if(inProcessStatus.contains(INProcessStatus.ASK_FOR_OBJECTS)) {
+
+                // FIXME do poprawy dla innych obiektów
+                String object = informationNeedAsk.getInfon().getObjects().get(0);
+
+                Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+object+",?l,?t,1>>");
+                InformationNeedAskMessage objectUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
+
+                InformationNeedProcess unknownRelationProcess = new InformationNeedProcess(objectUnknownNeed);
+                this.inProcesses.add(unknownRelationProcess);
+
+                objectUnknownNeed.processedInNode(this.nodeId);
+                for (Integer neighbourId : neighboursCombinedList.keySet()) {
+                    Neighbour neighbour = neighboursCombinedList.get(neighbourId);
+                    deviceAPI.api_sendMessage(this.nextMsgId(), deviceAPI.api_getMyID(), neighbour.getId(), neighbour.commInt, objectUnknownNeed.toJSON(), objectUnknownNeed.getSize());
+                }
+            }
+
+
             if(inProcessStatus.contains(INProcessStatus.PROCESS_IN_NODE)) {
                 respondForInformationNeed(informationNeedAsk);
             }
@@ -331,11 +366,15 @@ public class OWLMiddleware extends Thread implements Middleware {
         String relation = informationNeedAsk.getInfon().getRelation();
 //        boolean relationExists = kb.getOntologyProcessor().relationExists(relation);
 
-        boolean relationExists = kb.getRelationDefinition(relation) != null;
+        boolean relationExists = (kb.getRelationDefinition(relation) != null) || (kb.getStandardRelationDefinition(relation) != null);
 
         List<String> unknownObjects = new ArrayList<>();
+
         for(String object : informationNeedAsk.getInfon().getObjects()) {
-            if(!kb.getOntologyProcessor().objectExists(object)) {
+
+            // Jeśli można konwertować na liczbę to obiekt jest znany
+
+            if(!StringUtils.isNumeric(object) && !kb.getOntologyProcessor().objectExists(object)) {
                 unknownObjects.add(object);
             }
         }
@@ -397,6 +436,9 @@ public class OWLMiddleware extends Thread implements Middleware {
     }
 
     private void respondForInformationNeed(InformationNeedAskMessage inam) {
+
+        LOG.debug(">> respondForInformationNeed inam = " + inam);
+
         // relacja i obiekty są znane
 
         InformationNeedRespMessage inrm = null;
@@ -409,31 +451,55 @@ public class OWLMiddleware extends Thread implements Middleware {
             Infon unknownRelationInfon = new Infon(inam.getInfon());
 
             // Odesłanie informacji że relacja jest nieznana
-            inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId(),unknownRelationInfon);
+            inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId());
 
-            // FIXME obsługa więcej niż jednej relacji
-            for (String unknownRelation : inam.getInfon().getObjects()) {
-                KnowledgeBase.RelationDefinition rd = getKb().getRelationDefinition(unknownRelation);
-                if(rd != null) {
-                    inrm.addInfon(rd.getInfons());
+            boolean object = true;
+
+            // FIXME shitcode
+            if(object) {
+                String unknownObj = inam.getInfon().getObjects().get(0);
+
+                List<Infon> infons = getKb().collectKnowledgeAboutObject(unknownObj);
+
+                if(infons.size() == 0) {
+                    inrm.addInfon(unknownRelationInfon);
+                } else {
+                    inrm.addInfon(infons);
+                }
+
+            } else {
+                // FIXME obsługa więcej niż jednej relacji
+                for (String unknownRelation : inam.getInfon().getObjects()) {
+                    KnowledgeBase.RelationDefinition rd = getKb().getRelationDefinition(unknownRelation);
+                    if(rd != null) {
+                        inrm.addInfon(rd.getInfons());
+                    }
                 }
             }
 
-            Infon relRespInfon = new Infon(inam.getInfon());
+//            Infon relRespInfon = new Infon(inam.getInfon());
             inrm.procecessedInNode(this.nodeId);
 
         } else {
+            ;
+            if(!Functions.isPointInRegion((GeoPosition) this.deviceAPI.api_getPosition(), PositionParser.parsePositionsList(inam.getInfon().getSpatialLocation()))) {
+                LOG.info("Device "+ deviceAPI.api_getMyID() + " not in need area");
+                return;
+            }
 
             // Polarity is a paramter
             if(inam.getInfon().isPolarityParam()) {
+
+                boolean polarity;
+
                 Infon infon = inam.getInfon();
                 KnowledgeBase.StandardRelationDefinition rel = kb.getStandardRelationDefinition(infon.getRelation());
 
                 if (rel != null) {
                     ArrayList<String> obj = infon.getObjects();
-                    kb.isStateOfAffair(obj.get(1));
-                    String soa = obj.get(1);
-                    obj.get(2);
+                    kb.isStateOfAffair(obj.get(0));
+                    String soa = obj.get(0);
+                    obj.get(1);
 
                     List<String> sensorsNames = kb.sensorsWhichPerceivesSOA(soa);
                     List<SensorModel<?,?>> sensorModels = this.deviceAPI.api_getSensorsList();
@@ -449,13 +515,26 @@ public class OWLMiddleware extends Thread implements Middleware {
                         }
                     }
 
-
+                    LOG.debug("Relation name = " + rel.getName());
 
                     switch (rel.getName()) {
+
                         case "lessThan":
 
-                            deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
+                            ConfigurationSpace conf = deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
+                            LOG.debug("Sensor value = " + conf.getStringValue());
 
+                            Double sensorVal = Double.parseDouble(conf.getStringValue());
+                            Double relValue = Double.parseDouble(obj.get(1));
+
+                            polarity =  relValue < sensorVal;
+
+                            Infon respInfon = new Infon(inam.getInfon());
+                            respInfon.setPolarity(polarity);
+
+                            inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId());
+                            inrm.addInfon(respInfon);
+                            inrm.procecessedInNode(this.nodeId);
                             break;
                     }
 
@@ -466,11 +545,14 @@ public class OWLMiddleware extends Thread implements Middleware {
         }
 
         if(inrm != null) {
+            this.getInProcess(inam.getId()).setAnswer(inrm);
+            this.getInProcess(inam.getId()).setAnswered();
             sendInformationNeedResponse(inrm, inam);
         }
 
         //TODO Przypadek kiedy trzeba przeslac zapytanie dalej:
 
+        LOG.debug(">> respondForInformationNeed");
 
     }
 

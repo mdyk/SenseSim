@@ -47,7 +47,7 @@ public class PT100Observer implements ObserverModel<TemperatureConfigurationSpac
         LOG.trace(">> getPremises");
 
         double resistance = calculateResistanceForTemp(event.getTemperature());
-        LOG.debug("Resistance for temp "+ event.getTemperature() +" is "+ resistance);
+        LOG.trace("Resistance for temp "+ event.getTemperature() +" is "+ resistance);
 
         LOG.trace("<< getPremises");
         return new ResistancePremisesSpace(resistance);
@@ -64,7 +64,7 @@ public class PT100Observer implements ObserverModel<TemperatureConfigurationSpac
         double conclusionTemperature = calculateTempForResistance(premises.getResistance());
 
         TemperatureConfigurationSpace conclusion = new TemperatureConfigurationSpace(conclusionTemperature);
-        LOG.debug("Temperature for resistance "+ premises.getResistance() +" is "+ conclusionTemperature);
+        LOG.trace("Temperature for resistance "+ premises.getResistance() +" is "+ conclusionTemperature);
 
         LOG.trace(">> getConclusion");
         return conclusion;

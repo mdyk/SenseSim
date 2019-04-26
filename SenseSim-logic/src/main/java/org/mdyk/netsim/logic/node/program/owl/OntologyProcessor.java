@@ -95,7 +95,7 @@ public class OntologyProcessor {
     }
 
     public boolean objectExists(String objectName) {
-        return subClassExists(objectClassName , objectName);
+        return subClassExists(objectClassName , objectName) || subClassExists(stateOfAffairClass , objectName);
     }
 
     public boolean subClassExists(String parentClass , String childClass) {
@@ -119,10 +119,16 @@ public class OntologyProcessor {
 
     public NodeSet<OWLClass> getSubclasses(String parentClass) {
         OWLClass realtionClass = findClass(parentClass);
-
-
-
         return reasoner.getSubClasses(realtionClass, false);
+    }
+
+    public NodeSet<OWLClass> getSuperClasses(String subClass) {
+        OWLClass realtionClass = findClass(subClass);
+        return getSuperClasses(realtionClass);
+    }
+
+    public NodeSet<OWLClass> getSuperClasses(OWLClass subClass) {
+        return reasoner.getSuperClasses(subClass, false);
     }
 
 

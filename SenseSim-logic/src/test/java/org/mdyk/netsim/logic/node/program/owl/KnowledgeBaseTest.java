@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.mdyk.netsim.logic.infon.Infon;
 
 import java.io.File;
+import java.net.URL;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
@@ -92,6 +93,23 @@ public class KnowledgeBaseTest {
 
         kb.deatchUnknownRelation("fooRelation");
         assertFalse(kb.isRelationUnknown("fooRelation"));
+
+    }
+
+    @Test
+    public void collectKnowledgeAboutObjectTest() throws Exception {
+        String ontologyIRI = "http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontology";
+
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource("Device-dev_1-0.0.owl");
+        File ontologyFile = new File(resource.getFile());
+
+        KnowledgeBase kb = new KnowledgeBase("device-1");
+
+        kb.loadOntology(ontologyFile,ontologyIRI);
+
+        kb.collectKnowledgeAboutObject("Temperature");
 
     }
 

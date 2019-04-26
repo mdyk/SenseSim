@@ -18,26 +18,21 @@ import java.util.*;
 public abstract class DefaultDeviceModel<P extends Position> implements IDeviceModel<P> {
 
     private static final Logger LOG = Logger.getLogger(DefaultDeviceModel.class);
-
-    protected int           id;
-    protected String        name;
-    protected P             position;
-    protected double        velocity;
-
-    @Deprecated
-    protected double        radioRange;
-    protected List<CommunicationInterface> communicationInterfaces;
-
-    protected Map<Integer , Double> inboundCommIntCapacity;
-
-    protected Map<Integer , Double> outboundCommIntCapacity;
-
-    @Deprecated
-    protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     /**
      * Holds device observations
      */
     protected final Map<Class<? extends ConfigurationSpace>, TreeMap<Double, List<ConfigurationSpace>>> observationsFromObserver;
+    protected int           id;
+    protected String        name;
+    protected P             position;
+    protected double        velocity;
+    @Deprecated
+    protected double        radioRange;
+    protected List<CommunicationInterface> communicationInterfaces;
+    protected Map<Integer , Double> inboundCommIntCapacity;
+    protected Map<Integer , Double> outboundCommIntCapacity;
+    @Deprecated
+    protected Map<AbilityType, Map<Double, List<PhenomenonValue>>> observations;
     @Deprecated
     protected List<AbilityType> abilities;
     protected Map<Double, List<Message>> messagesMap;
@@ -221,7 +216,7 @@ public abstract class DefaultDeviceModel<P extends Position> implements IDeviceM
 
     @Override
     public void addObservation(Class<? extends ConfigurationSpace> configurationSpaceClass, Double time, ConfigurationSpace value) {
-        LOG.debug("Adding observation [confClass=" + configurationSpaceClass.getName() + " time=" + time + " , value=" + value + "]");
+        LOG.trace("Adding observation [confClass=" + configurationSpaceClass.getName() + " time=" + time + " , value=" + value + "]");
             List<ConfigurationSpace> observationsAtTime;
 
             if (value == null) {

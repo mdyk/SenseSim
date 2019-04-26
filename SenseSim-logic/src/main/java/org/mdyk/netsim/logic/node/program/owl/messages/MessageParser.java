@@ -41,19 +41,19 @@ public class MessageParser {
 
             case INFORMATION_NEED_RESP:
 
-                String infonsString = String.valueOf(jsonObject.get(INFON));
+                String infonString = String.valueOf(jsonObject.get(INFON));
 
-                String[] infonsStringArr = infonsString.split(";");
-
-                List<Infon> infons = new ArrayList<>();
-                for(String infonString : infonsStringArr) {
+//                String[] infonsStringArr = infonsString.split(";");
+//
+//                List<Infon> infons = new ArrayList<>();
+//                for(String infonString : infonsStringArr) {
                     Infon i = new Infon(infonString);
-                    infons.add(i);
-                }
+//                    infons.add(i);
+//                }
 
                 inm = new InformationNeedRespMessage(String.valueOf(jsonObject.get(SOURCE_NODE_KEY)), String.valueOf(jsonObject.get(NEED_ID)), jsonObject.getJSONArray(PROCESSED_NODES));
 
-                ((InformationNeedRespMessage)inm).addInfon(infons);
+                ((InformationNeedRespMessage)inm).addInfon(i);
 
                 break;
         }

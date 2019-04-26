@@ -114,6 +114,14 @@ public class Infon {
         this.polarity = polarity;
     }
 
+    public void setPolarity(boolean polarity) {
+        if (polarity) {
+            this.polarity = "1";
+        } else {
+            this.polarity = "0";
+        }
+    }
+
     public String getSpatialLocation() {
         return spatialLocation;
     }

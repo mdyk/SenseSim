@@ -19,8 +19,15 @@ public class InformationNeedRespMessage implements InformationNeedMessage {
     private int id;
     private List<Integer> processedInNodes;
 
+    @Deprecated
     public InformationNeedRespMessage(int sourceNode, int informationNeedId, Infon infon) {
         this.infon = infon;
+        processedInNodes = new ArrayList<>();
+        id = informationNeedId;
+        this.sourceNode = sourceNode;
+    }
+
+    public InformationNeedRespMessage(int sourceNode, int informationNeedId) {
         processedInNodes = new ArrayList<>();
         id = informationNeedId;
         this.sourceNode = sourceNode;
@@ -62,7 +69,8 @@ public class InformationNeedRespMessage implements InformationNeedMessage {
             sb.deleteCharAt(sb.length()-1);
             jsonObject.put(MessageParser.INFON , sb.toString());
         } else {
-            jsonObject.put(MessageParser.INFON , infon.toString());
+            // FIXME
+//            jsonObject.put(MessageParser.INFON , infon.toString());
         }
 
         jsonObject.put(MessageParser.SOURCE_NODE_KEY , sourceNode);
