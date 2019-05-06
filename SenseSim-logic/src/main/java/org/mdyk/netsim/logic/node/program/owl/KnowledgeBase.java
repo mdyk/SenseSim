@@ -258,7 +258,7 @@ public class KnowledgeBase {
 
     // FIXME
     public boolean isObjectUnknown(String object) {
-        return false;
+        return !op.objectExists(object);
     }
 
     public OntologyProcessor getOntologyProcessor() {

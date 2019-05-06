@@ -2,9 +2,11 @@ package org.mdyk.netsim.logic.node.program.owl;
 
 import org.junit.Test;
 import org.mdyk.netsim.logic.infon.Infon;
+import org.mdyk.netsim.logic.node.program.owl.messages.InformationNeedRespMessage;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
@@ -109,7 +111,10 @@ public class KnowledgeBaseTest {
 
         kb.loadOntology(ontologyFile,ontologyIRI);
 
-        kb.collectKnowledgeAboutObject("Temperature");
+        List<Infon> infons = kb.collectKnowledgeAboutObject("Temperature");
+
+        InformationNeedRespMessage inrm = new InformationNeedRespMessage(1,1);
+        inrm.addInfon(infons);
 
     }
 

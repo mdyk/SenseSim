@@ -70,6 +70,8 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     private List<InformationNeedProcess> inProcesses = Collections.synchronizedList(new ArrayList<>());
 
+    private List<String> waitingForConcept = new ArrayList<>();
+
 
     @Override
     public void initialize() {
@@ -158,6 +160,8 @@ public class OWLMiddleware extends Thread implements Middleware {
     public void handleInformationNeedResponse(InformationNeedRespMessage inrm) {
         LOG.debug(">> handleInformationNeedResponse [inamId="+inrm.getId()+" ;nodeId="+this.nodeId+"]");
 
+        int inProcessesSize = inProcesses.size();
+
         // 1. zweryfikowanie czy jestem odbiorcą
         if(inrm.getSourceNode() == this.nodeId) {
             // oznaczenie że udzielono odpowiedzi na potrzebę
@@ -182,10 +186,18 @@ public class OWLMiddleware extends Thread implements Middleware {
                         kb.deatchUnknownRelation(object);
                         kb.addRelation(object, KnowledgeBase.LogicOperator.AND,inrm.getInfons());
 
+                        LOG.info("Adding realtion concept: " + object);
+
+                        waitingForConcept.remove(object);
+
                     } else if (kb.isObjectUnknown(object)) {
                         for (Infon i : inrm.getInfons()) {
                             kb.populateKB(i);
                         }
+
+                        LOG.info("Adding object concept: " + object);
+
+                        waitingForConcept.remove(object);
                     }
                 }
 
@@ -193,10 +205,19 @@ public class OWLMiddleware extends Thread implements Middleware {
 
 
                 // Sprawdzenie czy mozna odpowiedziec na ktores z zapytań
-                for (Iterator<InformationNeedProcess> it = inProcesses.iterator(); it.hasNext();) {
-                    InformationNeedProcess process = it.next();
-                    if(!process.isAnswered()) {
-                        processInformationNeed(process.getInam(), true);
+//                for (Iterator<InformationNeedProcess> it = inProcesses.iterator(); it.hasNext();) {
+//                    InformationNeedProcess process = it.next();
+//                    if(!process.isAnswered()) {
+//                        processInformationNeed(process.getInam(), true);
+//                    }
+//                }
+
+
+                for (int i = 0 ; i < inProcessesSize ; i++) {
+                    InformationNeedProcess proc = inProcesses.get(i);
+                    if(!proc.isAnswered()) {
+                        processInformationNeed(proc.getInam(), true);
+//                        respondForInformationNeed(proc.getInam());
                     }
                 }
 
@@ -292,12 +313,20 @@ public class OWLMiddleware extends Thread implements Middleware {
     }
 
     private void processInformationNeed(InformationNeedAskMessage informationNeedAsk, boolean verify) {
+       processInformationNeed( informationNeedAsk,  verify,  true);
+    }
+
+    private void processInformationNeed(InformationNeedAskMessage informationNeedAsk, boolean verify, boolean resend) {
         informationNeedAsk.processedInNode(this.nodeId);
 
         //this.informationNeedAskResendCount.put(informationNeedAsk.getId(), 0);
         
         if(verify) {
             List<INProcessStatus> inProcessStatus = verifyInformationNeed(informationNeedAsk);
+
+            if(!resend) {
+                inProcessStatus.remove(INProcessStatus.RESEND);
+            }
 
             if(inProcessStatus.contains(INProcessStatus.UPDATE_TOPOLOGY)) {
                 topologyDiscovery(informationNeedAsk);
@@ -314,20 +343,26 @@ public class OWLMiddleware extends Thread implements Middleware {
             if(inProcessStatus.contains(INProcessStatus.ASK_FOR_RELATION)) {
                 String relation = informationNeedAsk.getInfon().getRelation();
 
-                kb.addUnknownRelation(relation);
+                if(!waitingForConcept.contains(relation)) {
 
-                Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+relation+",?l,?t,1>>");
-                InformationNeedAskMessage relationUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
+                    kb.addUnknownRelation(relation);
 
-                InformationNeedProcess unknownRelationProcess = new InformationNeedProcess(relationUnknownNeed);
-                this.inProcesses.add(unknownRelationProcess);
+                    Infon relAskInfon = new Infon("<<" + KnowledgeBase.UNKNOWN_RELATION + "," + relation + ",?l,?t,1>>");
+                    InformationNeedAskMessage relationUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
+
+                    InformationNeedProcess unknownRelationProcess = new InformationNeedProcess(relationUnknownNeed);
+                    this.inProcesses.add(unknownRelationProcess);
 //                this.informationNeedAskMsgs.put(relationUnknownNeed.getId() , relationUnknownNeed);
 
-                relationUnknownNeed.processedInNode(this.nodeId);
-                for (Integer neighbourId : neighboursCombinedList.keySet()) {
-                    Neighbour neighbour = neighboursCombinedList.get(neighbourId);
-                    deviceAPI.api_sendMessage(this.nextMsgId(), deviceAPI.api_getMyID(), neighbour.getId(), neighbour.commInt, relationUnknownNeed.toJSON(), relationUnknownNeed.getSize());
+                    relationUnknownNeed.processedInNode(this.nodeId);
+                    for (Integer neighbourId : neighboursCombinedList.keySet()) {
+                        Neighbour neighbour = neighboursCombinedList.get(neighbourId);
+                        deviceAPI.api_sendMessage(this.nextMsgId(), deviceAPI.api_getMyID(), neighbour.getId(), neighbour.commInt, relationUnknownNeed.toJSON(), relationUnknownNeed.getSize());
+                    }
+
+                    waitingForConcept.add(relation);
                 }
+
             }
 
             if(inProcessStatus.contains(INProcessStatus.ASK_FOR_OBJECTS)) {
@@ -335,16 +370,21 @@ public class OWLMiddleware extends Thread implements Middleware {
                 // FIXME do poprawy dla innych obiektów
                 String object = informationNeedAsk.getInfon().getObjects().get(0);
 
-                Infon relAskInfon = new Infon("<<"+KnowledgeBase.UNKNOWN_RELATION+","+object+",?l,?t,1>>");
-                InformationNeedAskMessage objectUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
+                if(!waitingForConcept.contains(object)) {
 
-                InformationNeedProcess unknownRelationProcess = new InformationNeedProcess(objectUnknownNeed);
-                this.inProcesses.add(unknownRelationProcess);
+                    Infon relAskInfon = new Infon("<<" + KnowledgeBase.UNKNOWN_RELATION + "," + object + ",?l,?t,1>>");
+                    InformationNeedAskMessage objectUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
 
-                objectUnknownNeed.processedInNode(this.nodeId);
-                for (Integer neighbourId : neighboursCombinedList.keySet()) {
-                    Neighbour neighbour = neighboursCombinedList.get(neighbourId);
-                    deviceAPI.api_sendMessage(this.nextMsgId(), deviceAPI.api_getMyID(), neighbour.getId(), neighbour.commInt, objectUnknownNeed.toJSON(), objectUnknownNeed.getSize());
+                    InformationNeedProcess unknownRelationProcess = new InformationNeedProcess(objectUnknownNeed);
+                    this.inProcesses.add(unknownRelationProcess);
+
+                    objectUnknownNeed.processedInNode(this.nodeId);
+                    for (Integer neighbourId : neighboursCombinedList.keySet()) {
+                        Neighbour neighbour = neighboursCombinedList.get(neighbourId);
+                        deviceAPI.api_sendMessage(this.nextMsgId(), deviceAPI.api_getMyID(), neighbour.getId(), neighbour.commInt, objectUnknownNeed.toJSON(), objectUnknownNeed.getSize());
+                    }
+
+                    waitingForConcept.add(object);
                 }
             }
 
@@ -437,7 +477,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
     private void respondForInformationNeed(InformationNeedAskMessage inam) {
 
-        LOG.debug(">> respondForInformationNeed inam = " + inam);
+        LOG.debug(">> respondForInformationNeed [dev = " +getId()+ "] inam = " + inam.toJSON());
 
         // relacja i obiekty są znane
 
