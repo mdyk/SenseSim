@@ -33,7 +33,7 @@ public class GeoRouteMovementAlgorithm implements GeoMovementAlgorithm {
 
     private boolean checkpointAchieved(GeoPosition currentPosition, double speed) {
         double distance = Functions.calculateGeoDistance(currentPosition, getNextCheckpoint());
-        LOG.debug("distance to checkpoint: " + distance);
+        LOG.trace("distance to checkpoint: " + distance);
         return distance <= speed;
     }
 
@@ -47,10 +47,10 @@ public class GeoRouteMovementAlgorithm implements GeoMovementAlgorithm {
     }
 
     private void calculateBearing(GeoPosition currentPosition, GeoPosition nextCheckpoint) {
-        LOG.debug(String.format(">> calculateBearing(currentPosition: %s, nextCheckpoint: %s)", currentPosition, nextCheckpoint));
+        LOG.trace(String.format(">> calculateBearing(currentPosition: %s, nextCheckpoint: %s)", currentPosition, nextCheckpoint));
         this.bearing = Functions.calculateBearingWithTwoPoints(currentPosition,nextCheckpoint);
-        LOG.debug("new bearing: " + bearing);
-        LOG.debug("<< calculateBearing");
+        LOG.trace("new bearing: " + bearing);
+        LOG.trace("<< calculateBearing");
     }
 
     @Override
@@ -59,7 +59,7 @@ public class GeoRouteMovementAlgorithm implements GeoMovementAlgorithm {
         LOG.trace(String.format(">> nextPositionToCheckpoint(currentPosition: %s, nextCheckpoint %s, speed %s)",
                 currentPosition, nextCheckpoint, speed));
         GeoPosition newPosition = Functions.calculateGeoPosition(currentPosition,bearing,speed);
-        LOG.debug("newPosition: " + newPosition);
+        LOG.trace("newPosition: " + newPosition);
         LOG.trace("<< nextPositionToCheckpoint");
         return newPosition;
     }

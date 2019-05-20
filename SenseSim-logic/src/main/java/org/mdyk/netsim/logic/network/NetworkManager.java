@@ -108,7 +108,7 @@ public class NetworkManager<P extends Position> {
     }
 
     public void actualizeNaighbours(DeviceNode changedDevice) {
-        LOG.debug(">> actualizeNaighbours [device "+changedDevice.getID()+"]");
+        LOG.trace(">> actualizeNaighbours [device "+changedDevice.getID()+"]");
                                                         
         for (DeviceNode device : sensorNodeList) {
 
@@ -121,7 +121,7 @@ public class NetworkManager<P extends Position> {
             for(CommunicationInterface communicationInterface : communicationInterfaces) {
                 // Devices have the same type of communication interfaces
                 if(device.getCommunicationInterface(communicationInterface.getId()) != null){
-                    LOG.debug("Device "+device.getID()+" contains communication interface " + communicationInterface.getId());
+                    LOG.trace("Device "+device.getID()+" contains communication interface " + communicationInterface.getId());
 
                     NetworkGraph networkGraph = this.communicationGraphs.get(communicationInterface.getId());
 
@@ -160,12 +160,12 @@ public class NetworkManager<P extends Position> {
             }
         }
         
-        LOG.debug("<< actualizeNaighbours");
+        LOG.trace("<< actualizeNaighbours");
     }
 
 
     private void addEdge(NetworkGraph networkGraph, DeviceNode device, DeviceNode changedDevice, CommunicationInterface communicationInterface) {
-        LOG.debug("adding edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
+        LOG.trace("adding edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
         networkGraph.addEdge(changedDevice,device);
         // TODO typowanie nie powinno odbywać się tutaj
         HashMap<Integer, GraphEdge<?>> payload = new HashMap<>();
@@ -174,7 +174,7 @@ public class NetworkManager<P extends Position> {
     }
 
     private void removeEdge(NetworkGraph networkGraph, DeviceNode device, DeviceNode changedDevice, CommunicationInterface communicationInterface) {
-        LOG.debug("removing edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
+        LOG.trace("removing edge: [" + changedDevice.getID() + ";" + device.getID() + "]");
         networkGraph.removeEdge(device,changedDevice);
         // TODO typowanie nie powinno odbywać się tutaj
         HashMap<Integer, GraphEdge<?>> payload = new HashMap<>();

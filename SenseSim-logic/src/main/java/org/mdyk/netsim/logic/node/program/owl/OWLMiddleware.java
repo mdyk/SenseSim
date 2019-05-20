@@ -173,6 +173,19 @@ public class OWLMiddleware extends Thread implements Middleware {
                 return;
             }
 
+            boolean answered = true;
+
+
+            for(Infon i : inrm.getInfons()) {
+                if(i.getRelation().equals(KnowledgeBase.UNKNOWN_RELATION)) {
+                    answered = false;
+                }
+            }
+
+            if(!answered) {
+                return;
+            }
+
             InformationNeedAskMessage inam = inProcess.getInam();
 
             inProcess.setAnswer(inrm);
@@ -405,8 +418,13 @@ public class OWLMiddleware extends Thread implements Middleware {
         // Verify if relation is known
         String relation = informationNeedAsk.getInfon().getRelation();
 //        boolean relationExists = kb.getOntologyProcessor().relationExists(relation);
+        boolean relationExists;
+        if(informationNeedAsk.getInfon().isRelationParam()) {
+            relationExists = true;
+        } else {
+            relationExists = (kb.getRelationDefinition(relation) != null) || (kb.getStandardRelationDefinition(relation) != null);
+        }
 
-        boolean relationExists = (kb.getRelationDefinition(relation) != null) || (kb.getStandardRelationDefinition(relation) != null);
 
         List<String> unknownObjects = new ArrayList<>();
 
@@ -430,6 +448,13 @@ public class OWLMiddleware extends Thread implements Middleware {
                 inProcessStatus.add(INProcessStatus.LOCALIZATION_IMPORTANT);
             } else {
                 inProcessStatus.add(INProcessStatus.LOCALIZATION_NOT_IMPORTANT);
+
+                // FIXME na potrzeby eksperymentów
+
+                if(kb.isAttachedTo != null && !kb.isAttachedTo.equals(informationNeedAsk.getInfon().getObjects().get(0))) {
+                    inProcessStatus.remove(INProcessStatus.PROCESS_IN_NODE);
+                }
+
             }
 
         }
@@ -521,22 +546,59 @@ public class OWLMiddleware extends Thread implements Middleware {
             inrm.procecessedInNode(this.nodeId);
 
         } else {
-            ;
-            if(!Functions.isPointInRegion((GeoPosition) this.deviceAPI.api_getPosition(), PositionParser.parsePositionsList(inam.getInfon().getSpatialLocation()))) {
-                LOG.info("Device "+ deviceAPI.api_getMyID() + " not in need area");
-                return;
+            if(!inam.getInfon().isSpatialLocationParam()) {
+                if (!Functions.isPointInRegion((GeoPosition) this.deviceAPI.api_getPosition(), PositionParser.parsePositionsList(inam.getInfon().getSpatialLocation()))) {
+                    LOG.info("Device " + deviceAPI.api_getMyID() + " not in need area");
+                    return;
+                }
             }
+
+            if(inam.getInfon().isRelationParam()) {
+                // zebranie wszystkich relacji
+
+                List<Infon> respInfons = new ArrayList<>();
+
+                for(KnowledgeBase.RelationDefinition infonRelation : kb.getRelationDefinition().values()) {
+                    // FIXME powinno być sprawdzenie czy obiekt jest wymaganego typu
+
+
+
+                    for (Infon relarionInfon : infonRelation.getInfons()) {
+                        KnowledgeBase.StandardRelationDefinition stdRel = kb.getStandardRelationDefinition(relarionInfon.getRelation());
+                        boolean fullfilled = verifyStandardSituation(relarionInfon, stdRel);
+
+                        if (fullfilled) {
+                            Infon respInfon = new Infon(inam.getInfon());
+                            respInfon.setRelation(infonRelation.getName());
+                            respInfons.add(respInfon);
+                        }
+
+                    }
+
+                }
+
+                if(respInfons.size() >0 ) {
+                    inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId());
+                    inrm.addInfon(respInfons);
+                    inrm.procecessedInNode(this.nodeId);
+
+                }
+
+            }
+
 
             // Polarity is a paramter
             if(inam.getInfon().isPolarityParam()) {
 
                 boolean polarity;
 
-                Infon infon = inam.getInfon();
-                KnowledgeBase.StandardRelationDefinition rel = kb.getStandardRelationDefinition(infon.getRelation());
+                Infon askInfon = inam.getInfon();
+                KnowledgeBase.StandardRelationDefinition standardRelationDefinition = kb.getStandardRelationDefinition(askInfon.getRelation());
 
-                if (rel != null) {
-                    ArrayList<String> obj = infon.getObjects();
+                KnowledgeBase.RelationDefinition infonRelation = kb.getRelationDefinition(askInfon.getRelation());
+
+                if (standardRelationDefinition != null) {
+                    ArrayList<String> obj = askInfon.getObjects();
                     kb.isStateOfAffair(obj.get(0));
                     String soa = obj.get(0);
                     obj.get(1);
@@ -555,9 +617,9 @@ public class OWLMiddleware extends Thread implements Middleware {
                         }
                     }
 
-                    LOG.debug("Relation name = " + rel.getName());
+                    LOG.debug("Relation name = " + standardRelationDefinition.getName());
 
-                    switch (rel.getName()) {
+                    switch (standardRelationDefinition.getName()) {
 
                         case "lessThan":
 
@@ -578,6 +640,25 @@ public class OWLMiddleware extends Thread implements Middleware {
                             break;
                     }
 
+                } else if (infonRelation != null) {
+                    List<Infon> realationInfons = infonRelation.getInfons();
+                    polarity = true;
+
+                    for (Infon relarionInfon : realationInfons) {
+                        KnowledgeBase.StandardRelationDefinition relDef = kb.getStandardRelationDefinition(relarionInfon.getRelation());
+                        boolean fullfilled = verifyStandardSituation(relarionInfon, relDef);
+                        if(infonRelation.getOperator().equals(KnowledgeBase.LogicOperator.AND)) {
+                            polarity &= fullfilled;
+                        }
+                    }
+
+                    Infon respInfon = new Infon(inam.getInfon());
+                    respInfon.setPolarity(polarity);
+
+                    inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId());
+                    inrm.addInfon(respInfon);
+                    inrm.procecessedInNode(this.nodeId);
+
                 }
 
             }
@@ -587,6 +668,9 @@ public class OWLMiddleware extends Thread implements Middleware {
         if(inrm != null) {
             this.getInProcess(inam.getId()).setAnswer(inrm);
             this.getInProcess(inam.getId()).setAnswered();
+
+            LOG.debug(">> [dev = " +getId()+ "]  sending response : " + inrm.toJSON());
+
             sendInformationNeedResponse(inrm, inam);
         }
 
@@ -594,6 +678,57 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         LOG.debug(">> respondForInformationNeed");
 
+    }
+
+    private boolean verifyStandardSituation(Infon infon, KnowledgeBase.StandardRelationDefinition standardRelationDefinition) {
+
+
+        boolean fullfilled = false;
+
+        ArrayList<String> obj = infon.getObjects();
+        kb.isStateOfAffair(obj.get(0));
+        String soa = obj.get(0);
+        obj.get(1);
+
+        List<String> sensorsNames = kb.sensorsWhichPerceivesSOA(soa);
+        List<SensorModel<?,?>> sensorModels = this.deviceAPI.api_getSensorsList();
+
+        SensorModel sensorForRelation = null;
+
+        // sprawdzenie czy posiadam sensory
+        for(SensorModel<?,?> model : sensorModels){
+            for(String sensorName : sensorsNames) {
+                if(model.getName().equalsIgnoreCase(sensorName)) {
+                    sensorForRelation = model;
+                }
+            }
+        }
+
+
+
+
+        switch (standardRelationDefinition.getName()) {
+
+            case "lessThan":
+
+                ConfigurationSpace conf = deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
+                LOG.debug("Sensor value = " + conf.getStringValue());
+
+                Double sensorVal = Double.parseDouble(conf.getStringValue());
+                Double relValue = Double.parseDouble(obj.get(1));
+
+                fullfilled =  relValue < sensorVal;
+
+//                Infon respInfon = new Infon(inam.getInfon());
+//                respInfon.setPolarity(polarity);
+//
+//                inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId());
+//                inrm.addInfon(respInfon);
+//                inrm.procecessedInNode(this.nodeId);
+                break;
+        }
+
+        return fullfilled;
     }
 
     private void sendInformationNeedResponse(InformationNeedRespMessage inrm, InformationNeedAskMessage inam) {

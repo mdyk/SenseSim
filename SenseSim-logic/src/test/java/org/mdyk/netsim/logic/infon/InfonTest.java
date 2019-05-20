@@ -41,5 +41,16 @@ public class InfonTest {
 
     }
 
+    @Test
+    public void infonRelaptionParamTest() throws Exception {
+
+        String infonString = "<< ?r, Soldier11, ?l , t, 1 >>";
+
+        Infon infon = new Infon(infonString);
+
+
+
+
+    }
 
 }

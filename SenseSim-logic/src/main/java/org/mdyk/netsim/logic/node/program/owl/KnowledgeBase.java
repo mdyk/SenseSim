@@ -18,6 +18,10 @@ public class KnowledgeBase {
     private static final String CONSISTS_OF = "consistsOf";
     private static final String PERCEIVES = "perceives";
     private static final String HAS_OBSERVER = "hasObserver";
+    private static final String IS_ATTACHED_TO = "isAttachedTo";
+
+    public String isAttachedTo;
+
     private OntologyProcessor op;
     private String kbName;
     private Map<String, RelationDefinition> retionDefinitions;
@@ -71,12 +75,22 @@ public class KnowledgeBase {
                 case OF_TYPE:
                     String childClass = infon.getObjects().get(0);
                     String parentClass = infon.getObjects().get(1);
-                    addSubclass(childClass, parentClass);
+
+                    // FIXME to w ogóle nie powinno się tutaj znaleźć
+                    if(!parentClass.equalsIgnoreCase("Thing")) {
+                        addSubclass(childClass, parentClass);
+                    }
                     break;
 
                 case PERCEIVES:
                     // TODO weryfikacja czy klasy są odowiednich typow: hasObserver(Object, StateOfAffair)
                     addProperyToClass(PERCEIVES,classFrom,classTo);
+                    break;
+
+                case IS_ATTACHED_TO:
+                    // TODO weryfikacja czy klasy są odowiednich typow: hasObserver(Object, Object)
+                    addProperyToClass(IS_ATTACHED_TO, classFrom , classTo);
+                    isAttachedTo = classTo;
                     break;
             }
 
@@ -206,6 +220,10 @@ public class KnowledgeBase {
         op.applyChange(change);
 
         LOG.trace("<< addSubclass");
+    }
+
+    public Map<String, RelationDefinition> getRelationDefinition() {
+        return this.retionDefinitions;
     }
 
     public RelationDefinition getRelationDefinition(String relationName) {

@@ -44,12 +44,12 @@ public class Infon {
         // TODO do poprawy sposob rozpoznawania parametrow
         if(relation.contains("?")) {
             isRelationParam = true;
-            relation = relation.replace("?","");
-            relation = relation.replace(" ","");
-
-            String[] splittedRelation = relation.split(":");
-
-            relationParam = new RelationParam(splittedRelation[0] , splittedRelation[1]);
+//            relation = relation.replace("?","");
+//            relation = relation.replace(" ","");
+//
+//            String[] splittedRelation = relation.split(":");
+//
+//            relationParam = new RelationParam(splittedRelation[0] , splittedRelation[1]);
         }
 
 
@@ -110,16 +110,16 @@ public class Infon {
         return polarity;
     }
 
-    public void setPolarity(String polarity) {
-        this.polarity = polarity;
-    }
-
     public void setPolarity(boolean polarity) {
         if (polarity) {
             this.polarity = "1";
         } else {
             this.polarity = "0";
         }
+    }
+
+    public void setPolarity(String polarity) {
+        this.polarity = polarity;
     }
 
     public String getSpatialLocation() {

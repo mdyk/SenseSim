@@ -104,7 +104,7 @@ public class OntologyProcessor {
         // FIXME
         assert realtionClass != null;
 
-        NodeSet<OWLClass> subClasses = reasoner.getSubClasses(realtionClass, true);
+        NodeSet<OWLClass> subClasses = reasoner.getSubClasses(realtionClass, false);
 
         for (OWLClass subClass : subClasses.getFlattened()) {
 
