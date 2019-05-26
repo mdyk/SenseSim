@@ -289,7 +289,10 @@ public class KnowledgeBase {
 
         StandardRelationDefinition lessThan = new StandardRelationDefinition("lessThan", "StateOfAffair", "Integer", OWLClass.class, Double.class);
 
+        StandardRelationDefinition greaterThan = new StandardRelationDefinition("greaterThan", "StateOfAffair", "Integer", OWLClass.class, Double.class);
+
         standardRelationDefinitions.put("lessThan" , lessThan);
+        standardRelationDefinitions.put("greaterThan" , greaterThan);
 
         // TODO pozostałe relacje
 

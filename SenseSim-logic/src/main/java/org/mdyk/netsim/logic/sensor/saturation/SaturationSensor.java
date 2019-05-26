@@ -24,7 +24,7 @@ public class SaturationSensor extends SensorModel<SaturationObserver , Saturatio
 
     @Override
     public String getName() {
-        return "Pulse oximeter";
+        return "Spo2Sensor";
     }
 
     @Override

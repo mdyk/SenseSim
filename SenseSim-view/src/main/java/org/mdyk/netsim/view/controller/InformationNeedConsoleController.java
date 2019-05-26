@@ -14,6 +14,7 @@ import org.mdyk.netsim.logic.event.EventBusHolder;
 import org.mdyk.netsim.logic.event.EventFactory;
 import org.mdyk.netsim.logic.event.InternalEvent;
 import org.mdyk.netsim.logic.infon.message.ResponseForNeedContent;
+import org.mdyk.netsim.logic.node.program.owl.messages.InformationNeedRespMessage;
 import org.mdyk.netsim.view.node.OSMNodeView;
 
 import java.net.URL;
@@ -65,12 +66,19 @@ public class InformationNeedConsoleController implements Initializable {
     @Subscribe
     @AllowConcurrentEvents
     public void handleEvents(InternalEvent event) {
+        try {
+            switch (event.getEventType()) {
+                case INFORMATION_NEED_FULLLFILLED:
+//                    ResponseForNeedContent responseForNeedContent = (ResponseForNeedContent) event.getPayload();
 
-        switch (event.getEventType()) {
-            case INFORMATION_NEED_FULLLFILLED:
-                ResponseForNeedContent responseForNeedContent = (ResponseForNeedContent) event.getPayload();
-                updateResponse(responseForNeedContent.getContent());
-                break;
+                    InformationNeedRespMessage inrm = (InformationNeedRespMessage) event.getPayload();
+
+                    updateResponse(inrm.toJSON());
+                    break;
+            }
+
+        } catch (Exception exc) {
+            LOG.error(exc);
         }
 
     }

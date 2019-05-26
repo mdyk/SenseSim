@@ -236,7 +236,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
             } else {
                 LOG.info("Response for nid " + inam.getId() + " " + inrm.toJSON());
-                EventBusHolder.post(new InternalEvent(EventType.INFORMATION_NEED_FULLLFILLED, inrm.toJSON()));
+                EventBusHolder.post(new InternalEvent(EventType.INFORMATION_NEED_FULLLFILLED, inrm));
 
             }
 
@@ -705,27 +705,37 @@ public class OWLMiddleware extends Thread implements Middleware {
         }
 
 
-
+        ConfigurationSpace conf;
+        Double sensorVal;
+        Double relValue;
 
         switch (standardRelationDefinition.getName()) {
 
             case "lessThan":
 
-                ConfigurationSpace conf = deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
+                conf = deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
                 LOG.debug("Sensor value = " + conf.getStringValue());
 
-                Double sensorVal = Double.parseDouble(conf.getStringValue());
-                Double relValue = Double.parseDouble(obj.get(1));
+                sensorVal = Double.parseDouble(conf.getStringValue());
+                relValue = Double.parseDouble(obj.get(1));
+
+                fullfilled =  relValue > sensorVal;
+
+                break;
+
+
+            case "greaterThan":
+
+                conf = deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
+                LOG.debug("Sensor value = " + conf.getStringValue());
+
+                sensorVal = Double.parseDouble(conf.getStringValue());
+                relValue = Double.parseDouble(obj.get(1));
 
                 fullfilled =  relValue < sensorVal;
 
-//                Infon respInfon = new Infon(inam.getInfon());
-//                respInfon.setPolarity(polarity);
-//
-//                inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId());
-//                inrm.addInfon(respInfon);
-//                inrm.procecessedInNode(this.nodeId);
                 break;
+
         }
 
         return fullfilled;
