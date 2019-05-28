@@ -173,37 +173,39 @@ public class OWLMiddleware extends Thread implements Middleware {
                 return;
             }
 
-            boolean answered = true;
+//            boolean answered = true;
+//
+//
+//            for(Infon i : inrm.getInfons()) {
+//                if(i.getRelation().equals(KnowledgeBase.UNKNOWN_RELATION)) {
+//                    answered = false;
+//                }
+//            }
 
-
-            for(Infon i : inrm.getInfons()) {
-                if(i.getRelation().equals(KnowledgeBase.UNKNOWN_RELATION)) {
-                    answered = false;
-                }
-            }
-
-            if(!answered) {
-                return;
-            }
+//            if(!answered) {
+//                return;
+//            }
 
             InformationNeedAskMessage inam = inProcess.getInam();
 
             inProcess.setAnswer(inrm);
 
             // Uzupełnienie włanej bazy wiedzy jeśli jest to opowiedź na zapytanie o wiedzę
-            if(inam.getInfon().getRelation().equals(KnowledgeBase.UNKNOWN_RELATION)) {
+            if(inam.getInfon().getRelation().equals(KnowledgeBase.UNKNOWN_RELATION) && !inrm.getInfons().get(0).getRelation().equals(KnowledgeBase.UNKNOWN_RELATION)) {
                 // Uzupełnienie bazy
                 for (String object : inam.getInfon().getObjects()) {
                     if(kb.isRelationUnknown(object)) {
 
                         kb.deatchUnknownRelation(object);
                         kb.addRelation(object, KnowledgeBase.LogicOperator.AND,inrm.getInfons());
+                        kb.saveKBSnapshot(deviceSimEntity.getSimTime());
 
                         LOG.info("Adding realtion concept: " + object);
 
                         waitingForConcept.remove(object);
 
-                    } else if (kb.isObjectUnknown(object)) {
+
+                    } else if (kb.isObjectUnknown(object) && waitingForConcept.contains(object) ) {
                         for (Infon i : inrm.getInfons()) {
                             kb.populateKB(i);
                         }
@@ -211,6 +213,7 @@ public class OWLMiddleware extends Thread implements Middleware {
                         LOG.info("Adding object concept: " + object);
 
                         waitingForConcept.remove(object);
+
                     }
                 }
 
@@ -251,8 +254,30 @@ public class OWLMiddleware extends Thread implements Middleware {
         // 2. jesli nie jestem odbiorcą to wyszukanie obsłużonych potrzeb i wybranie z nich odbiorcy
         else {
             InformationNeedProcess INprocess = getInProcess(inrm.getId());
-            INprocess.setAnswered();
-            INprocess.setAnswer(inrm);
+
+            if(INprocess.isAnswered()) {
+
+//                for(Infon respInfon : INprocess.getInrm().getInfons()) {
+//
+//                }
+
+                Infon respInfon = INprocess.getInrm().getInfons().get(0);
+
+                List<String> objToAdd = new ArrayList<>();
+                for(String object : respInfon.getObjects()) {
+                    if (!inrm.getInfons().get(0).getObjects().contains(object)) {
+                        objToAdd.add(object);
+                    }
+                }
+
+                inrm.getInfons().get(0).getObjects().addAll(objToAdd);
+                INprocess.setAnswer(inrm);
+
+            } else {
+                INprocess.setAnswered();
+                INprocess.setAnswer(inrm);
+            }
+
 
             this.actualizeNeighbours();
             sendInformationNeedResponse(inrm, INprocess.getInam());
@@ -359,6 +384,7 @@ public class OWLMiddleware extends Thread implements Middleware {
                 if(!waitingForConcept.contains(relation)) {
 
                     kb.addUnknownRelation(relation);
+                    kb.saveKBSnapshot(deviceSimEntity.getSimTime());
 
                     Infon relAskInfon = new Infon("<<" + KnowledgeBase.UNKNOWN_RELATION + "," + relation + ",?l,?t,1>>");
                     InformationNeedAskMessage relationUnknownNeed = new InformationNeedAskMessage(this.nodeId, relAskInfon);
@@ -368,6 +394,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 //                this.informationNeedAskMsgs.put(relationUnknownNeed.getId() , relationUnknownNeed);
 
                     relationUnknownNeed.processedInNode(this.nodeId);
+                    actualizeNeighbours();
                     for (Integer neighbourId : neighboursCombinedList.keySet()) {
                         Neighbour neighbour = neighboursCombinedList.get(neighbourId);
                         deviceAPI.api_sendMessage(this.nextMsgId(), deviceAPI.api_getMyID(), neighbour.getId(), neighbour.commInt, relationUnknownNeed.toJSON(), relationUnknownNeed.getSize());
@@ -390,7 +417,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                     InformationNeedProcess unknownRelationProcess = new InformationNeedProcess(objectUnknownNeed);
                     this.inProcesses.add(unknownRelationProcess);
-
+                    actualizeNeighbours();
                     objectUnknownNeed.processedInNode(this.nodeId);
                     for (Integer neighbourId : neighboursCombinedList.keySet()) {
                         Neighbour neighbour = neighboursCombinedList.get(neighbourId);
@@ -428,12 +455,14 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         List<String> unknownObjects = new ArrayList<>();
 
-        for(String object : informationNeedAsk.getInfon().getObjects()) {
+        if(!informationNeedAsk.getInfon().areObjectsParam()) {
+            for (String object : informationNeedAsk.getInfon().getObjects()) {
 
-            // Jeśli można konwertować na liczbę to obiekt jest znany
+                // Jeśli można konwertować na liczbę to obiekt jest znany
 
-            if(!StringUtils.isNumeric(object) && !kb.getOntologyProcessor().objectExists(object)) {
-                unknownObjects.add(object);
+                if (!StringUtils.isNumeric(object) && !kb.getOntologyProcessor().objectExists(object)) {
+                    unknownObjects.add(object);
+                }
             }
         }
 
@@ -451,7 +480,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
                 // FIXME na potrzeby eksperymentów
 
-                if(kb.isAttachedTo != null && !kb.isAttachedTo.equals(informationNeedAsk.getInfon().getObjects().get(0))) {
+                if(!relation.equalsIgnoreCase(KnowledgeBase.UNKNOWN_RELATION) && !informationNeedAsk.getInfon().areObjectsParam() &&  kb.isAttachedTo != null && !kb.isAttachedTo.equals(informationNeedAsk.getInfon().getObjects().get(0))) {
                     inProcessStatus.remove(INProcessStatus.PROCESS_IN_NODE);
                 }
 
@@ -518,7 +547,8 @@ public class OWLMiddleware extends Thread implements Middleware {
             // Odesłanie informacji że relacja jest nieznana
             inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId());
 
-            boolean object = true;
+            // FIXME na potrzeby eksperymentów
+            boolean object = false;
 
             // FIXME shitcode
             if(object) {
@@ -551,6 +581,56 @@ public class OWLMiddleware extends Thread implements Middleware {
                     LOG.info("Device " + deviceAPI.api_getMyID() + " not in need area");
                     return;
                 }
+            }
+
+
+            if(inam.getInfon().areObjectsParam()) {
+                // FIXME odszukanie wszystkich znanych obiektów
+                // FIXME zawsze trafi tutaj obiekt który jest przypiety do tego urzadzenia
+
+                String attachedTo = kb.isAttachedTo;
+
+                KnowledgeBase.RelationDefinition infonRelation = kb.getRelationDefinition(inam.getInfon().getRelation());
+
+                if(infonRelation != null ) {
+                    List<Infon> realationInfons = infonRelation.getInfons();
+                    Boolean polarity = null;
+
+                    for (Infon relarionInfon : realationInfons) {
+                        KnowledgeBase.StandardRelationDefinition relDef = kb.getStandardRelationDefinition(relarionInfon.getRelation());
+                        boolean fullfilled = verifyStandardSituation(relarionInfon, relDef);
+                        if(infonRelation.getOperator().equals(KnowledgeBase.LogicOperator.AND)) {
+
+
+                            if(polarity == null) {
+                                polarity = fullfilled;
+                            } else {
+                                polarity &= fullfilled;
+                            }
+
+                        } else if (infonRelation.getOperator().equals(KnowledgeBase.LogicOperator.OR)) {
+                            if(polarity == null) {
+                                polarity = fullfilled;
+                            } else {
+                                polarity |= fullfilled;
+                            }
+                        }
+                    }
+
+                    Infon respInfon = new Infon(inam.getInfon());
+
+                    if (inam.getInfon().getPolarity().equalsIgnoreCase("1") && polarity) {
+                        respInfon.getObjects().add(attachedTo);
+                    } else if (inam.getInfon().getPolarity().equalsIgnoreCase("0") && !polarity) {
+                        respInfon.getObjects().add(attachedTo);
+                    }
+
+
+                    inrm = new InformationNeedRespMessage(inam.getSourceNode(),inam.getId());
+                    inrm.addInfon(respInfon);
+                    inrm.procecessedInNode(this.nodeId);
+                }
+
             }
 
             if(inam.getInfon().isRelationParam()) {
@@ -590,7 +670,7 @@ public class OWLMiddleware extends Thread implements Middleware {
             // Polarity is a paramter
             if(inam.getInfon().isPolarityParam()) {
 
-                boolean polarity;
+                Boolean polarity = null;
 
                 Infon askInfon = inam.getInfon();
                 KnowledgeBase.StandardRelationDefinition standardRelationDefinition = kb.getStandardRelationDefinition(askInfon.getRelation());
@@ -649,6 +729,8 @@ public class OWLMiddleware extends Thread implements Middleware {
                         boolean fullfilled = verifyStandardSituation(relarionInfon, relDef);
                         if(infonRelation.getOperator().equals(KnowledgeBase.LogicOperator.AND)) {
                             polarity &= fullfilled;
+                        } else if (infonRelation.getOperator().equals(KnowledgeBase.LogicOperator.OR)) {
+                            polarity |= fullfilled;
                         }
                     }
 
@@ -665,7 +747,7 @@ public class OWLMiddleware extends Thread implements Middleware {
 
         }
 
-        if(inrm != null) {
+        if(inrm != null && inrm.getInfons().size() > 0 ) {
             this.getInProcess(inam.getId()).setAnswer(inrm);
             this.getInProcess(inam.getId()).setAnswered();
 
@@ -733,6 +815,31 @@ public class OWLMiddleware extends Thread implements Middleware {
                 relValue = Double.parseDouble(obj.get(1));
 
                 fullfilled =  relValue < sensorVal;
+
+                break;
+
+            // avgEquals
+
+            case "avgEquals":
+
+                conf = deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
+                LOG.debug("Sensor value = " + conf.getStringValue());
+
+                sensorVal = Double.parseDouble(conf.getStringValue());
+                int samples = Integer.parseInt(obj.get(1));
+                relValue = Double.parseDouble(obj.get(2));
+
+                List<ConfigurationSpace> observations = deviceAPI.api_getObservations(sensorForRelation.getConfigurationSpaceClass() , samples);
+
+                double avg = 0;
+
+                for (ConfigurationSpace obs : observations) {
+                    avg += Double.parseDouble(obs.getStringValue());
+                }
+
+                avg = avg / samples;
+
+                fullfilled =  relValue == avg;
 
                 break;
 

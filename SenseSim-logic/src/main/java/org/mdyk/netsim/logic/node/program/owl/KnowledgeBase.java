@@ -291,9 +291,13 @@ public class KnowledgeBase {
 
         StandardRelationDefinition greaterThan = new StandardRelationDefinition("greaterThan", "StateOfAffair", "Integer", OWLClass.class, Double.class);
 
+        StandardRelationDefinition avgEquals = new StandardRelationDefinition("avgEquals", "StateOfAffair", "Integer", OWLClass.class, Double.class);
+
+
+
         standardRelationDefinitions.put("lessThan" , lessThan);
         standardRelationDefinitions.put("greaterThan" , greaterThan);
-
+        standardRelationDefinitions.put("avgEquals" , avgEquals);
         // TODO pozostałe relacje
 
     }

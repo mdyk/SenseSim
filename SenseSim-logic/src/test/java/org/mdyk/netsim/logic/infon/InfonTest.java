@@ -50,6 +50,26 @@ public class InfonTest {
 
 
 
+    }
+
+    @Test
+    public void threePlaceRelationTest() throws Exception {
+        String infonString = "<< avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 >>";
+
+        Infon infon = new Infon(infonString);
+
+        infon.getObjects();
+
+    }
+
+
+    @Test
+    public void areObjectParamTest() throws Exception {
+        String infonString = "<< << Delayed, ?o, ?l , t, ?p >> >>";
+
+        Infon infon = new Infon(infonString);
+
+        TestCase.assertTrue(infon.areObjectsParam());
 
     }
 

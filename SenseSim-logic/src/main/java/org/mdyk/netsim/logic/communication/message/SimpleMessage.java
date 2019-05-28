@@ -5,6 +5,8 @@ import org.mdyk.netsim.logic.communication.Message;
 
 public class SimpleMessage implements Message {
 
+    // FIXME dla ramki TCP
+    final private Integer sizeOffset = 100;
     private int originSource;
     private int originDest;
     private Object content;
@@ -61,7 +63,7 @@ public class SimpleMessage implements Message {
             size = contentString.getBytes().length;
         }
 
-        return size;
+        return size + sizeOffset;
     }
 
     @Override

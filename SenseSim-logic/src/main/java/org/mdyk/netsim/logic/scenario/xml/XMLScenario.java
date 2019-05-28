@@ -171,12 +171,12 @@ public class XMLScenario implements Scenario {
 
                                         String[] infonsString = new String[0];
 
-                                        if (relationArr[1].contains("^")) {
+                                        if (relationArr[1].contains("AND")) {
                                             operator = KnowledgeBase.LogicOperator.AND;
-                                            infonsString = relationArr[1].split("^");
-                                        } else if (relationArr[1].contains("v")) {
+                                            infonsString = relationArr[1].split("AND");
+                                        } else if (relationArr[1].contains("OR")) {
                                             operator = KnowledgeBase.LogicOperator.OR;
-                                            infonsString = relationArr[1].split("v");
+                                            infonsString = relationArr[1].split("OR");
                                         } else {
                                             infonsString = new String[1];
                                             infonsString[0] = relationArr[1];

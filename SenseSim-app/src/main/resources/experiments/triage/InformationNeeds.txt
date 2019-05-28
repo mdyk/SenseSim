@@ -24,4 +24,8 @@
 
 << Immediate, Soldier11, ?l , t, ?p >>
 
+<< Delayed, ?o, ?l , t, 1 >>
+
+<< Healthy, ?o, ?l , t, 1 >>
+
 << ?r, Soldier11, ?l , t, 1 >>

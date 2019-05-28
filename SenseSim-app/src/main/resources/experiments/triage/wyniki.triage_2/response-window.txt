@@ -1,0 +1,76 @@
+Need:
+<< Healthy, ?o, ?l , t, 1 >>
+
+Resp:
+Question time: 6.644450682907015
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier21,?l,t,1,>>","psn":[21]}[time = 7.015864076329863]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier21,?l,t,1,>>","psn":[21]}[time = 7.015864076329863]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier11,?l,t,1,>>","psn":[11]}[time = 7.088765632665072]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier11,?l,t,1,>>","psn":[11]}[time = 7.088765632665072]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier22,?l,t,1,>>","psn":[22]}[time = 7.765716084752269]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier22,?l,t,1,>>","psn":[22]}[time = 7.765716084752269]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier24,?l,t,1,>>","psn":[24]}[time = 7.768765632665068]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier24,?l,t,1,>>","psn":[24]}[time = 7.768765632665068]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier26,Soldier25,Soldier21,?l,t,1,>>","psn":[26]}[time = 8.155864076329857]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier26,Soldier25,Soldier21,?l,t,1,>>","psn":[26]}[time = 8.155864076329857]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier25,Soldier21,?l,t,1,>>","psn":[25]}[time = 8.155864076329857]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier25,Soldier21,?l,t,1,>>","psn":[25]}[time = 8.155864076329857]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier14,Soldier11,?l,t,1,>>","psn":[14]}[time = 8.228765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier12,Soldier14,Soldier11,?l,t,1,>>","psn":[12]}[time = 8.228765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier14,Soldier11,?l,t,1,>>","psn":[14]}[time = 8.228765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier12,Soldier14,Soldier11,?l,t,1,>>","psn":[12]}[time = 8.228765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier23,Soldier26,Soldier25,Soldier21,?l,t,1,>>","psn":[23]}[time = 8.265864076329857]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier23,Soldier26,Soldier25,Soldier21,?l,t,1,>>","psn":[23]}[time = 8.265864076329857]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier15,Soldier13,Soldier16,Soldier12,Soldier14,Soldier11,?l,t,1,>>","psn":[15]}[time = 8.338765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier13,Soldier16,Soldier12,Soldier14,Soldier11,?l,t,1,>>","psn":[13]}[time = 8.338765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier16,Soldier12,Soldier14,Soldier11,?l,t,1,>>","psn":[16]}[time = 8.338765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier13,Soldier16,Soldier12,Soldier14,Soldier11,?l,t,1,>>","psn":[13]}[time = 8.338765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier15,Soldier13,Soldier16,Soldier12,Soldier14,Soldier11,?l,t,1,>>","psn":[15]}[time = 8.338765632665066]
+{"a":"inr","s":1,"nid":976214097,"i":"<<Healthy,?o,Soldier16,Soldier12,Soldier14,Soldier11,?l,t,1,>>","psn":[16]}[time = 8.338765632665066]
+
+
+
+Question time: 97.23927859053259
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier21,?l,t,1,>>","psn":[21]}[time = 97.67586407632922]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier21,?l,t,1,>>","psn":[21]}[time = 97.67586407632922]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,?l,t,1,>>","psn":[22]}[time = 97.68086312009203]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,?l,t,1,>>","psn":[22]}[time = 97.68086312009203]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier24,?l,t,1,>>","psn":[24]}[time = 97.68652679212845]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier24,?l,t,1,>>","psn":[24]}[time = 97.68652679212845]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,?l,t,1,>>","psn":[11]}[time = 97.68876563266443]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,?l,t,1,>>","psn":[11]}[time = 97.68876563266443]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier23,Soldier21,?l,t,1,>>","psn":[26]}[time = 98.13586407632923]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier21,?l,t,1,>>","psn":[25]}[time = 98.13586407632923]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier23,Soldier21,?l,t,1,>>","psn":[23]}[time = 98.13586407632923]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier21,?l,t,1,>>","psn":[25]}[time = 98.13586407632923]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier23,Soldier21,?l,t,1,>>","psn":[26]}[time = 98.13586407632923]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier23,Soldier21,?l,t,1,>>","psn":[23]}[time = 98.13586407632923]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,?l,t,1,>>","psn":[15]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier13,?l,t,1,>>","psn":[14]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,?l,t,1,>>","psn":[15]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier12,Soldier16,Soldier13,?l,t,1,>>","psn":[12]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier16,Soldier13,?l,t,1,>>","psn":[16]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier13,?l,t,1,>>","psn":[13]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier12,Soldier16,Soldier13,?l,t,1,>>","psn":[12]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier13,?l,t,1,>>","psn":[13]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier16,Soldier13,?l,t,1,>>","psn":[16]}[time = 98.14876563266444]
+{"a":"inr","s":1,"nid":-85030173,"i":"<<Healthy,?o,Soldier13,?l,t,1,>>","psn":[14]}[time = 98.14876563266444]
+
+
+Need:
+<< ?r, Soldier15, ?l , t, 1 >>
+
+Question time: 200.80959587028644
+{"a":"inr","s":1,"nid":678766440,"i":"<<Healthy,Soldier15,?l,t,1,>>;<<Healthy,Soldier15,?l,t,1,>>;<<Healthy,Soldier15,?l,t,1,>>","psn":[15]}[time = 201.92384506755988]
+{"a":"inr","s":1,"nid":678766440,"i":"<<Healthy,Soldier15,?l,t,1,>>;<<Healthy,Soldier15,?l,t,1,>>;<<Healthy,Soldier15,?l,t,1,>>","psn":[15]}[time = 201.92384506755988]
+
+
+Question time: 245.277259022214
+{"a":"inr","s":1,"nid":740021221,"i":"<<Minimal,Soldier11,?l,t,1,>>;<<Healthy,Soldier11,?l,t,1,>>;<<Healthy,Soldier11,?l,t,1,>>;<<Healthy,Soldier11,?l,t,1,>>","psn":[11]}[time = 245.81876563266994]
+{"a":"inr","s":1,"nid":740021221,"i":"<<Minimal,Soldier11,?l,t,1,>>;<<Healthy,Soldier11,?l,t,1,>>;<<Healthy,Soldier11,?l,t,1,>>;<<Healthy,Soldier11,?l,t,1,>>","psn":[11]}[time = 245.81876563266994]
+
+
+Question time: 253.31935504844313
+{"a":"inr","s":1,"nid":-2138729270,"i":"<<Minimal,Soldier21,?l,t,1,>>;<<Healthy,Soldier21,?l,t,1,>>;<<Healthy,Soldier21,?l,t,1,>>;<<Healthy,Soldier21,?l,t,1,>>","psn":[21]}[time = 253.85893795007905]
+{"a":"inr","s":1,"nid":-2138729270,"i":"<<Minimal,Soldier21,?l,t,1,>>;<<Healthy,Soldier21,?l,t,1,>>;<<Healthy,Soldier21,?l,t,1,>>;<<Healthy,Soldier21,?l,t,1,>>","psn":[21]}[time = 253.85893795007905]
+

@@ -72,9 +72,9 @@
                 <infon>&lt;&lt; isAttachedTo, Device1, Soldier1, ?l, ?t, 1 &gt;&gt;</infon>
 
                 <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
+                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
                 <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, Saturation, 96, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
 
             </initialKB>
             <speed>4</speed>
@@ -174,9 +174,9 @@
                 <infon>&lt;&lt; isAttachedTo, Device11, Soldier11, ?l, ?t, 1 &gt;&gt;</infon>
 
                 <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
+                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
                 <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, Saturation, 96, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
 
             </initialKB>
             <speed>4</speed>
@@ -302,10 +302,10 @@
                 <infon>&lt;&lt; ofType, Device12, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device12, Soldier12, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
         <speed>4</speed>
@@ -417,10 +417,10 @@
                 <infon>&lt;&lt; ofType, Device13, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device13, Soldier13, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
             <speed>4</speed>
@@ -532,10 +532,10 @@
                 <infon>&lt;&lt; ofType, Device14, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device14, Soldier14, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
             <speed>4</speed>
@@ -647,10 +647,10 @@
                 <infon>&lt;&lt; ofType, Device15, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device15, Soldier15, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
             <speed>4</speed>
@@ -763,10 +763,10 @@
                 <infon>&lt;&lt; ofType, Device16, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device16, Soldier16, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
             <speed>4</speed>
@@ -880,9 +880,9 @@
                 <infon>&lt;&lt; isAttachedTo, Device21, Soldier21, ?l, ?t, 1 &gt;&gt;</infon>
 
                 <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
+                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
                 <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, Saturation, 96, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; AND &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
 
             </initialKB>
           <speed>4</speed>
@@ -992,10 +992,10 @@
                 <infon>&lt;&lt; ofType, Device22, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device22, Soldier22, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
           <speed>4</speed>
@@ -1080,10 +1080,10 @@
                 <infon>&lt;&lt; ofType, Device23, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device23, Soldier23, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
           <speed>4</speed>
@@ -1179,10 +1179,10 @@
                 <infon>&lt;&lt; ofType, Device24, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device24, Soldier24, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
           <speed>4</speed>
@@ -1266,10 +1266,10 @@
                 <infon>&lt;&lt; ofType, Device25, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device25, Soldier25, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
           <speed>4</speed>
@@ -1365,10 +1365,10 @@
                 <infon>&lt;&lt; ofType, Device26, Object, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; isAttachedTo, Device26, Soldier26, ?l, ?t, 1 &gt;&gt;</infon>
 
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>
-                <infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
-                <infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>
+                <!--<infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; avgEquals, HeartRate, 0 , 20, ?l, ?t, 1 &gt;&gt;  </infon>-->
+                <!--<infon>Minimal = &lt;&lt; lessThan, Saturation, 94, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 91, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Delayed = &lt;&lt; greaterThan, Saturation, 98, ?l, ?t, 1 &gt;&gt; OR &lt;&lt; greaterThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
+                <!--<infon>Healthy = &lt;&lt; lessThan, Saturation, 99, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, Saturation, 97, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; greaterThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt; ^ &lt;&lt; lessThan, BodyTemperature, 37, ?l, ?t, 1 &gt;&gt; </infon>-->
 
             </initialKB>
           <speed>4</speed>

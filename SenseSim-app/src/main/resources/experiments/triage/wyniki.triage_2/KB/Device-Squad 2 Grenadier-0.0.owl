@@ -1,0 +1,405 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog">
+    <Prefix name="" IRI="http://www.semanticweb.org/michal/ontologies/2018/7/cognitive-agent-ontolog#"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#TemperatureObserver"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Location"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Immediate"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isPerceivedBy"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasObserver"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#s1"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Phenomenon"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isInRelation"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#isAttachedTo"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Sensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Unknown"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#perceives"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Observer"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Object"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#StateOfAffair"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Relation"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#consistsOf"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#hasObject"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#TemperatureSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Human"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#BodyTemperature"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier16"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Saturation"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#EcgSensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier14"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier15"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier12"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier13"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#HeartRate"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier11"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Spo2Sensor"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier25"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier26"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier1"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier23"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier24"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Device25"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier21"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Soldier22"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="y#Temperature"/>
+    </Declaration>
+    <EquivalentClasses>
+        <Class IRI="#Observer"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#perceives"/>
+            <Class IRI="#StateOfAffair"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Phenomenon"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#consistsOf"/>
+            <Class IRI="#StateOfAffair"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#Sensor"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#hasObserver"/>
+            <Class IRI="#Observer"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <EquivalentClasses>
+        <Class IRI="#StateOfAffair"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#isPerceivedBy"/>
+            <Class IRI="#Observer"/>
+        </ObjectSomeValuesFrom>
+    </EquivalentClasses>
+    <SubClassOf>
+        <Class IRI="#Immediate"/>
+        <Class IRI="#Relation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Sensor"/>
+        <Class IRI="#Object"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#TemperatureObserver"/>
+        <Class IRI="#Observer"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Unknown"/>
+        <Class IRI="#Location"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Unknown"/>
+        <Class IRI="#Object"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Unknown"/>
+        <Class IRI="#Relation"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#BodyTemperature"/>
+        <Class IRI="#Phenomenon"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#BodyTemperature"/>
+        <Class IRI="#StateOfAffair"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#BodyTemperature"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#consistsOf"/>
+            <Class IRI="y#Temperature"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Device25"/>
+        <Class IRI="#Object"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Device25"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#isAttachedTo"/>
+            <Class IRI="y#Soldier25"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#EcgSensor"/>
+        <Class IRI="#Sensor"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#EcgSensor"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#perceives"/>
+            <Class IRI="y#HeartRate"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#HeartRate"/>
+        <Class IRI="#Phenomenon"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#HeartRate"/>
+        <Class IRI="#StateOfAffair"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Human"/>
+        <Class IRI="#Object"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Saturation"/>
+        <Class IRI="#Phenomenon"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Saturation"/>
+        <Class IRI="#StateOfAffair"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier1"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier11"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier12"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier13"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier14"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier15"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier16"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier21"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier22"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier23"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier24"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier25"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Soldier26"/>
+        <Class IRI="y#Human"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Spo2Sensor"/>
+        <Class IRI="#Sensor"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Spo2Sensor"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#perceives"/>
+            <Class IRI="y#Saturation"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#Temperature"/>
+        <Class IRI="#StateOfAffair"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#TemperatureSensor"/>
+        <Class IRI="#Sensor"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#TemperatureSensor"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#perceives"/>
+            <Class IRI="y#BodyTemperature"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="y#TemperatureSensor"/>
+        <ObjectSomeValuesFrom>
+            <ObjectProperty IRI="#perceives"/>
+            <Class IRI="y#Temperature"/>
+        </ObjectSomeValuesFrom>
+    </SubClassOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#consistsOf"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <SubObjectPropertyOf>
+        <ObjectProperty IRI="#isInRelation"/>
+        <ObjectProperty abbreviatedIRI="owl:topObjectProperty"/>
+    </SubObjectPropertyOf>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#hasObject"/>
+        <ObjectProperty IRI="#isInRelation"/>
+    </InverseObjectProperties>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#isPerceivedBy"/>
+        <ObjectProperty IRI="#perceives"/>
+    </InverseObjectProperties>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasObject"/>
+        <Class IRI="#Relation"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#hasObserver"/>
+        <Class IRI="#Sensor"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isAttachedTo"/>
+        <Class IRI="#Object"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isInRelation"/>
+        <Class IRI="#Object"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#isPerceivedBy"/>
+        <Class IRI="#StateOfAffair"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#perceives"/>
+        <Class IRI="#Observer"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasObject"/>
+        <Class IRI="#Object"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#hasObserver"/>
+        <Class IRI="#Observer"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isAttachedTo"/>
+        <Class IRI="#Object"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isInRelation"/>
+        <Class IRI="#Relation"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#isPerceivedBy"/>
+        <Class IRI="#Observer"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#perceives"/>
+        <Class IRI="#StateOfAffair"/>
+    </ObjectPropertyRange>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.0.2.20150417-2043) http://owlapi.sourceforge.net -->
+
