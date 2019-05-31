@@ -38,7 +38,7 @@
                 <infon>&lt;&lt; ofType, TemperatureSensor, Sensor, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; perceives, TemperatureSensor, Temperature, ?l, ?t, 1 &gt;&gt;</infon>
                 <infon>&lt;&lt; consistsOf, BodyTemperature, Temperature, ?l, ?t, 1 &gt;&gt;</infon>
-                <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon>
+                <!-- <infon>Immediate = &lt;&lt; lessThan, BodyTemperature, 36, ?l, ?t, 1 &gt;&gt;</infon> -->
             </initialKB>
             <speed>4</speed>
             <radioRange>1000</radioRange>

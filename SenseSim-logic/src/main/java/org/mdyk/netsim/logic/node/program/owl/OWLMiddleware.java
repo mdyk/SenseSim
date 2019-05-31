@@ -704,6 +704,12 @@ public class OWLMiddleware extends Thread implements Middleware {
                         case "lessThan":
 
                             ConfigurationSpace conf = deviceAPI.api_getSensorCurrentObservation(sensorForRelation);
+
+                            if(conf == null) {
+                                LOG.debug("No sensor value");
+                                break;
+                            }
+
                             LOG.debug("Sensor value = " + conf.getStringValue());
 
                             Double sensorVal = Double.parseDouble(conf.getStringValue());
